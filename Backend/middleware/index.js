@@ -1,10 +1,13 @@
 // require('dotenv').load();
 const jwt = require('jsonwebtoken');
-
+const db = require('../models');
 exports.loginRequired = function (req, res, next) {
     try {
         let token = req.header.authorization.split(' ')[1];
         jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {
+            if (err) {
+                return next(err)
+            }
             if (decoded) {
                 return next();
             } else {
@@ -42,3 +45,4 @@ exports.ensureCorrectUser = function (req, res, next) {
         });
     }
 }
+

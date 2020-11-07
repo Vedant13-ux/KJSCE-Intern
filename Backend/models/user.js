@@ -21,7 +21,7 @@ const userScehma = new mongoose.Schema({
 	},
 	department: String,
 	role: String,
-	semester: String,
+	year: String,
 	rollNo: {
 		type: Number,
 		unique: true,
@@ -64,8 +64,28 @@ const userScehma = new mongoose.Schema({
 			ref: 'User'
 		}
 	],
-	resume: String,
-	resumeId: String
+	resume: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'File'
+	},
+	internshipsOffered: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'InternshipDetails'
+		}
+	],
+	applications: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'InternshipDetails'
+		}
+	],
+	skills: [
+		{
+			type: String
+		}
+	]
+
 });
 
 userScehma.methods.comparePassword = async function (password, next) {

@@ -1,13 +1,86 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+*{
+  margin:0;
+  box-sizing: border-box;
+  padding:0;
+}
+body{
+  /* background-color: #e6ecf0; */
+  background-color: white;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Color Pallete
+#08ffc8
+#fff7f7
+#dadada
+#204969 */
+
+.navbar{
+  padding:0;
+  background-color:#204969;
 }
+.navbar .nav-item{
+  margin:10px;
+}
+.navbar .nav-link,.navbar-brand{
+  color:#fff7f7
+}
+
+.navbar .navbar-brand,.nav-link:hover{
+  color:#dadada;
+}
+
+.navbar .navbar-brand{
+  font-size: 22px;
+}
+.navbar input:focus{
+  /* border:none; */
+  box-shadow: none;
+}
+.btn:focus{
+  outline:none !important;
+  box-shadow: none !important;
+}
+
+
+/* ***************************-Home page******************* */
+.homePage{
+  margin-top: 100px;
+}
+
+
+
+/* *******************************Auth From ********************* */
+
+
+/* .container{margin: 40px auto;max-width: 600px; width: 90%;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); padding: 10px;} */
+
+.container img{width: 80%;height: 200px; display: block; left:10%; position : relative;}
+:focus{outline: none;}
+.col-3{width:33%; margin: 40px 3%; position: relative; padding:0; margin:20px; display: inline-block;} /* necessary to give position: relative to parent. */
+input{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width: 100%; box-sizing: border-box; letter-spacing: 1px;}
+
+.effect-16{border: 0; padding: 4px 0; border-bottom: 1px solid #ccc; background-color: transparent; position: relative;}
+.effect-16 ~ .focus-border{position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: #3399FF; transition: 0.4s;}
+.effect-16:focus ~ .focus-border,
+.has-content.effect-16 ~ .focus-border{width: 100%; transition: 0.4s;}
+.effect-16 ~ label{position: absolute; left: 0; width: 100%; top: 9px; color: #aaa; transition: 0.3s; z-index: -1; letter-spacing: 0.5px;}
+.effect-16:focus ~ label, .has-content.effect-16 ~ label{top: -16px; font-size: 12px; color: #3399FF; transition: 0.3s;}
+
+.dropdown{
+  display: inline-block !important;
+}
+.dept{
+  margin-left:20px ;
+  max-width: 30%;
+}
+.submit{
+  text-align: center;
+}
+.password{
+  max-width: 50% !important;
+}
+.btn{
+  padding-left: 30px;
+  padding-right: 30px;
+}
+/* **************************** End Auth Form*/

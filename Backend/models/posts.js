@@ -19,7 +19,7 @@ var postSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
 	},
-	liked_by: [
+	likedBy: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User'

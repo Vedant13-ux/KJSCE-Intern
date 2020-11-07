@@ -1,0 +1,6 @@
+exports.ADD_ERROR = 'ADD_ERROR';
+exports.REMOVE_ERROR = 'REMOVE_ERROR';
+exports.SET_CURRENT_USER = 'SET_CURRENT_USER'
+
+
+

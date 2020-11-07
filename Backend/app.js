@@ -19,12 +19,17 @@ const User = require('./models/user');
 
 // ROutes
 const authRoutes = require('./routes/auth');
+const communityRoutes = require('./routes/community.js');
+const internshipRoutes = require('./routes/internship')
 
 
 app.use(bodyParser.json());
 app.use(cors());
+
 // Incuding Riutes
 app.use('/api/auth', authRoutes);
+app.use('/api/community', communityRoutes);
+app.use('/api/internship', internshipRoutes);
 
 
 app.use((req, res, next) => {
