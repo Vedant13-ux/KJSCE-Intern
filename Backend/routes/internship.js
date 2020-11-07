@@ -1,5 +1,5 @@
 const express = require('express');
-const router = require = express.Router();
+const router = express.Router();
 const db = require('../models');
 
 // Search Internships
@@ -15,6 +15,8 @@ router.get('/search/all', (req, res, next) => {
         })
         .catch(err => next(err));
 });
+
+
 router.get('/search/skills', (req, res, next) => {
     var regex = new RegExp(escapeRegex(req.query.skills), 'gi');
     db.InternshipDetails.find({ skills: regex })
@@ -45,7 +47,7 @@ router.post('/details', (req, res, next) => {
         });
 });
 
-router.put('/details/:id', (req, res, next) => {
+router.put('/details/:id', async (req, res, next) => {
     try {
         let user = await db.User.findById(req.body.id);
         let internship = await db.Internship.findById(req.params.id);
