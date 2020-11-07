@@ -15,6 +15,8 @@ router.get('/search/all', (req, res, next) => {
         })
         .catch(err => next(err));
 });
+
+
 router.get('/search/skills', (req, res, next) => {
     var regex = new RegExp(escapeRegex(req.query.skills), 'gi');
     db.InternshipDetails.find({ skills: regex })
