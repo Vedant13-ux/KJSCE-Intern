@@ -17,9 +17,9 @@ mongoose
         console.log('Connected');
     })
     .catch((err) => {
+        console.log("database nhi hora")
         console.log(err.message);
     });
-
 
 module.exports.User = require('./user');
 module.exports.Post = require('./posts');
@@ -31,4 +31,3 @@ module.exports.Message = require('./messages');
 module.exports.Conversation = require('./conversation');
 module.exports.Update = require('./updates');
 module.exports.File = require('./files');
-
