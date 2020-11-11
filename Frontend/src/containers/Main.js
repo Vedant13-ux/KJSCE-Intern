@@ -8,17 +8,17 @@ const Main = props => {
     return (
         <div>
             <Switch>
-                <Route exact path="/" render={props => <Homepage {...props} />} />
+                <Route exact path="/home" render={props => <Homepage {...props} />} />
                 <Route
                     exact path='/signin'
                     render={(props) => {
-                        <AuthForm {...props} buttonText="Login" heading="Welcome Back" />
+                        return <AuthForm {...props} buttonText="Login" heading="Welcome Back" />
                     }}
                 />
                 <Route
                     exact path='/signup'
                     render={(props) => {
-                        <AuthForm {...props} buttonText="Signup" heading="Signup Here" signUp />
+                        return <AuthForm {...props} buttonText="Signup" heading="Signup Here" signUp />
                     }}
                 />
 

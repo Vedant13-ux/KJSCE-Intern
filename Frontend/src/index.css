@@ -43,8 +43,11 @@ body{
 
 
 /* ***************************-Home page******************* */
-.homePage{
-  margin-top: 100px;
+.homePage .carousel{
+  max-height: 100vh;
+}
+.homePage .carousel-home .carousel .carousel-item img{
+  max-height: 500px !important;
 }
 
 

@@ -15,7 +15,6 @@ const { loginRequired, ensureCorrectUser } = require('./middleware');
 
 // Database
 require('./models/index');
-const User = require('./models/user');
 
 // ROutes
 const authRoutes = require('./routes/auth');
