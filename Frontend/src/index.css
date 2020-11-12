@@ -9,10 +9,17 @@ body{
 }
 
 /* Color Pallete
+
+style 1--
 #08ffc8
 #fff7f7
 #dadada
-#204969 */
+#204969
+
+style 2--
+#ffca3d
+#020c53
+*/
 
 /********************** Navbar***************** */
 .navbar .container{
@@ -123,11 +130,11 @@ body{
   color: #ffcb3dda;
 }
 /* ***************************-Home page******************* */
-.homePage .carousel{
-  max-height: 100vh;
-}
-.homePage .carousel-home .carousel .carousel-item img{
-  max-height: 500px !important;
-}
 
+/* .homePage .carousel-home .carousel .carousel-item img{
+  max-height: 500px !important;
+} */
+.homePage{
+  margin-top: 60px;
+}
 
