@@ -26,8 +26,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Incuding Riutes
-app.use('/api/auth', authRoutes);
-app.use('/api/community', communityRoutes);
+app.use('/api/auth',authRoutes);
+app.use('/api/community',communityRoutes);
 app.use('/api/internship', internshipRoutes);
 
 
