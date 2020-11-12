@@ -2,10 +2,12 @@ import React from 'react';
 // import { Link } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel'
 import InternshipList from './IntershipList';
+import Navbar from '../containers/Navbar'
 
 const Homepage = () => {
     return (
         <div className='homePage'>
+            <Navbar></Navbar>
             <div className="carousel-home">
                 <Carousel>
                     <Carousel.Item>
@@ -49,6 +51,4 @@ const Homepage = () => {
             </div>
     );
 }
-
-//<InternshipList></InternshipList>
 export default Homepage;
