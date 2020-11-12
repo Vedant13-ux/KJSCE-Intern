@@ -13,7 +13,7 @@ const App = () => (
     <Router>
       <div>
         <Main />
-        <Navbar />
+        {/* <Navbar /> */}
       </div>
     </Router>
   </Provider>

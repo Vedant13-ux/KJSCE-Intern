@@ -6,6 +6,7 @@ const Homepage = () => {
     return (
 
         <div classNameName='homePage'>
+            
             <div className="carousel-home">
                 <Carousel>
                     <Carousel.Item>

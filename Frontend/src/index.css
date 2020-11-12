@@ -14,12 +14,16 @@ body{
 #dadada
 #204969 */
 
+/********************** Navbar***************** */
+.navbar .container{
+  max-width: 1320px;
+}
 .navbar{
   padding:0;
-  background-color:#204969;
+  background-color:#020C53;
 }
 .navbar .nav-item{
-  margin:10px;
+  margin: 10px 10px;
 }
 .navbar .nav-link,.navbar-brand{
   color:#fff7f7
@@ -30,18 +34,94 @@ body{
 }
 
 .navbar .navbar-brand{
+  margin-right: 40px;
   font-size: 22px;
 }
 .navbar input:focus{
   /* border:none; */
   box-shadow: none;
 }
+.navbar .navbar-brand .logo{
+  height: 50px;
+  width: 120px;
+}
 .btn:focus{
   outline:none !important;
   box-shadow: none !important;
 }
 
+/* *************Landing Page***************/
+.sections{
+  display: flex;
+}
+.sections .leftSection{
+  width: 50%;
+  flex: 50%;
+  background-color: #020C53;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+.sections .leftSection .bigLogo{
+  margin: 0 auto;
+  max-width: 450px;
+  width: 90%;
+  max-height: 175px;
+  height:85%;
 
+}
+.sections .rightSection{
+  width: 50%;
+  flex: 50%;
+  background-color: #FFCA3D;
+  height: 100vh;
+}
+.sections .rightSection .nav{
+  padding: 20px;
+}
+.sections .rightSection .nav .nav-link{
+  color: black;
+  margin: 0 20px;
+}
+.sections .rightSection .content{
+  padding: 30px 50px;
+}
+
+        
+            /* *******************************Auth From ********************* */
+.sections .rightSection .content .authForm{
+  top:50%;
+  border: #020C53 8px solid;  
+  padding: 20px;
+  box-shadow: #020C53 1px 2px 2px ;
+}
+.sections .rightSection .content .authForm .heading{
+  font-size: 32px;
+  display: inline-block;
+  padding:10px;
+  border-bottom: 3px solid black;
+  margin-bottom: 30px;
+  position: relative;
+  left: 50% !important;
+  transform: translateX(-50%);
+  font-weight: 700;
+}
+.sections .rightSection .content .authForm select option{
+  background: #020C53;
+  color: #FFCA3D;
+}
+.sections .rightSection .content .authForm .button{
+  background-color: #020C53;
+  color: #FFCA3D;
+  margin: 0 auto !important;
+}
+.sections .rightSection .content .authForm .submit{
+  text-align: center;
+}
+.sections .rightSection .content .authForm .button:hover{
+  color: #ffcb3dda;
+}
 /* ***************************-Home page******************* */
 .homePage .carousel{
   max-height: 100vh;
@@ -51,39 +131,3 @@ body{
 }
 
 
-
-/* *******************************Auth From ********************* */
-
-
-/* .container{margin: 40px auto;max-width: 600px; width: 90%;  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); padding: 10px;} */
-
-.container img{width: 80%;height: 200px; display: block; left:10%; position : relative;}
-:focus{outline: none;}
-.col-3{width:33%; margin: 40px 3%; position: relative; padding:0; margin:20px; display: inline-block;} /* necessary to give position: relative to parent. */
-input{font: 15px/24px "Lato", Arial, sans-serif; color: #333; width: 100%; box-sizing: border-box; letter-spacing: 1px;}
-
-.effect-16{border: 0; padding: 4px 0; border-bottom: 1px solid #ccc; background-color: transparent; position: relative;}
-.effect-16 ~ .focus-border{position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: #3399FF; transition: 0.4s;}
-.effect-16:focus ~ .focus-border,
-.has-content.effect-16 ~ .focus-border{width: 100%; transition: 0.4s;}
-.effect-16 ~ label{position: absolute; left: 0; width: 100%; top: 9px; color: #aaa; transition: 0.3s; z-index: -1; letter-spacing: 0.5px;}
-.effect-16:focus ~ label, .has-content.effect-16 ~ label{top: -16px; font-size: 12px; color: #3399FF; transition: 0.3s;}
-
-.dropdown{
-  display: inline-block !important;
-}
-.dept{
-  margin-left:20px ;
-  max-width: 30%;
-}
-.submit{
-  text-align: center;
-}
-.password{
-  max-width: 50% !important;
-}
-.btn{
-  padding-left: 30px;
-  padding-right: 30px;
-}
-/* **************************** End Auth Form*/

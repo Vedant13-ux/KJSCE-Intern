@@ -1,20 +1,23 @@
 import React from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import Homepage from '../compenents/Homepage'
-import AuthForm from '../compenents/AuthForm'
+import Landing from '../compenents/Landing';
 import { connect } from 'react-redux';
+import AuthForm from '../compenents/AuthForm'
 
 const Main = props => {
     return (
         <div>
             <Switch>
+                <Route exact path="/" render={props => <Landing {...props} />} />
+
                 <Route exact path="/home" render={props => <Homepage {...props} />} />
-                <Route
+                {/* <Route
                     exact path='/signin'
                     render={(props) => {
                         return <AuthForm {...props} buttonText="Login" heading="Welcome Back" />
                     }}
-                />
+                /> */}
                 <Route
                     exact path='/signup'
                     render={(props) => {
