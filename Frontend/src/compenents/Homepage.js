@@ -47,6 +47,8 @@ const Homepage = () => {
                 </Carousel>
             </div>
             <InternshipList/>
+            
+            <PageFooter/>
             <button onClick={handleShow} class="float-bx">
                 <i class="fa fa-plus"></i>
             </button>
@@ -56,7 +58,6 @@ const Homepage = () => {
             </Modal.Header>
             <Modal.Body><Internshipform></Internshipform> </Modal.Body>
         </Modal>
-            <PageFooter/>
         </div>
     );
 }
