@@ -4,7 +4,9 @@ const internshipDetailsSchema=new mongoose.Schema ({
     type:mongoose.Schema.Types.ObjectId,
     ref:'User'
   },
-  skillsRequired:String,
+  skillsRequired:[{
+    type:String
+  }],
   duration:String,
   apply_by:Date,
   posted_on:{
