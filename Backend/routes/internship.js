@@ -8,12 +8,14 @@ function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 }
 
-router.get('/search/all', (req, res, next) => {
-    db.InternshipDetails.find()
-        .then((internships) => {
-            res.status(200).send(internships);
-        })
-        .catch(err => next(err));
+router.get('/search/all', async (req, res, next) => {
+    try {
+        let internships = await db.InternshipDetails.find().populate('faculty').exec();
+        res.status(200).send(internships);
+    } catch (err) {
+        next(err);
+    }
+
 });
 
 
