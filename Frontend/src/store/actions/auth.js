@@ -12,11 +12,10 @@ export function authUser(userData) {
     return dispatch => {
         return new Promise((resolve, reject) => {
             return apiCall('post', '/api/auth/signup', userData)
-                .then(({ token }) => {
+                .then(({ token, ...user }) => {
                     localStorage.setItem("jwtToken", token)
-                    return dispatch(setCurrentUser(userData))
-                })
-                .catch(err => {
+                    dispatch(setCurrentUser(user))
+                    resolve();
                 })
         });
     };

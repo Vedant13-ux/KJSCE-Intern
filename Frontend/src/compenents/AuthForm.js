@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+
+
 class AuthForm extends Component {
     constructor(props) {
         super(props);
@@ -12,18 +14,26 @@ class AuthForm extends Component {
             password: '',
         }
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
 
     }
 
     handleChange(e) {
         return this.setState({ [e.target.name]: e.target.value })
     }
+    handleSubmit(e) {
+        e.preventDefault();
+        this.props.onAuth(this.state).then(() => {
+            console.log('Logged in Successfully');
+        })
+    }
+
     render() {
         const { fname, lname, email, dept, year, rollNo, password } = this.state;
         const { heading, buttonText, signUp } = this.props;
         return (
             (signUp && (
-                <form className="ui form authForm">
+                <form className="ui form authForm" onSubmit={this.handleSubmit}>
                     <div className="heading">{heading}</div>
                     <div className="field">
                         <label>Name</label>
@@ -43,7 +53,7 @@ class AuthForm extends Component {
                             <div className="twelve wide field">
                                 <label>Somaiya Email</label>
                                 <div className="ui left icon input">
-                                    <input type="text" name="email" placeholder="Somaiya Email" value={email} onChange={this.handleChange} />
+                                    <input type="email" name="email" placeholder="Somaiya Email" value={email} onChange={this.handleChange} />
                                     <i className="envelope icon"></i>
                                 </div>
                             </div>
@@ -59,7 +69,7 @@ class AuthForm extends Component {
                     <div className="two fields">
                         <div className="field">
                             <label>Department</label>
-                            <select className="ui fluid dropdown" name="dept" onChnage={this.handleChange} value={dept}>
+                            <select className="ui fluid dropdown" name="dept" onChange={this.handleChange} value={dept}>
                                 <option value="">Department</option>
                                 <option value="cs">Computer Science</option>
                                 <option value="it">Infomration Technology</option>

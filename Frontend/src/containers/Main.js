@@ -4,8 +4,10 @@ import Homepage from '../compenents/Homepage'
 import Landing from '../compenents/Landing';
 import { connect } from 'react-redux';
 import AuthForm from '../compenents/AuthForm'
+import { authUser } from '../store/actions/auth'
 
 const Main = props => {
+    const { authUser } = { props };
     return (
         <div>
             <Switch>
@@ -35,4 +37,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default withRouter(connect(mapStateToProps, null)(Main));
+export default withRouter(connect(mapStateToProps, { authUser })(Main));
