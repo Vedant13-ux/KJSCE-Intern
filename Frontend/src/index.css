@@ -49,8 +49,8 @@ style 2--
   box-shadow: none;
 }
 .navbar .navbar-brand .logo{
-  height: 50px;
-  width: 120px;
+  height: 40px;
+  width: 130px;
 }
 .btn:focus{
   outline:none !important;
@@ -135,7 +135,7 @@ style 2--
   max-height: 500px !important;
 } */
 .homePage{
-  margin-top: 58.5px;
+  margin-top: 48.75px;
 }
 
 .homePage .d-block{
@@ -284,3 +284,30 @@ sub{
   color: #FFCA3D;
 }
 /* **************** End card ***************/
+
+/* **************Page Footer************** */
+footer{
+  background-color: #020C53;
+  margin-top: 50px;
+  padding: 10px;
+}
+footer h4{
+  color: #FFCA3D ;
+}
+footer a{
+  color: #FFCA3D;
+}
+footer .icon-lg{
+  float: right;
+  font-size: 80px;
+  padding: 10px;
+}
+@media (max-width: 768px){
+  .icon-lg {
+      font-size: 50px;
+  }
+}
+footer .btn{
+  background-color: #FFCA3D;
+  color: #020C53;
+}

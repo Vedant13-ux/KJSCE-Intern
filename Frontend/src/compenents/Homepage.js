@@ -3,6 +3,7 @@ import React from 'react';
 import Carousel from 'react-bootstrap/Carousel'
 import InternshipList from './IntershipList';
 import Navbar from '../containers/Navbar'
+import PageFooter from '../containers/PageFooter'
 
 const Homepage = () => {
     return (
@@ -39,6 +40,7 @@ const Homepage = () => {
                 </Carousel>
             </div>
             <InternshipList/>
+            <PageFooter/>
         </div>
     );
 }
