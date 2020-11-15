@@ -7,7 +7,7 @@ import AuthForm from '../compenents/AuthForm'
 import { authUser } from '../store/actions/auth'
 
 const Main = props => {
-    const { authUser } = { props };
+    // const { authUser } = { props };
     return (
         <div>
             <Switch>

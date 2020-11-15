@@ -3,9 +3,7 @@ import React,{useState} from 'react';
 import Carousel from 'react-bootstrap/Carousel'
 import InternshipList from './IntershipList';
 import Navbar from '../containers/Navbar'
-import Modal from 'react-bootstrap/Modal'
-import Internshipform from './Internshipform'
-
+import PageFooter from '../containers/PageFooter'
 
 const Homepage = () => {
     const [show, setShow] = useState(false);
@@ -47,15 +45,7 @@ const Homepage = () => {
                 </Carousel>
             </div>
             <InternshipList/>
-            <button onClick={handleShow} class="float-bx">
-                <i class="fa fa-plus"></i>
-            </button>
-            <Modal size="lg" show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-            <Modal.Title>Fill internship Details</Modal.Title>
-            </Modal.Header>
-            <Modal.Body><Internshipform></Internshipform> </Modal.Body>
-        </Modal>
+            <PageFooter/>
         </div>
     );
 }
