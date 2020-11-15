@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 // import { Link } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel'
 import InternshipList from './IntershipList';
@@ -6,6 +6,11 @@ import Navbar from '../containers/Navbar'
 import PageFooter from '../containers/PageFooter'
 
 const Homepage = () => {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return (
         <div className='homePage'>
             <Navbar></Navbar>
