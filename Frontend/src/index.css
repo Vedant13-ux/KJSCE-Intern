@@ -148,6 +148,24 @@ style 2--
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
+.float-bx{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right: 40px;
+	background-color: #020C53;
+	color:#FFF;
+  border-radius:50px;
+  border: 2px solid #FFCA3D;
+  outline:0px;
+	text-align:center;
+	box-shadow: 2px 2px 3px rgb(75, 75, 75);
+}
+.float-bx:focus{
+  outline:0px;
+}
+
 /* **************** Internship List ***************/
 .homeSection #intershiplist{
   max-width: 1400px;
