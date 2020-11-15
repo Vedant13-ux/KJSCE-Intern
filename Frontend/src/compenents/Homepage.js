@@ -1,10 +1,18 @@
-import React from 'react';
+import React,{useState} from 'react';
 // import { Link } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel'
 import InternshipList from './IntershipList';
 import Navbar from '../containers/Navbar'
+import Modal from 'react-bootstrap/Modal'
+import Internshipform from './Internshipform'
+
 
 const Homepage = () => {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return (
         <div className='homePage'>
             <Navbar></Navbar>
@@ -39,6 +47,15 @@ const Homepage = () => {
                 </Carousel>
             </div>
             <InternshipList/>
+            <button onClick={handleShow} class="float-bx">
+                <i class="fa fa-plus"></i>
+            </button>
+            <Modal size="lg" show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+            <Modal.Title>Fill internship Details</Modal.Title>
+            </Modal.Header>
+            <Modal.Body><Internshipform></Internshipform> </Modal.Body>
+        </Modal>
         </div>
     );
 }
