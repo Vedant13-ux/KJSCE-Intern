@@ -1,25 +1,30 @@
-const mongoose =require('mongoose');
-const internshipDetailsSchema=new mongoose.Schema ({
-  faculty:{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:'User'
+const mongoose = require('mongoose');
+const internshipDetailsSchema = new mongoose.Schema({
+  faculty: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   },
-  skillsRequired:String,
-  duration:String,
-  apply_by:Date,
-  posted_on:{
-      type:Date,
-      default:Date.now()
+  title: String,
+  skillsRequired: [{
+    type: String
+  }],
+  duration: String,
+  applyBy: Date,
+  posted_on: {
+    type: Date,
+    default: Date.now()
   },
-  numberOpenings:Number,
-  otherRequirements:String,
-  department:String,
-  perks:String,
-  whoCanApply:String,
-  applicants:[{
-      type:mongoose.Schema.Types.ObjectId,
-      ref:'User'
-  }]
+  numberOpenings: Number,
+  otherRequirements: String,
+  department: String,
+  perks: String,
+  whoCanApply: String,
+  applicants: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
+  description: String,
+  type: String
 });
 
-module.exports=mongoose.model('InternshipDetails',internshipDetailsSchema);
+module.exports = mongoose.model('InternshipDetails', internshipDetailsSchema);

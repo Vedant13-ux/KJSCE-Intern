@@ -31,7 +31,10 @@ const userScehma = new mongoose.Schema({
 		type: Number,
 		unique: true,
 	},
-	photo: String,
+	photo: {
+		type: String,
+		default: 'https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg'
+	},
 	photoId: {
 		type: String,
 		default: '123z99'
