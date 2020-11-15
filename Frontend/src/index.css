@@ -157,7 +157,7 @@ style 2--
 	background-color: #020C53;
 	color:#FFF;
   border-radius:50px;
-  border: none;
+  border: 2px solid #FFCA3D;
   outline:0px;
 	text-align:center;
 	box-shadow: 2px 2px 3px rgb(75, 75, 75);
