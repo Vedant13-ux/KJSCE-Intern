@@ -8,7 +8,7 @@ function seedDB() {
     var data = {};
     for (let i = 0; i < 7; i++) {
         data = {
-            faculty: "5fb152090b17a622d0eafa1c",
+            faculty: "5fb247e8d6a6e304d0eeb65d",
             title: 'Python Programming',
             skillsRequired: ['Python', "java", 'Node.Js', 'MongoDB'],
             duration: `${Math.floor(Math.random() * 13)} months`,
