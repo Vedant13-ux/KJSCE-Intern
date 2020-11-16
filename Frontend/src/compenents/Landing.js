@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-// import { connect } from 'react-redux';
 import logo from '../images/logo.png';
-import AuthForm from './AuthForm';
-import { authUser } from '../store/actions/auth'
-// import { withRouter } from 'react-router-dom';
+import AuthForm from '../containers/AuthForm';
+
 
 class Landing extends Component {
     constructor(props) {
@@ -30,7 +28,7 @@ class Landing extends Component {
                             <Link className="nav-link contact" to="/#contact" >Contact</Link>
                         </nav>
                         <div className="content">
-                            <AuthForm onAuth={authUser} buttonText="Register" heading="Sign Up" signUp />
+                            <AuthForm onAuth={this.props.onAuth} buttonText="Register" heading="Sign Up" signUp />
                         </div>
                     </section>
                 </div>
@@ -40,11 +38,5 @@ class Landing extends Component {
 };
 
 
-
-// function mapStateToProps(state) {
-//     return {
-//         currentUser: state.currentUser
-//     }
-// }
 
 export default Landing;

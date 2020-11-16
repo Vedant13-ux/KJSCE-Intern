@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Skills } from './../containers/skills'
+import { Skills } from './Utilities'
 
 class Intershipform extends Component {
   constructor(props) {

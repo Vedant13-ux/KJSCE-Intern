@@ -32,7 +32,7 @@ class AuthForm extends Component {
         const { fname, lname, email, dept, year, rollNo, password } = this.state;
         const { heading, buttonText, signUp } = this.props;
         return (
-            (signUp && (
+            (signUp &&
                 <form className="ui form authForm" onSubmit={this.handleSubmit}>
                     <div className="heading">{heading}</div>
                     <div className="field">
@@ -104,7 +104,7 @@ class AuthForm extends Component {
 
 
                 </form >
-            ))
+            )
         )
     }
 }
