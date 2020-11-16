@@ -1,3 +1,8 @@
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-buttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-inputs/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-react-dropdowns/styles/material.css";
+
 *{
   margin:0;
   box-sizing: border-box;
@@ -166,6 +171,16 @@ style 2--
   outline:0px;
 }
 
+.control-pane #multisection.control-section, .control-section #custom-filtering {
+  width: 80%;
+  margin: 0 auto;
+  min-width: 185px;
+}
+.e-bigger .control-pane #multisection.control-section,
+.e-bigger .control-section #custom-filtering {
+  width: 100%;
+}
+
 /* **************** Internship List ***************/
 .homeSection #intershiplist{
   max-width: 1400px;
@@ -329,3 +344,5 @@ footer .btn{
   background-color: #FFCA3D;
   color: #020C53;
 }
+
+

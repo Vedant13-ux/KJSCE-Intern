@@ -1,7 +1,11 @@
 import React, { Component } from "react";
-import Skill from './../containers/skills'
+import { MultiSelectComponent } from "@syncfusion/ej2-react-dropdowns";
+import { SampleBase } from './../containers/SampleBase';
 
-class Intershipform extends Component {
+
+var data=require("./temp.json");
+
+class Intershipform extends SampleBase {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,6 +21,11 @@ class Intershipform extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.temp = 'sportsData';
+    this.sportsData = data[this.temp];
+    // maps the appropriate column to fields property
+    this.fields = { text: 'Game', value: 'Id' };
+    console.log(this.sportsData);
   }
 
   handleChange(e) {
@@ -100,7 +109,12 @@ class Intershipform extends Component {
               ></input>
             </div>
           </div>
-          <Skill></Skill>
+          <div class="field">
+          <MultiSelectComponent
+            dataSource={this.sportsData}
+            fields={this.fields}
+            placeholder="Favorite Sports"
+          /></div>
           <div class="field">
             <label>Who can Apply</label>
             <textarea
