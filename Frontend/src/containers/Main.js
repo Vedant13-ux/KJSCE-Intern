@@ -5,6 +5,7 @@ import Landing from '../compenents/Landing';
 import { connect } from 'react-redux';
 import { authUser } from '../store/actions/auth'
 import AuthForm from '../containers/AuthForm'
+import Community from '../compenents/Community'
 
 const Main = props => {
     // const { authUser } = { props };
@@ -13,12 +14,7 @@ const Main = props => {
             <Switch>
                 <Route exact path="/" render={props => <Landing {...props} onAuth={authUser} />} />
                 <Route exact path="/home" render={props => <Homepage {...props} />} />
-                <Route
-                    exact path='/signin'
-                    render={(props) => {
-                        return <AuthForm {...props} buttonText="Login" heading="Welcome Back" />
-                    }}
-                />
+                <Route exact path="/community" render={props => <Community {...props} />} />
 
             </Switch>
         </div>

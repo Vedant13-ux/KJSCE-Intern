@@ -10,14 +10,14 @@ class Intershipform extends SampleBase {
     super(props);
     this.state = {
       title: "",
-      skills: [""],
+      skillsRequired: [],
       duration: "",
       applyBy: "",
-      noo: "",
-      OtherReq: "",
-      Department: "",
+      numberOpenings: "",
+      otherRequirements: "",
+      department: "",
       perks: "",
-      whocanApply: "",
+      whoCanApply: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,22 +31,28 @@ class Intershipform extends SampleBase {
   handleChange(e) {
     return this.setState({ [e.target.name]: e.target.value });
   }
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault();
-    //to do
+    let skillArray = [];
+
+    const selectSkills = document.querySelectorAll('.e-multi-hidden > option');
+    await selectSkills.forEach(skill => {
+      skillArray.push(skill.getAttribute('value'));
+    });
+    await this.setState({ skillsRequired: skillArray });
+    console.log(this.state);
   }
 
   render() {
     const {
       title,
-      Department,
-      applyBy,
       duration,
-      skills,
-      noo,
-      OtherReq,
+      applyBy,
+      numberOpenings,
+      otherRequirements,
+      department,
       perks,
-      whocanApply,
+      whoCanApply
     } = this.state;
     return (
       <form onSubmit={this.handleSubmit} id="internshipForm">
@@ -66,8 +72,8 @@ class Intershipform extends SampleBase {
             <div class="field">
               <label>Department</label>
               <select
-                name="Department"
-                val={Department}
+                name="department"
+                val={department}
                 onChange={this.handleChange}
               >
                 <option value="">Department</option>
@@ -103,8 +109,8 @@ class Intershipform extends SampleBase {
               <label>Number of opening</label>
               <input
                 type="text"
-                name="noo"
-                val={noo}
+                name="numberOpenings"
+                val={numberOpenings}
                 onChange={this.handleChange}
               ></input>
             </div>
@@ -123,8 +129,8 @@ class Intershipform extends SampleBase {
             <label>Who can Apply</label>
             <textarea
               rows="2"
-              name="whocanApply"
-              val={whocanApply}
+              name="whoCanApply"
+              val={whoCanApply}
               onChange={this.handleChange}
             ></textarea>
           </div>
@@ -132,8 +138,8 @@ class Intershipform extends SampleBase {
             <label>Other Requirements</label>
             <textarea
               rows="2"
-              name="OtherReq"
-              val={OtherReq}
+              name="otherRequirements"
+              val={otherRequirements}
               onChange={this.handleChange}
             ></textarea>
           </div>
