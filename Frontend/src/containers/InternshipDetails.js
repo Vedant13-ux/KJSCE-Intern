@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Navbar from "../containers/Navbar";
 import PageFooter from "../containers/PageFooter";
 import RecommInternship from "./RecommInternship"
-import "./temp.css";
 
 class InternshipDetail extends Component {
   constructor(props) {
@@ -90,9 +89,6 @@ class InternshipDetail extends Component {
           <div className="card">
             <div className="card-body">
               <h1>{this.state.title}</h1>
-              <p>
-                <i className="fa fa-home mr-1"></i> {this.state.type}
-              </p>
               <div class="provider">
                 <img
                   src={this.state.faculty.photo}
@@ -105,12 +101,18 @@ class InternshipDetail extends Component {
               </div>
               <br></br>
               <div id="iconinfo" class="flex-container">
-                  <div class="flex-item-left">
+                  <div class="flex-item">
                 <h4>
                   <i class="fa fa-clock mr-1"></i>Duration 
                 </h4><p>{this.state.duration}</p>
                 </div>
-                <div class="flex-item-right"><h4>
+                <div class="flex-item">
+                <h4>
+                <i className="fa fa-home mr-1"></i>Type 
+                </h4><p> {this.state.type}</p>
+                </div>
+
+                <div class="flex-item"><h4>
                   <i class="fa fa-hourglass mr-2"></i>Apply by
                 </h4><p>{this.state.duration}</p></div>
               </div><hr></hr>

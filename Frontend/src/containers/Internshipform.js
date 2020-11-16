@@ -3,7 +3,7 @@ import { MultiSelectComponent } from "@syncfusion/ej2-react-dropdowns";
 import { SampleBase } from './../containers/SampleBase';
 
 
-var data = require("./temp.json");
+var data = require("../services/skills.json");
 
 class Intershipform extends SampleBase {
   constructor(props) {
@@ -21,11 +21,10 @@ class Intershipform extends SampleBase {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.temp = 'sportsData';
+    this.temp = 'data';
     this.sportsData = data[this.temp];
-    // maps the appropriate column to fields property
-    this.fields = { text: 'Game', value: 'Id' };
-    console.log(this.sportsData);
+    this.fields = { text: 'text', value: 'value' };
+    //console.log(this.sportsData);
   }
 
   handleChange(e) {
