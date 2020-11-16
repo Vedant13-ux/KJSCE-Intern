@@ -1,0 +1,25 @@
+#internshipdetail{
+    padding: 2%;
+    padding-right: 14%;
+    padding-left: 14%;
+    margin-top: 53px;
+    min-height: 400px;
+}
+.card{
+    border:1px solid rgba(0,0,0,.125);
+}
+.applynow{
+    text-align: center;
+}
+#iconinfo{
+    
+}
+.tagsskill{
+    background-color: rgb(242, 242, 242);
+    border-radius: 10px;
+    display: inline;
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 5px;
+}
