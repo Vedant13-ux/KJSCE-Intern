@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "../containers/Navbar";
 import PageFooter from "../containers/PageFooter";
+import RecommInternship from "./RecommInternship"
 import "./temp.css";
 
 class InternshipDetail extends Component {
@@ -31,16 +32,68 @@ class InternshipDetail extends Component {
       description: "do react redux everyday",
       type: "work from home",
     };
+    this.recommlist=[
+            {
+                faculty: {
+                    photo: "https://www.w3schools.com/w3css/img_avatar3.png",
+                    fname: "phunsuk",
+                    lname: "vangdo",
+                  },
+                  title: "Frontend Stuff",
+                  duration: "2 months",
+                  applyBy: new Date(),
+                  type: "work from home",
+            },
+            {
+                faculty: {
+                    photo: "https://www.w3schools.com/w3css/img_avatar3.png",
+                    fname: "phunsuk",
+                    lname: "vangdo",
+                  },
+                  title: "Frontend Stuff",
+                  duration: "2 months",
+                  applyBy: new Date(),
+                  type: "work from home",
+            },
+            {
+                faculty: {
+                    photo: "https://www.w3schools.com/w3css/img_avatar3.png",
+                    fname: "phunsuk",
+                    lname: "vangdo",
+                  },
+                  title: "Frontend Stuff",
+                  duration: "2 months",
+                  applyBy: new Date(),
+                  type: "work from home",
+            },
+            {
+                faculty: {
+                    photo: "https://www.w3schools.com/w3css/img_avatar3.png",
+                    fname: "phunsuk",
+                    lname: "vangdo",
+                  },
+                  title: "Frontend Stuff",
+                  duration: "2 months",
+                  applyBy: new Date(),
+                  type: "work from home",
+            },
+        ]
   }
   render() {
     return (
       <div>
         <Navbar></Navbar>
         <div id="internshipdetail">
+        <div class="container">
+  <div class="row">
+    <div class="col-8">
           <div className="card">
             <div className="card-body">
               <h1>{this.state.title}</h1>
-              <div>
+              <p>
+                <i className="fa fa-home mr-1"></i> {this.state.type}
+              </p>
+              <div class="provider">
                 <img
                   src={this.state.faculty.photo}
                   alt="pfp"
@@ -51,18 +104,16 @@ class InternshipDetail extends Component {
                 </a>
               </div>
               <br></br>
-              <h3><p>
-                <i className="fa fa-home mr-1"></i> {this.state.type}
-              </p></h3>
-              <div id="iconinfo">
+              <div id="iconinfo" class="flex-container">
+                  <div class="flex-item-left">
                 <h4>
                   <i class="fa fa-clock mr-1"></i>Duration 
                 </h4><p>{this.state.duration}</p>
-                <h4>
+                </div>
+                <div class="flex-item-right"><h4>
                   <i class="fa fa-hourglass mr-2"></i>Apply by
-                  {this.state.duration}
-                </h4><p>{this.state.duration}</p>
-              </div>
+                </h4><p>{this.state.duration}</p></div>
+              </div><hr></hr>
               <h3>About Internship</h3>
               <p>{this.state.description}</p>
               <h3>Who can Apply</h3>
@@ -90,7 +141,20 @@ class InternshipDetail extends Component {
               </div>
             </div>
           </div>
+          </div>
+    <div class="col-4">
+        <div class="card recomm">
+            <h3>Recommendations</h3>
+            <hr></hr>
+                {this.recommlist.map((int,ind)=>{
+                    return <RecommInternship {...int}></RecommInternship>
+                })}
         </div>
+
+    </div>
+  </div>
+  </div>
+  </div>
         <PageFooter />
       </div>
     );
