@@ -6,6 +6,7 @@
 body{
   /* background-color: #e6ecf0; */
   background-color: white;
+  /* padding: 0 !important; */
 }
 
 /* Color Pallete
@@ -328,4 +329,12 @@ footer .icon-lg{
 footer .btn{
   background-color: #FFCA3D;
   color: #020C53;
+}
+
+.homePage .modal-dialog{
+  overflow: hidden;
+}
+/* *********Internship Form ************ */
+body{
+  padding-right: 0px !important;
 }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Skill from './../containers/skills'
+import { Skills } from './../containers/skills'
 
 class Intershipform extends Component {
   constructor(props) {
@@ -100,7 +100,7 @@ class Intershipform extends Component {
               ></input>
             </div>
           </div>
-          <Skill></Skill>
+          <Skills></Skills>
           <div class="field">
             <label>Who can Apply</label>
             <textarea

@@ -19,8 +19,8 @@ router.get('/search/all', async (req, res, next) => {
 });
 
 
-router.get('/search/skills', (req, res, next) => {
-    var regex = new RegExp(escapeRegex(req.query.skills), 'gi');
+router.get('/search', (req, res, next) => {
+    var regex = new RegExp(escapeRegex(req.body.query), 'gi');
     db.InternshipDetails.find({ skills: regex })
         .then((internships) => {
             res.status(200).send(internships);
@@ -28,14 +28,14 @@ router.get('/search/skills', (req, res, next) => {
         .catch(err => next(err));
 });
 
-router.get('/search/faculty', (req, res, next) => {
-    var regex = new RegExp(escapeRegex(req.query.faculty), 'gi');
-    db.InternshipDetails.find().populate('faculty',)
-        .then((internships) => {
-            res.status(200).send(internships);
-        })
-        .catch(err => next(err));
-});
+// router.get('/search/faculty', (req, res, next) => {
+//     var regex = new RegExp(escapeRegex(req.query.faculty), 'gi');
+//     db.InternshipDetails.find().populate('faculty',)
+//         .then((internships) => {
+//             res.status(200).send(internships);
+//         })
+//         .catch(err => next(err));
+// });
 
 
 

@@ -21,6 +21,7 @@ class InternshipList extends Component {
         console.log(err);
       })
   }
+  // searchInternships(){}
 
   render() {
     return (
