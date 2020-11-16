@@ -166,7 +166,8 @@ style 2--
   border: 2px solid #FFCA3D;
   outline:0px;
 	text-align:center;
-	box-shadow: 2px 2px 3px rgb(75, 75, 75);
+  box-shadow: 2px 2px 3px rgb(75, 75, 75);
+  z-index: 5;
 }
 .float-bx:focus{
   outline:0px;
