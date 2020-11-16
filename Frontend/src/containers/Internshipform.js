@@ -1,10 +1,9 @@
-import React, { Component } from "react";
-import { Skills } from './Utilities'
+import React from "react";
 import { MultiSelectComponent } from "@syncfusion/ej2-react-dropdowns";
 import { SampleBase } from './../containers/SampleBase';
 
 
-var data=require("./temp.json");
+var data = require("./temp.json");
 
 class Intershipform extends SampleBase {
   constructor(props) {
@@ -50,8 +49,8 @@ class Intershipform extends SampleBase {
       whocanApply,
     } = this.state;
     return (
-      <div>
-        <form className="ui form" onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} id="internshipForm">
+        <div className="ui form">
           <div class="ui form">
             <div class="field">
               <label>Title</label>
@@ -72,10 +71,10 @@ class Intershipform extends SampleBase {
                 onChange={this.handleChange}
               >
                 <option value="">Department</option>
-                <option value="4">IT</option>
-                <option value="3">Comps</option>
-                <option value="2">EXTC</option>
-                <option value="1">ETC</option>
+                <option value="it">IT</option>
+                <option value="cs">Comps</option>
+                <option value="extc">EXTC</option>
+                <option value="etrx">ETRX</option>
                 <option value="0">Mech</option>
               </select>
             </div>
@@ -110,12 +109,16 @@ class Intershipform extends SampleBase {
               ></input>
             </div>
           </div>
-          <div class="field">
-          <MultiSelectComponent
-            dataSource={this.sportsData}
-            fields={this.fields}
-            placeholder="Favorite Sports"
-          /></div>
+        </div>
+
+        <label className="skillsRequired">Skills Required</label>
+        <MultiSelectComponent
+          dataSource={this.sportsData}
+          fields={this.fields}
+          placeholder="Favorite Sports"
+          mode="Box"
+        />
+        <div className="ui form">
           <div class="field">
             <label>Who can Apply</label>
             <textarea
@@ -146,8 +149,8 @@ class Intershipform extends SampleBase {
           <div className="submit">
             <button class="big ui button">ADD</button>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     );
   }
 }

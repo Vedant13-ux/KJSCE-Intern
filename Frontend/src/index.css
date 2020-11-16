@@ -172,15 +172,6 @@ style 2--
   outline:0px;
 }
 
-.control-pane #multisection.control-section, .control-section #custom-filtering {
-  width: 80%;
-  margin: 0 auto;
-  min-width: 185px;
-}
-.e-bigger .control-pane #multisection.control-section,
-.e-bigger .control-section #custom-filtering {
-  width: 100%;
-}
 
 /* **************** Internship List ***************/
 .homeSection #intershiplist{
@@ -353,3 +344,24 @@ footer .btn{
 body{
   padding-right: 0px !important;
 }
+.control-pane #multisection.control-section, .control-section #custom-filtering {
+  width: 80%;
+  margin: 0 auto;
+  min-width: 185px;
+}
+.e-bigger .control-pane #multisection.control-section,
+.e-bigger .control-section #custom-filtering {
+  width: 100%;
+}
+#internshipForm .skillsRequired{
+  display: block;
+  margin: 0 0 .28571429rem 0;
+  color: rgba(0,0,0,.87);
+  font-size: .92857143em;
+  font-weight: 700;
+  text-transform: none;
+}
+#internshipForm .e-multiselect{
+  margin-bottom: 12px !important;
+}
+
