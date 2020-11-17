@@ -366,3 +366,33 @@ body{
   margin-bottom: 12px !important;
 }
 
+/* ***********Community************ */
+#communityPage {
+  margin-top: 100px;
+}
+#communityPage .newPost {
+  text-align: center !important;
+
+}
+#communityPage .newPost .new{
+  width: 80%;
+  padding: 10px;
+  left:0;
+  border: #bbbbbb 1px solid;
+  border-radius: 30px;
+  margin:0 auto;
+  cursor: pointer;
+}
+#communityPage .newPost .upload{
+  margin: 10px auto;
+}
+#communityPage .newPost .upload .media{
+  display:inline-block;
+  margin:0 10px;
+}
+#communityPage .newPost .upload .media span{
+  margin:10px
+}
+#communityPage .newPost .upload .media .fas{
+  font-size: 40px;
+}

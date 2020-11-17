@@ -23,9 +23,7 @@ class Community extends Component {
         return (
             <div className="post">
                 {this.state.posts.map(post => (
-                    <div class="d-block">
-                        <Post key={post._id} {...post}></Post>
-                    </div>
+                    <Post key={post._id} {...post}></Post>
                 ))}
             </div>
         )

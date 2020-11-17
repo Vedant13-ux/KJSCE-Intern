@@ -17,7 +17,6 @@ mongoose
         console.log('Connected');
     })
     .catch((err) => {
-        console.log("database nhi hora")
         console.log(err.message);
     });
 

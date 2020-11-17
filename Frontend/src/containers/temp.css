@@ -1,0 +1,49 @@
+#internshipdetail{
+    padding: 2%;
+    padding-right: 7%;
+    padding-left: 7%;
+    margin-top: 53px;
+    min-height: 400px;
+}
+.card{
+    border:1px solid rgba(0,0,0,.125);
+}
+.applynow{
+    text-align: center;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .flex-item-left {
+    flex: 50%;
+  }
+  
+  .flex-item-right {
+    flex: 50%;
+  }
+.provider{
+    margin-bottom: 10px;
+}
+.author{
+    margin-left: 10px;
+    color:rgb(99, 99, 99);
+    font-size: 20px;
+}
+.tagsskill{
+    background-color: rgb(242, 242, 242);
+    border-radius: 10px;
+    display: inline;
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 5px;
+}
+.recomm{
+    padding:20px;
+}
+.closedpack p{
+    margin:0px;
+}
