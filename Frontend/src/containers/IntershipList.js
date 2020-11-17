@@ -34,9 +34,9 @@ class InternshipList extends Component {
           <div class="row">
             {this.state.internships.map((internship) => {
               return (
-                <div class="col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center">
-                  <Internship key={internship._id} {...internship}></Internship>
-                </div>
+
+                <Internship key={internship._id} {...internship}></Internship>
+
               );
             })}
           </div>

@@ -142,6 +142,7 @@ style 2--
 } */
 .homePage{
   margin-top: 48.75px;
+  
 }
 
 .homePage .d-block{
@@ -180,6 +181,8 @@ style 2--
   padding: 0 20px;
   margin: 0 auto;
   align-items: center !important;
+  min-height: 700px;
+  animation: fadeIn;
 }
 
 #top-bar.btn-circle.btn-lg {
@@ -222,16 +225,18 @@ sub{
 /* **************** card ***************/
 
 .template {
+  animation-name: fadeIn;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   border-radius: 20px;
   margin-right: 10px;
   margin-top: 10px;
   transition: all 1s;
-  background-color: white;
   margin-bottom: 15px;
   /* border: 2px solid #020C53; */
   box-sizing: content-box;
+  animation-name: fadeIn;
+  animation-duration: 1s;
 
 }
 .template .top{
@@ -378,11 +383,12 @@ body{
   padding-left: 7%;
   margin-top: 53px;
   min-height: 400px;
+  display: flex;
+  align-items: stretch;
 }
 #internshipdetail .card{
   border:1px solid rgba(0,0,0,.125);
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-
 }
 #internshipdetail .applynow{
   text-align: center;
@@ -420,15 +426,20 @@ body{
 #internshipdetail .closedpack p{
   margin:0px;
 }
-
+#internshipdetail .recommendations{
+  padding: 10px;
+}
+#internshipdetail .recommendations .scroll{
+  overflow-y: scroll
+}
 
 /* *********End Internship Details ************ */
 
-/* ******COmmunity ******************** */
+/* *****************COmmunity ******************** */
 @import url("https://use.fontawesome.com/releases/v5.7.2/css/all.css");
 @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700');
 body {
-   background: #e2e5ee;
+   /* background: #e2e5ee; */
    font-family: "Segoe UI";
    margin: 0;
    padding: 0;
@@ -537,8 +548,9 @@ body {
    overflow: hidden;
 }
 
-.post {
-   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+.post-wall .post {
+  box-sizing: border-box;
+  border:1.5px solid rgba(0,0,0,.125);
    width: 600px;
    height: auto;
    margin: 15px auto;
@@ -546,6 +558,7 @@ body {
    position: relative;
    animation-name: fadeIn;
    animation-duration: 1s;
+   border-radius: 10px;
 }
 
 @keyframes fadeIn {

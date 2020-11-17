@@ -10,26 +10,28 @@ class InternshipDetail extends Component {
     this.data = new URLSearchParams(this.props.location.search);
     this.id = this.data.get("id");
     this.state = {
-      faculty: {
-        photo: "https://www.w3schools.com/w3css/img_avatar3.png",
-        fname: "   ---    ",
-        lname: "   ---   ",
-      },
-      title: "  ---   ",
-      skillsRequired: ["    ", "     ", "    ", "      "],
-      duration: "  ---   ",
-      applyBy: new Date(),
-      posted_on: {
-        type: Date,
-        default: Date.now(),
-      },
-      numberOpenings: "   --   ",
-      otherRequirements: "   ---   ",
-      department: "    ---   ",
-      perks: "         ----------                 ",
-      whoCanApply: "    -----    ",
-      description: "        -------           ",
-      type: "    ----    ",
+      details: {
+        faculty: {
+          photo: "https://www.w3schools.com/w3css/img_avatar3.png",
+          fname: "   ---    ",
+          lname: "   ---   ",
+        },
+        title: "  ---   ",
+        skillsRequired: ["    ", "     ", "    ", "      "],
+        duration: "  ---   ",
+        applyBy: new Date(),
+        posted_on: {
+          type: Date,
+          default: Date.now(),
+        },
+        numberOpenings: "   --   ",
+        otherRequirements: "   ---   ",
+        department: "    ---   ",
+        perks: "         ----------                 ",
+        whoCanApply: "    -----    ",
+        description: "        -------           ",
+        type: "    ----    ",
+      }
     };
     this.recommlist = [
       {
@@ -83,13 +85,8 @@ class InternshipDetail extends Component {
       .then(
         (data) => {
           console.log(data)
-          data["faculty"] = {
-            photo: "https://www.w3schools.com/w3css/img_avatar3.png",
-            fname: "phunsuk",
-            lname: "vangdo",
-          }
           //this.state=data;
-          this.setState(data);
+          this.setState({ data });
         }
       )
   }
@@ -161,13 +158,16 @@ class InternshipDetail extends Component {
                   </div>
                 </div>
               </div>
-              <div class="col-4">
+              <div class="col-4 recommendations">
                 <div class="card recomm">
                   <h3>Recommendations</h3>
                   <hr></hr>
-                  {this.recommlist.map((int, ind) => {
-                    return <RecommInternship {...int}></RecommInternship>
-                  })}
+                  <div className="scroll">
+                    {this.recommlist.map((int, ind) => {
+                      return <RecommInternship {...int}></RecommInternship>
+                    })}
+                  </div>
+
                 </div>
 
               </div>

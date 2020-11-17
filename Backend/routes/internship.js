@@ -50,7 +50,7 @@ router.post('/details', (req, res, next) => {
 });
 // Get Internship Details
 router.get('/details/:id', (req, res, next) => {
-    db.InternshipDetails.findById(req.params.id)
+    db.InternshipDetails.findById(req.params.id).populate('faculty')
         .then((internship) => {
             res.status(200).send(internship)
         })

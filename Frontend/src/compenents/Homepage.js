@@ -16,7 +16,7 @@ const Homepage = () => {
                     <Carousel.Item>
                         <img
                             className="d-block"
-                            src="https://lms-kjsce.somaiya.edu/pluginfile.php/1/theme_essential/slide1image/1604898978/home4_kjsce%20%281%29.jpg"
+                            src="https://www.eurashe.eu/wp-content/uploads/2018/08/Visual.png"
                             alt="First slide"
                         />
                     </Carousel.Item>
