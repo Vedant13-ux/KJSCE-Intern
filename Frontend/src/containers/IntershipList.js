@@ -15,6 +15,14 @@ class InternshipList extends Component {
     apiCall('get', url, '')
       .then((internships) => {
         console.log(internships);
+        let i=0
+        for(i=0;i<internships.length;i++){
+          internships[i]["faculty"] = {
+            photo: "https://www.w3schools.com/w3css/img_avatar3.png",
+            fname: "phunsuk",
+            lname: "vangdo",
+          }
+        }
         return this.setState({ internships })
       })
       .catch(err => {
