@@ -87,6 +87,12 @@ const userScehma = new mongoose.Schema({
 		{
 			type: String
 		}
+	],
+	posts: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Post'
+		}
 	]
 
 });

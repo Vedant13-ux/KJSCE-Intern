@@ -1,14 +1,23 @@
 const express = require('express');
-const router =  express.Router();
+const router = express.Router();
 const db = require('../models');
 var cloudinary = require('cloudinary');
+const { populate } = require('../models/user');
 cloudinary.config({
     cloud_name: 'ved13',
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-
+router.get('/profile/:id', (req, res, next) => {
+    db.User.findById(req.params.id).populate('internshipsOffered').populate('applications').populate('resume').populate('bookmarks').populate('posts')
+        .exec((err, user) => {
+            if (err) {
+                return next(err);
+            }
+            return res.status(200).send(user)
+        });
+})
 // const formData = new FormData();
 // const imagefile = document.querySelector('#file');
 // formData.append("image", imagefile.files[0]);
