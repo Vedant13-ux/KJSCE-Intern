@@ -2,35 +2,34 @@ import React, { Component } from "react";
 import Navbar from "../containers/Navbar";
 import PageFooter from "../containers/PageFooter";
 import RecommInternship from "./RecommInternship"
-import "./temp.css";
+import { apiCall } from "../services/api"
 
 class InternshipDetail extends Component {
   constructor(props) {
     super(props);
     this.data = new URLSearchParams(this.props.location.search);
-    this.id = Number.parseInt(this.data.get("id"), 10);
-    //get data with id and assign to state
+    this.id = this.data.get("id");
     this.state = {
       faculty: {
         photo: "https://www.w3schools.com/w3css/img_avatar3.png",
-        fname: "phunsuk",
-        lname: "vangdo",
+        fname: "   ---    ",
+        lname: "   ---   ",
       },
-      title: "Frontend Stuff",
-      skillsRequired: ["react", "redux", "css", "javascript"],
-      duration: "2 months",
+      title: "  ---   ",
+      skillsRequired: ["    ", "     ", "    ", "      "],
+      duration: "  ---   ",
       applyBy: new Date(),
       posted_on: {
         type: Date,
         default: Date.now(),
       },
-      numberOpenings: 4,
-      otherRequirements: "should know english",
-      department: "IT",
-      perks: "certificate and stuff",
-      whoCanApply: "smart people",
-      description: "do react redux everyday",
-      type: "work from home",
+      numberOpenings: "   --   ",
+      otherRequirements: "   ---   ",
+      department: "    ---   ",
+      perks: "         ----------                 ",
+      whoCanApply: "    -----    ",
+      description: "        -------           ",
+      type: "    ----    ",
     };
     this.recommlist = [
       {
@@ -79,6 +78,23 @@ class InternshipDetail extends Component {
       },
     ]
   }
+  componentDidMount() {
+    apiCall('get', 'http://localhost:3001/api/internship/details/' + this.id, '')
+      .then(
+        (data) => {
+          console.log(data)
+          data["faculty"] = {
+            photo: "https://www.w3schools.com/w3css/img_avatar3.png",
+            fname: "phunsuk",
+            lname: "vangdo",
+          }
+          //this.state=data;
+          this.setState(data);
+        }
+      )
+  }
+
+
   render() {
     return (
       <div>
@@ -90,9 +106,6 @@ class InternshipDetail extends Component {
                 <div className="card">
                   <div className="card-body">
                     <h1>{this.state.title}</h1>
-                    <p>
-                      <i className="fa fa-home mr-1"></i> {this.state.type}
-                    </p>
                     <div class="provider">
                       <img
                         src={this.state.faculty.photo}
@@ -105,14 +118,20 @@ class InternshipDetail extends Component {
                     </div>
                     <br></br>
                     <div id="iconinfo" class="flex-container">
-                      <div class="flex-item-left">
+                      <div class="flex-item">
                         <h4>
                           <i class="fa fa-clock mr-1"></i>Duration
                 </h4><p>{this.state.duration}</p>
                       </div>
-                      <div class="flex-item-right"><h4>
+                      <div class="flex-item">
+                        <h4>
+                          <i className="fa fa-home mr-1"></i>Type
+                </h4><p> {this.state.type}</p>
+                      </div>
+
+                      <div class="flex-item"><h4>
                         <i class="fa fa-hourglass mr-2"></i>Apply by
-                </h4><p>{this.state.duration}</p></div>
+                </h4><p>Nov 17 {/*this.state.applyBy.toDateString().substring(4,10) */}</p></div>
                     </div><hr></hr>
                     <h3>About Internship</h3>
                     <p>{this.state.description}</p>

@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { Badge } from "react-bootstrap";
-import './temp.css';
 
 class InternshipList extends Component {
   constructor(props) {
