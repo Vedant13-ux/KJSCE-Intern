@@ -1,8 +1,9 @@
 import React from "react";
 import { MultiSelectComponent } from "@syncfusion/ej2-react-dropdowns";
 import { SampleBase } from "./../containers/SampleBase";
-
+import { apiCall } from "../services/api"
 var data = require("../services/skills.json");
+
 
 class Intershipform extends SampleBase {
   constructor(props) {
@@ -15,6 +16,7 @@ class Intershipform extends SampleBase {
       numberOpenings: "",
       otherRequirements: "",
       department: "",
+      description:"",
       perks: "",
       whoCanApply: "",
     };
@@ -39,6 +41,11 @@ class Intershipform extends SampleBase {
     });
     await this.setState({ skillsRequired: skillArray });
     console.log(this.state);
+    apiCall("post",'http://localhost:3001/api/internship/details',this.state).then(
+      data=> {console.log(data)
+        window.location='http://localhost:3000/internship?id='+data._id
+      }
+    )
   }
 
   render() {
@@ -49,6 +56,7 @@ class Intershipform extends SampleBase {
       numberOpenings,
       otherRequirements,
       department,
+      description,
       perks,
       whoCanApply,
     } = this.state;
@@ -65,6 +73,7 @@ class Intershipform extends SampleBase {
                 val={title}
                 onChange={this.handleChange}
                 type="text"
+                placeholder="eg. Frontend with React"
               ></input>
             </div>
           </div>
@@ -106,6 +115,7 @@ class Intershipform extends SampleBase {
                 required
                 name="duration"
                 val={duration}
+                placeholder="eg. 1"
                 onChange={this.handleChange}
               ></input>
             </div>
@@ -116,6 +126,7 @@ class Intershipform extends SampleBase {
                 min="1"
                 required
                 name="numberOpenings"
+                placeholder="eg. 2"
                 val={numberOpenings}
                 onChange={this.handleChange}
               ></input>
@@ -127,7 +138,7 @@ class Intershipform extends SampleBase {
         <MultiSelectComponent
           dataSource={this.sportsData}
           fields={this.fields}
-          placeholder="skills"
+          placeholder="eg. python,javascript"
           mode="Box"
         />
         <div className="ui form">
@@ -137,8 +148,21 @@ class Intershipform extends SampleBase {
               maxlength="200"
               rows="2"
               required
+              placeholder="eg. Only those candidates can apply who have relevant skills and interests and are available for duration of 3 months"
               name="whoCanApply"
               val={whoCanApply}
+              onChange={this.handleChange}
+            ></textarea>
+          </div>
+          <div class="field">
+            <label>About Internship</label>
+            <textarea
+              maxlength="200"
+              rows="2"
+              required
+              placeholder="eg. Do daily assigned task and fix issues in github"
+              name="description"
+              val={description}
               onChange={this.handleChange}
             ></textarea>
           </div>
@@ -148,6 +172,7 @@ class Intershipform extends SampleBase {
               maxlength="200"
               rows="2"
               required
+              placeholder="eg. Should have communication and leadership skills"
               name="otherRequirements"
               val={otherRequirements}
               onChange={this.handleChange}
@@ -160,6 +185,7 @@ class Intershipform extends SampleBase {
               rows="2"
               required
               name="perks"
+              placeholder="eg. Certificate,Letter of recommendation,Flexible work hours "
               val={perks}
               onChange={this.handleChange}
             ></textarea>
