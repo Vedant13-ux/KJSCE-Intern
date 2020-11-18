@@ -9,7 +9,8 @@ class InternshipDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      exists: false,
+      hidden: true,
+      exists: true,
       details: {
         faculty: {
           photo: "https://www.w3schools.com/w3css/img_avatar3.png",
@@ -81,21 +82,24 @@ class InternshipDetail extends Component {
     ]
     this.contentDisplay = this.contentDisplay.bind(this);
   }
-  componentDidMount() {
+
+  componentWillMount() {
     document.documentElement.scrollTop = '0';
-    apiCall('get', 'http://localhost:3001/api/internship/details/' + this.props.match.params.id, '')
+    return apiCall('get', 'http://localhost:3001/api/internship/details/' + this.props.match.params.id, '')
       .then(
         async (data) => {
           console.log(data)
-          if (Object.keys(data)) {
-            await this.setState({ details: data, exists: true });
+          if (Object.keys(data).length !== 0) {
+            await this.setState({ details: data });
             console.log(this.state);
+          } else {
+            await this.setState({ exists: false })
           }
         }
       )
   }
   contentDisplay(exists) {
-    if (exists === true) {
+    if (exists) {
       return (
         <div id="internshipdetail">
           <div class="container">
@@ -176,7 +180,7 @@ class InternshipDetail extends Component {
           </div>
         </div>
       )
-    } else {
+    } else if (exists === false) {
       return (
         <NotFoundSVG />
       )

@@ -53,7 +53,7 @@ router.get('/details/:id', (req, res, next) => {
     db.InternshipDetails.findById(req.params.id).populate('faculty')
         .exec((err, internship) => {
             if (!internship) {
-                res.status(404).send({});
+                return res.status(404).send({});
             }
             if (err) {
                 return next(err);
