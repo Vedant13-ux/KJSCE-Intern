@@ -14,7 +14,7 @@ const Main = props => {
             <Switch>
                 <Route exact path="/" render={props => <Landing {...props} onAuth={authUser} />} />
                 <Route exact path="/home" render={props => <Homepage {...props} />} />
-                <Route exact path="/internship" render={props => <IntershipDetail {...props} />} />
+                <Route exact path="/internship/:id" render={props => <IntershipDetail {...props} />} />
                 <Route exact path="/community" render={props => <Community {...props} />} />
             </Switch>
         </div>

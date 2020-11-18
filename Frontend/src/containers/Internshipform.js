@@ -1,7 +1,8 @@
 import React from "react";
 import { MultiSelectComponent } from "@syncfusion/ej2-react-dropdowns";
 import { SampleBase } from "./../containers/SampleBase";
-import { apiCall } from "../services/api"
+import { apiCall } from "../services/api";
+import { Redirect } from 'react-router-dom';
 var data = require("../services/skills.json");
 
 
@@ -16,7 +17,7 @@ class Intershipform extends SampleBase {
       numberOpenings: "",
       otherRequirements: "",
       department: "",
-      description:"",
+      description: "",
       perks: "",
       whoCanApply: "",
     };
@@ -41,9 +42,10 @@ class Intershipform extends SampleBase {
     });
     await this.setState({ skillsRequired: skillArray });
     console.log(this.state);
-    apiCall("post",'http://localhost:3001/api/internship/details',this.state).then(
-      data=> {console.log(data)
-        window.location='http://localhost:3000/internship?id='+data._id
+    apiCall("post", 'http://localhost:3001/api/internship/details', this.state).then(
+      data => {
+        console.log(data);
+        < Redirect to={'http://localhost:3000/internship?id=' + data._id} />
       }
     )
   }

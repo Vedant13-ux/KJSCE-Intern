@@ -586,15 +586,15 @@ class Controls extends React.Component {
                     </div>
 
                     <div className="controls-title">App info</div>
-                    <div className="row">
+                    <div className="rowControl">
                         <span>Total posts:</span>
                         <span>{this.props.totalPosts}</span>
                     </div>
-                    <div className="row">
+                    <div className="rowControl">
                         <span>On screen:</span>
                         <span>{this.props.postsOnScreen}</span>
                     </div>
-                    <div className="row">
+                    <div className="rowControl">
                         <span>Max posts:</span>
                         <span>50</span>
                     </div>

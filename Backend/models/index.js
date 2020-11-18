@@ -3,8 +3,7 @@ mongoose.set('debug', true);
 mongoose.Promise = Promise;
 mongoose
     .connect(
-        //'mongodb://localhost:27017/kjintern' ||
-        'mongodb+srv://vedant:1234@cluster0.blpd9.mongodb.net/linkedin?retryWrites=true&w=majority',
+        process.env.MONGODB_URI,
         {
             useNewUrlParser: true,
             useUnifiedTopology: true,

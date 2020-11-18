@@ -51,10 +51,12 @@ router.post('/details', (req, res, next) => {
 // Get Internship Details
 router.get('/details/:id', (req, res, next) => {
     db.InternshipDetails.findById(req.params.id).populate('faculty')
-        .then((internship) => {
-            res.status(200).send(internship)
+        .exec((err, internship) => {
+            if (err) {
+                return next(err);
+            }
+            return res.status(200).send(internship)
         })
-        .catch(err => next(err));
 });
 
 router.put('/details/:id', async (req, res, next) => {

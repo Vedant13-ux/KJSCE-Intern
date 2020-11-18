@@ -16,11 +16,6 @@ body{
 
 /* Color Pallete
 
-style 1--
-#08ffc8
-#fff7f7
-#dadada
-#204969
 
 style 2--
 #ffca3d
@@ -63,6 +58,18 @@ style 2--
   box-shadow: none !important;
 }
 
+/* ************Not Found SVG *************/
+#notFound {
+   display:flex;
+   justify-content: center;
+   padding-top:100px;
+}
+#notFound svg{
+   max-width:1100px;
+   width:95%;
+   max-height:600px;
+   height:90%;
+}
 /* *************Landing Page***************/
 .sections{
   display: flex;
@@ -180,9 +187,8 @@ style 2--
   max-width: 1400px;
   padding: 0 20px;
   margin: 0 auto;
-  align-items: center !important;
-  min-height: 700px;
   animation: fadeIn;
+  min-height: 800px;
 }
 
 #top-bar.btn-circle.btn-lg {
@@ -383,8 +389,6 @@ body{
   padding-left: 7%;
   margin-top: 53px;
   min-height: 400px;
-  display: flex;
-  align-items: stretch;
 }
 #internshipdetail .card{
   border:1px solid rgba(0,0,0,.125);
@@ -405,6 +409,8 @@ body{
 
 #internshipdetail .provider{
   margin-bottom: 10px;
+  display: flex;
+  align-items: center;
 }
 #internshipdetail .author{
   margin-left: 10px;
@@ -421,13 +427,37 @@ body{
   margin: 5px;
 }
 #internshipdetail .recomm{
-  padding:20px;
+  padding:30px;
 }
 #internshipdetail .closedpack p{
   margin:0px;
 }
-#internshipdetail .recommendations{
-  padding: 10px;
+#internshipdetail .recomm{
+   min-height: 100px;
+  max-height: 600px;
+}
+#internshipdetail .recommendations .template{
+   margin: 10px;
+}
+#internshipdetail .recommendations .template .top{
+   display: flex !important;
+   align-items: center !important;
+   padding: 0 !important;
+}
+#internshipdetail .recommendations .template .top .author{
+   font-size: 16px;
+   padding: 0px;
+   margin:0px;
+}
+#internshipdetail .recommendations .template .title{
+   margin: 0px;
+   margin-bottom: 4px;
+   padding: 2px 6px;
+   font-size: 14px;
+}
+#internshipdetail .recommendations .template .closedpack{
+   font-size: 14px;
+   padding-bottom: 5px;
 }
 #internshipdetail .recommendations .scroll{
   overflow-y: scroll
@@ -781,7 +811,7 @@ body {
    padding: 10px 0;
 }
 
-.row {
+.rowControl {
    display: flex;
    justify-content: space-between;
    padding: 10px;
@@ -806,7 +836,7 @@ body {
 .toggle {
    width: 30px;
    height: 10px;
-   background: #d1d1d1;
+   background: #FFCA3D;
    border-radius: 50px;
    position: relative;
 }
@@ -824,7 +854,7 @@ body {
 
 .toggle-wrap input:checked~label>.toggle .round {
    left: 45%;
-   background: #7964b1;
+   background: #020c53;
 }
 
 .show-new-button {

@@ -13,9 +13,9 @@ class InternshipList extends Component {
     return apply.toDateString();
   }
   render() {
-    const id = `/internship/?id=${this.props.key}`
+    const id = '/internship/' + this.props._id;
     return (
-      <div class="col-sm-6 col-md-4 col-lg-3">
+      <div class="col-md-4 col-lg-3">
         <div className="card">
           <div className="template">
             <div className="top">
