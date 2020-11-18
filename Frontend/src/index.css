@@ -462,7 +462,15 @@ body{
 #internshipdetail .recommendations .scroll{
   overflow-y: scroll
 }
-
+.loading-anime{
+   min-height: 500px;
+   text-align: center;
+   margin:auto;
+   padding-top: 15%;
+}
+.loading-wheel{
+   vertical-align: center;
+}
 /* *********End Internship Details ************ */
 
 /* *****************COmmunity ******************** */

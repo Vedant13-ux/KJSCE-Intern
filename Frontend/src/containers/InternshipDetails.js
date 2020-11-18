@@ -4,12 +4,14 @@ import PageFooter from "../containers/PageFooter";
 import RecommInternship from "./RecommInternship"
 import { apiCall } from "../services/api"
 import NotFoundSVG from "../images/NotFound.js"
+import Loading from "../images/Loading"
 
 class InternshipDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
       exists: false,
+      start:true,
       details: {
         faculty: {
           photo: "https://www.w3schools.com/w3css/img_avatar3.png",
@@ -88,13 +90,29 @@ class InternshipDetail extends Component {
         async (data) => {
           console.log(data)
           if (Object.keys(data)) {
-            await this.setState({ details: data, exists: true });
+            await this.setState({ details: data, exists: true,start:false });
             console.log(this.state);
+            return
           }
+          
+        }
+        
+      ).catch(
+        (e)=>{
+          this.setState({exist:false,start:false})
         }
       )
+      
   }
-  contentDisplay(exists) {
+  contentDisplay(exists,start) {
+    console.log("this tbh",exists,start)
+    if (start==true){
+      return (
+        <div className="loading-anime">
+        <Loading class="loading-wheel"/>
+        </div>
+      )
+    }
     if (exists === true) {
       return (
         <div id="internshipdetail">
@@ -179,6 +197,7 @@ class InternshipDetail extends Component {
     } else {
       return (
         <NotFoundSVG />
+        
       )
     }
   }
@@ -186,12 +205,12 @@ class InternshipDetail extends Component {
 
 
   render() {
-    const { exists } = this.state;
+    const { exists,start } = this.state;
     console.log(exists);
     return (
       <div>
         <Navbar></Navbar>
-        {this.contentDisplay(exists)}
+        {this.contentDisplay(exists,start)}
         <PageFooter />
       </div>
     );
