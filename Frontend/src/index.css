@@ -858,6 +858,7 @@ body {
 }
 
 .show-new-button {
+   box-sizing: border-box;
    height: 50px;
    line-height: 50px;
    text-align: center;
@@ -866,7 +867,9 @@ body {
    animation-duration: 0.5s;
    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
    border-radius: 2px;
-   background-image: linear-gradient(-225deg, #A8BFFF 0%, #884D80 100%);
+   background: rgb(255,202,61);
+   background: linear-gradient(90deg, rgba(255,202,61,1) 0%, rgba(2,17,83,1) 82%, rgba(2,12,83,0.9727241238292192) 95%);
+   border-radius: 30px;
 }
 
 .show-new-button a {
