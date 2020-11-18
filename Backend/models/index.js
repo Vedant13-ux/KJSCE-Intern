@@ -4,6 +4,7 @@ mongoose.Promise = Promise;
 mongoose
     .connect(
         process.env.MONGODB_URI,
+        // 'mongodb+srv://vedant:1234@cluster0.blpd9.mongodb.net/linkedin?retryWrites=true&w=majority',
         {
             useNewUrlParser: true,
             useUnifiedTopology: true,
