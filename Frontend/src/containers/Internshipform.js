@@ -1,11 +1,11 @@
 import React from "react";
 import { Multiselect } from 'multiselect-react-dropdown';
-import { SampleBase } from "./../containers/SampleBase";
+//import { SampleBase } from "./../containers/SampleBase";
 import { apiCall } from "../services/api";
 import { Redirect } from 'react-router-dom';
 
 
-class Intershipform extends SampleBase {
+class Intershipform extends Component {
   constructor(props) {
     super(props);
     this.state = {
