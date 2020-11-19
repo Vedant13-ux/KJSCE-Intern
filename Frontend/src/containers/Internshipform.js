@@ -1,13 +1,13 @@
-import React from "react";
+import React,{ Component } from "react";
 // import { MultiSelectComponent } from "@syncfusion/ej2-react-dropdowns";
 import { Multiselect } from 'multiselect-react-dropdown';
-import { SampleBase } from "./../containers/SampleBase";
+//import { SampleBase } from "./../containers/SampleBase";
 import { apiCall } from "../services/api";
 import { Redirect } from 'react-router-dom';
 import skills from '../services/skills.json'
 
 
-class Intershipform extends SampleBase {
+class Intershipform extends Component {
   constructor(props) {
     super(props);
     this.state = {
