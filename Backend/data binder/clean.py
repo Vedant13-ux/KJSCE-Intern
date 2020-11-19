@@ -1,6 +1,6 @@
 import json
 
-with open('temp.txt','r') as f:
+with open('all.txt','r',encoding='utf-8') as f:
     ok=f.readlines()
 
 # with open('skills.json','w') as f:

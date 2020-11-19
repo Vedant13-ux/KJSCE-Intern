@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models');
+const skillJSON = require('../data binder/skills.json');
 
 // Search Internships
 
@@ -47,6 +48,18 @@ router.post('/details', (req, res, next) => {
         }).catch((err) => {
             next(err);
         });
+});
+// Skill Suggestions
+router.get('/skillSuggestion/:skill', (req, res, next) => {
+    let query = req.params.skill.toLowerCase().split('');
+    if (query.length > 5) {
+        query.splice(5);
+    }
+    top = skillJSON;
+    query.forEach(char => {
+        top = top[char];
+    });
+    res.send(top["top"]);
 });
 // Get Internship Details
 router.get('/details/:id', (req, res, next) => {

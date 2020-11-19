@@ -30,16 +30,16 @@ class Navbar extends Component {
                                     <i class="fas fa-users mr-1"></i>Community</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/link"><i class="fas fa-envelope mr-1"></i>Messaging</Link>
+                                <Link className="nav-link" to="/messaging"><i class="fas fa-envelope mr-1"></i>Messaging</Link>
                             </li>
                         </ul>
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item">
-                                <Link className="nav-link" to="/signup">
+                                <Link className="nav-link" to="/#signup">
                                     <i class="fas fa-user-plus mr-1"></i>Signup</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/signin"><i class="fas fa-sign-in-alt mr-1"></i>Signin</Link>
+                                <Link className="nav-link" to="/#"><i class="fas fa-sign-in-alt mr-1"></i>Signin</Link>
                             </li>
                         </ul>
 
