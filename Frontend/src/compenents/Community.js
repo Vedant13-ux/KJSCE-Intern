@@ -1,5 +1,7 @@
 import React from 'react'
 import Navbar from '../containers/Navbar'
+import PageFooter from '../containers/PageFooter'
+
 class Application extends React.Component {
     constructor(props) {
         super(props);
@@ -27,6 +29,7 @@ class Application extends React.Component {
                 <Navbar isMobile={this.state.isMobile} />
                 <Feed isMobile={this.state.isMobile} />
                 <ScrollTopButton />
+                <PageFooter/>
             </div>
         )
     }
@@ -89,7 +92,7 @@ class ScrollTopButton extends React.Component {
         else this.styles = { position: 'fixed', top: '4.4rem', left: `${document.querySelector('.feed-wrapper').getBoundingClientRect().left - 60}px`, display: `${this.state.visible ? 'block' : 'none'}` };
 
         return (
-            <div id="scrollTopButton" style={this.styles}><a href="#" onClick={this.scrollToTop}><i className="far fa-caret-square-up"></i></a></div>
+            <div id="scrollTopButton" style={this.styles}><div href="#" onClick={this.scrollToTop}><i className="far fa-caret-square-up"></i></div></div>
         );
     }
 }
@@ -109,10 +112,8 @@ class Feed extends React.Component {
             postsOnScreen: 0,
             totalPosts: 0
         }
-        this.changeSettings = this.changeSettings.bind(this);
         this.changePostsCount = this.changePostsCount.bind(this);
         this.manualUpdateWall = this.manualUpdateWall.bind(this);
-        this.fixedScrollHandler = this.fixedScrollHandler.bind(this);
     }
 
     componentDidMount() {
@@ -122,34 +123,6 @@ class Feed extends React.Component {
         }
     }
 
-    changeSettings(e) {
-        let id = e.target.id;
-        if (id === "autoUpdate") this.setState({ autoUpdate: e.target.checked });
-
-        if (id === "fixedScroll") {
-            if (e.target.checked) {
-                document.addEventListener('scroll', this.fixedScrollHandler);
-            } else {
-                document.removeEventListener('scroll', this.fixedScrollHandler);
-            }
-            this.setState({ fixedScroll: e.target.checked });
-            this.setState({ fixedScrollTrigger: e.target.checked });
-        }
-
-        if (id === "showOnlyLiked") this.setState({ showOnlyLiked: e.target.checked });
-
-        if (id === "clearOld") this.setState({ clearOld: e.target.checked });
-
-        if (id === "stopUpload") this.setState({ stopUpload: e.target.checked });
-    }
-
-    fixedScrollHandler(e) {
-        if (window.pageYOffset > document.documentElement.clientHeight / 2) {
-            this.setState({ fixedScrollTrigger: true });
-        } else {
-            this.setState({ fixedScrollTrigger: false });
-        }
-    }
 
     manualUpdateWall() {
         this.setState({ autoUpdate: true });
@@ -166,7 +139,11 @@ class Feed extends React.Component {
         return <div id="feed">
             <div className="content-wrapper feed-wrapper">
                 <PostWall autoUpdate={this.state.autoUpdate} changeCount={this.changePostsCount} manualUpdate={this.manualUpdateWall} fixedScroll={this.state.fixedScrollTrigger} showOnlyLiked={this.state.showOnlyLiked} clearOld={this.state.clearOld} stopUpload={this.state.stopUpload} />
-                <Controls change={this.changeSettings} postsOnScreen={this.state.postsOnScreen} totalPosts={this.state.totalPosts} />
+                <div className="right-side">
+                <div className="controls">
+
+                </div>
+            </div>
             </div>
         </div>
     }
@@ -203,7 +180,6 @@ class PostObj {
         }, Math.round(430 - 0.5 + Math.random() * (1000 - 430 + 0.5)));
 
         //imported methods
-        this.deleteHandler = this.deleteHandler.bind(this);
         this.likeHandler = this.likeHandler.bind(this);
         this.addCommentHandler = this.addCommentHandler.bind(this);
     }
@@ -226,15 +202,6 @@ class PostObj {
         this.updateParentState();
     }
 
-    deleteHandler(e) {
-        e.preventDefault();
-
-        e.target.closest('.post').className = 'deleted';
-        //clear interval for better performance
-        clearInterval(this.timerId);
-        delete this.postList[this.id];
-        this.updateParentState();
-    }
 
     addCommentHandler(e) {
         e.preventDefault();
@@ -276,52 +243,6 @@ class PostWall extends React.Component {
 
     updateState() {
         this.wallUpdate();
-    }
-
-    addRandomPost() {
-        if (this.props.stopUpload) return;
-        new Promise(resolve => {
-            let req = new XMLHttpRequest();
-            req.onload = function () {
-                resolve(this.responseURL);
-            };
-            req.open("get", "https://picsum.photos/1024/768/?random", true);
-            req.send();
-        }).then(url => {
-            let randomImages = { postImage: url };
-            return new Promise(resolve => {
-                let req = new XMLHttpRequest();
-                req.onload = function () {
-                    randomImages.avatarImage = JSON.parse(this.responseText).results[0].picture.medium;
-                    resolve(randomImages);
-                };
-                req.open("get", "https://randomuser.me/api/?inc=picture", true);
-                req.send();
-            });
-        }).then(randomImages => {
-            let postObject = new PostObj({
-                list: this.localList,
-                update: this.updateState,
-                id: this.idCounter,
-                avatar: randomImages.avatarImage,
-                nameLength: Math.round(60 - 0.5 + Math.random() * (100 - 60 + 0.5)),
-                img: randomImages.postImage
-            });
-
-            if (this.props.clearOld) {
-                if (Object.keys(this.localList).length >= this.maxPostCount) {
-                    delete this.localList[Math.min(...Object.keys(this.localList))];
-                }
-            }
-
-            if (Object.keys(this.localList).length < this.maxPostCount) {
-                this.localList[this.idCounter] = postObject;
-                this.idCounter++;
-            }
-
-            this.wallUpdate();
-
-        });
     }
 
     getSnapshotBeforeUpdate(prevProps, prevState) {
@@ -384,22 +305,6 @@ class PostWall extends React.Component {
             return likedPosts;
         }
 
-        if (!this.props.autoUpdate) {
-            let currentElements = [];
-            let currentNodes = document.querySelectorAll('.post');
-
-            currentNodes.forEach((val) => {
-                if (this.getPostById(val.id)) currentElements.push(this.getPostById(val.id));
-            });
-
-            let newPostsCount = Object.keys(this.state.postList).length - currentElements.length;
-            if (newPostsCount > 0) {
-                currentElements.unshift(<ShowNewPosts key={-1} count={newPostsCount.toString()} eventHandler={this.manualUpdate} />);
-            }
-            return currentElements;
-        }
-
-        //default render
         let elem = [];
         for (let key in this.state.postList) {
             elem.unshift(this.getPostById(key));
@@ -425,9 +330,6 @@ class PostWall extends React.Component {
             this.idCounter++;
         }
 
-        this.timerId = setInterval(() => {
-            this.addRandomPost();
-        }, 4000);
     }
     componentWillUnmount() {
         clearInterval(this.timerId);
@@ -448,92 +350,6 @@ class PostWall extends React.Component {
 
 }
 
-class ShowNewPosts extends React.Component {
-    render() {
-        return (
-            <div className="message">
-                <div className="show-new-button">
-                    <a href="#" onClick={this.props.eventHandler}>Show <span style={{ fontWeight: "bold" }}>{this.props.count}</span> new posts</a>
-                </div>
-            </div>
-        );
-    }
-}
-
-class Controls extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            count: 0
-        }
-    }
-
-    render() {
-        return (
-            <div className="right-side">
-                <div className="controls" onChange={this.props.change}>
-                    <div className="controls-title">Feed controls</div>
-
-                    <div className="toggle-wrap" title="Automatically append new posts in your feed">
-                        <input id="autoUpdate" type="checkbox" defaultChecked></input>
-                        <label htmlFor="autoUpdate">
-                            Autoupdate
-                   <div className="toggle"><div className="round"></div></div>
-                        </label>
-                    </div>
-
-                    <div className="toggle-wrap" title="Page doesn't jump when you scroll down (more than half screen)">
-                        <input id="fixedScroll" type="checkbox" defaultChecked></input>
-                        <label htmlFor="fixedScroll">
-                            Fixed scroll
-                   <div className="toggle"><div className="round"></div></div>
-                        </label>
-                    </div>
-
-                    <div className="toggle-wrap" title="Show only posts that you liked">
-                        <input id="showOnlyLiked" type="checkbox"></input>
-                        <label htmlFor="showOnlyLiked">
-                            Show only liked
-                   <div className="toggle"><div className="round"></div></div>
-                        </label>
-                    </div>
-
-                    <div className="toggle-wrap" title="If max posts count exceeded, oldest automatically replaced">
-                        <input id="clearOld" type="checkbox" defaultChecked></input>
-                        <label htmlFor="clearOld">
-                            Clear old
-                   <div className="toggle"><div className="round"></div></div>
-                        </label>
-                    </div>
-
-                    <div className="toggle-wrap" title="Dont upload new posts">
-                        <input id="stopUpload" type="checkbox"></input>
-                        <label htmlFor="stopUpload">
-                            Stop upload
-                   <div className="toggle"><div className="round"></div></div>
-                        </label>
-                    </div>
-
-                    <div className="controls-title">App info</div>
-                    <div className="rowControl">
-                        <span>Total posts:</span>
-                        <span>{this.props.totalPosts}</span>
-                    </div>
-                    <div className="rowControl">
-                        <span>On screen:</span>
-                        <span>{this.props.postsOnScreen}</span>
-                    </div>
-                    <div className="rowControl">
-                        <span>Max posts:</span>
-                        <span>50</span>
-                    </div>
-
-                </div>
-
-            </div>
-        );
-    }
-}
 
 class Post extends React.Component {
     constructor(props) {
@@ -563,9 +379,10 @@ class Post extends React.Component {
         return (
             <div className="post" id={this.props.id}>
                 <div className="post-wrapper">
-                    <div className="delete-button"><a href="#" title="Delete this from history" onClick={this.props.args.deleteHandler}><i className="far fa-window-close"></i></a></div>
                     <UserInfo userAvatar={this.props.args.avatar} date={this.props.args.date} username={this.props.args.nameLength} />
-                    <PostContent content={this.props.args.img} />
+                    <div className="post-content">
+                <img src={this.props.args.img} alt=""></img>
+            </div>
                     <PostInfo likes={this.props.args.likes} views={this.props.args.views} commentsCount={this.props.args.commentsCount} likeHandler={this.props.args.likeHandler} isLiked={this.props.args.isLiked} showComments={this.showComments} />
                     <Comments comments={this.props.args.comments} isExpanded={this.state.commentsExpanded} hideComment={this.hideComment} />
                     <CommentInput addCommentHandler={this.addCommentDecorator} />
@@ -601,7 +418,7 @@ class Comments extends React.Component {
         });
 
         let hideButton = <div className="hide-comments-button">
-            <a href="#" onClick={this.props.hideComment}>Hide comments</a>
+            <div href="#" onClick={this.props.hideComment}>Hide comments</div>
         </div>
 
         return (
@@ -627,9 +444,7 @@ class UserInfo extends React.Component {
 
                 <div className="user-data">
                     <div className="username">
-                        <svg width={this.props.username.toString()} height="10">
-                            <rect width="100%" height="100%" style={{ fill: "#dbdbdb" }} />
-                        </svg>
+                        {this.props.username}
                     </div>
 
                     <div className="post-date">
@@ -648,20 +463,21 @@ class PostInfo extends React.Component {
         return (
             <div className="post-info">
                 <div className="likes" onClick={this.props.likeHandler}>
-                    <a href="#">
+                    <span>
                         <div className="icon"><i className={`${likeIconStyle} fa-heart`}></i></div>
                         <div className="count">{this.props.likes}</div>
-                    </a>
+                        </span>
                 </div>
                 <div className="comments" onClick={this.props.showComments}>
-                    <a href="#">
+                    <span>
                         <div className="icon"><i className="far fa-comment-alt"></i></div>
                         <div className="count">{this.props.commentsCount}</div>
-                    </a>
+                        </span>
                 </div>
                 <div className="views">
-                    <div className="icon"><i className="fas fa-eye"></i></div>
-                    <div className="count">{this.props.views}</div>
+                    <span>
+                    <div className="icon"><i className="fas fa-share"></i></div>
+                    </span>
                 </div>
             </div>
         );
@@ -683,16 +499,5 @@ class CommentInput extends React.Component {
         );
     }
 }
-
-class PostContent extends React.Component {
-    render() {
-        return (
-            <div className="post-content">
-                <img src={this.props.content} alt=""></img>
-            </div>
-        );
-    }
-}
-
 
 export default Application;
