@@ -11,7 +11,7 @@ class InternshipDetail extends Component {
     super(props);
     this.state = {
       exists: false,
-      start:true,
+      start: true,
       details: {
         faculty: {
           photo: "https://www.w3schools.com/w3css/img_avatar3.png",
@@ -91,28 +91,28 @@ class InternshipDetail extends Component {
         async (data) => {
           console.log(data)
           if (Object.keys(data).length !== 0) {
-            await this.setState({ details: data , exists: true,start:false});
+            await this.setState({ details: data, exists: true, start: false });
             console.log(this.state);
             return
           } else {
-            await this.setState({ exists: false,start:false })
+            await this.setState({ exists: false, start: false })
           }
-          
+
         }
-        
+
       ).catch(
-        (e)=>{
-          this.setState({exist:false,start:false})
+        (e) => {
+          this.setState({ exist: false, start: false })
         }
       )
-      
+
   }
-  contentDisplay(exists,start) {
-    console.log("this tbh",exists,start)
-    if (start==true){
+  contentDisplay(exists, start) {
+    console.log("this tbh", exists, start)
+    if (start === true) {
       return (
         <div className="loading-anime">
-        <Loading class="loading-wheel"/>
+          <Loading class="loading-wheel" />
         </div>
       )
     }
@@ -173,7 +173,7 @@ class InternshipDetail extends Component {
                     <h3> Number of Opening</h3>
                     <p>{this.state.details.numberOpenings}</p>
                     <div className="applynow">
-                      <button type="button" class="btn btn-lg btn-primary">
+                      <button type="button" class="btn btn-lg btn-default">
                         Apply Now
                 </button>
                     </div>
@@ -200,7 +200,7 @@ class InternshipDetail extends Component {
     } else if (exists === false) {
       return (
         <NotFoundSVG />
-        
+
       )
     }
   }
@@ -208,12 +208,12 @@ class InternshipDetail extends Component {
 
 
   render() {
-    const { exists,start } = this.state;
+    const { exists, start } = this.state;
     console.log(exists);
     return (
       <div>
         <Navbar></Navbar>
-        {this.contentDisplay(exists,start)}
+        {this.contentDisplay(exists, start)}
         <PageFooter />
       </div>
     );

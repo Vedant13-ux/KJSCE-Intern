@@ -73,6 +73,8 @@ style 2--
 /* *************Landing Page***************/
 .sections{
   display: flex;
+  width: 100%;
+  min-height: 100%;
 }
 .sections .leftSection{
   width: 50%;
@@ -461,6 +463,13 @@ body{
 }
 #internshipdetail .recommendations .scroll{
   overflow-y: scroll
+}
+#internshipdetail .applynow .btn{
+   background-color: #FFCA3D;
+   border: 2px solid #020C53;
+}
+#internshipdetail .applynow .btn:hover{
+   background-color: #ffcb3dad;
 }
 .loading-anime{
    min-height: 500px;
