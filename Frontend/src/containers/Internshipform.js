@@ -1,9 +1,10 @@
 import React from "react";
-import { MultiSelectComponent } from "@syncfusion/ej2-react-dropdowns";
+// import { MultiSelectComponent } from "@syncfusion/ej2-react-dropdowns";
+import { Multiselect } from 'multiselect-react-dropdown';
 import { SampleBase } from "./../containers/SampleBase";
 import { apiCall } from "../services/api";
 import { Redirect } from 'react-router-dom';
-var data = require("../services/skills.json");
+import skills from '../services/skills.json'
 
 
 class Intershipform extends SampleBase {
@@ -20,17 +21,33 @@ class Intershipform extends SampleBase {
       description: "",
       perks: "",
       whoCanApply: "",
+      skillData: [{ "text": 'Srigar', "value": 1 }, { "text": 'Sam', "value": 2 }],
+      options: []
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.temp = "data";
-    this.sportsData = data[this.temp];
-    this.fields = { text: "text", value: "value" };
-    //console.log(this.sportsData);
+    this.handleSkills = this.handleSkills.bind(this);
+    // this.fields = { text: "text", value: "value" };
+    this.data = skills["data"];
+
+
   }
 
   handleChange(e) {
     return this.setState({ [e.target.name]: e.target.value });
+  }
+  handleSkills() {
+    const skillInput = document.querySelector('.searchBox');
+    var query = skillInput.value;
+    console.log(query);
+    apiCall('get', 'http://localhost:3001/api/internship/skillSuggestion/' + query, '')
+      .then(data => {
+        console.log(data)
+        this.setState({ skillData: data });
+      })
+      .catch(err => console.log(err))
+    console.log('Hello');
+
   }
   async handleSubmit(e) {
     e.preventDefault();
@@ -49,6 +66,8 @@ class Intershipform extends SampleBase {
       }
     )
   }
+
+
 
   render() {
     const {
@@ -137,12 +156,22 @@ class Intershipform extends SampleBase {
         </div>
 
         <label className="skillsRequired">Skills Required</label>
-        <MultiSelectComponent
-          dataSource={this.sportsData}
+        {/* <MultiSelectComponent
+          dataSource={this.data}
           fields={this.fields}
           placeholder="eg. python,javascript"
           mode="Box"
+          change={this.handleSkills}
+        /> */}
+        <Multiselect
+          options={this.state.skillData} // Options to display in the dropdown
+          selectedValues={this.state.skillsRequired} // Preselected value to persist in dropdown
+          // onSelect={this.onSelect} // Function will trigger on select event
+          // onRemove={this.onRemove} // Function will trigger on remove event
+          displayValue="text" // Property name to display in the dropdown options
+          onSearch={this.handleSkills}
         />
+
         <div className="ui form">
           <div class="field">
             <label>Who can Apply</label>

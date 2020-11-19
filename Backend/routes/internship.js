@@ -59,7 +59,16 @@ router.get('/skillSuggestion/:skill', (req, res, next) => {
     query.forEach(char => {
         top = top[char];
     });
-    res.send(top["top"]);
+    var top10 = top["top"];
+    var skillObj = {};
+    var skillArray = [];
+    top10.forEach(skill => {
+        skillObj["text"] = skill;
+        // skillObj["value"] = skill;
+        skillArray.push(skillObj);
+        skillObj = {};
+    });
+    res.send(skillArray);
 });
 // Get Internship Details
 router.get('/details/:id', (req, res, next) => {
