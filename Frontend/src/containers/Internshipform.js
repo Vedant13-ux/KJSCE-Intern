@@ -1,8 +1,6 @@
-import React from "react";
+import React, { Component } from "react";
 import { Multiselect } from 'multiselect-react-dropdown';
-//import { SampleBase } from "./../containers/SampleBase";
 import { apiCall } from "../services/api";
-import { Redirect } from 'react-router-dom';
 
 
 class Intershipform extends Component {
@@ -44,7 +42,6 @@ class Intershipform extends Component {
         this.setState({ skillData: data });
       })
       .catch(err => console.log(err))
-    console.log('Hello');
 
   }
   async handleSubmit(e) {
