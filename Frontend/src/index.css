@@ -514,7 +514,7 @@ body {
    font-size: 40px;
 }
 
-#scrollTopButton a {
+#scrollTopButton div {
    display: block;
    line-height: inherit;
    text-decoration: none;
@@ -582,7 +582,8 @@ body {
 }
 
 .controls {
-   position: fixed;
+   position: sticky;
+   top:60px;
    width: 200px;
    height: 405px;
    padding: 10px 20px;
@@ -714,7 +715,7 @@ body {
    margin-right: 10px;
 }
 
-.post-info a {
+.post-info span {
    display: flex;
    width: 140px;
    justify-content: center;
@@ -723,11 +724,11 @@ body {
    padding: 5px 0;
 }
 
-.post-info a .icon {
+.post-info span .icon {
    margin-right: 10px;
 }
 
-.post-info a:hover {
+.post-info span:hover {
    background: rgba(182, 167, 222, 0.4);
 }
 
@@ -740,7 +741,7 @@ body {
    border: 1px solid #e7e7e7;
 }
 
-.hide-comments-button a {
+.hide-comments-button div {
    display: block;
    text-decoration: none;
    color: black;

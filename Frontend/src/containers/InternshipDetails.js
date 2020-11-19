@@ -107,9 +107,9 @@ class InternshipDetail extends Component {
       )
 
   }
-  contentDisplay(exists, start) {
-    console.log("this tbh", exists, start)
-    if (start === true) {
+  contentDisplay(exists,start) {
+    console.log("this tbh",exists,start)
+    if (start){
       return (
         <div className="loading-anime">
           <Loading class="loading-wheel" />
