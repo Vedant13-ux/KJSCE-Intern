@@ -52,6 +52,9 @@ router.post('/details', (req, res, next) => {
 // Skill Suggestions
 router.get('/skillSuggestion/:skill', (req, res, next) => {
     let query = req.params.skill.toLowerCase().split('');
+    if (query.length > 5) {
+        query.splice(5);
+    }
     top = skillJSON;
     query.forEach(char => {
         top = top[char];
