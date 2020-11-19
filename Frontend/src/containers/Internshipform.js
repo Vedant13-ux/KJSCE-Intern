@@ -17,9 +17,10 @@ class Intershipform extends Component {
       description: "",
       perks: "",
       whoCanApply: "",
-      faculty: "5fb247e8d6a6e304d0eeb65d"
+      faculty: "5fb247e8d6a6e304d0eeb65d",
+      skillData: [{ "text": 'Python' }, { "text": 'Node.Js' }, { "text": 'Django' }, { "text": 'Javascript' }, { "text": 'C++' }, { "text": "React Native" }],
+
     };
-    this.skillData = [{ "text": 'Python' }, { "text": 'Node.Js' }, { "text": 'Django' }, { "text": 'Javascript' }, { "text": 'C++' }, { "text": "React Native" }];
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,7 +40,7 @@ class Intershipform extends Component {
     apiCall('get', 'http://localhost:3001/api/internship/skillSuggestion/' + query, '')
       .then(data => {
         console.log(data)
-        this.setState({ skillData: data });
+        this.setState({ skillData: data })
       })
       .catch(err => console.log(err))
 
@@ -151,7 +152,7 @@ class Intershipform extends Component {
 
         <label className="skillsRequired">Skills Required</label>
         <Multiselect
-          options={this.skillData} // Options to display in the dropdown
+          options={this.state.skillData} // Options to display in the dropdown
           selectedValues={this.state.skillsRequired} // Preselected value to persist in dropdown
           // onSelect={this.onSelect} // Function will trigger on select event
           // onRemove={this.onRemove} // Function will trigger on remove event
