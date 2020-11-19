@@ -1,10 +1,8 @@
 import React from "react";
-// import { MultiSelectComponent } from "@syncfusion/ej2-react-dropdowns";
 import { Multiselect } from 'multiselect-react-dropdown';
 import { SampleBase } from "./../containers/SampleBase";
 import { apiCall } from "../services/api";
 import { Redirect } from 'react-router-dom';
-import skills from '../services/skills.json'
 
 
 class Intershipform extends SampleBase {
@@ -21,14 +19,14 @@ class Intershipform extends SampleBase {
       description: "",
       perks: "",
       whoCanApply: "",
-      skillData: [{ "text": 'Srigar', "value": 1 }, { "text": 'Sam', "value": 2 }],
-      options: []
+      faculty: "5fb247e8d6a6e304d0eeb65d"
     };
+    this.skillData = [{ "text": 'Python' }, { "text": 'Node.Js' }, { "text": 'Django' }, { "text": 'Javascript' }, { "text": 'C++' }, { "text": "React Native" }];
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSkills = this.handleSkills.bind(this);
-    // this.fields = { text: "text", value: "value" };
-    this.data = skills["data"];
+    this.multiselectRef = React.createRef();
 
 
   }
@@ -51,20 +49,19 @@ class Intershipform extends SampleBase {
   }
   async handleSubmit(e) {
     e.preventDefault();
-    let skillArray = [];
-
-    const selectSkills = document.querySelectorAll(".e-multi-hidden > option");
-    await selectSkills.forEach((skill) => {
-      skillArray.push(skill.getAttribute("value"));
+    var skills = this.multiselectRef.current.getSelectedItems();
+    var skillArray = [];
+    skills.forEach(skill => {
+      skillArray.push(skill['text']);
     });
-    await this.setState({ skillsRequired: skillArray });
+    await this.setState({ skillsRequired: skillArray })
+    // apiCall("post", 'http://localhost:3001/api/internship/details', this.state).then(
+    //   data => {
+    //     console.log(data);
+    //     < Redirect to={'http://localhost:3000/internship?id=' + data._id} />
+    //   }
+    // )
     console.log(this.state);
-    apiCall("post", 'http://localhost:3001/api/internship/details', this.state).then(
-      data => {
-        console.log(data);
-        < Redirect to={'http://localhost:3000/internship?id=' + data._id} />
-      }
-    )
   }
 
 
@@ -156,20 +153,14 @@ class Intershipform extends SampleBase {
         </div>
 
         <label className="skillsRequired">Skills Required</label>
-        {/* <MultiSelectComponent
-          dataSource={this.data}
-          fields={this.fields}
-          placeholder="eg. python,javascript"
-          mode="Box"
-          change={this.handleSkills}
-        /> */}
         <Multiselect
-          options={this.state.skillData} // Options to display in the dropdown
+          options={this.skillData} // Options to display in the dropdown
           selectedValues={this.state.skillsRequired} // Preselected value to persist in dropdown
           // onSelect={this.onSelect} // Function will trigger on select event
           // onRemove={this.onRemove} // Function will trigger on remove event
           displayValue="text" // Property name to display in the dropdown options
           onSearch={this.handleSkills}
+          ref={this.multiselectRef}
         />
 
         <div className="ui form">
