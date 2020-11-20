@@ -2,7 +2,6 @@ const db = require('../models');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-var spawn = require('child_process').spawn;
 var mailOptionsImport = require('./mailOptions')
 
 exports.signup = async function (req, res, next) {
@@ -13,9 +12,6 @@ exports.signup = async function (req, res, next) {
     let token = jwt.sign({
       id, fname, lname, email, rollNo
     }, process.env.SECRET_KEY);
-    // var process = spawn('python', ["./data binder/users.py",
-    //   req.body.fname,
-    //   req.body.lname]);
     var mailOptions = mailOptionsImport(req);
     // console.log(mailOptions);
     var transporter = nodemailer.createTransport({

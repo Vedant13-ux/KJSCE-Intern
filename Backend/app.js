@@ -13,22 +13,24 @@ require('dotenv').config();
 // Middleware
 const { loginRequired, ensureCorrectUser } = require('./middleware');
 
+app.use(bodyParser.json());
+app.use(cors());
 // Database
 require('./models/index');
 // require('./seedDB')();
 // ROutes
+
 const authRoutes = require('./routes/auth');
 const communityRoutes = require('./routes/community.js');
 const internshipRoutes = require('./routes/internship')
+const userRoutes = require('./routes/user');
 
 
-app.use(bodyParser.json());
-app.use(cors());
-
-// Incuding Riutes
+// Incuding Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/community', communityRoutes);
 app.use('/api/internship', internshipRoutes);
+app.use('/api/users', userRoutes)
 
 
 app.use((req, res, next) => {

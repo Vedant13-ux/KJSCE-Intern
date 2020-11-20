@@ -8,6 +8,29 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+}
+
+// User Suggestions
+router.get('/profile/search', (req, res, next) => {
+    let regex = new RegExp(escapeRegex(req.query.name), 'gi')
+    db.User.find({ fname: regex }, '_id lname fname photo')
+        .then((users) => {
+            users.forEach(user => {
+                // Object.assign(user, { "text": `${user['fname']} ${user['lname']}` });
+                // user['fname'] = user['text']
+            });
+            res.send(users);
+            // res.status(200).send(users)
+        }).catch((err) => {
+            next({
+                status: 404,
+                message: 'User Not Found'
+            })
+        });
+});
+
 router.get('/profile/:id', (req, res, next) => {
     db.User.findById(req.params.id).populate('internshipsOffered').populate('applications').populate('resume').populate('bookmarks').populate('posts')
         .exec((err, user) => {
