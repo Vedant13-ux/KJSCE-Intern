@@ -478,8 +478,7 @@ body{
 /* *********End Internship Details ************ */
 
 /* *****************COmmunity ******************** */
-@import url("https://use.fontawesome.com/releases/v5.7.2/css/all.css");
-@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700');
+
 body {
    /* background: #e2e5ee; */
    font-family: "Segoe UI";
@@ -516,57 +515,10 @@ body {
    color: #b9b9b9;
 }
 
-#header {
-   height: 4rem;
-   width: 100%;
-   position: relative;
-}
 
-.fixed-header {
-   position: fixed;
-   width: 100%;
-   background: #4e4764;
-   z-index: 100;
-}
 
 .scroll-indicator {
    border-bottom: 5px solid #8075a4;
-}
-
-.header-content {
-   line-height: 4rem;
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   color: #fff;
-   font-weight: bold;
-}
-
-.app-title {
-   font-family: 'Quicksand', sans-serif;
-   font-size: 23px;
-   display: flex;
-}
-
-.header-content .user-avatar {
-   width: 40px;
-   height: 40px;
-   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
-}
-
-.header-right-side {
-   display: flex;
-   align-items: center;
-}
-
-.header-info {
-   margin-right: 5px;
-}
-
-.header-info svg {
-   display: block;
-   padding: 3px;
-   border-radius: 20px;
 }
 
 .right-side {
@@ -583,7 +535,10 @@ body {
    height: 405px;
    padding: 10px 20px;
    background: #fff;
-   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+   box-sizing: border-box;
+  border:1.5px solid rgba(0,0,0,.125);
+  border-radius: 10px;
+   /* box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); */
    font-size: 0.9rem;
 }
 
@@ -628,27 +583,6 @@ body {
    animation-duration: 0.5s;
 }
 
-.deleted {
-   display: none;
-}
-
-.delete-button {
-   position: absolute;
-   height: 30px;
-   width: 30px;
-   line-height: 30px;
-   right: 10px;
-   top: 10px;
-   text-align: center;
-}
-
-.delete-button a {
-   display: block;
-   color: #c2c2c2;
-   font-size: 1.3rem;
-   text-decoration: none;
-   line-height: inherit;
-}
 
 .user-info {
    padding: 20px;
@@ -818,81 +752,6 @@ body {
    outline: none;
 }
 
-/*controls*/
-
-.controls-title {
-   padding: 10px 0;
-}
-
-.rowControl {
-   display: flex;
-   justify-content: space-between;
-   padding: 10px;
-}
-
-/*toggle buttons*/
-
-.toggle-wrap {
-   padding: 10px;
-}
-
-.toggle-wrap label {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-}
-
-.toggle-wrap input {
-   display: none;
-}
-
-.toggle {
-   width: 30px;
-   height: 10px;
-   background: #FFCA3D;
-   border-radius: 50px;
-   position: relative;
-}
-
-.toggle .round {
-   position: absolute;
-   left: 0;
-   top: -3px;
-   width: 17px;
-   height: 17px;
-   border-radius: 50px;
-   background: #b6b6b6;
-   transition: left 0.3s;
-}
-
-.toggle-wrap input:checked~label>.toggle .round {
-   left: 45%;
-   background: #020c53;
-}
-
-.show-new-button {
-   box-sizing: border-box;
-   height: 50px;
-   line-height: 50px;
-   text-align: center;
-   margin-top: 15px;
-   animation-name: fadeIn;
-   animation-duration: 0.5s;
-   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
-   border-radius: 2px;
-   background: rgb(255,202,61);
-   background: linear-gradient(90deg, rgba(255,202,61,1) 0%, rgba(2,17,83,1) 82%, rgba(2,12,83,0.9727241238292192) 95%);
-   border-radius: 30px;
-}
-
-.show-new-button a {
-   display: block;
-   height: inherit;
-   line-height: inherit;
-   text-align: center;
-   text-decoration: none;
-   color: #fff;
-}
 
 /*mobile fix*/
 
