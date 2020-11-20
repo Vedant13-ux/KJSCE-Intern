@@ -126,33 +126,11 @@ class ScrollTopButton extends React.Component {
 class Feed extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      autoUpdate: true,
-      fixedScroll: true,
-      fixedScrollTrigger: false,
-      showOnlyLiked: false,
-      clearOld: true,
-      stopUpload: false,
-
-      postsOnScreen: 0,
-      totalPosts: 0,
-    };
     this.changePostsCount = this.changePostsCount.bind(this);
-    this.manualUpdateWall = this.manualUpdateWall.bind(this);
   }
 
   componentDidMount() {
-    //setting fixed scroll by default
-    if (this.state.fixedScroll) {
-      document.addEventListener("scroll", this.fixedScrollHandler);
-    }
-  }
-
-  manualUpdateWall() {
-    this.setState({ autoUpdate: true });
-    setTimeout(() => {
-      this.setState({ autoUpdate: false });
-    }, 10);
+    document.addEventListener("scroll", this.fixedScrollHandler);
   }
 
   changePostsCount(current, total) {
@@ -163,17 +141,11 @@ class Feed extends React.Component {
     return (
       <div id="feed">
         <div className="content-wrapper feed-wrapper">
-          <PostWall
-            autoUpdate={this.state.autoUpdate}
-            changeCount={this.changePostsCount}
-            manualUpdate={this.manualUpdateWall}
-            fixedScroll={this.state.fixedScrollTrigger}
-            showOnlyLiked={this.state.showOnlyLiked}
-            clearOld={this.state.clearOld}
-            stopUpload={this.state.stopUpload}
-          />
+          <PostWall />
           <div className="right-side">
-            <div className="controls"></div>
+            <div className="controls">
+              tags and recommended post
+            </div>
           </div>
         </div>
       </div>
@@ -200,24 +172,9 @@ class PostObj {
     })}`;
     this.img = options.img;
     this.likes = 0;
-    this.maxLikes = Math.round(7 - 0.5 + Math.random() * (153 - 7 + 0.5));
     this.isLiked = false;
     this.comments = [];
     this.isExpanded = false;
-    this.views = 1;
-    this.maxViews = Math.round(277 - 0.5 + Math.random() * (1770 - 277 + 0.5));
-
-    //timers
-    this.likeTimer = setInterval(() => {
-      if (this.likes >= this.maxLikes) clearInterval(this.likeTimer);
-      this.likes++;
-      this.updateParentState();
-    }, Math.round(730 - 0.5 + Math.random() * (1650 - 730 + 0.5)));
-    this.viewTimer = setInterval(() => {
-      if (this.views >= this.maxViews) clearInterval(this.viewTimer);
-      this.views++;
-      this.updateParentState();
-    }, Math.round(430 - 0.5 + Math.random() * (1000 - 430 + 0.5)));
 
     //imported methods
     this.likeHandler = this.likeHandler.bind(this);
@@ -251,7 +208,7 @@ class PostObj {
       return;
     }
     this.comments.push({
-      userLength: 75,
+      name: 'huzaifa',
       avatar:
         "https://justmonk.github.io/react-news-feed-spa-demo/img/user-avatar.jpg",
       text: commentText,
@@ -271,9 +228,7 @@ class PostWall extends React.Component {
     };
     this.localList = {};
     this.idCounter = 0;
-    this.maxPostCount = 50;
 
-    this.manualUpdate = this.manualUpdate.bind(this);
     this.updateState = this.updateState.bind(this);
     //throttling
     this.isThrottled = false;
@@ -284,34 +239,10 @@ class PostWall extends React.Component {
     this.wallUpdate();
   }
 
-  getSnapshotBeforeUpdate(prevProps, prevState) {
-    this.prevDocHeight = document.documentElement.scrollHeight;
-    this.scrollPosition =
-      document.documentElement.scrollHeight - window.pageYOffset;
-    return {
-      prevDocHeight: this.prevDocHeight,
-      scrollPosition: this.scrollPosition,
-    };
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.fixedScroll) {
-      if (document.documentElement.scrollHeight > snapshot.prevDocHeight) {
-        let newScroll =
-          document.documentElement.scrollHeight - snapshot.scrollPosition;
-        window.scrollTo(0, newScroll);
-      }
-    }
-  }
-
   wallUpdate() {
     if (!this.isThrottled) {
       this.isThrottled = true;
       this.setState({ postList: this.localList });
-      this.props.changeCount(
-        document.querySelectorAll(".post").length,
-        Object.keys(this.localList).length
-      );
       setTimeout(() => {
         this.isThrottled = false;
         if (!this.queueIsEmpty) this.wallUpdate();
@@ -324,13 +255,6 @@ class PostWall extends React.Component {
   getPostById(id) {
     if (!this.localList[id]) return;
     return <Post id={id} key={id} args={this.state.postList[id]} />;
-  }
-
-  manualUpdate() {
-    this.props.manualUpdate();
-    setTimeout(() => {
-      this.wallUpdate();
-    }, 10);
   }
 
   renderAll() {
@@ -348,8 +272,6 @@ class PostWall extends React.Component {
   }
 
   componentDidMount() {
-    //instant add first post
-    if (!Object.keys(this.state.postList).length) {
       let postObject = new PostObj({
         list: this.localList,
         update: this.updateState,
@@ -360,11 +282,23 @@ class PostWall extends React.Component {
         img:
           "https://justmonk.github.io/react-news-feed-spa-demo/img/blur-min.jpg",
       });
+      let postObject2 = new PostObj({
+        list: this.localList,
+        update: this.updateState,
+        id: this.idCounter,
+        avatar:
+          "https://justmonk.github.io/react-news-feed-spa-demo/img/user-avatar.jpg",
+        name: "vedant",
+        img:
+          "https://justmonk.github.io/react-news-feed-spa-demo/img/blur-min.jpg",
+      });
 
       this.localList[this.idCounter] = postObject;
-      this.wallUpdate();
       this.idCounter++;
-    }
+      this.localList[this.idCounter] = postObject2;
+      this.idCounter++;
+      this.wallUpdate();
+      
   }
   componentWillUnmount() {
     clearInterval(this.timerId);
@@ -447,9 +381,7 @@ class Comments extends React.Component {
           </div>
           <div className="user-data">
             <div className="username">
-              <svg width={val.userLength} height="10">
-                <rect width="100%" height="100%" style={{ fill: "#dbdbdb" }} />
-              </svg>
+              {val.name}
             </div>
 
             <div className="comment-text">{val.text}</div>
