@@ -33,54 +33,44 @@ class InternshipDetail extends Component {
         whoCanApply: "    -----    ",
         description: "        -------           ",
         type: "    ----    ",
-      }
+        
+      },
+      recommlist:[
+        {
+          faculty: {
+            photo: "https://www.w3schools.com/w3css/img_avatar3.png",
+            fname: " --  ",
+            lname: "  --  ",
+          },
+          title: "  --  ",
+          duration: "  --  ",
+          applyBy: new Date(),
+          type: "  --  ",
+        },
+        {
+          faculty: {
+            photo: "https://www.w3schools.com/w3css/img_avatar3.png",
+            fname: " --  ",
+            lname: "  --  ",
+          },
+          title: "  --  ",
+          duration: "  --  ",
+          applyBy: new Date(),
+          type: "  --  ",
+        },
+        {
+          faculty: {
+            photo: "https://www.w3schools.com/w3css/img_avatar3.png",
+            fname: " --  ",
+            lname: "  --  ",
+          },
+          title: "  --  ",
+          duration: "  --  ",
+          applyBy: new Date(),
+          type: "  --  ",
+        }
+      ]
     };
-    this.recommlist = [
-      {
-        faculty: {
-          photo: "https://www.w3schools.com/w3css/img_avatar3.png",
-          fname: "phunsuk",
-          lname: "vangdo",
-        },
-        title: "Frontend Stuff",
-        duration: "2 months",
-        applyBy: new Date(),
-        type: "work from home",
-      },
-      {
-        faculty: {
-          photo: "https://www.w3schools.com/w3css/img_avatar3.png",
-          fname: "phunsuk",
-          lname: "vangdo",
-        },
-        title: "Frontend Stuff",
-        duration: "2 months",
-        applyBy: new Date(),
-        type: "work from home",
-      },
-      {
-        faculty: {
-          photo: "https://www.w3schools.com/w3css/img_avatar3.png",
-          fname: "phunsuk",
-          lname: "vangdo",
-        },
-        title: "Frontend Stuff",
-        duration: "2 months",
-        applyBy: new Date(),
-        type: "work from home",
-      },
-      {
-        faculty: {
-          photo: "https://www.w3schools.com/w3css/img_avatar3.png",
-          fname: "phunsuk",
-          lname: "vangdo",
-        },
-        title: "Frontend Stuff",
-        duration: "2 months",
-        applyBy: new Date(),
-        type: "work from home",
-      },
-    ]
     this.contentDisplay = this.contentDisplay.bind(this);
   }
 
@@ -91,8 +81,15 @@ class InternshipDetail extends Component {
         async (data) => {
           console.log(data)
           if (Object.keys(data).length !== 0) {
-            await this.setState({ details: data, exists: true, start: false });
+            apiCall('get', 'http://localhost:3001/api/internship/search/skills?skills=' + data["skillsRequired"].join(',') )
+            .then(
+            async (recomm)=>{
+              // let recomm=this.state.recommlist;
+            await this.setState({ details: data,recommlist:recomm, exists: true, start: false });
             console.log(this.state);
+          }).catch(
+            (e)=> this.setState({ exist: false, start: false })
+          )
             return
           } else {
             await this.setState({ exists: false, start: false })
@@ -185,7 +182,7 @@ class InternshipDetail extends Component {
                   <h3>Recommendations</h3>
                   <hr></hr>
                   <div className="scroll">
-                    {this.recommlist.map((int, ind) => {
+                    {this.state.recommlist.map((int, ind) => {
                       return <RecommInternship {...int}></RecommInternship>
                     })}
                   </div>
