@@ -22,27 +22,17 @@ router.get('/search/all', async (req, res, next) => {
 
 router.get('/search/skills', async (req, res, next) => {
     var skills = req.query.skills.split(',');
+    skills = skills.map(skill => {
+        return new RegExp(escapeRegex(skill), 'gi');
+    })
     console.log(skills);
-    internships = [];
-    for (let i = 0; i < skills.length; i++) {
-        var regex = new RegExp(escapeRegex(skills[i]), 'gi');
-        var suggested = await db.InternshipDetails.find({ skillsRequired: regex }).populate('faculty', 'fname lname photo _id').exec();
-        internships = internships.concat(suggested);
-    };
-    console.log('2');
-    internships = await internships.filter((intern, index, self) => (
-        index === self.findIndex(t => (
-            t._id === intern._id
-        ))
-    ));
-    // for (var i = 0; i < internships.length; i++) {
-    //     for (var j = i + 1; j <= internships.length - i; j++) {
-    //         if (internships[i]._id == internships[j]._id) {
-    //             internships = internships.splice(j, 1);
-    //         }
-    //     }
-    // }
-    res.send(internships);
+    try {
+        var suggested = await db.InternshipDetails.find({ skillsRequired: { $all: skills } }).populate('faculty', 'fname lname photo _id').exec();
+        res.send(suggested);
+
+    } catch (error) {
+        next(err)
+    }
 
 });
 
