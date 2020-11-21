@@ -308,7 +308,15 @@ class PostWall extends React.Component {
     let content;
     content = this.renderAll();
 
-    return <div className="post-wall">{content}</div>;
+    return <div className="post-wall">
+      <div class="posting-area">
+        <input class="posting-text" placeholder="start post"></input>
+        <div class="posting-but">
+          <div class="posting-but1" onClick=""><i class="material-icons">insert_photo</i>photo</div>
+          <div class="posting-but2" onClick=""><i class="material-icons">videocam</i>video</div>
+        </div>
+      </div>
+      {content}</div>;
   }
 }
 

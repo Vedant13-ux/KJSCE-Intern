@@ -828,3 +828,34 @@ body {
       width: 65px;
    }
 }
+
+.posting-area{
+  margin-top: 20px;
+  box-sizing: border-box;
+  border:1.5px solid rgba(0,0,0,.125);
+  border-radius: 10px;
+  padding:10px;
+  text-align: center;
+}
+
+.posting-but{
+  display:flex;
+}
+
+.posting-but1{
+  flex:1;
+}
+.posting-text{
+  border-radius: 1rem;
+  margin: 10px;
+  box-sizing: border-box;
+  border:1.5px solid rgba(0,0,0,.125);
+  height: 32px;
+  padding: 5px;
+  width:550px;
+
+}
+
+.posting-but2{
+  flex:1;
+}
