@@ -20,13 +20,32 @@ router.get('/search/all', async (req, res, next) => {
 });
 
 
-router.get('/search', (req, res, next) => {
-    var regex = new RegExp(escapeRegex(req.body.query), 'gi');
-    db.InternshipDetails.find({ skills: regex })
-        .then((internships) => {
-            res.status(200).send(internships);
-        })
-        .catch(err => next(err));
+router.get('/search/skills', (req, res, next) => {
+    var skills = req.query.skills.split(',');
+    console.log(skills);
+    var internships = [];
+    skills.forEach(skill => {
+        var regex = new RegExp(escapeRegex(skill), 'gi');
+        db.InternshipDetails.find({ skillsRequired: regex }).populate('faculty', 'fname lname photo _id')
+            .exec(async (err, suggested) => {
+                if (err) {
+                    return next(err);
+                }
+                internships = suggested;
+            })
+        console.log(internships)
+    })
+    var finalArray = [];
+    // for (var i = 0; i < internships.length; i++) {
+    //     for (var j = i + 1; j <= internships.length - i; j++) {
+    //         if (internships[i]._id === internships[j]._id) {
+    //             internships = internships.splice(j, 1);
+    //         }
+    //     }
+    // }
+
+    res.send(internships);
+
 });
 
 // router.get('/search/faculty', (req, res, next) => {

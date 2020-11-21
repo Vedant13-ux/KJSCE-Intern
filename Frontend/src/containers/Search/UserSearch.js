@@ -1,46 +1,64 @@
-import React, { Component } from 'react'
-import { apiCall } from '../../services/api'
-import { Multiselect } from 'multiselect-react-dropdown';
+import React from 'react'
+import { Dropdown } from 'semantic-ui-react'
 
-class UserSearch extends Component {
+const friendOptions = [
+    {
+        key: 'Jenny Hess',
+        text: 'Jenny Hess',
+        value: 'Jenny Hess',
+        image: { avatar: true, src: '/images/avatar/small/jenny.jpg' },
+    },
+    {
+        key: 'Elliot Fu',
+        text: 'Elliot Fu',
+        value: 'Elliot Fu',
+        image: { avatar: true, src: '/images/avatar/small/elliot.jpg' },
+    },
+    {
+        key: 'Stevie Feliciano',
+        text: 'Stevie Feliciano',
+        value: 'Stevie Feliciano',
+        image: { avatar: true, src: '/images/avatar/small/stevie.jpg' },
+    },
+    {
+        key: 'Christian',
+        text: 'Christian',
+        value: 'Christian',
+        image: { avatar: true, src: '/images/avatar/small/christian.jpg' },
+    },
+    {
+        key: 'Matt',
+        text: 'Matt',
+        value: 'Matt',
+        image: { avatar: true, src: '/images/avatar/small/matt.jpg' },
+    },
+    {
+        key: 'Justen Kitsune',
+        text: 'Justen Kitsune',
+        value: 'Justen Kitsune',
+        image: { avatar: true, src: '/images/avatar/small/justen.jpg' },
+    },
+]
+
+class UserSearch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userData: [{ "fname": 'Python' }, { "fname": 'Node.Js' }, { "fname": 'Django' }, { "fname": 'Javascript' }, { "fname": 'C++' }, { "fname": "React Native" }],
-            query: '',
-
+            data: []
         }
-        this.getUserSugg = this.getUserSugg.bind(this);
     }
-    getUserSugg() {
-
-        let query = this.state.query;
-        apiCall('get', 'http://localhost:3001/api/users/profile/search?name=Vedant' + query, '')
-            .then((userData) => {
-                console.log(userData)
-                this.setState({ userData });
-            }).catch((err) => {
-                console.log(err);
-            });
-    }
-    handleChange(e) {
-        return this.setState({ [e.target.name]: e.target.value });
-    }
+    handleChange = (e, { value }) => this.setState({ value })
     render() {
         return (
-            <Multiselect
-                options={this.state.userData} // Options to display in the dropdown
-                selectedValues={this.state.query} // Preselected value to persist in dropdown
-                // onSelect={this.onSelect} // Function will trigger on select event
-                // onRemove={this.onRemove} // Function will trigger on remove event
-                displayValue="fname" // Property name to display in the dropdown options
-                onSearch={this.getUserSugg}
-                selectionLimit="1"
-            // singleSelect="true"
-            // ref={this.multiselectRef}
+            <Dropdown
+                placeholder='Select Friend'
+                fluid
+                selection
+                options={friendOptions}
+                onChange={this.handleChange}
             />
         )
     }
-
 }
-export default UserSearch;
+
+export default UserSearch

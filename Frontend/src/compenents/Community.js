@@ -227,30 +227,9 @@ class PostWall extends React.Component {
       postList: {},
     };
     this.localList = {};
-    this.idCounter = 0;
 
-    this.updateState = this.updateState.bind(this);
-    //throttling
-    this.isThrottled = false;
-    this.queueIsEmpty = true;
   }
 
-  updateState() {
-    this.wallUpdate();
-  }
-
-  wallUpdate() {
-    if (!this.isThrottled) {
-      this.isThrottled = true;
-      this.setState({ postList: this.localList });
-      setTimeout(() => {
-        this.isThrottled = false;
-        if (!this.queueIsEmpty) this.wallUpdate();
-      }, 200);
-    } else {
-      this.queueIsEmpty = false;
-    }
-  }
 
   getPostById(id) {
     if (!this.localList[id]) return;
