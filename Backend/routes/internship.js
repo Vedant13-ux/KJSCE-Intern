@@ -26,15 +26,17 @@ router.get('/search/skills', (req, res, next) => {
     var internships = [];
     skills.forEach(skill => {
         var regex = new RegExp(escapeRegex(skill), 'gi');
-        db.InternshipDetails.find({ skillsRequired: regex }).populate('faculty', 'fname lname photo _id')
-            .exec(async (err, suggested) => {
-                if (err) {
-                    return next(err);
-                }
-                internships = suggested;
+        db.InternshipDetails.find({ skillsRequired: regex }).populate('faculty', 'fname lname photo _id').exec()
+            .then(async suggested => {
+                console.log(suggested);
+                await Object.assign(internships, suggested)
+                console.log('Hello')
             })
-        console.log(internships)
+            .catch(err => next(err))
     })
+    console.log(internships)
+    res.send(internships);
+
     var finalArray = [];
     // for (var i = 0; i < internships.length; i++) {
     //     for (var j = i + 1; j <= internships.length - i; j++) {
@@ -44,7 +46,6 @@ router.get('/search/skills', (req, res, next) => {
     //     }
     // }
 
-    res.send(internships);
 
 });
 

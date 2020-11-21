@@ -276,7 +276,6 @@ class PostWall extends React.Component {
       this.idCounter++;
       this.localList[this.idCounter] = postObject2;
       this.idCounter++;
-      this.wallUpdate();
       
   }
   componentWillUnmount() {
