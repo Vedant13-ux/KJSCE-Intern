@@ -69,10 +69,9 @@ class ScrollTopButton extends React.Component {
         styles: {
           position: "fixed",
           top: "4.4rem",
-          left: `${
-            document.querySelector(".feed-wrapper").getBoundingClientRect()
-              .left - 60
-          }px`,
+          left: `${document.querySelector(".feed-wrapper").getBoundingClientRect()
+            .left - 60
+            }px`,
           display: `${this.state.visible ? "block" : "none"}`,
         },
       });
@@ -106,10 +105,9 @@ class ScrollTopButton extends React.Component {
       this.styles = {
         position: "fixed",
         top: "4.4rem",
-        left: `${
-          document.querySelector(".feed-wrapper").getBoundingClientRect().left -
+        left: `${document.querySelector(".feed-wrapper").getBoundingClientRect().left -
           60
-        }px`,
+          }px`,
         display: `${this.state.visible ? "block" : "none"}`,
       };
 
@@ -120,6 +118,23 @@ class ScrollTopButton extends React.Component {
         </div>
       </div>
     );
+  }
+}
+class PostCreate extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  render() {
+    return (
+      <div class="posting-area">
+        <input class="posting-text" placeholder="start post"></input>
+        <div class="posting-but">
+          <div class="posting-but1" onClick=""><i class="material-icons">insert_photo</i>Photo</div>
+          <div class="posting-but2" onClick=""><i class="material-icons">videocam</i>Video</div>
+        </div>
+      </div>
+    )
   }
 }
 
@@ -251,32 +266,32 @@ class PostWall extends React.Component {
   }
 
   componentDidMount() {
-      let postObject = new PostObj({
-        list: this.localList,
-        update: this.updateState,
-        id: this.idCounter,
-        avatar:
-          "https://justmonk.github.io/react-news-feed-spa-demo/img/user-avatar.jpg",
-        name: "huzaifa",
-        img:
-          "https://justmonk.github.io/react-news-feed-spa-demo/img/blur-min.jpg",
-      });
-      let postObject2 = new PostObj({
-        list: this.localList,
-        update: this.updateState,
-        id: this.idCounter,
-        avatar:
-          "https://justmonk.github.io/react-news-feed-spa-demo/img/user-avatar.jpg",
-        name: "vedant",
-        img:
-          "https://justmonk.github.io/react-news-feed-spa-demo/img/blur-min.jpg",
-      });
+    let postObject = new PostObj({
+      list: this.localList,
+      update: this.updateState,
+      id: this.idCounter,
+      avatar:
+        "https://justmonk.github.io/react-news-feed-spa-demo/img/user-avatar.jpg",
+      name: "huzaifa",
+      img:
+        "https://justmonk.github.io/react-news-feed-spa-demo/img/blur-min.jpg",
+    });
+    let postObject2 = new PostObj({
+      list: this.localList,
+      update: this.updateState,
+      id: this.idCounter,
+      avatar:
+        "https://justmonk.github.io/react-news-feed-spa-demo/img/user-avatar.jpg",
+      name: "vedant",
+      img:
+        "https://justmonk.github.io/react-news-feed-spa-demo/img/blur-min.jpg",
+    });
 
-      this.localList[this.idCounter] = postObject;
-      this.idCounter++;
-      this.localList[this.idCounter] = postObject2;
-      this.idCounter++;
-      
+    this.localList[this.idCounter] = postObject;
+    this.idCounter++;
+    this.localList[this.idCounter] = postObject2;
+    this.idCounter++;
+
   }
   componentWillUnmount() {
     clearInterval(this.timerId);
@@ -287,13 +302,7 @@ class PostWall extends React.Component {
     content = this.renderAll();
 
     return <div className="post-wall">
-      <div class="posting-area">
-        <input class="posting-text" placeholder="start post"></input>
-        <div class="posting-but">
-          <div class="posting-but1" onClick=""><i class="material-icons">insert_photo</i>photo</div>
-          <div class="posting-but2" onClick=""><i class="material-icons">videocam</i>video</div>
-        </div>
-      </div>
+      <PostCreate />
       {content}</div>;
   }
 }

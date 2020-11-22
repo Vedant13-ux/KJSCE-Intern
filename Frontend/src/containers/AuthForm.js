@@ -24,9 +24,8 @@ class AuthForm extends Component {
     }
     handleSubmit(e) {
         e.preventDefault();
-        authUser(this.state).then(() => {
-            console.log('Logged in Successfully'); 
-        })
+        authUser(this.state);
+
     }
 
     render() {

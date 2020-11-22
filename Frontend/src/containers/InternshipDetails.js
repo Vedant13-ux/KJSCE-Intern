@@ -33,9 +33,9 @@ class InternshipDetail extends Component {
         whoCanApply: "    -----    ",
         description: "        -------           ",
         type: "    ----    ",
-        
+
       },
-      recommlist:[
+      recommlist: [
         {
           faculty: {
             photo: "https://www.w3schools.com/w3css/img_avatar3.png",
@@ -81,15 +81,14 @@ class InternshipDetail extends Component {
         async (data) => {
           console.log(data)
           if (Object.keys(data).length !== 0) {
-            apiCall('get', 'http://localhost:3001/api/internship/search/skills?skills=' + data["skillsRequired"].join(',') )
-            .then(
-            async (recomm)=>{
-              // let recomm=this.state.recommlist;
-            await this.setState({ details: data,recommlist:recomm, exists: true, start: false });
-            console.log(this.state);
-          }).catch(
-            (e)=> this.setState({ exist: false, start: false })
-          )
+            apiCall('get', 'http://localhost:3001/api/internship/search/skills?skills=' + data["skillsRequired"].join(','))
+              .then(
+                async (recomm) => {
+                  await this.setState({ details: data, recommlist: recomm, exists: true, start: false });
+                  console.log(this.state);
+                }).catch(
+                  (e) => this.setState({ exist: false, start: false })
+                )
             return
           } else {
             await this.setState({ exists: false, start: false })
@@ -104,9 +103,9 @@ class InternshipDetail extends Component {
       )
 
   }
-  contentDisplay(exists,start) {
-    console.log("this tbh",exists,start)
-    if (start){
+  contentDisplay(exists, start) {
+    console.log("this tbh", exists, start)
+    if (start) {
       return (
         <div className="loading-anime">
           <Loading class="loading-wheel" />

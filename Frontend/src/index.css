@@ -486,6 +486,7 @@ body {
    padding: 0;
 }
 
+
 .content-wrapper {
    width: 850px;
    margin: 0 auto;
@@ -838,14 +839,12 @@ body {
   text-align: center;
 }
 
-.posting-but{
-  display:flex;
-}
 
-.posting-but1{
-  flex:1;
+.posting-area .posting-but1{
+  display: inline-flex;
+  padding: 0 7px;
 }
-.posting-text{
+.posting-area  .posting-text{
   border-radius: 1rem;
   margin: 10px;
   box-sizing: border-box;
@@ -856,8 +855,9 @@ body {
 
 }
 
-.posting-but2{
-  flex:1;
+.posting-area .posting-but2{
+  display: inline-flex;
+  padding: 0 7px;
 }
 /* Search Users INput */
 #userSuggestion .autocomplete {
