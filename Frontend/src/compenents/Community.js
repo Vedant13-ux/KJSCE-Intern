@@ -248,14 +248,16 @@ class PostWall extends React.Component {
 
   getPostById(id) {
     if (!this.localList[id]) return;
-    return <Post id={id} key={id} args={this.state.postList[id]} />;
+    return <Post id={id} key={id} args={this.localList[id]} />;
   }
 
   renderAll() {
     let elem = [];
-    for (let key in this.state.postList) {
+    for (let key in this.localList) {
+      console.log("huzaifa")
       elem.unshift(this.getPostById(key));
     }
+    console.log(elem)
     if (!elem.length)
       elem.push(
         <div className="message" key={-2}>
