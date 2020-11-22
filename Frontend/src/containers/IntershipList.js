@@ -11,7 +11,7 @@ class InternshipList extends Component {
   }
 
   componentDidMount() {
-    let url = 'http://localhost:3001/api/internship/search/all';
+    let url = '/api/internship/search/all';
     apiCall('get', url, '')
       .then((internships) => {
         console.log(internships);
