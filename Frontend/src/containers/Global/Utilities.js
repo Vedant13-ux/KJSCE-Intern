@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Dropdown } from 'semantic-ui-react'
 import Modal from 'react-bootstrap/Modal'
-import Internshipform from './Internshipform'
+import Internshipform from '../Homepage/Internshipform'
 
 const stateOptions = [
   {

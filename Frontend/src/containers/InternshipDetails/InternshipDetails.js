@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import Navbar from "../containers/Navbar";
-import PageFooter from "../containers/PageFooter";
+import Navbar from "../Global/Navbar";
+import PageFooter from "../Global/PageFooter";
 import RecommInternship from "./RecommInternship"
-import { apiCall } from "../services/api"
-import NotFoundSVG from "../images/NotFound.js"
-import Loading from "../images/Loading"
+import { apiCall } from "../../services/api"
+import NotFoundSVG from "../../images/NotFound.js"
+import Loading from "../../images/Loading"
 
 class InternshipDetail extends Component {
   constructor(props) {
@@ -76,12 +76,12 @@ class InternshipDetail extends Component {
 
   componentWillMount() {
     document.documentElement.scrollTop = '0';
-    return apiCall('get', 'http://localhost:3001/api/internship/details/' + this.props.match.params.id, '')
+    return apiCall('get', '/api/internship/details/' + this.props.match.params.id, '')
       .then(
         async (data) => {
           console.log(data)
           if (Object.keys(data).length !== 0) {
-            apiCall('get', 'http://localhost:3001/api/internship/search/skills?skills=' + data["skillsRequired"].join(','))
+            apiCall('get', '/api/internship/search/skills?skills=' + data["skillsRequired"].join(','))
               .then(
                 async (recomm) => {
                   await this.setState({ details: data, recommlist: recomm, exists: true, start: false });

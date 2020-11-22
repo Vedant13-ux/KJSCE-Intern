@@ -4,7 +4,7 @@ import Homepage from '../compenents/Homepage'
 import Landing from '../compenents/Landing';
 import { connect } from 'react-redux';
 import { authUser } from '../store/actions/auth'
-import IntershipDetail from './InternshipDetails'
+import IntershipDetail from './InternshipDetails/InternshipDetails'
 import Community from '../compenents/Community'
 import NotFound from '../images/NotFound'
 const Main = (props) => (

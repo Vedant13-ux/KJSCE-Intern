@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "../containers/Navbar";
-import PageFooter from "../containers/PageFooter";
+import Navbar from "../containers/Global/Navbar";
+import PageFooter from "../containers/Global/PageFooter";
 
 class Application extends React.Component {
   constructor(props) {

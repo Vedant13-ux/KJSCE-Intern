@@ -1,10 +1,10 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel'
-import InternshipList from '../containers/IntershipList';
-import Navbar from '../containers/Navbar'
-import PageFooter from '../containers/PageFooter'
-import { InternshipCreate } from '../containers/Utilities'
+import InternshipList from '../containers/Homepage/IntershipList';
+import Navbar from '../containers/Global/Navbar'
+import PageFooter from '../containers/Global/PageFooter'
+import { InternshipCreate } from '../containers/Global/Utilities'
 
 
 const Homepage = () => {

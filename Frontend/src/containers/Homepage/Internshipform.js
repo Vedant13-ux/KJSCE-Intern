@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Multiselect } from 'multiselect-react-dropdown';
-import { apiCall } from "../services/api";
+import { apiCall } from "../../services/api";
 
 
 class Intershipform extends Component {
@@ -37,7 +37,7 @@ class Intershipform extends Component {
     const skillInput = document.querySelector('.searchBox');
     var query = skillInput.value;
     console.log(query);
-    apiCall('get', 'http://localhost:3001/api/internship/skillSuggestion/' + query, '')
+    apiCall('get', '/api/internship/skillSuggestion/' + query, '')
       .then(data => {
         console.log(data)
         this.setState({ skillData: data })
@@ -53,7 +53,7 @@ class Intershipform extends Component {
       skillArray.push(skill['text']);
     });
     await this.setState({ skillsRequired: skillArray })
-    // apiCall("post", 'http://localhost:3001/api/internship/details', this.state).then(
+    // apiCall("post", '/api/internship/details', this.state).then(
     //   data => {
     //     console.log(data);
     //     < Redirect to={'http://localhost:3000/internship?id=' + data._id} />

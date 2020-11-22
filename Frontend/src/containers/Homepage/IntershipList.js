@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Internship from "./Intership";
-import { apiCall } from "../services/api"
+import { apiCall } from "../../services/api"
 
 class InternshipList extends Component {
   constructor(props) {

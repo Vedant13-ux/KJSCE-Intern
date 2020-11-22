@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo.png';
-import AuthForm from '../containers/AuthForm';
+import AuthForm from '../containers/Landing/AuthForm';
 
 
 class Landing extends Component {
