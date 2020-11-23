@@ -2,8 +2,19 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import logo from '../../images/logo.png';
+import { MContext } from '../../services/Provider'
 
 class Navbar extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            query: ""
+        }
+        // this.handleChange = this.handleChange.bind(this);
+    }
+    // handleChange(e) {
+    //     return this.setState({ query: e.target.value });
+    // }
     render() {
         return (
             <nav className="navbar navbar-expand-lg fixed-top">
@@ -16,9 +27,15 @@ class Navbar extends Component {
                     </button>
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        {/* <UserSearch></UserSearch> */}
+
                         <div className="form-inline my-2 my-lg-0">
-                            <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+                            <MContext.Consumer>
+                                {
+                                    context => (
+                                        <input onChange={(e) => context.setMessage(e.target.value)} className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="internshipSerach" />
+                                    )
+                                }
+                            </MContext.Consumer>
                             <button className="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
                         </div>
                         <ul className="navbar-nav mr-auto">

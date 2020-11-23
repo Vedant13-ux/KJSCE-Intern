@@ -5,12 +5,12 @@ import InternshipList from '../containers/Homepage/IntershipList';
 import Navbar from '../containers/Global/Navbar'
 import PageFooter from '../containers/Global/PageFooter'
 import { InternshipCreate } from '../containers/Global/Utilities'
+import { MyProvider } from '../services/Provider'
 
 
 const Homepage = () => {
     return (
         <div className='homePage'>
-            <Navbar></Navbar>
             <div className="carousel-home">
                 <Carousel>
                     <Carousel.Item>
@@ -41,7 +41,10 @@ const Homepage = () => {
                     </Carousel.Item>
                 </Carousel>
             </div>
-            <InternshipList />
+            <MyProvider>
+                <Navbar></Navbar>
+                <InternshipList />
+            </MyProvider>
             <InternshipCreate />
             <PageFooter />
 
