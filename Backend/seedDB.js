@@ -8,7 +8,7 @@ function seedDB() {
     var data = {};
     for (let i = 0; i < 7; i++) {
         data = {
-            faculty: "5fb77fb565055a20043cd8ca",
+            faculty: "5fb77ea640ffa92112ec8032",
             title: 'Python Programming',
             skillsRequired: ['Python', "java"],
             duration: `${Math.floor(Math.random() * 13)} months`,
@@ -23,17 +23,17 @@ function seedDB() {
             .catch(err => console.log(err))
     }
     data = {};
-    // for (let i = 0; i < 7; i++) {
-    //     data = {
-    //         title: faker.lorem.words(3),
-    //         content: faker.lorem.lines(3),
-    //         image: faker.image.imageUrl(),
-    //         author: "5fb247e8d6a6e304d0eeb65d",
-    //         hashtags: faker.lorem.word(1)
-    //     }
-    //     db.Post.create(data)
-    //         .then((intenship) => console.log(internship))
-    //         .catch(err => console.log(err))
-    // }
+    for (let i = 0; i < 7; i++) {
+        data = {
+            title: faker.lorem.words(3),
+            content: faker.lorem.lines(3),
+            image: faker.image.imageUrl(),
+            author: "5fb77ea640ffa92112ec8032",
+            hashtags: faker.lorem.word(1)
+        }
+        db.Post.create(data)
+            .then((intenship) => console.log(internship))
+            .catch(err => console.log(err))
+    }
 }
 module.exports = seedDB;
