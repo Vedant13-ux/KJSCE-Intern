@@ -17,7 +17,6 @@ class Landing extends Component {
         this.handleSwitch = this.handleSwitch.bind(this);
     }
     handleSwitch(e) {
-        e.preventDefault();
         return this.setState({ content: e.target.textContent })
     }
     render() {
