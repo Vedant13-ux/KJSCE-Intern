@@ -696,7 +696,11 @@ body {
    overflow: hidden;
    min-height: 454px;
 }
-
+.post-content p{
+  padding: 10px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
 .post-content img {
    width: inherit;
 }
