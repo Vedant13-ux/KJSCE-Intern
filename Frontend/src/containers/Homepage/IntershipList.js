@@ -1,20 +1,22 @@
 import React, { Component } from "react";
 import Internship from "./Intership";
-import { apiCall } from "../../services/api"
+import { apiCall } from "../../services/api";
+import { MContext } from '../../services/Provider'
 
 class InternshipList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      internships: []
+      internships: [],
+      query: ""
     };
   }
-
-  componentDidMount() {
+  componentWillMount() {
+    // static contextType = Context;
+    console.log(this.context.query)
     let url = '/api/internship/search/all';
     apiCall('get', url, '')
       .then((internships) => {
-        console.log(internships);
         return this.setState({ internships })
       })
       .catch(err => {
@@ -38,10 +40,21 @@ class InternshipList extends Component {
               );
             })}
           </div>
+          <MContext.Consumer>
+            {(context) => {
+              if (this.state.query !== context.state.query && context.state.query !== "") {
+                return apiCall('get', '/api/internship/search/title/' + context.state.query, '')
+                  .then((interns) => {
+                    console.log(interns)
+                  })
+                  .catch(err => console.log(err))
+              }
+            }}
+          </MContext.Consumer>
         </div>
       </div>
     );
   }
 }
-
+Internship.contextType = MContext;
 export default InternshipList;

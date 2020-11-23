@@ -11,7 +11,6 @@ const App = () => (
     <Router>
       <div>
         <Main />
-        {/* <Navbar /> */}
       </div>
     </Router>
   </Provider>

@@ -4,13 +4,21 @@ const db = require('../models');
 
 // Getting Posts
 router.get('/posts/getAll', (req, res, next) => {
-    db.Post.find().limit(10).exec()
+    db.Post.find().limit(10).sort({ created: -1 }).exec()
         .then(posts => {
             res.status(200).send(posts);
         })
         .catch(err => next(err));
 });
+router.get('/posts/getNext', (req, res, next) => {
+    let curId = req.query.curId;
+    db.Post.find({ _id: { $gt: curId } }).sort({ created: -1 }).limit(1).exec()
+        .then(posts => {
+            res.status(200).send(posts);
+        })
+        .catch(err => next(err))
 
+});
 router.get('/posts/:id', (req, res, next) => {
     db.Post.findById(req.params.id)
         .then((post) => {
