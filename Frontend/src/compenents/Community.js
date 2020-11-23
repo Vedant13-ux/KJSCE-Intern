@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../containers/Global/Navbar";
 import PageFooter from "../containers/Global/PageFooter";
+import { apiCall } from "../services/api";
 
 class Application extends React.Component {
   constructor(props) {
@@ -180,22 +181,24 @@ class PostWall extends React.Component {
 
     this.state = {
       postList: {},
+      loggedin:{
+        name:'mai hu',
+        avatar:'https://i.redd.it/1y3vw360an031.png'
+      },
+      localList:{}
     };
-    this.localList = {};
   }
 
   getPostById(id) {
     if (!this.localList[id]) return;
-    return <Post id={id} key={id} options={this.localList[id]} />;
+    return <Post id={id} key={id} loggedin={this.state.loggedin} options={this.localList[id]} />;
   }
 
   renderAll() {
     let elem = [];
     for (let key in this.localList) {
-      console.log("huzaifa");
       elem.unshift(this.getPostById(key));
     }
-    console.log(elem);
     if (!elem.length)
       elem.push(
         <div className="message" key={-2}>
@@ -206,31 +209,37 @@ class PostWall extends React.Component {
   }
 
   componentDidMount() {
-    let postObject = {
-      list: this.localList,
-      update: this.updateState,
-      id: this.idCounter,
-      avatar:
-        "https://justmonk.github.io/react-news-feed-spa-demo/img/user-avatar.jpg",
-      name: "huzaifa",
-      img:
-        "https://justmonk.github.io/react-news-feed-spa-demo/img/blur-min.jpg",
-    };
-    let postObject2 = {
-      list: this.localList,
-      update: this.updateState,
-      id: this.idCounter,
-      avatar:
-        "https://justmonk.github.io/react-news-feed-spa-demo/img/user-avatar.jpg",
-      name: "vedant",
-      img:
-        "https://justmonk.github.io/react-news-feed-spa-demo/img/blur-min.jpg",
-    };
+    // let postObject = {
+    //   id: this.idCounter,
+    //   avatar:
+    //     "https://justmonk.github.io/react-news-feed-spa-demo/img/user-avatar.jpg",
+    //   name: "huzaifa",
+    //   content:"me and my bois trying node",
+    //   date: new Date(),
+    //   img:
+    //     "https://justmonk.github.io/react-news-feed-spa-demo/img/blur-min.jpg",
+    // };
+    // let postObject2 = {
+    //   id: this.idCounter,
+    //   date:new Date(),
+    //   content:"this sucks",
+    //   avatar:
+    //     "https://justmonk.github.io/react-news-feed-spa-demo/img/user-avatar.jpg",
+    //   name: "vedant",
+    //   img:
+    //     "https://justmonk.github.io/react-news-feed-spa-demo/img/blur-min.jpg",
+    // };
 
-    this.localList[this.idCounter] = postObject;
-    this.idCounter++;
-    this.localList[this.idCounter] = postObject2;
-    this.idCounter++;
+    // this.localList[this.idCounter] = postObject;
+    // this.idCounter++;
+    // this.localList[this.idCounter] = postObject2;
+    // this.idCounter++;
+    // this.localList=
+    apiCall('get', '/api/community/posts/getAll','')
+      .then((data)=>{
+        this.setState({...this.state,localList:data});
+        //console.log(this.localList)
+      })
   }
   componentWillUnmount() {
     clearInterval(this.timerId);
@@ -258,24 +267,21 @@ class Post extends React.Component {
       likes: 0,
       isLiked: false,
       comments: [],
-      // isExpanded : false,
     };
     this.id = options.id;
+    this.content=options.content;
     this.avatar = options.avatar;
     this.name = options.name;
-    let dateNow = new Date();
-    this.date = `${dateNow.toLocaleString("en", {
+    this.date = `${options.date.toLocaleString("en", {
       day: "2-digit",
-    })} ${dateNow.toLocaleString("en", {
+    })} ${options.date.toLocaleString("en", {
       month: "short",
-    })} at ${dateNow.toLocaleString("ru", {
+    })} at ${options.date.toLocaleString("ru", {
       hour: "2-digit",
       minute: "2-digit",
       second: "2-digit",
     })}`;
     this.img = options.img;
-
-    //imported methods
     this.likeHandler = this.likeHandler.bind(this);
     this.addCommentHandler = this.addCommentHandler.bind(this);
 
@@ -289,16 +295,15 @@ class Post extends React.Component {
   likeHandler(e) {
     e.preventDefault();
     let button = e.target.closest(".likes");
+    let lik=this.state.likes;
     if (!this.state.isLiked) {
       button.classList.toggle("liked");
-      this.state.likes++;
+      lik++;
     } else {
       button.classList.toggle("liked");
-      this.state.likes--;
+      lik--;
     }
-    this.state.isLiked = !this.state.isLiked;
-    this.setState(this.state);
-    // this.updateParentState();
+    this.setState({...this.state,isLiked:!this.state.isLiked,likes:lik});
   }
 
   addCommentHandler(e) {
@@ -310,26 +315,22 @@ class Post extends React.Component {
       return;
     }
     this.state.comments.push({
-      name: "huzaifa",
-      avatar:
-        "https://justmonk.github.io/react-news-feed-spa-demo/img/user-avatar.jpg",
+      name: this.props.loggedin.name,
+      avatar: this.props.loggedin.avatar,
       text: commentText,
       type: "user",
     });
     form.text.value = "";
-    this.setState(this.state);
-    // this.updateParentState();
+    this.setState({...this.state});
   }
 
   showComments(e) {
     e.preventDefault();
-    this.state.commentsExpanded = true;
-    this.setState(this.state);
+    this.setState({...this.state,commentsExpanded:true});
   }
   hideComment(e) {
     e.preventDefault();
-    this.state.commentsExpanded = false;
-    this.setState(this.state);
+    this.setState({...this.state,commentsExpanded:false});
   }
 
   addCommentDecorator(e) {
@@ -348,6 +349,7 @@ class Post extends React.Component {
             username={this.name}
           />
           <div className="post-content">
+            <p>{this.content}</p>
             <img src={this.img} alt=""></img>
           </div>
           <PostInfo
@@ -363,7 +365,7 @@ class Post extends React.Component {
             hideComment={this.hideComment}
           />
           <CommentInput
-            avatar={this.avatar}
+            loggedin={this.props.loggedin}
             addCommentHandler={this.addCommentDecorator}
           />
         </div>
@@ -465,7 +467,7 @@ class CommentInput extends React.Component {
     return (
       <div className="comment-input">
         <div className="user-avatar">
-          <img src={this.props.avatar} alt="user avatar"></img>
+          <img src={this.props.loggedin.avatar} alt="user avatar"></img>
         </div>
         <form onSubmit={this.props.addCommentHandler}>
           <input

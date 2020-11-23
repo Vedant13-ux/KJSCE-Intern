@@ -4,7 +4,8 @@ const db = require('../models');
 
 // Getting Posts
 router.get('/posts/getAll', (req, res, next) => {
-    db.Post.find().limit(10).sort({ created: -1 }).exec()
+    console.log("aya");
+    db.Post.find().limit(10).exec()
         .then(posts => {
             res.status(200).send(posts);
         })
