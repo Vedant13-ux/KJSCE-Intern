@@ -256,13 +256,12 @@ class Post extends React.Component {
     this.content=options.content;
     this.avatar = options.author.photo;
     this.name = options.author.fname+options.author.lname;
-    let da=options.created
-    dateFormat(k) {
+    function dateFormat(k){
       let apply = new Date(k);
       return apply.toDateString();
     }
-    this.date = dateFormat(this.created);
-    this.img = options.img;
+    this.date = dateFormat(options.created);
+    this.img = options.image;
     this.likeHandler = this.likeHandler.bind(this);
     this.addCommentHandler = this.addCommentHandler.bind(this);
 
