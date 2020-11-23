@@ -5,7 +5,7 @@ const db = require('../models');
 // Getting Posts
 router.get('/posts/getAll', (req, res, next) => {
     console.log("aya");
-    db.Post.find().limit(10).exec()
+    db.Post.find().limit(10).populate('author').exec()
         .then(posts => {
             res.status(200).send(posts);
         })
