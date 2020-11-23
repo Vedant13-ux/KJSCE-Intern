@@ -69,9 +69,10 @@ class ScrollTopButton extends React.Component {
         styles: {
           position: "fixed",
           top: "4.4rem",
-          left: `${document.querySelector(".feed-wrapper").getBoundingClientRect()
-            .left - 60
-            }px`,
+          left: `${
+            document.querySelector(".feed-wrapper").getBoundingClientRect()
+              .left - 60
+          }px`,
           display: `${this.state.visible ? "block" : "none"}`,
         },
       });
@@ -105,9 +106,10 @@ class ScrollTopButton extends React.Component {
       this.styles = {
         position: "fixed",
         top: "4.4rem",
-        left: `${document.querySelector(".feed-wrapper").getBoundingClientRect().left -
+        left: `${
+          document.querySelector(".feed-wrapper").getBoundingClientRect().left -
           60
-          }px`,
+        }px`,
         display: `${this.state.visible ? "block" : "none"}`,
       };
 
@@ -130,11 +132,15 @@ class PostCreate extends React.Component {
       <div class="posting-area">
         <input class="posting-text" placeholder="start post"></input>
         <div class="posting-but">
-          <div class="posting-but1" onClick=""><i class="material-icons">insert_photo</i>Photo</div>
-          <div class="posting-but2" onClick=""><i class="material-icons">videocam</i>Video</div>
+          <div class="posting-but1" onClick="">
+            <i class="material-icons">insert_photo</i>Photo
+          </div>
+          <div class="posting-but2" onClick="">
+            <i class="material-icons">videocam</i>Video
+          </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -158,9 +164,7 @@ class Feed extends React.Component {
         <div className="content-wrapper feed-wrapper">
           <PostWall />
           <div className="right-side">
-            <div className="controls">
-              tags and recommended post
-            </div>
+            <div className="controls">tags and recommended post</div>
           </div>
         </div>
       </div>
@@ -168,10 +172,93 @@ class Feed extends React.Component {
   }
 }
 
-class PostObj {
-  constructor(options) {
-    this.postList = options.list;
-    this.updateParentState = options.update;
+class PostWall extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      postList: {},
+    };
+    this.localList = {};
+  }
+
+  getPostById(id) {
+    if (!this.localList[id]) return;
+    return <Post id={id} key={id} options={this.localList[id]} />;
+  }
+
+  renderAll() {
+    let elem = [];
+    for (let key in this.localList) {
+      console.log("huzaifa");
+      elem.unshift(this.getPostById(key));
+    }
+    console.log(elem);
+    if (!elem.length)
+      elem.push(
+        <div className="message" key={-2}>
+          <div className="text-message">No posts available</div>
+        </div>
+      );
+    return elem;
+  }
+
+  componentDidMount() {
+    let postObject = {
+      list: this.localList,
+      update: this.updateState,
+      id: this.idCounter,
+      avatar:
+        "https://justmonk.github.io/react-news-feed-spa-demo/img/user-avatar.jpg",
+      name: "huzaifa",
+      img:
+        "https://justmonk.github.io/react-news-feed-spa-demo/img/blur-min.jpg",
+    };
+    let postObject2 = {
+      list: this.localList,
+      update: this.updateState,
+      id: this.idCounter,
+      avatar:
+        "https://justmonk.github.io/react-news-feed-spa-demo/img/user-avatar.jpg",
+      name: "vedant",
+      img:
+        "https://justmonk.github.io/react-news-feed-spa-demo/img/blur-min.jpg",
+    };
+
+    this.localList[this.idCounter] = postObject;
+    this.idCounter++;
+    this.localList[this.idCounter] = postObject2;
+    this.idCounter++;
+  }
+  componentWillUnmount() {
+    clearInterval(this.timerId);
+  }
+
+  render() {
+    let content;
+    content = this.renderAll();
+
+    return (
+      <div className="post-wall">
+        <PostCreate />
+        {content}
+      </div>
+    );
+  }
+}
+
+class Post extends React.Component {
+  constructor(props) {
+    super(props);
+    let options = props.options;
+    this.state = {
+      commentsExpanded: true,
+      likes : 0,
+     isLiked : false,
+     comments : [],
+    isExpanded : false,
+    
+    };
     this.id = options.id;
     this.avatar = options.avatar;
     this.name = options.name;
@@ -186,32 +273,34 @@ class PostObj {
       second: "2-digit",
     })}`;
     this.img = options.img;
-    this.likes = 0;
-    this.isLiked = false;
-    this.comments = [];
-    this.isExpanded = false;
+    
+    
 
     //imported methods
     this.likeHandler = this.likeHandler.bind(this);
     this.addCommentHandler = this.addCommentHandler.bind(this);
-  }
 
-  get commentsCount() {
-    return this.comments.length;
+    // get commentsCount() {
+    //   return this.comments.length;
+    // }
+    
+    this.showComments = this.showComments.bind(this);
+    this.hideComment = this.hideComment.bind(this);
+    this.addCommentDecorator = this.addCommentDecorator.bind(this);
   }
 
   likeHandler(e) {
     e.preventDefault();
     let button = e.target.closest(".likes");
-    if (!this.isLiked) {
+    if (!this.state.isLiked) {
       button.classList.toggle("liked");
-      this.likes++;
+      this.state.likes++;
     } else {
       button.classList.toggle("liked");
-      this.likes--;
+      this.state.likes--;
     }
-    this.isLiked = !this.isLiked;
-    this.updateParentState();
+    this.state.isLiked = !this.state.isLiked;
+    // this.updateParentState();
   }
 
   addCommentHandler(e) {
@@ -222,115 +311,32 @@ class PostObj {
       form.text.value = "";
       return;
     }
-    this.comments.push({
-      name: 'huzaifa',
+    this.state.comments.push({
+      name: "huzaifa",
       avatar:
         "https://justmonk.github.io/react-news-feed-spa-demo/img/user-avatar.jpg",
       text: commentText,
       type: "user",
     });
     form.text.value = "";
-    this.updateParentState();
-  }
-}
-
-class PostWall extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      postList: {},
-    };
-    this.localList = {};
-
-  }
-
-
-  getPostById(id) {
-    if (!this.localList[id]) return;
-    return <Post id={id} key={id} args={this.localList[id]} />;
-  }
-
-  renderAll() {
-    let elem = [];
-    for (let key in this.localList) {
-      console.log("huzaifa")
-      elem.unshift(this.getPostById(key));
-    }
-    console.log(elem)
-    if (!elem.length)
-      elem.push(
-        <div className="message" key={-2}>
-          <div className="text-message">No posts available</div>
-        </div>
-      );
-    return elem;
-  }
-
-  componentDidMount() {
-    let postObject = new PostObj({
-      list: this.localList,
-      update: this.updateState,
-      id: this.idCounter,
-      avatar:
-        "https://justmonk.github.io/react-news-feed-spa-demo/img/user-avatar.jpg",
-      name: "huzaifa",
-      img:
-        "https://justmonk.github.io/react-news-feed-spa-demo/img/blur-min.jpg",
-    });
-    let postObject2 = new PostObj({
-      list: this.localList,
-      update: this.updateState,
-      id: this.idCounter,
-      avatar:
-        "https://justmonk.github.io/react-news-feed-spa-demo/img/user-avatar.jpg",
-      name: "vedant",
-      img:
-        "https://justmonk.github.io/react-news-feed-spa-demo/img/blur-min.jpg",
-    });
-
-    this.localList[this.idCounter] = postObject;
-    this.idCounter++;
-    this.localList[this.idCounter] = postObject2;
-    this.idCounter++;
-
-  }
-  componentWillUnmount() {
-    clearInterval(this.timerId);
-  }
-
-  render() {
-    let content;
-    content = this.renderAll();
-
-    return <div className="post-wall">
-      <PostCreate />
-      {content}</div>;
-  }
-}
-
-class Post extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { commentsExpanded: true };
-    this.showComments = this.showComments.bind(this);
-    this.hideComment = this.hideComment.bind(this);
-    this.addCommentDecorator = this.addCommentDecorator.bind(this);
+    // this.updateParentState();
   }
 
   showComments(e) {
     e.preventDefault();
-    this.setState({ commentsExpanded: true });
+    this.state.commentsExpanded=true;
+    this.setState(this.state);
   }
   hideComment(e) {
     e.preventDefault();
-    this.setState({ commentsExpanded: false });
+    this.state.commentsExpanded=false;
+    this.setState(this.state);
   }
 
   addCommentDecorator(e) {
     e.preventDefault();
     this.showComments(e);
-    this.props.args.addCommentHandler(e);
+    this.addCommentHandler(e);
   }
 
   render() {
@@ -338,27 +344,29 @@ class Post extends React.Component {
       <div className="post" id={this.props.id}>
         <div className="post-wrapper">
           <UserInfo
-            userAvatar={this.props.args.avatar}
-            date={this.props.args.date}
-            username={this.props.args.name}
+            userAvatar={this.avatar}
+            date={this.date}
+            username={this.name}
           />
           <div className="post-content">
-            <img src={this.props.args.img} alt=""></img>
+            <img src={this.img} alt=""></img>
           </div>
           <PostInfo
-            likes={this.props.args.likes}
-            views={this.props.args.views}
-            commentsCount={this.props.args.commentsCount}
-            likeHandler={this.props.args.likeHandler}
-            isLiked={this.props.args.isLiked}
+            likes={this.likes}
+            commentsCount={this.commentsCount}
+            likeHandler={this.likeHandler}
+            isLiked={this.isLiked}
             showComments={this.showComments}
           />
           <Comments
-            comments={this.props.args.comments}
+            comments={this.comments}
             isExpanded={this.state.commentsExpanded}
             hideComment={this.hideComment}
           />
-          <CommentInput addCommentHandler={this.addCommentDecorator} />
+          <CommentInput
+            avatar={this.avatar}
+            addCommentHandler={this.addCommentDecorator}
+          />
         </div>
       </div>
     );
@@ -377,9 +385,7 @@ class Comments extends React.Component {
             <img src={val.avatar} alt="author avatar"></img>
           </div>
           <div className="user-data">
-            <div className="username">
-              {val.name}
-            </div>
+            <div className="username">{val.name}</div>
 
             <div className="comment-text">{val.text}</div>
           </div>
@@ -460,10 +466,7 @@ class CommentInput extends React.Component {
     return (
       <div className="comment-input">
         <div className="user-avatar">
-          <img
-            src="https://justmonk.github.io/react-news-feed-spa-demo/img/user-avatar.jpg"
-            alt="user avatar"
-          ></img>
+          <img src={this.props.avatar} alt="user avatar"></img>
         </div>
         <form onSubmit={this.props.addCommentHandler}>
           <input
