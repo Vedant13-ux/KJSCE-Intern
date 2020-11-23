@@ -112,8 +112,16 @@ style 2--
   border: #020C53 8px solid;  
   padding: 20px;
   box-shadow: #020C53 1px 2px 2px ;
+  animation: appear 0.6s forwards;
 }
-.sections .rightSection .content .authForm .heading{
+@keyframes appear{
+  from{
+    opacity: 0;
+  }to{
+    opacity: 1;
+  }
+}
+.sections .rightSection .content .heading{
   font-size: 32px;
   display: inline-block;
   padding:10px;
@@ -138,6 +146,76 @@ style 2--
 }
 .sections .rightSection .content .authForm .button:hover{
   color: #ffcb3dda;
+}
+
+/* ******************Features************** */
+.sections .rightSection .content .features .featuresList {
+  padding-left: 20px;
+  list-style: none;
+}
+.sections .rightSection .content .features .featuresList .featuresItem:nth-child(odd){
+  animation: rightShift 0.4s forwards;
+}
+@keyframes rightShift{
+  from{
+    opacity: 0;
+    transform: translateX(-60px);
+  }to{
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+.sections .rightSection .content .features .featuresList .featuresItem:nth-child(even){
+  animation: leftShift 0.4s forwards;
+}
+
+@keyframes leftShift{
+  from{
+    opacity: 0;
+    transform: translateX(60px);
+  }to{
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+.sections .rightSection .content .features .featuresList .featuresItem{
+  font-size: 19px;
+  display: flex;
+  padding: 14px 0;
+  align-items: center;
+}
+.sections .rightSection .content .features .featuresList .featuresItem .leftIcon{
+  font-size: 45px;
+  margin-right: 10px;
+}
+.sections .rightSection .content .features .featuresList .featuresItem .rightIcon{
+  font-size: 45px;
+}
+
+/* ************About Us **************** */
+.sections .rightSection .content .aboutus p{
+  font-size: 20px;
+  animation: downShift 0.4s forwards;
+}
+@keyframes downShift{
+  from{
+    transform:translateY(-50px);
+    opacity: 0;
+  }to{
+    transform:translateY(0px);
+    opacity: 1;
+  }
+}
+/* *************Contact us */
+.sections .rightSection .content .contact p{
+  font-size: 25px;
+  text-align: center;
+}
+.sections .rightSection .content .contact p:nth-child(odd){
+  animation: rightShift 0.4s forwards;
+}
+.sections .rightSection .content .contact p:nth-child(even){
+  animation: leftShift 0.4s forwards;
 }
 /* ***************************-Home page******************* */
 
