@@ -188,13 +188,13 @@ class PostWall extends React.Component {
   }
 
   getPostById(id) {
-    if (!this.localList[id]) return;
-    return <Post id={id} key={id} loggedin={this.state.loggedin} options={this.localList[id]} />;
+    if (!this.state.localList[id]) return;
+    return <Post id={id} key={id} loggedin={this.state.loggedin} options={this.state.localList[id]} />;
   }
 
   renderAll() {
     let elem = [];
-    for (let key in this.localList) {
+    for (let key in this.state.localList) {
       elem.unshift(this.getPostById(key));
     }
     if (!elem.length)
@@ -217,26 +217,10 @@ class PostWall extends React.Component {
     //   img:
     //     "https://justmonk.github.io/react-news-feed-spa-demo/img/blur-min.jpg",
     // };
-    // let postObject2 = {
-    //   id: this.idCounter,
-    //   date:new Date(),
-    //   content:"this sucks",
-    //   avatar:
-    //     "https://justmonk.github.io/react-news-feed-spa-demo/img/user-avatar.jpg",
-    //   name: "vedant",
-    //   img:
-    //     "https://justmonk.github.io/react-news-feed-spa-demo/img/blur-min.jpg",
-    // };
-
-    // this.localList[this.idCounter] = postObject;
-    // this.idCounter++;
-    // this.localList[this.idCounter] = postObject2;
-    // this.idCounter++;
-    // this.localList=
     apiCall('get', '/api/community/posts/getAll','')
       .then((data)=>{
         this.setState({...this.state,localList:data});
-        //console.log(this.localList)
+        console.log(this.state.localList)
       })
   }
   componentWillUnmount() {
@@ -266,19 +250,16 @@ class Post extends React.Component {
       isLiked: false,
       comments: [],
     };
-    this.id = options.id;
+    this.id = options._id;
     this.content=options.content;
-    this.avatar = options.avatar;
-    this.name = options.name;
-    this.date = `${options.date.toLocaleString("en", {
-      day: "2-digit",
-    })} ${options.date.toLocaleString("en", {
-      month: "short",
-    })} at ${options.date.toLocaleString("ru", {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    })}`;
+    this.avatar = options.author.photo;
+    this.name = options.author.fname+options.author.lname;
+    let da=options.created
+    dateFormat(k) {
+      let apply = new Date(k);
+      return apply.toDateString();
+    }
+    this.date = dateFormat(this.created);
     this.img = options.img;
     this.likeHandler = this.likeHandler.bind(this);
     this.addCommentHandler = this.addCommentHandler.bind(this);
@@ -287,6 +268,7 @@ class Post extends React.Component {
     this.hideComment = this.hideComment.bind(this);
     this.addCommentDecorator = this.addCommentDecorator.bind(this);
   }
+  
   get commentsCount() {
     return this.state.comments.length;
   }
