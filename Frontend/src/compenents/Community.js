@@ -253,11 +253,10 @@ class Post extends React.Component {
     let options = props.options;
     this.state = {
       commentsExpanded: true,
-      likes : 0,
-     isLiked : false,
-     comments : [],
-    isExpanded : false,
-    
+      likes: 0,
+      isLiked: false,
+      comments: [],
+      // isExpanded : false,
     };
     this.id = options.id;
     this.avatar = options.avatar;
@@ -273,22 +272,18 @@ class Post extends React.Component {
       second: "2-digit",
     })}`;
     this.img = options.img;
-    
-    
 
     //imported methods
     this.likeHandler = this.likeHandler.bind(this);
     this.addCommentHandler = this.addCommentHandler.bind(this);
 
-    // get commentsCount() {
-    //   return this.comments.length;
-    // }
-    
     this.showComments = this.showComments.bind(this);
     this.hideComment = this.hideComment.bind(this);
     this.addCommentDecorator = this.addCommentDecorator.bind(this);
   }
-
+  get commentsCount() {
+    return this.state.comments.length;
+  }
   likeHandler(e) {
     e.preventDefault();
     let button = e.target.closest(".likes");
@@ -300,6 +295,7 @@ class Post extends React.Component {
       this.state.likes--;
     }
     this.state.isLiked = !this.state.isLiked;
+    this.setState(this.state);
     // this.updateParentState();
   }
 
@@ -319,17 +315,18 @@ class Post extends React.Component {
       type: "user",
     });
     form.text.value = "";
+    this.setState(this.state);
     // this.updateParentState();
   }
 
   showComments(e) {
     e.preventDefault();
-    this.state.commentsExpanded=true;
+    this.state.commentsExpanded = true;
     this.setState(this.state);
   }
   hideComment(e) {
     e.preventDefault();
-    this.state.commentsExpanded=false;
+    this.state.commentsExpanded = false;
     this.setState(this.state);
   }
 
@@ -341,7 +338,7 @@ class Post extends React.Component {
 
   render() {
     return (
-      <div className="post" id={this.props.id}>
+      <div className="post" id={this.id}>
         <div className="post-wrapper">
           <UserInfo
             userAvatar={this.avatar}
@@ -352,14 +349,14 @@ class Post extends React.Component {
             <img src={this.img} alt=""></img>
           </div>
           <PostInfo
-            likes={this.likes}
+            likes={this.state.likes}
             commentsCount={this.commentsCount}
             likeHandler={this.likeHandler}
-            isLiked={this.isLiked}
+            isLiked={this.state.isLiked}
             showComments={this.showComments}
           />
           <Comments
-            comments={this.comments}
+            comments={this.state.comments}
             isExpanded={this.state.commentsExpanded}
             hideComment={this.hideComment}
           />
