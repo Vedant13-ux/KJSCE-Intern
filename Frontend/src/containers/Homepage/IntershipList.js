@@ -42,13 +42,14 @@ class InternshipList extends Component {
           </div>
           <MContext.Consumer>
             {(context) => {
-              if (this.state.query !== context.state.query && context.state.query !== "") {
-                return apiCall('get', '/api/internship/search/title/' + context.state.query, '')
-                  .then((interns) => {
-                    console.log(interns)
-                  })
-                  .catch(err => console.log(err))
-              }
+              // if (this.state.query !== context.state.query && context.state.query !== "") {
+              //   return apiCall('get', '/api/internship/search/title/' + context.state.query, '')
+              //     .then((interns) => {
+              //       console.log(interns)
+              //     })
+              //     .catch(err => console.log(err))
+              // }
+              return <p>{context.state.query}</p>
             }}
           </MContext.Consumer>
         </div>
