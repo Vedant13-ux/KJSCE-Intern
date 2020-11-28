@@ -19,17 +19,14 @@ const userScehma = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	department: String,
+	dept: String,
 	role: String,
 	year: String,
 	rollNo: {
-		type: Number,
+		type: String,
 		unique: true,
 		required: true
 	},
-	// facultyId: {
-	// 	type: Number,
-	// },
 	photo: {
 		type: String,
 		default: 'https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg'
