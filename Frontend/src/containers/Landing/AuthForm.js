@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { authUser } from '../../store/actions/auth'
+// import { authUser } from '../../store/actions/auth'
 
 
 class AuthForm extends Component {
@@ -24,7 +24,12 @@ class AuthForm extends Component {
     }
     handleSubmit(e) {
         e.preventDefault();
-        authUser(this.state);
+        this.props.onAuth(this.state)
+            .then(() => {
+                console.log('Logged In Successfully')
+            }).catch((err) => {
+                console.log(err.message);
+            });
 
     }
 

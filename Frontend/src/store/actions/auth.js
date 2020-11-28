@@ -14,7 +14,7 @@ export function authUser(userData) {
             return apiCall('post', 'http://localhost:3001/api/auth/signup', userData)
                 .then(({ token, ...user }) => {
                     localStorage.setItem("jwtToken", token)
-                    dispatch(setCurrentUser(user))
+                    dispatch(setCurrentUser(user));
                     resolve();
                 })
         });
