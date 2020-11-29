@@ -149,7 +149,7 @@ class Intershipform extends Component {
             </div>
           </div>
         </div>
-
+        
         <label className="skillsRequired">Skills Required</label>
         <Multiselect
           options={this.state.skillData} // Options to display in the dropdown

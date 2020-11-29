@@ -124,7 +124,6 @@ class ScrollTopButton extends React.Component {
   }
 }
 
-
 class PostCreate extends React.Component {
   constructor(props) {
     super(props);
@@ -180,18 +179,26 @@ class PostWall extends React.Component {
     super(props);
 
     this.state = {
+      start: true,
       postList: {},
-      loggedin:{
-        name:'mai hu',
-        avatar:'https://i.redd.it/1y3vw360an031.png'
+      loggedin: {
+        name: "mai hu",
+        avatar: "https://i.redd.it/1y3vw360an031.png",
       },
-      localList:{}
+      localList: {},
     };
   }
 
   getPostById(id) {
     if (!this.state.localList[id]) return;
-    return <Post id={id} key={id} loggedin={this.state.loggedin} options={this.state.localList[id]} />;
+    return (
+      <Post
+        id={id}
+        key={id}
+        loggedin={this.state.loggedin}
+        options={this.state.localList[id]}
+      />
+    );
   }
 
   renderAll() {
@@ -199,34 +206,47 @@ class PostWall extends React.Component {
     for (let key in this.state.localList) {
       elem.unshift(this.getPostById(key));
     }
-    if (!elem.length)
-      elem.push(
-        <div className="message" key={-2}>
-          <div className="text-message">No posts available</div>
-        </div>
-      );
+    if (!elem.length) {
+      if (this.state.start)
+        elem.push(
+          <div className="post">
+            <div className="post-wrapper loading-post">
+              <div class="ui placeholder">
+                <div class="image header">
+                  <div class="line"></div>
+                  <div class="line"></div>
+                </div>
+              </div>
+              <div className="post-content">
+              <div class="ui placeholder">
+                <div class="paragraph">
+                  <div class="medium line"></div>
+                  <div class="short line"></div>
+                </div>
+                
+                  <div class="image "></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      else
+        elem.push(
+          <div className="message" key={-2}>
+            <div className="text-message">No posts available</div>
+          </div>
+        );
+    }
     return elem;
   }
 
   componentDidMount() {
-    // let postObject = {
-    //   id: this.idCounter,
-    //   avatar:
-    //     "https://justmonk.github.io/react-news-feed-spa-demo/img/user-avatar.jpg",
-    //   name: "huzaifa",
-    //   content:"me and my bois trying node",
-    //   date: new Date(),
-    //   img:
-    //     "https://justmonk.github.io/react-news-feed-spa-demo/img/blur-min.jpg",
-    // };
-    apiCall('get', '/api/community/posts/getAll','')
-      .then((data)=>{
-        this.setState({...this.state,localList:data});
-        console.log(this.state.localList)
-      })
-  }
-  componentWillUnmount() {
-    clearInterval(this.timerId);
+    apiCall("get", "/api/community/posts/getAll", "").then((data) => {
+      this.setState({ ...this.state, localList: data,start:false });
+      console.log(this.state.localList);
+    }).catch(e=>{
+      this.setState({...this.state,start:false})
+    })
   }
 
   render() {
@@ -253,10 +273,10 @@ class Post extends React.Component {
       comments: [],
     };
     this.id = options._id;
-    this.content=options.content;
+    this.content = options.content;
     this.avatar = options.author.photo;
-    this.name = options.author.fname+options.author.lname;
-    function dateFormat(k){
+    this.name = options.author.fname + options.author.lname;
+    function dateFormat(k) {
       let apply = new Date(k);
       return apply.toDateString();
     }
@@ -269,14 +289,14 @@ class Post extends React.Component {
     this.hideComment = this.hideComment.bind(this);
     this.addCommentDecorator = this.addCommentDecorator.bind(this);
   }
-  
+
   get commentsCount() {
     return this.state.comments.length;
   }
   likeHandler(e) {
     e.preventDefault();
     let button = e.target.closest(".likes");
-    let lik=this.state.likes;
+    let lik = this.state.likes;
     if (!this.state.isLiked) {
       button.classList.toggle("liked");
       lik++;
@@ -284,7 +304,7 @@ class Post extends React.Component {
       button.classList.toggle("liked");
       lik--;
     }
-    this.setState({...this.state,isLiked:!this.state.isLiked,likes:lik});
+    this.setState({ ...this.state, isLiked: !this.state.isLiked, likes: lik });
   }
 
   addCommentHandler(e) {
@@ -302,16 +322,16 @@ class Post extends React.Component {
       type: "user",
     });
     form.text.value = "";
-    this.setState({...this.state});
+    this.setState({ ...this.state });
   }
 
   showComments(e) {
     e.preventDefault();
-    this.setState({...this.state,commentsExpanded:true});
+    this.setState({ ...this.state, commentsExpanded: true });
   }
   hideComment(e) {
     e.preventDefault();
-    this.setState({...this.state,commentsExpanded:false});
+    this.setState({ ...this.state, commentsExpanded: false });
   }
 
   addCommentDecorator(e) {
@@ -331,7 +351,7 @@ class Post extends React.Component {
           />
           <div className="post-content">
             <p>{this.content}</p>
-            <img src={this.img} alt=""></img>
+            <img loading="lazy" src={this.img} alt=""></img>
           </div>
           <PostInfo
             likes={this.state.likes}
