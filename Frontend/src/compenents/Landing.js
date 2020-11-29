@@ -5,6 +5,8 @@ import AuthForm from '../containers/Landing/AuthForm';
 import Featues from '../containers/Landing/Features'
 import AboutUs from '../containers/Landing/AboutUs'
 import Contact from '../containers/Landing/Contact'
+import Verification from '../containers/Landing/Verification';
+
 
 
 
@@ -12,24 +14,38 @@ class Landing extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            content: 'Sign Up'
+            content: 'Sign Up',
+            linkSent: false
         }
         this.handleSwitch = this.handleSwitch.bind(this);
+        this.verify = this.verify.bind(this);
     }
     handleSwitch(e) {
         return this.setState({ content: e.target.textContent })
     }
+
+    verify() {
+        this.setState({ content: 'Verification' });
+        this.setState({ linkSent: true });
+        return;
+    }
     render() {
         var content;
-        if (this.state.content === 'Sign Up')
-            content = <AuthForm onAuth={this.props.onAuth} buttonText="Register" heading="Sign Up" signUp />
+        if (this.state.content === 'Sign Up') {
+            if (this.state.linkSent) {
+                content = <Verification />
+            } else {
+                content = <AuthForm onAuth={this.props.onAuth} buttonText="Register" heading="Sign Up" signUp onVerify={this.verify} />
+            }
+        }
         if (this.state.content === 'Features')
             content = <Featues />
         if (this.state.content === 'About Us')
             content = <AboutUs />
         if (this.state.content === 'Contact')
             content = <Contact />
-
+        if (this.state.content === 'Verification')
+            content = <Verification />
         return (
             <div>
                 <div className="sections">

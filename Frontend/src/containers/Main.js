@@ -4,11 +4,16 @@ import Homepage from '../compenents/Homepage'
 import Landing from '../compenents/Landing';
 import { connect } from 'react-redux';
 import { authUser } from '../store/actions/auth'
+import { setCurrentUser } from '../store/actions/auth'
 import IntershipDetail from './InternshipDetails/InternshipDetails'
 import Community from '../compenents/Community'
 import NotFound from '../images/NotFound'
+import EmailVerificaton from '../containers/Utils/EmailVerification';
+
+
 const Main = (props) => {
     const authUser = props.authUser;
+    const setCurrentUser = props.setCurrentUser;
     return (
         <div>
             <Switch>
@@ -16,6 +21,7 @@ const Main = (props) => {
                 <Route exact path="/home" render={props => <Homepage {...props} />} />
                 <Route exact path="/internship/:id" render={props => <IntershipDetail {...props} />} />
                 <Route exact path="/community" render={props => <Community {...props} />} />
+                <Route exact path="/verify-email/:token" render={props => <EmailVerificaton {...props} onVerify={setCurrentUser} />} />
                 <Route path="*" render={props => <NotFound {...props} />} />
             </Switch>
         </div>
@@ -28,4 +34,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default withRouter(connect(mapStateToProps, { authUser })(Main));
+export default withRouter(connect(mapStateToProps, { authUser, setCurrentUser })(Main));

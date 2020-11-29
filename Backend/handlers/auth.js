@@ -7,10 +7,10 @@ var mailOptionsImport = require('./mailOptions')
 exports.signup = async function (req, res, next) {
   try {
     req.body.emailToken = crypto.randomBytes(64).toString('hex');
-    let newUser = await db.User.create(req.body);
-    let { id, fname, lname, email, rollNo } = newUser;
+    const newUser = await db.User.create(req.body);
+    let { id, fname, lname, email, rollNo, dept, year } = newUser;
     let token = jwt.sign({
-      id, fname, lname, email, rollNo
+      id, fname, lname, email, rollNo, dept, year
     }, process.env.SECRET_KEY);
     var mailOptions = mailOptionsImport(req);
     // console.log(mailOptions);
@@ -29,7 +29,7 @@ exports.signup = async function (req, res, next) {
       console.log('Preview URL : %s', info.getTestMessageURL(info));
     });
     return res.status(200).json({
-      id, fname, lname, email, token, rollNo
+      ...newUser._doc, token
     })
   } catch (err) {
     if (err.code === 11000) {

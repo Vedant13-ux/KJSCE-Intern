@@ -25,7 +25,7 @@ class AuthForm extends Component {
     handleSubmit(e) {
         e.preventDefault();
         console.log(this.state);
-        this.props.onAuth(this.state).then(() => console.log('Logged In')).catch(err => console.log(err));
+        this.props.onAuth(this.state).then(() => { this.props.onVerify(); console.log('Logged In') }).catch(err => console.log(err));
     }
 
     render() {
