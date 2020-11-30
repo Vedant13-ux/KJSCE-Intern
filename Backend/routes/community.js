@@ -65,7 +65,7 @@ router.post('/posts/like/:id', (req, res, next) => {
                 })
             }
             try {
-                let user = await db.User.findById(req.body);
+                let user = await db.User.findById(req.body.id);
                 if (post.likedBy.findIndex((u) => u == user._id) == -1) {
                     await post.likedBy.push(user);
                     return await post.save();
@@ -90,7 +90,7 @@ router.put('/posts/like/:id', (req, res, next) => {
                 })
             }
             try {
-                let user = await db.User.findById(req.body);
+                let user = await db.User.findById(req.body.id);
                 let to_remove = post.likedBy.findIndex((u) => {
                     return u == user._id;
                 });
@@ -98,10 +98,10 @@ router.put('/posts/like/:id', (req, res, next) => {
                     await post.likedBy.splice(to_remove, 1)
                     return await post.save();
                 }
-                return next({
-                    status: 403,
-                    message: 'You do not like this post.'
-                });
+                // return next({
+                //     status: 403,
+                //     message: 'You do not like this post.'
+                // });
             } catch (err) { next(err) }
 
         })
