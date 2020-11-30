@@ -177,7 +177,7 @@ router.put('/posts/comments/edit/:id', (req, res, next) => {
         });
 });
 router.delete('/posts/comments/delete/:postId/:cmntId', (req, res, next) => {
-    db.Post.findById(req.params.id)
+    db.Post.findById(req.params.id).populate('comments')
         .then((post) => {
             if (!post) {
                 return next({
@@ -197,7 +197,7 @@ router.delete('/posts/comments/delete/:postId/:cmntId', (req, res, next) => {
                     if (toRemove != -1) {
                         await post.comments.splice(toRemove, 1);
                         await post.save();
-                        return;
+                        return res.send(posts.comments);
                     }
 
                 }).catch((err) => {
