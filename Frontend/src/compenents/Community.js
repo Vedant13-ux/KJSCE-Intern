@@ -332,7 +332,7 @@ class Post extends React.Component {
       text: commentText,
     });
     form.text.value = "";
-    this.setState({ ...this.state });
+    this.setState({ ...this.state , commentsExpanded: true});
   }
 
   showComments(e) {
