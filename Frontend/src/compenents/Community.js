@@ -395,25 +395,7 @@ class Comments extends React.Component {
 
     let commentsArr = this.props.comments.map((val, i) => {
       return (
-        <div class="comment">
-          <a class="avatar" href="/">
-            <img alt="" src={val.author.photo} />
-          </a>
-          <div class="content">
-            <a href="/" class="author">
-              {val.author.fname+' '+val.author.lname}
-            </a>
-            <div class="metadata">
-              <span class="date">Today at 5:42PM</span>
-            </div>
-            <div class="text">{val.text}</div>
-            <div class="actions">
-              <a href="/" class="reply">
-                Like
-              </a>
-            </div>
-          </div>
-        </div>
+        <Comment data={val}></Comment>
         // <div className="comment" key={i}>
         //   <div className="user-avatar">
         //     <img src={val.avatar} alt="author avatar"></img>
@@ -443,6 +425,44 @@ class Comments extends React.Component {
         </div>
       </div>
     );
+  }
+}
+
+class Comment extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+      isliked:false,
+      data:props.data,
+    }
+  }
+  handleLike(e){
+    console.log(e)
+  }
+  render(){
+    let val=this.state.data;
+    console.log(val);
+    return (
+      <div class="comment">
+          <a class="avatar" href="/">
+            <img alt="" src={val.author.photo} />
+          </a>
+          <div class="content">
+            <a href="/" class="author">
+              {val.author.fname+' '+val.author.lname}
+            </a>
+            <div class="metadata">
+              <span class="date">Today at 5:42PM</span>
+            </div>
+            <div class="text">{val.text}</div>
+            <div class="actions">
+              <button onClick={this.handleLike} class="reply">
+                Like
+              </button>
+            </div>
+          </div>
+        </div>
+    )
   }
 }
 
