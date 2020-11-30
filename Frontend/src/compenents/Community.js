@@ -182,7 +182,7 @@ class PostWall extends React.Component {
       loggedin: {
         name: "mai hu",
         avatar: "https://i.redd.it/1y3vw360an031.png",
-        id:"5fc3e5d1fc33db6a66886586",
+        id: "5fc3e5d1fc33db6a66886586",
       },
       localList: {},
     };
@@ -305,15 +305,15 @@ class Post extends React.Component {
     if (!this.state.isLiked) {
       button.classList.toggle("liked");
       lik++;
-      apiCall("post", "/api/community/posts/like/"+this.id, this.props.loggedin ).then(
-        (data)=> console.log(data)
-      ).catch(e=>console.log(e))
+      apiCall("post", "/api/community/posts/like/" + this.id, this.props.loggedin).then(
+        (data) => console.log(data)
+      ).catch(e => console.log(e))
     } else {
       button.classList.toggle("liked");
       lik--;
-      apiCall("put", "/api/community/posts/like/"+this.id, this.props.loggedin ).then(
-        (data)=> console.log(data)
-      ).catch(e=>console.log(e))
+      apiCall("put", "/api/community/posts/like/" + this.id, this.props.loggedin).then(
+        (data) => console.log(data)
+      ).catch(e => console.log(e))
     }
     this.setState({ ...this.state, isLiked: !this.state.isLiked, likes: lik });
   }
@@ -365,10 +365,9 @@ class Post extends React.Component {
             <p>{this.content}</p>
 
             {/* <img onLoad={this.handleImageLoad} src={this.img} alt=""></img> */}
-            <div class="content">
-              <div class="ui placeholder">
-                <div class="square image"></div>
-              </div>
+            <div
+              class="ui placeholder">
+              <div class="square image"></div>
             </div>
           </div>
           <PostInfo
