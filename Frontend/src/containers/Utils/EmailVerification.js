@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { apiCall } from '../../services/api';
 
 class Emailverification extends Component {

@@ -605,11 +605,12 @@ body {
 .right-side {
    position: relative;
    width: 240px;
-   height: 520px;
+   /* height: 520px; */
    margin-top: 15px;
+   margin-bottom: 70px;
 }
 
-.controls {
+.right-side .controls {
    position: sticky;
    top:60px;
    width: 200px;
