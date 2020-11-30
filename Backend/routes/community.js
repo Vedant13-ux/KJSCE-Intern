@@ -67,7 +67,7 @@ router.post('/posts/like/:id', (req, res, next) => {
             try {
                 console.log("post mila", req.body)
                 let user = await db.User.findById(req.body.id);
-                if (post.likedBy.findIndex((u) => u === user._doc._id) == -1) {
+                if (post.likedBy.findIndex((u) => u === req.body.id) == -1) {
                     await post.likedBy.push(user);
                     return await post.save();
                 }
@@ -96,7 +96,7 @@ router.put('/posts/like/:id', (req, res, next) => {
                 let user = await db.User.findById(req.body.id);
                 console.log(user)
                 let to_remove = post.likedBy.findIndex((u) => {
-                    return u === user._doc._id;
+                    return u === req.body.id;
                 });
                 console.log(to_remove)
                 if (to_remove !== -1) {
