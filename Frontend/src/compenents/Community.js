@@ -70,10 +70,9 @@ class ScrollTopButton extends React.Component {
         styles: {
           position: "fixed",
           top: "4.4rem",
-          left: `${
-            document.querySelector(".feed-wrapper").getBoundingClientRect()
-              .left - 60
-          }px`,
+          left: `${document.querySelector(".feed-wrapper").getBoundingClientRect()
+            .left - 60
+            }px`,
           display: `${this.state.visible ? "block" : "none"}`,
         },
       });
@@ -107,10 +106,9 @@ class ScrollTopButton extends React.Component {
       this.styles = {
         position: "fixed",
         top: "4.4rem",
-        left: `${
-          document.querySelector(".feed-wrapper").getBoundingClientRect().left -
+        left: `${document.querySelector(".feed-wrapper").getBoundingClientRect().left -
           60
-        }px`,
+          }px`,
         display: `${this.state.visible ? "block" : "none"}`,
       };
 
@@ -183,7 +181,7 @@ class PostWall extends React.Component {
       postList: {},
       loggedin: {
         fname: "mai",
-        lname:"hu",
+        lname: "hu",
         avatar: "https://i.redd.it/0cin4hvettn51.png",
         id: "5fc3e5a0fe0c31080ccb2654",
       },
@@ -274,7 +272,11 @@ class Post extends React.Component {
     this.addCommentDecorator = this.addCommentDecorator.bind(this);
     this.handleImageLoad = this.handleImageLoad.bind(this);
   }
-
+  // assignMessageEnd(el) {
+  //   console.log(el);
+  //   el.preventDefault();
+  //   this.messagesEnd = el;
+  // }
   handleImageLoad(e) {
     this.setState({ imageLoaded: true });
   }
@@ -321,17 +323,21 @@ class Post extends React.Component {
     apiCall(
       "post",
       "/api/community/posts/comments/" + this.id,
-      {id:this.props.loggedin.id,
-        text:commentText,}
+      {
+        id: this.props.loggedin.id,
+        text: commentText,
+      }
     )
     this.state.comments.push({
-      author:{fname: this.props.loggedin.fname,
-        lname:this.props.loggedin.lname,
-      photo: this.props.loggedin.avatar,},
+      author: {
+        fname: this.props.loggedin.fname,
+        lname: this.props.loggedin.lname,
+        photo: this.props.loggedin.avatar,
+      },
       text: commentText,
     });
     form.text.value = "";
-    this.setState({ ...this.state , commentsExpanded: true}); //vedant kya karta hai
+    this.setState({ ...this.state, commentsExpanded: true }); //vedant kya karta hai
   }
 
   showComments(e) {
@@ -347,6 +353,7 @@ class Post extends React.Component {
     e.preventDefault();
     this.showComments(e);
     this.addCommentHandler(e);
+    // this.scrollToBottom();
   }
 
   render() {
@@ -373,7 +380,9 @@ class Post extends React.Component {
             isLiked={this.state.isLiked}
             showComments={this.showComments}
           />
+
           <Comments
+            messageEnd={this.messagesEnd}
             comments={this.state.comments}
             isExpanded={this.state.commentsExpanded}
             hideComment={this.hideComment}
@@ -389,6 +398,15 @@ class Post extends React.Component {
 }
 
 class Comments extends React.Component {
+  constructor(props) {
+    super(props);
+    this.commentEnd = {};
+  }
+  componentDidUpdate() {
+    if (this.commentEnd) {
+      this.commentEnd.scrollTop = this.commentEnd.scrollHeight;
+    }
+  }
   render() {
     if (!this.props.comments.length || !this.props.isExpanded)
       return <div className="empty-comments"></div>;
@@ -420,7 +438,7 @@ class Comments extends React.Component {
     return (
       <div className="comments-container">
         {this.props.isExpanded ? hideButton : ""}
-        <div className="comments-wrapper ui threaded comments">
+        <div className="comments-wrapper ui threaded comments" ref={el => { this.commentEnd = el; }} >
           {commentsArr}
         </div>
       </div>
