@@ -207,7 +207,7 @@ class InternshipDetail extends Component {
     const { exists, start } = this.state;
     console.log(exists);
     return (
-      <div>
+      <div className="internshipDetails">
         <Navbar></Navbar>
         {this.contentDisplay(exists, start)}
         <PageFooter />

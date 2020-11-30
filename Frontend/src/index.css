@@ -545,13 +545,13 @@ body{
 #internshipdetail .applynow .btn:hover{
    background-color: #ffcb3dad;
 }
-.loading-anime{
-   min-height: 500px;
+  .internshipDetails .loading-anime{
+   min-height: 700px;
    text-align: center;
    margin:auto;
    padding-top: 15%;
 }
-.loading-wheel{
+ .internshipDetails .loading-wheel{
    vertical-align: center;
 }
 /* *********End Internship Details ************ */
