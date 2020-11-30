@@ -266,11 +266,7 @@ style 2--
   animation: fadeIn;
   min-height: 800px;
 }
-.homePage .loading-anime{
-  min-height: 700px;
-  text-align: center;
-  margin:auto;
-}
+
 
 
 #top-bar.btn-circle.btn-lg {
@@ -306,6 +302,13 @@ style 2--
 sub{
   margin-left: 15px;
   color: rgb(80, 80, 80);
+}
+
+.homePage .loading-anime{
+  min-height: 700px;
+  text-align: center;
+  margin:auto;
+  padding-top: 0% !important;
 }
 /* **************** End Internship List ***************/
 
@@ -551,14 +554,13 @@ body{
 #internshipdetail .applynow .btn:hover{
    background-color: #ffcb3dad;
 }
-  .internshipDetails .loading-anime{
+ .loading-anime{
    min-height: 700px;
    text-align: center;
    margin:auto;
    padding-top: 15%;
 }
- .internshipDetails .loading-wheel{
-
+ .loading-wheel{
    vertical-align: center;
 }
 /* *********End Internship Details ************ */
@@ -1021,3 +1023,6 @@ body {
    background-color: DodgerBlue !important; 
    color: #ffffff; 
  }
+
+ /* **********Internship Details************* */
+
