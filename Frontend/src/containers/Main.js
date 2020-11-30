@@ -9,6 +9,8 @@ import IntershipDetail from './InternshipDetails/InternshipDetails'
 import Community from '../compenents/Community'
 import NotFound from '../images/NotFound'
 import EmailVerificaton from '../containers/Utils/EmailVerification';
+import Profile from '../compenents/Profile';
+import MyInternships from '../compenents/MyInternships'
 
 
 const Main = (props) => {
@@ -22,6 +24,8 @@ const Main = (props) => {
                 <Route exact path="/internship/:id" render={props => <IntershipDetail {...props} />} />
                 <Route exact path="/community" render={props => <Community {...props} />} />
                 <Route exact path="/verify-email/:token" render={props => <EmailVerificaton {...props} onVerify={setCurrentUser} />} />
+                <Route exact path="/user/:id" render={props => <Profile {...props} />} />
+                <Route exact path="/myinternships" render={props => <MyInternships {...props} />} />
                 <Route path="*" render={props => <NotFound {...props} />} />
             </Switch>
         </div>

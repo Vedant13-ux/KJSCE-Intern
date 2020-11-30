@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models');
+const { populate } = require('../models/user');
 
 // Getting Posts
 router.get('/posts/getAll', (req, res, next) => {
-    db.Post.find().populate('author').populate('comments').limit(10).exec()
+    db.Post.find().populate('author').populate({ path: 'comments', populate: { path: 'author' } }).limit(10).exec()
         .then(posts => {
             res.status(200).send(posts);
         })
@@ -17,7 +18,6 @@ router.get('/posts/getNext', (req, res, next) => {
             res.status(200).send(posts);
         })
         .catch(err => next(err))
-
 });
 router.get('/posts/:id', (req, res, next) => {
     db.Post.findById(req.params.id)
