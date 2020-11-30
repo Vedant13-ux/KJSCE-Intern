@@ -4,7 +4,6 @@ const db = require('../models');
 
 // Getting Posts
 router.get('/posts/getAll', (req, res, next) => {
-    console.log("aya");
     db.Post.find().populate('author').limit(10).exec()
         .then(posts => {
             res.status(200).send(posts);
@@ -56,6 +55,7 @@ router.put('/posts/edit/:id', (req, res, next) => {
 });
 
 router.post('/posts/like/:id', (req, res, next) => {
+    console.log("bruh aya")
     db.Post.findById(req.params.id)
         .then(async (post) => {
             if (!post) {
@@ -65,6 +65,7 @@ router.post('/posts/like/:id', (req, res, next) => {
                 })
             }
             try {
+                console.log("post mila",req.body)
                 let user = await db.User.findById(req.body.id);
                 if (post.likedBy.findIndex((u) => u == user._id) == -1) {
                     await post.likedBy.push(user);
@@ -81,6 +82,7 @@ router.post('/posts/like/:id', (req, res, next) => {
 
 
 router.put('/posts/like/:id', (req, res, next) => {
+    console.log("aya yaha par")
     db.Post.findById(req.params.id)
         .then(async (post) => {
             if (!post) {
@@ -90,14 +92,18 @@ router.put('/posts/like/:id', (req, res, next) => {
                 })
             }
             try {
+                console.log("sahi hona chahiya",req.body.id)
                 let user = await db.User.findById(req.body.id);
+                console.log(user)
                 let to_remove = post.likedBy.findIndex((u) => {
                     return u == user._id;
                 });
+                console.log(to_remove)
                 if (to_remove !== -1) {
                     await post.likedBy.splice(to_remove, 1)
                     return await post.save();
                 }
+                
                 // return next({
                 //     status: 403,
                 //     message: 'You do not like this post.'
