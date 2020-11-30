@@ -345,12 +345,12 @@ class Post extends React.Component {
           />
           <div className="post-content">
             <p>{this.content}</p>
-
-            {/* <img onLoad={this.handleImageLoad} src={this.img} alt=""></img> */}
-            <div
+            
+            <img onLoad={this.handleImageLoad} src={this.img} alt=""></img>
+            {/* <div
               class="ui placeholder">
               <div class="square image"></div>
-            </div>
+            </div> */}
           </div>
           <PostInfo
             likes={this.state.likes}
