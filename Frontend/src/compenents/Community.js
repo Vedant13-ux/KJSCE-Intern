@@ -70,9 +70,10 @@ class ScrollTopButton extends React.Component {
         styles: {
           position: "fixed",
           top: "4.4rem",
-          left: `${document.querySelector(".feed-wrapper").getBoundingClientRect()
-            .left - 60
-            }px`,
+          left: `${
+            document.querySelector(".feed-wrapper").getBoundingClientRect()
+              .left - 60
+          }px`,
           display: `${this.state.visible ? "block" : "none"}`,
         },
       });
@@ -106,9 +107,10 @@ class ScrollTopButton extends React.Component {
       this.styles = {
         position: "fixed",
         top: "4.4rem",
-        left: `${document.querySelector(".feed-wrapper").getBoundingClientRect().left -
+        left: `${
+          document.querySelector(".feed-wrapper").getBoundingClientRect().left -
           60
-          }px`,
+        }px`,
         display: `${this.state.visible ? "block" : "none"}`,
       };
 
@@ -180,9 +182,10 @@ class PostWall extends React.Component {
       start: true,
       postList: {},
       loggedin: {
-        name: "mai hu",
-        avatar: "https://i.redd.it/1y3vw360an031.png",
-        id: "5fc3e5d1fc33db6a66886586",
+        fname: "mai",
+        lname:"hu",
+        avatar: "https://i.redd.it/0cin4hvettn51.png",
+        id: "5fc3e5a0fe0c31080ccb2654",
       },
       localList: {},
     };
@@ -206,11 +209,7 @@ class PostWall extends React.Component {
       elem.unshift(this.getPostById(key));
     }
     if (!elem.length) {
-      if (this.state.start)
-        elem.push(
-          <div>
-          </div>
-        );
+      if (this.state.start) elem.push(<div></div>);
       else
         elem.push(
           <div className="message" key={-2}>
@@ -222,12 +221,14 @@ class PostWall extends React.Component {
   }
 
   componentDidMount() {
-    apiCall("get", "/api/community/posts/getAll", "").then((data) => {
-      this.setState({ ...this.state, localList: data, start: false });
-      console.log(this.state.localList);
-    }).catch(e => {
-      this.setState({ ...this.state, start: false })
-    })
+    apiCall("get", "/api/community/posts/getAll", "")
+      .then((data) => {
+        this.setState({ ...this.state, localList: data, start: false });
+        console.log(this.state.localList);
+      })
+      .catch((e) => {
+        this.setState({ ...this.state, start: false });
+      });
   }
 
   render() {
@@ -247,12 +248,13 @@ class Post extends React.Component {
   constructor(props) {
     super(props);
     let options = props.options;
+    console.log(options.comments)
     this.state = {
-      commentsExpanded: true,
+      commentsExpanded: false,
       likes: options.likedBy.length,
       isLiked: options.likedBy.includes(props.loggedin.id),
-      comments: [],
-      imageLoaded: false
+      comments: options.comments,
+      imageLoaded: false,
     };
     this.id = options._id;
     this.content = options.content;
@@ -287,15 +289,23 @@ class Post extends React.Component {
     if (!this.state.isLiked) {
       button.classList.toggle("liked");
       lik++;
-      apiCall("post", "/api/community/posts/like/" + this.id, this.props.loggedin).then(
-        (data) => console.log(data)
-      ).catch(e => console.log(e))
+      apiCall(
+        "post",
+        "/api/community/posts/like/" + this.id,
+        this.props.loggedin
+      )
+        .then((data) => console.log(data))
+        .catch((e) => console.log(e));
     } else {
       button.classList.toggle("liked");
       lik--;
-      apiCall("put", "/api/community/posts/like/" + this.id, this.props.loggedin).then(
-        (data) => console.log(data)
-      ).catch(e => console.log(e))
+      apiCall(
+        "put",
+        "/api/community/posts/like/" + this.id,
+        this.props.loggedin
+      )
+        .then((data) => console.log(data))
+        .catch((e) => console.log(e));
     }
     this.setState({ ...this.state, isLiked: !this.state.isLiked, likes: lik });
   }
@@ -308,11 +318,17 @@ class Post extends React.Component {
       form.text.value = "";
       return;
     }
+    apiCall(
+      "post",
+      "/api/community/posts/comments/" + this.id,
+      {id:this.props.loggedin.id,
+        text:commentText,}
+    )
     this.state.comments.push({
-      name: this.props.loggedin.name,
-      avatar: this.props.loggedin.avatar,
+      author:{fname: this.props.loggedin.fname,
+        lname:this.props.loggedin.lname,
+      photo: this.props.loggedin.avatar,},
       text: commentText,
-      type: "user",
     });
     form.text.value = "";
     this.setState({ ...this.state });
@@ -334,7 +350,6 @@ class Post extends React.Component {
   }
 
   render() {
-
     return (
       <div className="post" id={this.id}>
         <div className="post-wrapper">
@@ -345,10 +360,9 @@ class Post extends React.Component {
           />
           <div className="post-content">
             <p>{this.content}</p>
-            
+
             <img onLoad={this.handleImageLoad} src={this.img} alt=""></img>
-            {/* <div
-              class="ui placeholder">
+            {/* <div class="ui placeholder">
               <div class="square image"></div>
             </div> */}
           </div>
@@ -381,16 +395,35 @@ class Comments extends React.Component {
 
     let commentsArr = this.props.comments.map((val, i) => {
       return (
-        <div className="comment" key={i}>
-          <div className="user-avatar">
-            <img src={val.avatar} alt="author avatar"></img>
-          </div>
-          <div className="user-data">
-            <div className="username">{val.name}</div>
-
-            <div className="comment-text">{val.text}</div>
+        <div class="comment">
+          <a class="avatar" href="/">
+            <img alt="" src={val.author.photo} />
+          </a>
+          <div class="content">
+            <a href="/" class="author">
+              {val.author.fname+' '+val.author.lname}
+            </a>
+            <div class="metadata">
+              <span class="date">Today at 5:42PM</span>
+            </div>
+            <div class="text">{val.text}</div>
+            <div class="actions">
+              <a href="/" class="reply">
+                Like
+              </a>
+            </div>
           </div>
         </div>
+        // <div className="comment" key={i}>
+        //   <div className="user-avatar">
+        //     <img src={val.avatar} alt="author avatar"></img>
+        //   </div>
+        //   <div className="user-data">
+        //     <div className="username">{val.name}</div>
+
+        //     <div className="comment-text">{val.text}</div>
+        //   </div>
+        // </div>
       );
     });
 
@@ -405,7 +438,9 @@ class Comments extends React.Component {
     return (
       <div className="comments-container">
         {this.props.isExpanded ? hideButton : ""}
-        <div className="comments-wrapper">{commentsArr}</div>
+        <div className="comments-wrapper ui threaded comments">
+          {commentsArr}
+        </div>
       </div>
     );
   }
