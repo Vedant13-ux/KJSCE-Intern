@@ -80,7 +80,7 @@ router.post('/posts/like/:id', (req, res, next) => {
 });
 
 
-router.delete('/posts/like/:id', (req, res, next) => {
+router.put('/posts/like/:id', (req, res, next) => {
     db.Post.findById(req.params.id)
         .then(async (post) => {
             if (!post) {

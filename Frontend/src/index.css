@@ -235,6 +235,7 @@ style 2--
 /* */
 .carousel{
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  animation: fadeIn forwards 1s;
 }
 
 .float-bx{
@@ -647,6 +648,7 @@ body {
    }
 }
 
+
 .message {
    width: 600px;
    height: auto;
@@ -759,8 +761,10 @@ body {
   height: 100%;
 }
 
-.post-content .placeholder{
-  width:inherit;
+.post .post-content .content .ui.placeholder .square.image{
+  padding-top:400px;
+  padding-left: 600px;
+  width: 100%;
 }
 
 .hide-comments-button {

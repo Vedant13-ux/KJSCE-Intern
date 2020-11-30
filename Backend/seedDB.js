@@ -8,7 +8,7 @@ function seedDB() {
     var data = {};
     for (let i = 0; i < 7; i++) {
         data = {
-            faculty: "5fc289f1ab6dbe0c98dfc1ab",
+            faculty: "5fc3e5a0fe0c31080ccb2654",
             title: 'Python Programming',
             skillsRequired: ['Python', "java"],
             duration: `${Math.floor(Math.random() * 13)} months`,
@@ -28,7 +28,7 @@ function seedDB() {
             title: faker.lorem.words(3),
             content: faker.lorem.lines(3),
             image: faker.image.imageUrl(),
-            author: "5fc289f1ab6dbe0c98dfc1ab",
+            author: "5fc3e5a0fe0c31080ccb2654",
             hashtags: faker.lorem.word(1)
         }
         db.Post.create(data)
