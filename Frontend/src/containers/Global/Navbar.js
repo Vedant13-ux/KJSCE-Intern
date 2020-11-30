@@ -32,12 +32,12 @@ class Navbar extends Component {
                             <MContext.Consumer>
                                 {
                                     context => (
-                                        <div><input onChange={(e) => context.setMessage(e.target.value)} className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="internshipSerach" />
-                                        <button onClick={(e)=>{context.searched()}} className="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+                                        <div><input onKeyPress={e => { if (e.which === 13) { context.searched() } }} onChange={(e) => context.setMessage(e.target.value)} className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="internshipSerach" />
+                                            <button onClick={(e) => { context.searched() }} className="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
                                         </div>)
                                 }
                             </MContext.Consumer>
-                            
+
                         </div>
                         <ul className="navbar-nav mr-auto">
 
