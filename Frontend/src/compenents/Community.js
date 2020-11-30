@@ -268,7 +268,7 @@ class Post extends React.Component {
     this.state = {
       commentsExpanded: true,
       likes: options.likedBy.length,
-      isLiked: false,// options.likedBy.includes(props.loggedin.id),
+      isLiked: options.likedBy.includes(props.loggedin.id),
       comments: [],
       imageLoaded: false
     };
