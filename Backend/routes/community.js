@@ -4,7 +4,7 @@ const db = require('../models');
 
 // Getting Posts
 router.get('/posts/getAll', (req, res, next) => {
-    db.Post.find().populate('author').limit(10).exec()
+    db.Post.find().populate('author').populate('comments').limit(10).exec()
         .then(posts => {
             res.status(200).send(posts);
         })
@@ -112,6 +112,102 @@ router.put('/posts/like/:id', (req, res, next) => {
 
         })
 });
+
+// COmments
+router.get('/posts/comments/:id', (req, res, next) => {
+    db.Post.findById(req.params.id).populate('comments').exec()
+        .then((post) => {
+            if (!post) {
+                return next({
+                    status: 404,
+                    message: 'Post Not Found'
+                })
+            }
+            res.send(post.comments);
+
+        }).catch((err) => {
+            next(err);
+        });
+});
+
+router.post('/posts/comments/:id', (req, res, next) => {
+    db.Post.findById(req.params.id)
+        .then(async (post) => {
+            if (!post) {
+                return next({
+                    status: 404,
+                    message: 'Post Not Found'
+                })
+            }
+            try {
+                console.log("post mila", req.body);
+                let user = await db.User.findById(req.body.id);
+                commentBody = {
+                    author: user,
+                    text: req.body.text
+                }
+                db.Comment.create(commentBody)
+                    .then(async (comment) => {
+                        await post.comments.push(comment);
+                        await post.save();
+                        res.status(200).send(comment);
+                        return;
+                    }).catch((err) => {
+                        return next(err);
+                    });
+            } catch (err) { next(err) }
+
+        })
+        .catch(err => next(err));
+});
+
+router.put('/posts/comments/edit/:id', (req, res, next) => {
+    db.Comment.findByIdAndUpdate(req.params.id, req.body)
+        .then((comment) => {
+            if (!comment) {
+                next({
+                    status: 404,
+                    message: 'Comment Not Found'
+                })
+            }
+            res.send(comment);
+        })
+        .catch((err) => {
+            next(err)
+        });
+});
+router.delete('/posts/comments/delete/:postId/:cmntId', (req, res, next) => {
+    db.Post.findById(req.params.id).populate('comments')
+        .then((post) => {
+            if (!post) {
+                return next({
+                    status: 404,
+                    message: 'Post Not Found'
+                })
+            }
+            db.Comment.findByIdAndRemove(req.params.cmntId)
+                .then(async (comment) => {
+                    if (!comment) {
+                        return next({
+                            status: 404,
+                            message: 'Comment Not Found'
+                        })
+                    }
+                    const toRemove = post.comments.findIndex(cmnt => cmnt == req.params.cmntId);
+                    if (toRemove != -1) {
+                        await post.comments.splice(toRemove, 1);
+                        await post.save();
+                        return res.send(posts.comments);
+                    }
+
+                }).catch((err) => {
+                    next(err);
+                });
+
+        }).catch((err) => {
+            next(err);
+        });
+})
 
 
 module.exports = router;
