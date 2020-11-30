@@ -70,10 +70,9 @@ class ScrollTopButton extends React.Component {
         styles: {
           position: "fixed",
           top: "4.4rem",
-          left: `${
-            document.querySelector(".feed-wrapper").getBoundingClientRect()
-              .left - 60
-          }px`,
+          left: `${document.querySelector(".feed-wrapper").getBoundingClientRect()
+            .left - 60
+            }px`,
           display: `${this.state.visible ? "block" : "none"}`,
         },
       });
@@ -107,10 +106,9 @@ class ScrollTopButton extends React.Component {
       this.styles = {
         position: "fixed",
         top: "4.4rem",
-        left: `${
-          document.querySelector(".feed-wrapper").getBoundingClientRect().left -
+        left: `${document.querySelector(".feed-wrapper").getBoundingClientRect().left -
           60
-        }px`,
+          }px`,
         display: `${this.state.visible ? "block" : "none"}`,
       };
 
@@ -219,12 +217,12 @@ class PostWall extends React.Component {
                 </div>
               </div>
               <div className="post-content">
-              <div class="ui placeholder">
-                <div class="paragraph">
-                  <div class="medium line"></div>
-                  <div class="short line"></div>
-                </div>
-                
+                <div class="ui placeholder">
+                  <div class="paragraph">
+                    <div class="medium line"></div>
+                    <div class="short line"></div>
+                  </div>
+
                   <div class="image "></div>
                 </div>
               </div>
@@ -243,10 +241,10 @@ class PostWall extends React.Component {
 
   componentDidMount() {
     apiCall("get", "/api/community/posts/getAll", "").then((data) => {
-      this.setState({ ...this.state, localList: data,start:false });
+      this.setState({ ...this.state, localList: data, start: false });
       console.log(this.state.localList);
-    }).catch(e=>{
-      this.setState({...this.state,start:false})
+    }).catch(e => {
+      this.setState({ ...this.state, start: false })
     })
   }
 
@@ -272,6 +270,7 @@ class Post extends React.Component {
       likes: options.likedBy.length,
       isLiked: false,// options.likedBy.includes(props.loggedin.id),
       comments: [],
+      imageLoaded: false
     };
     this.id = options._id;
     this.content = options.content;
@@ -289,6 +288,11 @@ class Post extends React.Component {
     this.showComments = this.showComments.bind(this);
     this.hideComment = this.hideComment.bind(this);
     this.addCommentDecorator = this.addCommentDecorator.bind(this);
+    this.handleImageLoad = this.handleImageLoad.bind(this);
+  }
+
+  handleImageLoad(e) {
+    this.setState({ imageLoaded: true });
   }
 
   get commentsCount() {
@@ -348,6 +352,7 @@ class Post extends React.Component {
   }
 
   render() {
+
     return (
       <div className="post" id={this.id}>
         <div className="post-wrapper">
@@ -358,7 +363,13 @@ class Post extends React.Component {
           />
           <div className="post-content">
             <p>{this.content}</p>
-            <img loading="lazy" src={this.img} alt=""></img>
+
+            {/* <img onLoad={this.handleImageLoad} src={this.img} alt=""></img> */}
+            <div class="content">
+              <div class="ui placeholder">
+                <div class="square image"></div>
+              </div>
+            </div>
           </div>
           <PostInfo
             likes={this.state.likes}
