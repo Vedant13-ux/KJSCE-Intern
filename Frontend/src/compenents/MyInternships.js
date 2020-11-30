@@ -15,7 +15,7 @@ class Profile extends Component {
         return (
             <div>
                 <Navbar />
-                <div id="userProfile" style={{minHeight:"800px"}}>
+                <div id="userProfile">
                     <h1>Hello world</h1>
                 </div>
                 <PageFooter />

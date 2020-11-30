@@ -10,7 +10,8 @@ import Community from '../compenents/Community'
 import NotFound from '../images/NotFound'
 import EmailVerificaton from '../containers/Utils/EmailVerification';
 import Profile from '../compenents/Profile';
-import MyInternships from '../compenents/MyInternships'
+import MyInternships from '../compenents/MyInternships';
+import '../index2.css'
 
 
 const Main = (props) => {
