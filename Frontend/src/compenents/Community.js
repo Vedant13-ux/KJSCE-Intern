@@ -70,10 +70,9 @@ class ScrollTopButton extends React.Component {
         styles: {
           position: "fixed",
           top: "4.4rem",
-          left: `${
-            document.querySelector(".feed-wrapper").getBoundingClientRect()
-              .left - 60
-          }px`,
+          left: `${document.querySelector(".feed-wrapper").getBoundingClientRect()
+            .left - 60
+            }px`,
           display: `${this.state.visible ? "block" : "none"}`,
         },
       });
@@ -107,10 +106,9 @@ class ScrollTopButton extends React.Component {
       this.styles = {
         position: "fixed",
         top: "4.4rem",
-        left: `${
-          document.querySelector(".feed-wrapper").getBoundingClientRect().left -
+        left: `${document.querySelector(".feed-wrapper").getBoundingClientRect().left -
           60
-        }px`,
+          }px`,
         display: `${this.state.visible ? "block" : "none"}`,
       };
 
@@ -183,7 +181,7 @@ class PostWall extends React.Component {
       postList: {},
       loggedin: {
         fname: "mai",
-        lname:"hu",
+        lname: "hu",
         avatar: "https://i.redd.it/0cin4hvettn51.png",
         id: "5fc3e5a0fe0c31080ccb2654",
       },
@@ -273,8 +271,12 @@ class Post extends React.Component {
     this.hideComment = this.hideComment.bind(this);
     this.addCommentDecorator = this.addCommentDecorator.bind(this);
     this.handleImageLoad = this.handleImageLoad.bind(this);
+    this.scrollToBottom = this.scrollToBottom.bind(this);
   }
 
+  scrollToBottom(e) {
+    e.target.scrollHeight = e.target.scrollHeight;
+  }
   handleImageLoad(e) {
     this.setState({ imageLoaded: true });
   }
@@ -312,7 +314,6 @@ class Post extends React.Component {
 
   addCommentHandler(e) {
     e.preventDefault();
-    
     let form = e.target;
     let commentText = form.text.value.trim();
     if (!commentText.length) {
@@ -322,17 +323,21 @@ class Post extends React.Component {
     apiCall(
       "post",
       "/api/community/posts/comments/" + this.id,
-      {id:this.props.loggedin.id,
-        text:commentText,}
+      {
+        id: this.props.loggedin.id,
+        text: commentText,
+      }
     )
     this.state.comments.push({
-      author:{fname: this.props.loggedin.fname,
-        lname:this.props.loggedin.lname,
-      photo: this.props.loggedin.avatar,},
+      author: {
+        fname: this.props.loggedin.fname,
+        lname: this.props.loggedin.lname,
+        photo: this.props.loggedin.avatar,
+      },
       text: commentText,
     });
     form.text.value = "";
-    this.setState({ ...this.state , commentsExpanded: true});
+    this.setState({ ...this.state });
   }
 
   showComments(e) {
@@ -402,7 +407,7 @@ class Comments extends React.Component {
           </a>
           <div class="content">
             <a href="/" class="author">
-              {val.author.fname+' '+val.author.lname}
+              {val.author.fname + ' ' + val.author.lname}
             </a>
             <div class="metadata">
               <span class="date">Today at 5:42PM</span>
