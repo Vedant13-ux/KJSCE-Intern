@@ -52,6 +52,10 @@ class Navbar extends Component {
                             <li className="nav-item">
                                 <Link className="nav-link" to="/messaging"><i class="fas fa-envelope mr-1"></i>Messaging</Link>
                             </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/myinternships"><i class="fas fa-briefcase mr-1"></i>My Internships</Link>
+                            </li>
+
                         </ul>
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item">
