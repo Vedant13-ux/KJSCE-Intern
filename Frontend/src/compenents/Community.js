@@ -271,12 +271,12 @@ class Post extends React.Component {
     this.hideComment = this.hideComment.bind(this);
     this.addCommentDecorator = this.addCommentDecorator.bind(this);
     this.handleImageLoad = this.handleImageLoad.bind(this);
-    this.scrollToBottom = this.scrollToBottom.bind(this);
   }
-
-  scrollToBottom(e) {
-    e.target.scrollHeight = e.target.scrollHeight;
-  }
+  // assignMessageEnd(el) {
+  //   console.log(el);
+  //   el.preventDefault();
+  //   this.messagesEnd = el;
+  // }
   handleImageLoad(e) {
     this.setState({ imageLoaded: true });
   }
@@ -337,7 +337,7 @@ class Post extends React.Component {
       text: commentText,
     });
     form.text.value = "";
-    this.setState({ ...this.state , commentsExpanded: true}); //vedant kya karta hai
+    this.setState({ ...this.state, commentsExpanded: true }); //vedant kya karta hai
   }
 
   showComments(e) {
@@ -353,6 +353,7 @@ class Post extends React.Component {
     e.preventDefault();
     this.showComments(e);
     this.addCommentHandler(e);
+    // this.scrollToBottom();
   }
 
   render() {
@@ -379,7 +380,9 @@ class Post extends React.Component {
             isLiked={this.state.isLiked}
             showComments={this.showComments}
           />
+
           <Comments
+            messageEnd={this.messagesEnd}
             comments={this.state.comments}
             isExpanded={this.state.commentsExpanded}
             hideComment={this.hideComment}
@@ -395,6 +398,15 @@ class Post extends React.Component {
 }
 
 class Comments extends React.Component {
+  constructor(props) {
+    super(props);
+    this.commentEnd = {};
+  }
+  componentDidUpdate() {
+    if (this.commentEnd) {
+      this.commentEnd.scrollTop = this.commentEnd.scrollHeight;
+    }
+  }
   render() {
     if (!this.props.comments.length || !this.props.isExpanded)
       return <div className="empty-comments"></div>;
@@ -420,16 +432,6 @@ class Comments extends React.Component {
             </div>
           </div>
         </div>
-        // <div className="comment" key={i}>
-        //   <div className="user-avatar">
-        //     <img src={val.avatar} alt="author avatar"></img>
-        //   </div>
-        //   <div className="user-data">
-        //     <div className="username">{val.name}</div>
-
-        //     <div className="comment-text">{val.text}</div>
-        //   </div>
-        // </div>
       );
     });
 
@@ -444,7 +446,7 @@ class Comments extends React.Component {
     return (
       <div className="comments-container">
         {this.props.isExpanded ? hideButton : ""}
-        <div className="comments-wrapper ui threaded comments">
+        <div className="comments-wrapper ui threaded comments" ref={el => { this.commentEnd = el; }} >
           {commentsArr}
         </div>
       </div>
