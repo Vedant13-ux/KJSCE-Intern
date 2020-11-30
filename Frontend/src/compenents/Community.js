@@ -327,7 +327,7 @@ class Post extends React.Component {
     this.state.comments.push({
       author:{fname: this.props.loggedin.fname,
         lname:this.props.loggedin.lname,
-      avatar: this.props.loggedin.avatar,},
+      photo: this.props.loggedin.avatar,},
       text: commentText,
     });
     form.text.value = "";
@@ -397,7 +397,7 @@ class Comments extends React.Component {
       return (
         <div class="comment">
           <a class="avatar" href="/">
-            <img alt="" src={val.author.avatar} />
+            <img alt="" src={val.author.photo} />
           </a>
           <div class="content">
             <a href="/" class="author">
