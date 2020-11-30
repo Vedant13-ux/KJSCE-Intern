@@ -67,10 +67,7 @@ router.post('/posts/like/:id', (req, res, next) => {
             try {
                 console.log("post mila", req.body)
                 let user = await db.User.findById(req.body.id);
-                if (post.likedBy.findIndex((u) => u === req.body.id) == -1) {
-                    await post.likedBy.push(user);
-                    return await post.save();
-                }
+   
                 return next({
                     status: 403,
                     message: 'You have already liked this post'
