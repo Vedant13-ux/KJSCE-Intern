@@ -784,6 +784,8 @@ body {
 
 .comments-wrapper {
    padding: 20px;
+   max-height: 300px;
+   overflow-y: auto;
 }
 
 .comments-wrapper :last-child {

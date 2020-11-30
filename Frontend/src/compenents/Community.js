@@ -312,6 +312,7 @@ class Post extends React.Component {
 
   addCommentHandler(e) {
     e.preventDefault();
+    
     let form = e.target;
     let commentText = form.text.value.trim();
     if (!commentText.length) {
