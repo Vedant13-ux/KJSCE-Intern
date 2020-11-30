@@ -208,25 +208,7 @@ class PostWall extends React.Component {
     if (!elem.length) {
       if (this.state.start)
         elem.push(
-          <div className="post">
-            <div className="post-wrapper loading-post">
-              <div class="ui placeholder">
-                <div class="image header">
-                  <div class="line"></div>
-                  <div class="line"></div>
-                </div>
-              </div>
-              <div className="post-content">
-                <div class="ui placeholder">
-                  <div class="paragraph">
-                    <div class="medium line"></div>
-                    <div class="short line"></div>
-                  </div>
-
-                  <div class="image "></div>
-                </div>
-              </div>
-            </div>
+          <div>
           </div>
         );
       else
