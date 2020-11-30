@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Multiselect } from 'multiselect-react-dropdown';
+import { Multiselect } from "multiselect-react-dropdown";
 import { apiCall } from "../../services/api";
-
 
 class Intershipform extends Component {
   constructor(props) {
@@ -14,45 +13,50 @@ class Intershipform extends Component {
       numberOpenings: "",
       otherRequirements: "",
       department: "",
+      type: "Work from Home",
       description: "",
       perks: "",
       whoCanApply: "",
       faculty: "5fb247e8d6a6e304d0eeb65d",
-      skillData: [{ "text": 'Python' }, { "text": 'Node.Js' }, { "text": 'Django' }, { "text": 'Javascript' }, { "text": 'C++' }, { "text": "React Native" }],
-
+      skillData: [
+        { text: "Python" },
+        { text: "Node.Js" },
+        { text: "Django" },
+        { text: "Javascript" },
+        { text: "C++" },
+        { text: "React Native" },
+      ],
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSkills = this.handleSkills.bind(this);
     this.multiselectRef = React.createRef();
-
-
   }
 
   handleChange(e) {
-    return this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value });
   }
   handleSkills() {
-    const skillInput = document.querySelector('.searchBox');
+    const skillInput = document.querySelector(".searchBox");
     var query = skillInput.value;
     console.log(query);
-    apiCall('get', '/api/internship/skillSuggestion/' + query, '')
-      .then(data => {
-        console.log(data)
-        this.setState({ skillData: data })
+    apiCall("get", "/api/internship/skillSuggestion/" + query, "")
+      .then((data) => {
+        console.log(data);
+        this.setState({ skillData: data });
       })
-      .catch(err => console.log(err))
-
+      .catch((err) => console.log(err));
   }
   async handleSubmit(e) {
+    console.log(this.state);
     e.preventDefault();
     var skills = this.multiselectRef.current.getSelectedItems();
     var skillArray = [];
-    skills.forEach(skill => {
-      skillArray.push(skill['text']);
+    skills.forEach((skill) => {
+      skillArray.push(skill["text"]);
     });
-    await this.setState({ skillsRequired: skillArray })
+    await this.setState({ skillsRequired: skillArray });
     // apiCall("post", '/api/internship/details', this.state).then(
     //   data => {
     //     console.log(data);
@@ -61,8 +65,6 @@ class Intershipform extends Component {
     // )
     console.log(this.state);
   }
-
-
 
   render() {
     const {
@@ -148,8 +150,17 @@ class Intershipform extends Component {
               ></input>
             </div>
           </div>
+          <div class="field">
+              <label>Type</label>
+              </div>
+          <input type="radio" id="wfh" onChange={this.handleChange} name="type" value="Work from Home" />
+          <label for="wfh">Work from Home</label>
+          <br />
+          <input type="radio" id="ext" onChange={this.handleChange} name="type" value="External" />
+          <label for="ext">External</label>
+          <br></br>
         </div>
-        
+
         <label className="skillsRequired">Skills Required</label>
         <Multiselect
           options={this.state.skillData} // Options to display in the dropdown
