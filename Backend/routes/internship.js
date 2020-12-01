@@ -31,16 +31,17 @@ router.get('/search/title/:query', async (req, res, next) => {
 });
 
 
-router.get('/search/filter', async (req, res, next) => {
+router.post('/search/filter', (req, res, next) => {
     try {
+        console.log(req.body)
         var query = new RegExp(escapeRegex(req.body.query), 'gi');
         var { min, max, skills, type } = req.body;
         try {
             if (type.length === 1) {
-                let internships = await db.InternshipDetails.find({ title: query, skillsRequired: { $all: skills }, duration: { $gt: min }, duration: { $lt: max }, type: type[0] }).populate('faculty').exec();
+                let internships = db.InternshipDetails.find({ title: query, skillsRequired: { $all: skills }, duration: { $gt: min }, duration: { $lt: max }, type: type[0] }).populate('faculty').exec();
                 return res.status(200).send(internships);
             } else {
-                let internships = await db.InternshipDetails.find({ title: query, skillsRequired: { $all: skills }, $and: [{ duration: { $lt: 20 } }, { duration: 10 }], $or: [{ type: type[0] }, { type: type[1] }] }).populate('faculty').exec();
+                let internships = db.InternshipDetails.find({ title: query, skillsRequired: { $all: skills }, $and: [{ duration: { $lt: 20 } }, { duration: 10 }], $or: [{ type: type[0] }, { type: type[1] }] }).populate('faculty').exec();
                 return res.status(200).send(internships);
             }
         } catch (err) {

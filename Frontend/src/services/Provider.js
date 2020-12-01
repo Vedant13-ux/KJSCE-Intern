@@ -42,7 +42,7 @@ export class MyProvider extends Component {
                     filter:(r)=>{
                         r["query"]=this.state.query;
                         console.log("aya boi",r)
-                        apiCall("get", "/api/internship/search/filter", "",r)
+                        apiCall("post", "/api/internship/search/filter",r)
                             .then((internships) => {
                                 console.log("sahi hua")
                                 return this.setState({ ...this.state, list: internships });
