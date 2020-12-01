@@ -261,7 +261,9 @@ style 2--
 .float-bx:focus{
   outline:0px;
 }
-
+.float-bx .fa-plus{
+  color:#FFCA3D;
+}
 
 /* **************** Internship List ***************/
 .homeSection #intershiplist{
