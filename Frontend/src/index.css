@@ -268,22 +268,20 @@ style 2--
   min-height: 800px;
 }
 
-
-
 #top-bar.btn-circle.btn-lg {
   width: 40px;
   height: 40px;
   border-radius: 35px;
-  font-size: 20px;
+  font-size: 22px;
   line-height: 1.33;
   display: inline-block;
 }
 
 #top-bar .btn-circle {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   padding: 6px 0px;
-  border-radius: 15px;
+  border-radius: 30px;
   text-align: center;
   font-size: 12px;
   background-color: #020C53;
