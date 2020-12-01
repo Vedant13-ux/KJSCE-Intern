@@ -39,14 +39,15 @@ export class MyProvider extends Component {
                                 return this.setState({ ...this.state, list: internships });
                             })
                     },
-                    filter:(r)=>{
-                        r["query"]=this.state.query;
-                        console.log("aya boi",r)
-                        apiCall("post", "/api/internship/search/filter",r)
+                    filter: (r) => {
+                        r["query"] = this.state.query;
+                        console.log("aya boi", r)
+                        apiCall("post", "/api/internship/search/filter", r)
                             .then((internships) => {
-                                console.log("sahi hua")
+                                console.log("sahi hua");
+                                console.log(internships);
                                 return this.setState({ ...this.state, list: internships });
-                            }).catch((e)=>console.log(e))
+                            }).catch((e) => console.log(e))
                     }
                 }}
             >
