@@ -4,7 +4,6 @@ export const MContext = React.createContext(); //exporting context object
 export class MyProvider extends Component {
     state = {
         query: "",
-
         list: [],
     };
     componentDidMount() {
@@ -40,6 +39,15 @@ export class MyProvider extends Component {
                                 return this.setState({ ...this.state, list: internships });
                             })
                     },
+                    filter:(r)=>{
+                        r["query"]=this.state.query;
+                        console.log("aya boi",r)
+                        apiCall("get", "/api/internship/search/filter", "",r)
+                            .then((internships) => {
+                                console.log("sahi hua")
+                                return this.setState({ ...this.state, list: internships });
+                            }).catch((e)=>console.log(e))
+                    }
                 }}
             >
                 {this.props.children}
