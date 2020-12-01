@@ -130,6 +130,7 @@ class Intershipform extends Component {
               <input
                 type="number"
                 min="1"
+                max="12"
                 required
                 name="duration"
                 val={duration}
