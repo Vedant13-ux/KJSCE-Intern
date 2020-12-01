@@ -79,12 +79,10 @@ class FilterForm extends Component {
                     Apply Filters
                 </button>
 
-        <button type="button" class="btn btn-default">
-          Apply Filters
-        </button>
-      </div>
-    );
-  }
+
+            </div>
+        );
+    }
 }
 
 export default FilterForm;

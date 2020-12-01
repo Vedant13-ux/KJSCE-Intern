@@ -31,6 +31,18 @@ router.get('/search/title/:query', async (req, res, next) => {
 });
 
 
+router.get('/search/filter', async (req, res, next) => {
+    try {
+        var regex = new RegExp(escapeRegex(req.params.query), 'gi');
+        let internships = await db.InternshipDetails.find({ title: regex }).populate('faculty').exec();
+        res.status(200).send(internships);
+    } catch (err) {
+        next(err);
+    }
+
+});
+
+
 
 router.get('/search/skills', async (req, res, next) => {
     var skills = req.query.skills.split(',');
