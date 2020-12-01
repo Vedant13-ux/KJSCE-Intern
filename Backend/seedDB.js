@@ -6,12 +6,12 @@ const internship = require('./models/internship');
 
 function seedDB() {
     var data = {};
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 3; i++) {
         data = {
             // faculty: "5fc3e5a0fe0c31080ccb2654",
             faculty: "5fc3e5d1fc33db6a66886586",
-            title: 'Python Programming',
-            skillsRequired: ['Python', "java"],
+            title: 'Beating Up Huzaifa',
+            skillsRequired: ['Karate', "Boxing"],
             duration: Math.floor(Math.random() * 13),
             applyBy: Date.now(),
             numberOpenings: Math.floor(Math.random() * 3),
