@@ -273,46 +273,7 @@ style 2--
   animation: fadeIn;
   min-height: 800px;
 }
-.filterForm .toggle-wrap {
-  padding: 10px 0;
-}
 
-.filterForm .toggle-wrap label {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  
-}
-
-.filterForm .toggle-wrap input {
-  display: none;
-}
-
-.filterForm .toggle {
-  width: 30px;
-  height: 10px;
-  background: #d1d1d1;
-  border-radius: 50px;
-  position: relative;
-  margin-right: 10px;
-  margin-left: 0;
-}
-
-.filterForm .toggle .round {
-  position: absolute;
-  left: 0;
-  top: -3px;
-  width: 17px;
-  height: 17px;
-  border-radius: 50px;
-  background: #b6b6b6;
-  transition: left 0.3s;
-}
-
-.filterForm .toggle-wrap input:checked~label>.toggle .round {
-  left: 45%;
-  background: #7964b1;
-}
 
 #top-bar.btn-circle.btn-lg {
   width: 40px;
@@ -359,7 +320,59 @@ sub{
 }
 /* **************** End Internship List ***************/
 
+/* **************Filter Form (homePage) */
+.filterForm .toggle-wrap {
+  padding: 10px 10px;
+  display: inline-block;
+}
 
+.filterForm .toggle-wrap label {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  
+}
+
+.filterForm .toggle-wrap input {
+  display: none;
+}
+
+.filterForm .toggle {
+  width: 30px;
+  height: 10px;
+  background: #020C53;
+  border-radius: 50px;
+  position: relative;
+  margin-right: 10px;
+  margin-left: 0;
+}
+
+.filterForm .toggle .round {
+  position: absolute;
+  left: 0;
+  top: -3px;
+  width: 17px;
+  height: 17px;
+  border-radius: 50px;
+  background: #b6b6b6;
+  transition: left 0.3s;
+}
+
+.filterForm .toggle-wrap input:checked~label>.toggle .round {
+  left: 45%;
+  background: #FFCA3D;
+}
+.filterForm ._7ahQImyV4dj0EpcNOjnwA{
+  background-color: #FFCA3D;
+  color:#020C53;
+}
+.filterForm .btn{
+  color: #020C53;
+  background-color: #FFCA3D;
+  left:50%;
+  transform: translateX(-50%);
+  position: relative;
+}
 /* **************** card ***************/
 
 .template {

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Internship from "./Intership";
 import { MContext } from "../../services/Provider";
 import Loading from "../../images/Loading";
-import { FilterInternships } from '../Global/Utilities'
 
 class InternshipList extends Component {
   constructor(props) {
@@ -26,7 +25,6 @@ class InternshipList extends Component {
     // } else {
     return (
       <div className="homeSection">
-        <FilterInternships />
         <MContext.Consumer>
           {(context) => {
             return (

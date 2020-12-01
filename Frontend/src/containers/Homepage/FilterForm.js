@@ -43,13 +43,27 @@ class FilterForm extends Component {
                     onSearch={this.handleSkills}
                     ref={this.multiselectRef}
                 />
-                <div className="toggle-wrap" title="Automatically append new posts in your feed">
-                    <input id="autoUpdate" type="checkbox" defaultChecked></input>
-                    <label htmlFor="autoUpdate">
-                        <div className="toggle"><div className="round"></div></div>
+                <div className="intType">
+                    <label>Type</label>
+                    <div className="toggle-wrap" title="Automatically append new posts in your feed">
+                        <input id="autoUpdate" type="checkbox" defaultChecked></input>
+                        <label htmlFor="autoUpdate">
+                            <div className="toggle"><div className="round"></div></div>
                          Work From Home
                     </label>
+                    </div>
+                    <div className="toggle-wrap" title="Automatically append new posts in your feed">
+                        <input id="autoUpdate" type="checkbox" defaultChecked></input>
+                        <label htmlFor="autoUpdate">
+                            <div className="toggle"><div className="round"></div></div>
+                         External
+                    </label>
+                    </div>
                 </div>
+                <button type="button" class="btn btn-default">
+                    Apply Filters
+                </button>
+
             </div>
         )
     }

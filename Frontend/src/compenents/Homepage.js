@@ -6,6 +6,8 @@ import Navbar from '../containers/Global/Navbar'
 import PageFooter from '../containers/Global/PageFooter'
 import { InternshipCreate } from '../containers/Global/Utilities'
 import { MyProvider } from '../services/Provider'
+import { FilterInternships } from '../containers/Global/Utilities'
+
 
 
 const Homepage = () => {
@@ -43,6 +45,7 @@ const Homepage = () => {
             </div>
             <MyProvider>
                 <Navbar></Navbar>
+                <FilterInternships />
                 <InternshipList />
             </MyProvider>
             <InternshipCreate />
