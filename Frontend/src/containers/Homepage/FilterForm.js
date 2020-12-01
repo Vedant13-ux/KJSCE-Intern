@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Multiselect } from "multiselect-react-dropdown";
 import { apiCall } from "../../services/api";
+import InputRange from 'react-input-range'
+import 'react-input-range/lib/css/index.css'
 
 class FilterForm extends Component {
     constructor(props) {
@@ -13,7 +15,11 @@ class FilterForm extends Component {
                 { text: "Javascript" },
                 { text: "C++" },
                 { text: "React Native" },
-            ]
+            ],
+            value5: {
+                min: 1,
+                max: 12,
+            },
         }
         this.handleSkills = this.handleSkills.bind(this);
         this.multiselectRef = React.createRef();
@@ -33,7 +39,7 @@ class FilterForm extends Component {
     render() {
         return (
             <div className="filterForm">
-                <label>By Skills</label>
+                <label className="labelFilter">By Skills</label>
                 <Multiselect
                     options={this.state.skills} // Options to display in the dropdown
                     selectedValues={this.state.skillsRequired} // Preselected value to persist in dropdown
@@ -44,7 +50,7 @@ class FilterForm extends Component {
                     ref={this.multiselectRef}
                 />
                 <div className="intType">
-                    <label>Type</label>
+                    <label className="labelFilter">Type</label>
                     <div className="toggle-wrap" title="Automatically append new posts in your feed">
                         <input id="autoUpdate" type="checkbox" defaultChecked></input>
                         <label htmlFor="autoUpdate">
@@ -57,9 +63,18 @@ class FilterForm extends Component {
                         <label htmlFor="autoUpdate">
                             <div className="toggle"><div className="round"></div></div>
                          External
-                    </label>
+                        </label>
                     </div>
                 </div>
+
+                <label className="labelFilter">Duration (in months)</label>
+                <InputRange
+                    draggableTrack
+                    maxValue={12}
+                    minValue={1}
+                    onChange={value => this.setState({ value5: value })}
+                    onChangeComplete={value => console.log(value)}
+                    value={this.state.value5} />
                 <button type="button" class="btn btn-default">
                     Apply Filters
                 </button>
