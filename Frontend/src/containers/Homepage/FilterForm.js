@@ -61,11 +61,11 @@ class FilterForm extends Component {
                         />
                         <div className="intType">
                             <label className="labelFilter">Type</label>
-                            <div class="checkbox">
+                            <div className="checkbox">
                                 <input type="checkbox" value="Work From Home" checked={this.state.isHomeChecked} onChange={this.toggleHome} />
                                 <label>Work From Home</label>
                             </div>
-                            <div class="checkbox">
+                            <div className="checkbox">
                                 <input type="checkbox" value="External" checked={this.state.isExternalChecked} onChange={this.toggleExternal} />
                                 <label>External</label>
                             </div>
