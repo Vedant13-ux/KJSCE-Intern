@@ -83,9 +83,9 @@ class FilterForm extends Component {
                     draggableTrack
                     maxValue={12}
                     minValue={1}
-                    onChange={value => this.setState({ value5: value })}
+                    onChange={value => this.setState({ value: value })}
                     onChangeComplete={value => console.log(value)}
-                    value={this.state.value5} />
+                    value={this.state.value} />
 
             <button type="button" class="btn btn-default">
               Apply Filters
