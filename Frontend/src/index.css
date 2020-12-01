@@ -321,43 +321,14 @@ sub{
 /* **************** End Internship List ***************/
 
 /* **************Filter Form (homePage) */
-.filterForm .toggle-wrap {
-  padding: 10px 10px;
+.filterForm .intType .checkbox{
+  margin: 10px 10px;
   display: inline-block;
 }
-
-.filterForm .toggle-wrap label {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  
+.filterForm .intType .checkbox label{
+  margin-left: 4px;
 }
-
-.filterForm .toggle-wrap input {
-  display: none;
-}
-
-.filterForm .toggle {
-  width: 30px;
-  height: 10px;
-  background: #020C53;
-  border-radius: 50px;
-  position: relative;
-  margin-right: 10px;
-  margin-left: 0;
-}
-
-.filterForm .toggle .round {
-  position: absolute;
-  left: 0;
-  top: -3px;
-  width: 17px;
-  height: 17px;
-  border-radius: 50px;
-  background: #b6b6b6;
-  transition: left 0.3s;
-}
-
+.filterForm
 .filterForm .toggle-wrap input:checked~label>.toggle .round {
   left: 45%;
   background: #FFCA3D;
