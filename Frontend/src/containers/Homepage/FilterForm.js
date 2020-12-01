@@ -80,12 +80,12 @@ class FilterForm extends Component {
               </div>
             </div>
             <InputRange
-              // formatLabel={value => `${value}months`}
-              maxValue={20}
-              minValue={0}
-              value={this.state.value}
-              onChange={(value) => this.setState({ ...this.state, value })}
-            />
+                    draggableTrack
+                    maxValue={12}
+                    minValue={1}
+                    onChange={value => this.setState({ value5: value })}
+                    onChangeComplete={value => console.log(value)}
+                    value={this.state.value5} />
 
             <button type="button" class="btn btn-default">
               Apply Filters

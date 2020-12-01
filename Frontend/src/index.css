@@ -373,6 +373,34 @@ sub{
   transform: translateX(-50%);
   position: relative;
 }
+.filterForm .form {
+  margin: 0 auto;
+}
+
+@media (min-width: 800px) {
+	.filterForm  .form {
+		max-width: 60%;
+	}
+}
+
+.filterForm  .input-range {
+  margin:30px 0;
+  max-width: 500px !important;
+}
+.filterForm .input-range__track--active {
+  background-color: #020C53;
+}
+.filterForm .input-range__slider{
+  background-color: #FFCA3D;
+}
+.filterForm .input-range{
+  left:50%;
+  width: 300px;
+  transform: translateX(-50%);
+}
+.filterForm .labelFilter{
+  font-weight: 700;
+}
 /* **************** card ***************/
 
 .template {
