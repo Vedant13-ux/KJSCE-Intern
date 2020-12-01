@@ -21,11 +21,20 @@ class FilterForm extends Component {
                 min: 3,
                 max: 7,
             },
+            isHomeChecked: true,
+            isExternalChecked: false
         };
         this.handleSkills = this.handleSkills.bind(this);
         this.multiselectRef = React.createRef();
+        this.toggleHome = this.toggleHome.bind(this);
+        this.toggleExternal = this.toggleExternal.bind(this);
     }
-
+    toggleHome(e) {
+        this.setState({ isHomeChecked: !this.state.isHomeChecked })
+    }
+    toggleExternal(e) {
+        this.setState({ isExternalChecked: !this.state.isExternalChecked })
+    }
     handleSkills() {
         const skillInput = document.querySelector(".searchBox");
         var query = skillInput.value;
@@ -46,8 +55,6 @@ class FilterForm extends Component {
                         <Multiselect
                             options={this.state.skills} // Options to display in the dropdown
                             selectedValues={this.state.skillsRequired} // Preselected value to persist in dropdown
-                            // onSelect={this.onSelect} // Function will trigger on select event
-                            // onRemove={this.onRemove} // Function will trigger on remove event
                             displayValue="text" // Property name to display in the dropdown options
                             onSearch={this.handleSkills}
                             ref={this.multiselectRef}
@@ -55,12 +62,12 @@ class FilterForm extends Component {
                         <div className="intType">
                             <label className="labelFilter">Type</label>
                             <div class="checkbox">
-                                <input type="checkbox" value="Work From Home" />
+                                <input type="checkbox" value="Work From Home" checked={this.state.isHomeChecked} onChnage={this.toggleHome} />
                                 <label>Work From Home</label>
                             </div>
                             <div class="checkbox">
-                                <input type="checkbox" value="Work From Home" />
-                                <label>Active</label>
+                                <input type="checkbox" value="External" checked={this.state.isExternalChecked} onChnage={this.toggleExternal} />
+                                <label>External</label>
                             </div>
                         </div>
                         <label className="labelFilter">Duration (in Months)</label>
