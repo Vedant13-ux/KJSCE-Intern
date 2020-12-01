@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { Multiselect } from "multiselect-react-dropdown";
 import { apiCall } from "../../services/api";
 import InputRange from 'react-input-range'
@@ -79,9 +79,12 @@ class FilterForm extends Component {
                     Apply Filters
                 </button>
 
-            </div>
-        )
-    }
+        <button type="button" class="btn btn-default">
+          Apply Filters
+        </button>
+      </div>
+    );
+  }
 }
 
 export default FilterForm;
