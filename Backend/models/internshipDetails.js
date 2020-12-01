@@ -8,7 +8,7 @@ const internshipDetailsSchema = new mongoose.Schema({
   skillsRequired: [{
     type: String
   }],
-  duration: String,
+  duration: Number,
   applyBy: Date,
   posted_on: {
     type: Date,

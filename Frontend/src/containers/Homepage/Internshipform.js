@@ -54,7 +54,7 @@ class Intershipform extends Component {
     var skills = this.multiselectRef.current.getSelectedItems();
     var skillArray = [];
     skills.forEach((skill) => {
-      skillArray.push(skill["text"]);
+      skillArray.push(skill.text);
     });
     await this.setState({ skillsRequired: skillArray });
     // apiCall("post", '/api/internship/details', this.state).then(
@@ -152,8 +152,8 @@ class Intershipform extends Component {
             </div>
           </div>
           <div class="field">
-              <label>Type</label>
-              </div>
+            <label>Type</label>
+          </div>
           <input type="radio" id="wfh" onChange={this.handleChange} name="type" value="Work from Home" />
           <label for="wfh">Work from Home</label>
           <br />

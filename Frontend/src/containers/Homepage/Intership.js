@@ -29,7 +29,7 @@ class InternshipList extends Component {
 
               <div className="extraDetails">
                 <p><i class="fa fa-home mr-1"></i>  {this.props.type}</p>
-                <p><i class="fa fa-clock mr-1"></i>  {this.props.duration}</p>
+                <p><i class="fa fa-clock mr-1"></i>  {this.props.duration} months</p>
                 <p><i class="fa fa-hourglass mr-2"></i>Apply by {this.dateFormat()}</p>
               </div>
             </div>

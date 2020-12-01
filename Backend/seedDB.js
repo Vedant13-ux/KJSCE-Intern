@@ -11,7 +11,7 @@ function seedDB() {
             faculty: "5fc3e5a0fe0c31080ccb2654",
             title: 'Python Programming',
             skillsRequired: ['Python', "java"],
-            duration: `${Math.floor(Math.random() * 13)} months`,
+            duration: Math.floor(Math.random() * 13),
             applyBy: Date.now(),
             numberOpenings: Math.floor(Math.random() * 3),
             description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque delectus tempore eos quibusdam, tenetur quas nihil asperiores molestiae ad sunt, dolore, minima blanditiis? Error unde sapiente, temporibus sit eius neque.",
