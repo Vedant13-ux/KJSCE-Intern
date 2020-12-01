@@ -31,11 +31,14 @@ router.get('/search/title/:query', async (req, res, next) => {
 });
 
 
-router.get('/search/filter', async (req, res, next) => {
+router.post('/search/filter', async (req, res, next) => {
     console.log(req.body);
     try {
         var query = new RegExp(escapeRegex(req.body.query), 'gi');
         var { min, max, skills, type } = req.body;
+        skills = skills.map(skill => {
+            return new RegExp(escapeRegex(skill), 'gi');
+        });
         try {
             if (type.length === 1) {
                 let internships = await db.InternshipDetails.find({ title: query, skillsRequired: { $all: skills }, duration: { $gt: min }, duration: { $lt: max }, type: type[0] }).populate('faculty').exec();

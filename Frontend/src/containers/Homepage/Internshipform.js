@@ -56,13 +56,14 @@ class Intershipform extends Component {
     skills.forEach((skill) => {
       skillArray.push(skill.text);
     });
-    await this.setState({ skillsRequired: skillArray });
-    // apiCall("post", '/api/internship/details', this.state).then(
-    //   data => {
-    //     console.log(data);
-    //     < Redirect to={'http://localhost:3000/internship?id=' + data._id} />
-    //   }
-    // )
+    await this.setState({ skillsRequired: skillArray, skillData: [] });
+
+    apiCall("post", '/api/internship/details', this.state).then(
+      data => {
+        console.log(data);
+        // < Redirect to={'http://localhost:3000/internship?id=' + data._id} />
+      }
+    )
     console.log(this.state);
   }
 
