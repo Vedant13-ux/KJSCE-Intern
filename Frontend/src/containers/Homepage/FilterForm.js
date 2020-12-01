@@ -22,7 +22,7 @@ class FilterForm extends Component {
                 max: 7,
             },
             isHomeChecked: true,
-            isExternalChecked: false
+            isExternalChecked: true
         };
         this.handleSkills = this.handleSkills.bind(this);
         this.multiselectRef = React.createRef();
@@ -62,11 +62,11 @@ class FilterForm extends Component {
                         <div className="intType">
                             <label className="labelFilter">Type</label>
                             <div class="checkbox">
-                                <input type="checkbox" value="Work From Home" checked={this.state.isHomeChecked} onChnage={this.toggleHome} />
+                                <input type="checkbox" value="Work From Home" checked={this.state.isHomeChecked} onChange={this.toggleHome} />
                                 <label>Work From Home</label>
                             </div>
                             <div class="checkbox">
-                                <input type="checkbox" value="External" checked={this.state.isExternalChecked} onChnage={this.toggleExternal} />
+                                <input type="checkbox" value="External" checked={this.state.isExternalChecked} onChange={this.toggleExternal} />
                                 <label>External</label>
                             </div>
                         </div>
