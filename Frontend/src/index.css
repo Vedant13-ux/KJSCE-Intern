@@ -6,7 +6,8 @@
 body{
   /* background-color: #e6ecf0; */
   background-color: white;
-  /* padding: 0 !important; */
+  padding: 0 !important;
+  overflow-y: scroll !important;
 }
 
 /* Color Pallete
