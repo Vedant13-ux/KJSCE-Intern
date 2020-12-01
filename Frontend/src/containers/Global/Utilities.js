@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Dropdown } from 'semantic-ui-react'
 import Modal from 'react-bootstrap/Modal'
 import Internshipform from '../Homepage/Internshipform'
+import FilterForm from '../Homepage/FilterForm'
 
 const stateOptions = [
   {
@@ -64,11 +65,11 @@ export function FilterInternships() {
           <i class="fa fa-filter"></i>
         </button>
       </div>
-      <Modal  show={show} onHide={handleClose} centered>
+      <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>Filter Internships</Modal.Title>
         </Modal.Header>
-        <Modal.Body></Modal.Body>
+        <Modal.Body><FilterForm></FilterForm></Modal.Body>
       </Modal>
     </div>
   )
