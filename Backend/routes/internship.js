@@ -32,6 +32,7 @@ router.get('/search/title/:query', async (req, res, next) => {
 
 
 router.get('/search/filter', async (req, res, next) => {
+    console.log(req.body);
     try {
         var query = new RegExp(escapeRegex(req.body.query), 'gi');
         var { min, max, skills, type } = req.body;
