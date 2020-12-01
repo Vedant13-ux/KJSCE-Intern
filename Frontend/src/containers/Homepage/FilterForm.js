@@ -79,7 +79,23 @@ class FilterForm extends Component {
                             onChangeComplete={value => console.log(value)}
                             value={this.state.value} />
 
-                        <button type="button" class="btn btn-default">
+                        <button type="button" class="btn btn-default" onClick={(e)=>{
+                            var skills = this.multiselectRef.current.getSelectedItems();
+                            var skillArray = [];
+                            skills.forEach((skill) => {
+                              skillArray.push(skill["text"]);
+                            });
+                            let type=[];
+                            if (this.state.isHomeChecked) type.push("Work from Home")
+                            if (this.state.isExternalChecked) type.push("External")
+                            let obj={
+                                type:type,
+                                min:this.state.value.min,
+                                max:this.state.value.max,
+                                skills:skillArray,
+                            }
+                            context.filter(obj)
+                        }}>
                             Apply Filters
                         </button>
                     </div>
