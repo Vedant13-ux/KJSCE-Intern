@@ -22,7 +22,8 @@ class FilterForm extends Component {
                 max: 7,
             },
             isHomeChecked: true,
-            isExternalChecked: true
+            isExternalChecked: true,
+            error: ''
         };
         this.handleSkills = this.handleSkills.bind(this);
         this.multiselectRef = React.createRef();
@@ -35,7 +36,8 @@ class FilterForm extends Component {
     toggleExternal(e) {
         this.setState({ isExternalChecked: !this.state.isExternalChecked })
     }
-    handleSkills() {
+    async handleSkills() {
+        await this.setState({ error: '' })
         const skillInput = document.querySelector(".searchBox");
         var query = skillInput.value;
         console.log(query);
@@ -79,25 +81,38 @@ class FilterForm extends Component {
                             onChangeComplete={value => console.log(value)}
                             value={this.state.value} />
 
-                        <button type="button" class="btn btn-default" onClick={(e)=>{
+                        <button type="button" class="btn btn-default" onClick={async (e) => {
                             var skills = this.multiselectRef.current.getSelectedItems();
-                            var skillArray = [];
-                            skills.forEach((skill) => {
-                              skillArray.push(skill["text"]);
-                            });
-                            let type=[];
-                            if (this.state.isHomeChecked) type.push("Work from Home")
-                            if (this.state.isExternalChecked) type.push("External")
-                            let obj={
-                                type:type,
-                                min:this.state.value.min,
-                                max:this.state.value.max,
-                                skills:skillArray,
+                            if (skills.length === 0) {
+                                return await this.setState({ error: 'Skills can\'t be empty.' })
+                            } else if (this.state.isExternalChecked === false && this.state.isHomeChecked === false) {
+                                return await this.setState({ error: 'Select atleast one type.' })
                             }
-                            context.filter(obj)
+
+                            else {
+                                await this.setState({ error: '' })
+                                var skillArray = [];
+                                skills.forEach((skill) => {
+                                    skillArray.push(skill["text"]);
+                                });
+                                let type = [];
+                                if (this.state.isHomeChecked) type.push("Work from Home")
+                                if (this.state.isExternalChecked) type.push("External")
+                                let obj = {
+                                    type: type,
+                                    min: this.state.value.min,
+                                    max: this.state.value.max,
+                                    skills: skillArray,
+                                }
+                                context.filter(obj)
+                            }
+                            // } else {
+                            //     this.setState({ error: 'Skills can\'t be empty.' })
+                            // }
                         }}>
                             Apply Filters
                         </button>
+                        <p style={{ color: 'red' }}>{this.state.error}</p>
                     </div>
                 )}
             </MContext.Consumer>

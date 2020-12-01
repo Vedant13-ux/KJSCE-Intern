@@ -17,7 +17,7 @@ function seedDB() {
             numberOpenings: Math.floor(Math.random() * 3),
             description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque delectus tempore eos quibusdam, tenetur quas nihil asperiores molestiae ad sunt, dolore, minima blanditiis? Error unde sapiente, temporibus sit eius neque.",
             perks: 'Certificate',
-            type: 'Work from Home'
+            type: 'External'
         }
         db.InternshipDetails.create(data)
             .then((intenship) => console.log(internship))
