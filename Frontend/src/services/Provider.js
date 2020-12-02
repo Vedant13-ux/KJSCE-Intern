@@ -5,6 +5,14 @@ export class MyProvider extends Component {
     state = {
         query: "",
         list: [],
+        start:true,
+        home:true,
+        external:true,
+        value: {
+            min: 0,
+            max: 12,
+        },
+        skills:[],
     };
     componentDidMount() {
         this.showAll();
@@ -13,18 +21,30 @@ export class MyProvider extends Component {
         let url = "/api/internship/search/all";
         apiCall("get", url, "")
             .then((internships) => {
-                return this.setState({ ...this.state, list: internships });
+                return this.setState({ ...this.state, list: internships ,start:false});
             })
             .catch((err) => {
                 console.log(err);
-                return this.setState({ ...this.state });
+                // return this.setState({ ...this.state });
             });
     }
     render() {
         return (
             <MContext.Provider
                 value={{
+                    changeskills:(e)=>{
+                        this.setState({...this.state,skills:e})
+                    },
+                    valchange:(v)=>{
+                        this.setState({...this.state,value:v.value})
+                    },
                     state: this.state,
+                    toggleHome:(e)=> {
+                        this.setState({ ...this.state,home: !this.state.home });
+                    },
+                    toggleExternal:(e) => {
+                        this.setState({ ...this.state,external: !this.state.external  });
+                    },
                     setMessage: (value) =>
                         this.setState({
                             ...this.state, query: value,
@@ -39,10 +59,23 @@ export class MyProvider extends Component {
                                 return this.setState({ ...this.state, list: internships });
                             })
                     },
-                    filter: (r) => {
-                        r["query"] = this.state.query;
-                        console.log("aya boi", r)
-                        apiCall("post", "/api/internship/search/filter", r)
+                    filter: () => {
+                        var skillArray = [];
+                        this.state.skills.forEach((skill) => {
+                            skillArray.push(skill["text"]);
+                        });
+                        let type = [];
+                        if (this.state.home) type.push("Work from Home")
+                        if (this.state.external) type.push("External")
+                        let obj = {
+                            type: type,
+                            min: this.state.value.min,
+                            max: this.state.value.max,
+                            skills: skillArray,
+                            query:this.state.query
+                        }
+                        console.log("aya boi", obj)
+                        apiCall("post", "/api/internship/search/filter", obj)
                             .then((internships) => {
                                 console.log("sahi hua");
                                 console.log(internships);

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Internship from "./Intership";
 import { MContext } from "../../services/Provider";
-// import Loading from "../../images/Loading";
-import NoResults from '../../images/NoResults'
+import Loading from "../../images/Loading";
+import NoResults from "../../images/NoResults";
 
 class InternshipList extends Component {
   constructor(props) {
@@ -13,44 +13,43 @@ class InternshipList extends Component {
       query: "",
     };
   }
-  componentWillMount() {
-  }
+  componentWillMount() {}
 
   render() {
     // if (this.state.start) {
-    //   return (
-    //     <div className="loading-anime">
-    //       <Loading class="loading-wheel" />
-    //     </div>
-    //   );
+    //  
     // } else {
     return (
       <div className="homeSection">
         <MContext.Consumer>
           {(context) => {
-            return (
-              <div id="intershiplist">
-                <div class="row">
-                  {context.state.list.length !== 0 &&
-                    (
-                      context.state.list.map((internship) => {
-                        return (
-                          <Internship
-                            key={internship._id}
-                            {...internship}
-                          ></Internship>
-                        );
-                      })
-                    )
-                  }
-                  {context.state.list.length === 0 &&
-                    (
-                      <NoResults></NoResults>
-                    )
-                  }
+            if (context.state.list.length !== 0) {
+              return (
+                <div id="intershiplist">
+                  <div class="row">
+                    {context.state.list.map((internship) => {
+                      return (
+                        <Internship
+                          key={internship._id}
+                          {...internship}
+                        ></Internship>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            );
+              );
+            } else if(context.state.start){
+              return (
+                    <div className="loading-anime">
+                      <Loading class="loading-wheel" />
+                    </div>
+                  );
+
+            }
+            
+            else{
+              return <NoResults></NoResults>;
+            }
 
             // if (this.state.query !== context.state.query && context.state.query !== "") {
             //   return apiCall('get', '/api/internship/search/title/' + context.state.query, '')

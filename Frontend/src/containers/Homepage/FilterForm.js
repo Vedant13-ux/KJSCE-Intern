@@ -17,25 +17,13 @@ class FilterForm extends Component {
                 { text: "C++" },
                 { text: "React Native" },
             ],
-            value: {
-                min: 3,
-                max: 7,
-            },
-            isHomeChecked: true,
-            isExternalChecked: true,
+            
             error: ''
         };
         this.handleSkills = this.handleSkills.bind(this);
         this.multiselectRef = React.createRef();
-        this.toggleHome = this.toggleHome.bind(this);
-        this.toggleExternal = this.toggleExternal.bind(this);
     }
-    toggleHome(e) {
-        this.setState({ isHomeChecked: !this.state.isHomeChecked });
-    }
-    toggleExternal(e) {
-        this.setState({ isExternalChecked: !this.state.isExternalChecked });
-    }
+    
     async handleSkills() {
         await this.setState({ error: '' })
         const skillInput = document.querySelector(".searchBox");
@@ -55,8 +43,10 @@ class FilterForm extends Component {
                     <div className="filterForm">
                         <label className="labelFilter">By Skills</label>
                         <Multiselect
+                        onSelect={(e)=>context.changeskills(e)}
+                        onRemove={(e)=>context.changeskills(e)}
                             options={this.state.skills} // Options to display in the dropdown
-                            selectedValues={this.state.skillsRequired} // Preselected value to persist in dropdown
+                            selectedValues={context.state.skills} // Preselected value to persist in dropdown
                             displayValue="text" // Property name to display in the dropdown options
                             onSearch={this.handleSkills}
                             ref={this.multiselectRef}
@@ -64,11 +54,11 @@ class FilterForm extends Component {
                         <div className="intType">
                             <label className="labelFilter">Type</label>
                             <div className="checkbox">
-                                <input type="checkbox" value="Work From Home" checked={this.state.isHomeChecked} onChange={this.toggleHome} />
+                                <input type="checkbox" value="Work From Home" checked={context.state.home} onChange={context.toggleHome} />
                                 <label>Work From Home</label>
                             </div>
                             <div className="checkbox">
-                                <input type="checkbox" value="External" checked={this.state.isExternalChecked} onChange={this.toggleExternal} />
+                                <input type="checkbox" value="External" checked={context.state.external} onChange={context.toggleExternal} />
                                 <label>External</label>
                             </div>
                         </div>
@@ -77,9 +67,9 @@ class FilterForm extends Component {
                             draggableTrack
                             maxValue={12}
                             minValue={1}
-                            onChange={value => this.setState({ value: value })}
-                            onChangeComplete={value => console.log(value)}
-                            value={this.state.value} />
+                            onChange={value => context.valchange({ value: value })}
+                            // onChangeComplete={value => console.log(value)}
+                            value={context.state.value} />
 
                         <button type="button" class="btn btn-default" onClick={async (e) => {
                             var skills = this.multiselectRef.current.getSelectedItems();
@@ -87,20 +77,7 @@ class FilterForm extends Component {
                                 return await this.setState({ error: 'Select atleast one type.' })
                             } else {
                                 await this.setState({ error: '' })
-                                var skillArray = [];
-                                skills.forEach((skill) => {
-                                    skillArray.push(skill["text"]);
-                                });
-                                let type = [];
-                                if (this.state.isHomeChecked) type.push("Work from Home")
-                                if (this.state.isExternalChecked) type.push("External")
-                                let obj = {
-                                    type: type,
-                                    min: this.state.value.min,
-                                    max: this.state.value.max,
-                                    skills: skillArray,
-                                }
-                                context.filter(obj)
+                                context.filter()
                                 this.props.onHide();
                             }
                         }}>
