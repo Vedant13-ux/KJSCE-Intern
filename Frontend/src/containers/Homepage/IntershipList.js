@@ -15,7 +15,7 @@ class InternshipList extends Component {
   }
   componentWillMount() {
   }
-
+  
   render() {
     // if (this.state.start) {
     //   return (
