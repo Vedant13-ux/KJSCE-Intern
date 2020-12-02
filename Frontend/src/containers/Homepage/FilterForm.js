@@ -31,10 +31,10 @@ class FilterForm extends Component {
         this.toggleExternal = this.toggleExternal.bind(this);
     }
     toggleHome(e) {
-        this.setState({ isHomeChecked: !this.state.isHomeChecked })
+        this.setState({ isHomeChecked: !this.state.isHomeChecked });
     }
     toggleExternal(e) {
-        this.setState({ isExternalChecked: !this.state.isExternalChecked })
+        this.setState({ isExternalChecked: !this.state.isExternalChecked });
     }
     async handleSkills() {
         await this.setState({ error: '' })

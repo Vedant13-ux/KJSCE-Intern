@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Internship from "./Intership";
 import { MContext } from "../../services/Provider";
-import Loading from "../../images/Loading";
+// import Loading from "../../images/Loading";
+import NoResults from '../../images/NoResults'
 
 class InternshipList extends Component {
   constructor(props) {
@@ -30,14 +31,23 @@ class InternshipList extends Component {
             return (
               <div id="intershiplist">
                 <div class="row">
-                  {context.state.list.map((internship) => {
-                    return (
-                      <Internship
-                        key={internship._id}
-                        {...internship}
-                      ></Internship>
-                    );
-                  })}
+                  {context.state.list.length !== 0 &&
+                    (
+                      context.state.list.map((internship) => {
+                        return (
+                          <Internship
+                            key={internship._id}
+                            {...internship}
+                          ></Internship>
+                        );
+                      })
+                    )
+                  }
+                  {context.state.list.length === 0 &&
+                    (
+                      <NoResults></NoResults>
+                    )
+                  }
                 </div>
               </div>
             );
