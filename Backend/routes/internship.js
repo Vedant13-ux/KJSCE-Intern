@@ -44,11 +44,21 @@ router.post('/search/filter', async (req, res, next) => {
 
         try {
             if (type.length === 1) {
-                let internships = await db.InternshipDetails.find({ $and: [{ duration: { $gte: min }, duration: { $lte: max } }], title: query, skillsRequired: { $all: skills }, type: type[0] }).populate('faculty').exec();
-                return res.status(200).send(internships);
+                if (skills.length == 0) {
+                    let internships = await db.InternshipDetails.find({ duration: { $gte: min, $lte: max }, title: query, type: type[0] }).populate('faculty').exec();
+                    return res.status(200).send(internships);
+                } else {
+                    let internships = await db.InternshipDetails.find({ duration: { $gte: min, $lte: max }, title: query, skillsRequired: { $all: skills }, type: type[0] }).populate('faculty').exec();
+                    return res.status(200).send(internships);
+                }
             } else {
-                let internships = await db.InternshipDetails.find({ title: query, skillsRequired: { $all: skills }, duration: { $gte: min }, duration: { $lt: max } }).populate('faculty').exec();
-                return res.status(200).send(internships);
+                if (skills.length === 0) {
+                    let internships = await db.InternshipDetails.find({ title: query, duration: { $gte: min, $lte: max } }).populate('faculty').exec();
+                    return res.status(200).send(internships);
+                } else {
+                    let internships = await db.InternshipDetails.find({ title: query, skillsRequired: { $all: skills }, duration: { $gte: min, $lte: max } }).populate('faculty').exec();
+                    return res.status(200).send(internships);
+                }
             }
         } catch (err) {
             console.log(err);

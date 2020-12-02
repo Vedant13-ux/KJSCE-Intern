@@ -83,13 +83,9 @@ class FilterForm extends Component {
 
                         <button type="button" class="btn btn-default" onClick={async (e) => {
                             var skills = this.multiselectRef.current.getSelectedItems();
-                            if (skills.length === 0) {
-                                return await this.setState({ error: 'Skills can\'t be empty.' })
-                            } else if (this.state.isExternalChecked === false && this.state.isHomeChecked === false) {
+                            if (this.state.isExternalChecked === false && this.state.isHomeChecked === false) {
                                 return await this.setState({ error: 'Select atleast one type.' })
-                            }
-
-                            else {
+                            } else {
                                 await this.setState({ error: '' })
                                 var skillArray = [];
                                 skills.forEach((skill) => {
@@ -105,7 +101,7 @@ class FilterForm extends Component {
                                     skills: skillArray,
                                 }
                                 context.filter(obj)
-                                // this.props.onHide();
+                                this.props.onHide();
                             }
                         }}>
                             Apply Filters
