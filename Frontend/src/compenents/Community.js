@@ -30,7 +30,7 @@ class Application extends React.Component {
   render() {
     return (
       <div className="wrapper">
-        <Navbar isMobile={this.state.isMobile} />
+        <Navbar isMobile={this.state.isMobile} {...this.props} />
         <Feed isMobile={this.state.isMobile} />
         <ScrollTopButton />
         <PageFooter />
@@ -447,39 +447,39 @@ class Comments extends React.Component {
 }
 
 class Comment extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
-      isliked:false,
-      data:props.data,
+    this.state = {
+      isliked: false,
+      data: props.data,
     }
   }
-  handleLike(e){
+  handleLike(e) {
     console.log(e)
   }
-  render(){
-    let val=this.state.data;
+  render() {
+    let val = this.state.data;
     console.log(val);
     return (
       <div class="comment">
-          <a class="avatar" href="/">
-            <img alt="" src={val.author.photo} />
+        <a class="avatar" href="/">
+          <img alt="" src={val.author.photo} />
+        </a>
+        <div class="content">
+          <a href="/" class="author">
+            {val.author.fname + ' ' + val.author.lname}
           </a>
-          <div class="content">
-            <a href="/" class="author">
-              {val.author.fname+' '+val.author.lname}
-            </a>
-            <div class="metadata">
-              <span class="date">Today at 5:42PM</span>
-            </div>
-            <div class="text">{val.text}</div>
-            <div class="actions">
-              <button onClick={this.handleLike} class="reply">
-                Like
+          <div class="metadata">
+            <span class="date">Today at 5:42PM</span>
+          </div>
+          <div class="text">{val.text}</div>
+          <div class="actions">
+            <button onClick={this.handleLike} class="reply">
+              Like
               </button>
-            </div>
           </div>
         </div>
+      </div>
     )
   }
 }

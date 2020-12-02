@@ -49,16 +49,7 @@ export class MyProvider extends Component {
                         this.setState({
                             ...this.state, query: value,
                         }),
-                    searched: () => {
-                        if (this.state.query === "") {
-                            return this.showAll();
-                        }
-                        apiCall("get", "/api/internship/search/title/" + this.state.query, "")
-                            .then((internships) => {
-                                console.log("sahi hua")
-                                return this.setState({ ...this.state, list: internships });
-                            })
-                    },
+
                     filter: () => {
                         var skillArray = [];
                         this.state.skills.forEach((skill) => {

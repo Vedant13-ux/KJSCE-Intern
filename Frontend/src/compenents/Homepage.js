@@ -10,7 +10,8 @@ import { FilterInternships } from '../containers/Global/Utilities'
 
 
 
-const Homepage = () => {
+const Homepage = (props) => {
+    console.log(props.currentUser);
     return (
         <div className='homePage'>
             <div className="carousel-home">
@@ -44,7 +45,7 @@ const Homepage = () => {
                 </Carousel>
             </div>
             <MyProvider>
-                <Navbar></Navbar>
+                <Navbar currentUser={props.currentUser} ></Navbar>
                 <FilterInternships />
                 <InternshipList />
             </MyProvider>

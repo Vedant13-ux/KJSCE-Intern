@@ -4,16 +4,17 @@ const defaultState = {
     isAuthenticated: false,
     user: {}
 }
-export const currentUserReducer = (state = defaultState, action) => {
+const currentUserReducer = (state = defaultState, action) => {
     switch (action.type) {
         case SET_CURRENT_USER:
             return {
                 isAuthenticated: !!Object.keys(action.user).length,
-                user: action
+                user: action.user
             }
         default:
             return state
     }
 }
+export default currentUserReducer;
 
 

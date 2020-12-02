@@ -24,7 +24,6 @@ const userScehma = new mongoose.Schema({
 	year: String,
 	rollNo: {
 		type: String,
-		unique: true,
 		required: true
 	},
 	photo: {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
 import logo from '../../images/logo.png';
 import { MContext } from '../../services/Provider'
 
@@ -8,7 +7,9 @@ class Navbar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            query: ""
+            query: "",
+            user: this.props.currentUser.user,
+            isAuthenticated: this.props.currentUser.isAuthenticated
         }
         // this.handleChange = this.handleChange.bind(this);
     }
@@ -16,6 +17,30 @@ class Navbar extends Component {
     //     return this.setState({ query: e.target.value });
     // }
     render() {
+        const rightContent = () => {
+            if (this.state.isAuthenticated) {
+                return (
+                    <ul className="navbar-nav ml-auto">
+                        <li className="nav-item userProfile">
+                            <img className="avatar-pro" src={this.state.user.photo} alt="user-profile" />
+                            <Link className="nav-link username" to="/#">{this.state.user.fname} {this.state.user.lname} </Link>
+                        </li>
+                    </ul>
+                )
+            } else {
+                return (
+                    <ul className="navbar-nav ml-auto">
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/#signup">
+                                <i class="fas fa-user-plus mr-1"></i>Signup</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/#"><i class="fas fa-sign-in-alt mr-1"></i>Signin</Link>
+                        </li>
+                    </ul>
+                )
+            }
+        }
         return (
             <nav className="navbar navbar-expand-lg fixed-top">
                 <div className="container">
@@ -32,8 +57,8 @@ class Navbar extends Component {
                             <MContext.Consumer>
                                 {
                                     context => (
-                                        <div><input onKeyPress={e => { if (e.which === 13) { context.searched() } }} onChange={(e) => context.setMessage(e.target.value)} className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="internshipSerach" />
-                                            <button onClick={(e) => { context.searched() }} className="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+                                        <div><input onKeyPress={e => { if (e.which === 13) { context.filter() } }} onChange={(e) => context.setMessage(e.target.value)} className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="internshipSerach" />
+                                            <button onClick={(e) => { context.filter() }} className="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
                                         </div>)
                                 }
                             </MContext.Consumer>
@@ -58,28 +83,17 @@ class Navbar extends Component {
                             </li>
 
                         </ul>
-                        <ul className="navbar-nav ml-auto">
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/#signup">
-                                    <i class="fas fa-user-plus mr-1"></i>Signup</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/#"><i class="fas fa-sign-in-alt mr-1"></i>Signin</Link>
-                            </li>
-                        </ul>
+
+                        {rightContent()}
 
                     </div>
                 </div>
-            </nav>
+            </nav >
         )
     }
 
 }
 
-function mapStateToProps(state) {
-    return {
-        currentUser: state.currentUser
-    }
-};
 
-export default connect(mapStateToProps, null)(Navbar);
+
+export default Navbar;

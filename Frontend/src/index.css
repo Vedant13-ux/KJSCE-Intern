@@ -57,6 +57,10 @@ style 2--
   outline:none !important;
   box-shadow: none !important;
 }
+.navbar .userProfile{
+  display: flex;
+  align-items: center;
+}
 
 /* ************Not Found SVG *************/
 #notFound {

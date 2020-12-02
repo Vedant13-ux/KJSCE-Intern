@@ -17,13 +17,13 @@ class FilterForm extends Component {
                 { text: "C++" },
                 { text: "React Native" },
             ],
-            
+
             error: ''
         };
         this.handleSkills = this.handleSkills.bind(this);
         this.multiselectRef = React.createRef();
     }
-    
+
     async handleSkills() {
         await this.setState({ error: '' })
         const skillInput = document.querySelector(".searchBox");
@@ -43,8 +43,8 @@ class FilterForm extends Component {
                     <div className="filterForm">
                         <label className="labelFilter">By Skills</label>
                         <Multiselect
-                        onSelect={(e)=>context.changeskills(e)}
-                        onRemove={(e)=>context.changeskills(e)}
+                            onSelect={(e) => context.changeskills(e)}
+                            onRemove={(e) => context.changeskills(e)}
                             options={this.state.skills} // Options to display in the dropdown
                             selectedValues={context.state.skills} // Preselected value to persist in dropdown
                             displayValue="text" // Property name to display in the dropdown options
@@ -72,8 +72,7 @@ class FilterForm extends Component {
                             value={context.state.value} />
 
                         <button type="button" class="btn btn-default" onClick={async (e) => {
-                            var skills = this.multiselectRef.current.getSelectedItems();
-                            if (this.state.isExternalChecked === false && this.state.isHomeChecked === false) {
+                            if (context.state.home === false && context.state.external === false) {
                                 return await this.setState({ error: 'Select atleast one type.' })
                             } else {
                                 await this.setState({ error: '' })

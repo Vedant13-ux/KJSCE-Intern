@@ -208,7 +208,7 @@ class InternshipDetail extends Component {
     console.log(exists);
     return (
       <div>
-        <Navbar></Navbar>
+        <Navbar currentUser={this.props.currentUser}></Navbar>
         {this.contentDisplay(exists, start)}
         <PageFooter />
       </div>
