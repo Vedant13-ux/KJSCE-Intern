@@ -69,7 +69,7 @@ export function FilterInternships() {
         <Modal.Header closeButton>
           <Modal.Title>Filter Internships</Modal.Title>
         </Modal.Header>
-        <Modal.Body><FilterForm></FilterForm></Modal.Body>
+        <Modal.Body><FilterForm onHide={handleClose}></FilterForm></Modal.Body>
       </Modal>
     </div>
   )

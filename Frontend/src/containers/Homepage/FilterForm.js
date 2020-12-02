@@ -105,10 +105,8 @@ class FilterForm extends Component {
                                     skills: skillArray,
                                 }
                                 context.filter(obj)
+                                // this.props.onHide();
                             }
-                            // } else {
-                            //     this.setState({ error: 'Skills can\'t be empty.' })
-                            // }
                         }}>
                             Apply Filters
                         </button>
