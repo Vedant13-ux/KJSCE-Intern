@@ -17,7 +17,7 @@ class Intershipform extends Component {
       description: "",
       perks: "",
       whoCanApply: "",
-      faculty: "5fb247e8d6a6e304d0eeb65d",
+      faculty: this.props.userId,
       skillData: [
         { text: "Python" },
         { text: "Node.Js" },
@@ -61,9 +61,10 @@ class Intershipform extends Component {
     apiCall("post", '/api/internship/details', this.state).then(
       data => {
         console.log(data);
-        // < Redirect to={'http://localhost:3000/internship?id=' + data._id} />
+        return this.props.history.push('/internship/' + data._id);
       }
     )
+      .catch(err => console.log(err));
     console.log(this.state);
   }
 

@@ -49,7 +49,7 @@ const Homepage = (props) => {
                 <FilterInternships />
                 <InternshipList />
             </MyProvider>
-            <InternshipCreate />
+            <InternshipCreate userId={props.currentUser.user._id} {...props} />
             <PageFooter />
 
         </div>

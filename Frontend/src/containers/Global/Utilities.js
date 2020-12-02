@@ -33,7 +33,7 @@ export function Skills() {
   )
 }
 
-export function InternshipCreate() {
+export function InternshipCreate(props) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -47,7 +47,7 @@ export function InternshipCreate() {
         <Modal.Header closeButton>
           <Modal.Title>Fill internship Details</Modal.Title>
         </Modal.Header>
-        <Modal.Body><Internshipform></Internshipform></Modal.Body>
+        <Modal.Body><Internshipform userId={props.userId} {...props}></Internshipform></Modal.Body>
       </Modal>
     </div>
   )
