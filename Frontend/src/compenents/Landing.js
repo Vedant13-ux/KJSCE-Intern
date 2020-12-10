@@ -37,7 +37,7 @@ class Landing extends Component {
                 content = <Verification />
             } else {
                 content =
-                    <Carousel wrap={false}>
+                    <Carousel indicators={false}>
                         <Carousel.Item>
                             <div>
                                 <AuthForm onAuth={this.props.onAuth} buttonText="Register" heading="Student Signup" signUp onVerify={this.verify} />
