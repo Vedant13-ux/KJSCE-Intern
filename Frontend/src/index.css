@@ -127,8 +127,10 @@ style 2--
   color: black;
   margin: 0 20px;
 }
-.sections .rightSection .carousel-control-next-icon, .carousel-control-prev-icon{
+.sections .rightSection .carousel-control-prev-icon{
   color: #020C53;
+  left: 0;
+  margin-left: 0;
 }
 
         
