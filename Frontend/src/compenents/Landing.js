@@ -44,7 +44,7 @@ class Landing extends Component {
                             </div>
                         </Carousel.Item>
                         <Carousel.Item>
-                            <AuthForm onAuth={this.props.onAuth} buttonText="Register" heading="Sign Up" signUp onVerify={this.verify} />
+                            <AuthForm onAuth={this.props.onAuth} buttonText="Register" heading="Faculty Signup" signUp onVerify={this.verify} />
                         </Carousel.Item>
                     </Carousel>
             }
