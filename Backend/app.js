@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const socket = require('socket.io');
-const server = app.listen(3001, process.env.IP, () => {
+const server = app.listen(process.env.PORT || 3001, process.env.IP, () => {
     console.log('Server Listening on Port 3001');
 });
 const io = socket(server);

@@ -6,6 +6,7 @@ import Featues from '../containers/Landing/Features'
 import AboutUs from '../containers/Landing/AboutUs'
 import Contact from '../containers/Landing/Contact'
 import Verification from '../containers/Landing/Verification';
+import Carousel from 'react-bootstrap/Carousel'
 
 
 
@@ -35,7 +36,17 @@ class Landing extends Component {
             if (this.state.linkSent) {
                 content = <Verification />
             } else {
-                content = <AuthForm onAuth={this.props.onAuth} buttonText="Register" heading="Sign Up" signUp onVerify={this.verify} />
+                content =
+                    <Carousel wrap={false}>
+                        <Carousel.Item>
+                            <div>
+                                <AuthForm onAuth={this.props.onAuth} buttonText="Register" heading="Student Signup" signUp onVerify={this.verify} />
+                            </div>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <AuthForm onAuth={this.props.onAuth} buttonText="Register" heading="Sign Up" signUp onVerify={this.verify} />
+                        </Carousel.Item>
+                    </Carousel>
             }
         }
         if (this.state.content === 'Features')

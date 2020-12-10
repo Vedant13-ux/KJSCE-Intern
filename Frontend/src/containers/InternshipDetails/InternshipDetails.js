@@ -168,10 +168,24 @@ class InternshipDetail extends Component {
                     <p>{this.state.details.perks}</p>
                     <h3> Number of Opening</h3>
                     <p>{this.state.details.numberOpenings}</p>
+
+                    <h3>
+                      Applicants
+                    </h3>
+                    <span className="appliList">
+                      <span className="applicant">
+                        <img src={this.props.currentUser.user.photo} alt=""></img>
+                        <span className="name">Vedant Nagani</span>
+                      </span>
+                      <span className="applicant">
+                        <img src={this.props.currentUser.user.photo} alt=""></img>
+                        <span className="name">Vedant Nagani</span>
+                      </span>
+                    </span>
                     <div className="applynow">
                       <button type="button" class="btn btn-lg btn-default">
                         Apply Now
-                </button>
+                      </button>
                     </div>
                   </div>
                 </div>

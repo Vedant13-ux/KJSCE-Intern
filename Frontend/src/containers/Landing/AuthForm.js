@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-// import { authUser } from '../../store/actions/auth'
+// import { authUser } from '../../store/actions/auth']
+import { Link } from 'react-router-dom'
 
 
 class AuthForm extends Component {
@@ -34,7 +35,7 @@ class AuthForm extends Component {
         return (
             (signUp &&
                 <form className="ui form authForm" onSubmit={this.handleSubmit}>
-                    <div className="heading">{heading}</div>
+                    <div className="heading"><i class="fas fa-user-graduate"></i> {heading}</div>
                     <div className="field">
                         <label>Name</label>
                         <div className="two fields">
@@ -95,6 +96,9 @@ class AuthForm extends Component {
                             <input type="password" name="password" placeholder="Password" onChange={this.handleChange} value={password} />
                             <i className="lock icon"></i>
                         </div>
+                    </div>
+                    <div>
+                        <Link className="login" to="/login">Already have an account? Login</Link>
                     </div>
                     <div className="submit">
                         <button class="big ui button">

@@ -12,7 +12,7 @@ exports.signup = async function (req, res, next) {
     let token = jwt.sign({
       id, fname, lname, email, rollNo, dept, year
     }, process.env.SECRET_KEY);
-    var mailOptions = mailOptionsImport(req);
+    var mailOptions = mailOptionsImport(req, process);
     // console.log(mailOptions);
     var transporter = nodemailer.createTransport({
       service: 'gmail',

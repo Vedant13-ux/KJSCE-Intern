@@ -139,6 +139,7 @@ style 2--
   padding: 20px;
   box-shadow: #020C53 1px 2px 2px ;
   animation: appear 0.6s forwards;
+  margin: 0;
 }
 @keyframes appear{
   from{
@@ -170,6 +171,10 @@ style 2--
 .sections .rightSection .content .authForm .submit{
   text-align: center;
 }
+.sections .rightSection .content .authForm .login{
+  color: #020C53;
+  position: relative;
+} 
 .sections .rightSection .content .authForm .button:hover{
   color: #ffcb3dda;
 }
@@ -630,9 +635,36 @@ body{
 #internshipdetail .applynow .btn{
    background-color: #FFCA3D;
    border: 2px solid #020C53;
+   margin-top: 30px;
+
 }
 #internshipdetail .applynow .btn:hover{
    background-color: #ffcb3dad;
+}
+#internshipdetail .appliList{
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 40px;
+}
+#internshipdetail .appliList .applicant {
+  background-color: rgb(242, 242, 242);
+  border-radius: 30px;
+  padding: 0px;
+  margin: 5px;
+  padding-right: 10px;
+  display: inline-block;
+
+  
+}
+#internshipdetail .appliList img{
+  width: 40px;
+  height: 40px;
+  border-radius: 30px;
+  display: inline;
+  margin-right: 4px;
+}
+#internshipdetail .applicant .appliList .name {
+  line-height: 40px;
 }
  .loading-anime{
    min-height: 700px;

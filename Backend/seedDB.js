@@ -9,9 +9,9 @@ function seedDB() {
     for (let i = 0; i < 3; i++) {
         data = {
             // faculty: "5fc3e5a0fe0c31080ccb2654",
-            faculty: "5fc3e5d1fc33db6a66886586",
-            title: 'Beating Up Huzaifa',
-            skillsRequired: ['Karate', "Boxing"],
+            faculty: "5fc81a619619ea0017ecb856",
+            title: 'Web Development',
+            skillsRequired: ['Node.Js', "MongoDB"],
             duration: Math.floor(Math.random() * 13),
             applyBy: Date.now(),
             numberOpenings: Math.floor(Math.random() * 3),
