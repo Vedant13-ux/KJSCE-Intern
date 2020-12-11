@@ -142,6 +142,10 @@ router.get('/details/:id', (req, res, next) => {
             if (err) {
                 return next(err);
             }
+            
+            let curr = new Date();
+            internship["canApply"]= new Date(internship.applyBy) - curr > 0
+            console.log(internship.canApply)
             return res.status(200).send(internship)
         })
 });
