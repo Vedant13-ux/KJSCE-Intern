@@ -30,3 +30,4 @@ module.exports.Message = require('./messages');
 module.exports.Conversation = require('./conversation');
 module.exports.Update = require('./updates');
 module.exports.File = require('./files');
+module.exports.Application = require('./application');

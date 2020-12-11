@@ -5,16 +5,16 @@ import PageFooter from "../containers/Global/PageFooter";
 // import { Link } from 'react-router-dom';
 
 class Profile extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            user: {}
-        }
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {}
     }
-    render() {
-        return (
-            <div id="profile">
-                <Navbar currentUser={this.props.currentUser}/>
+  }
+  render() {
+    return (
+      <div id="profile">
+        <Navbar currentUser={this.props.currentUser} />
         <section id="content" className="container">
           <div className="page-heading">
             <div className="media clearfix">
@@ -22,7 +22,7 @@ class Profile extends Component {
                 <a href="/">
                   <img className="media-object mw150" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="..." />
                 </a>
-              </div>                      
+              </div>
               <div className="media-body va-m">
                 <h2 className="media-heading">Michael Halls
                   <small> - Profile</small>
@@ -71,7 +71,7 @@ class Profile extends Component {
                 </div>
                 <div className="panel-body pn">
                   <table className="table mbn tc-icon-1 tc-med-2 tc-bold-last">
-                    
+
                   </table>
                 </div>
               </div>
@@ -83,14 +83,14 @@ class Profile extends Component {
                   <span className="panel-title"> My Skills</span>
                 </div>
                 <div className="panel-body pb5">
-                    <div className="tagsskill">ok</div>
-                    <div className="tagsskill">eating</div>
-                    <div className="tagsskill">sleeping</div>
-                    <div className="tagsskill">doing</div>
-                    <div className="tagsskill">ok</div>
-                    <div className="tagsskill">eating</div>
-                    <div className="tagsskill">sleeping</div>
-                    <div className="tagsskill">doing</div>
+                  <div className="tagsskill">ok</div>
+                  <div className="tagsskill">eating</div>
+                  <div className="tagsskill">sleeping</div>
+                  <div className="tagsskill">doing</div>
+                  <div className="tagsskill">ok</div>
+                  <div className="tagsskill">eating</div>
+                  <div className="tagsskill">sleeping</div>
+                  <div className="tagsskill">doing</div>
                 </div>
               </div>
               <div className="panel">
@@ -101,7 +101,7 @@ class Profile extends Component {
                   <span className="panel-title">About Me</span>
                 </div>
                 <div className="panel-body pb5">
-                  
+
                 </div>
               </div>
             </div>
@@ -118,18 +118,18 @@ class Profile extends Component {
                     <a href="#tab1" data-toggle="tab">Media</a>
                   </li>
                 </ul>
-                <div className="tab-content p30" style={{height: '730px'}}>
+                <div className="tab-content p30" style={{ height: '730px' }}>
                   <div id="tab1" className="tab-pane active">
-                    
+
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
-        <PageFooter/>
+        <PageFooter />
       </div>
-        )
-    }
+    )
+  }
 }
 export default Profile;

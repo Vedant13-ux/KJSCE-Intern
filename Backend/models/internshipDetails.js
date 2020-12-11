@@ -23,6 +23,12 @@ const internshipDetailsSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }],
+  applications: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Application'  
+    }
+  ],
   description: String,
   type: String
 });

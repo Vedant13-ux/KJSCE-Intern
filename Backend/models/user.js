@@ -88,7 +88,20 @@ const userScehma = new mongoose.Schema({
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Post'
 		}
+	],
+	liked: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Post'
+		}
+	],
+	commented: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Post'
+		}
 	]
+
 
 });
 
