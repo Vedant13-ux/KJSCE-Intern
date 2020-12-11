@@ -82,9 +82,9 @@ class Intershipform extends Component {
     } = this.state;
     return (
       <form onSubmit={this.handleSubmit} id="internshipForm">
-        <div className="ui form">
-          <div class="ui form">
-            <div class="field">
+        <div classNameName="ui form">
+          <div classNameName="ui form">
+            <div classNameName="field">
               <label>Title</label>
               <input
                 name="title"
@@ -97,8 +97,8 @@ class Intershipform extends Component {
               ></input>
             </div>
           </div>
-          <div class="two fields">
-            <div class="field">
+          <div className="two fields">
+            <div className="field">
               <label>Department</label>
               <select
                 name="department"
@@ -115,7 +115,7 @@ class Intershipform extends Component {
               </select>
             </div>
 
-            <div class="field">
+            <div className="field">
               <label>Apply By</label>
               <input
                 required
@@ -126,8 +126,8 @@ class Intershipform extends Component {
               ></input>
             </div>
           </div>
-          <div class="two fields">
-            <div class="field">
+          <div className="two fields">
+            <div className="field">
               <label>Duration (in months)</label>
               <input
                 type="number"
@@ -140,7 +140,7 @@ class Intershipform extends Component {
                 onChange={this.handleChange}
               ></input>
             </div>
-            <div class="field">
+            <div className="field">
               <label>Number of opening</label>
               <input
                 type="number"
@@ -153,7 +153,7 @@ class Intershipform extends Component {
               ></input>
             </div>
           </div>
-          <div class="field">
+          <div className="field">
             <label>Type</label>
           </div>
           <input type="radio" id="wfh" onChange={this.handleChange} name="type" value="Work from Home" />
@@ -164,7 +164,7 @@ class Intershipform extends Component {
           <br></br>
         </div>
 
-        <label className="skillsRequired">Skills Required</label>
+        <label classNameName="skillsRequired">Skills Required</label>
         <Multiselect
           options={this.state.skillData} // Options to display in the dropdown
           selectedValues={this.state.skillsRequired} // Preselected value to persist in dropdown
@@ -175,8 +175,8 @@ class Intershipform extends Component {
           ref={this.multiselectRef}
         />
 
-        <div className="ui form">
-          <div class="field">
+        <div classNameName="ui form">
+          <div className="field">
             <label>Who can Apply</label>
             <textarea
               maxlength="200"
@@ -188,7 +188,7 @@ class Intershipform extends Component {
               onChange={this.handleChange}
             ></textarea>
           </div>
-          <div class="field">
+          <div className="field">
             <label>About Internship</label>
             <textarea
               maxlength="200"
@@ -200,7 +200,7 @@ class Intershipform extends Component {
               onChange={this.handleChange}
             ></textarea>
           </div>
-          <div class="field">
+          <div className="field">
             <label>Other Requirements</label>
             <textarea
               maxlength="200"
@@ -212,7 +212,7 @@ class Intershipform extends Component {
               onChange={this.handleChange}
             ></textarea>
           </div>
-          <div class="field">
+          <div className="field">
             <label>perks</label>
             <textarea
               maxlength="100"
@@ -224,8 +224,8 @@ class Intershipform extends Component {
               onChange={this.handleChange}
             ></textarea>
           </div>
-          <div className="submit">
-            <button class="big ui button">ADD</button>
+          <div classNameName="submit">
+            <button className="big ui button">ADD</button>
           </div>
         </div>
       </form>

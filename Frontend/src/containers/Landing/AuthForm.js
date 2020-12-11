@@ -35,7 +35,7 @@ class AuthForm extends Component {
         return (
             (signUp &&
                 <form className="ui form authForm" onSubmit={this.handleSubmit}>
-                    <div className="heading"><i class="fas fa-user-graduate"></i> {heading}</div>
+                    <div className="heading"><i className="fas fa-user-graduate"></i> {heading}</div>
                     <div className="field">
                         <label>Name</label>
                         <div className="two fields">
@@ -101,7 +101,7 @@ class AuthForm extends Component {
                         <Link className="login" to="/login">Already have an account? Login</Link>
                     </div>
                     <div className="submit">
-                        <button class="big ui button">
+                        <button className="big ui button">
                             {buttonText}
                         </button>
                     </div>

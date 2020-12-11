@@ -3,6 +3,7 @@ import { Dropdown } from 'semantic-ui-react'
 import Modal from 'react-bootstrap/Modal'
 import Internshipform from '../Homepage/Internshipform'
 import FilterForm from '../Homepage/FilterForm'
+import ApplyForm from '../InternshipDetails/ApplyForm';
 
 const stateOptions = [
   {
@@ -70,6 +71,28 @@ export function FilterInternships() {
           <Modal.Title>Filter Internships</Modal.Title>
         </Modal.Header>
         <Modal.Body><FilterForm onHide={handleClose}></FilterForm></Modal.Body>
+      </Modal>
+    </div>
+  )
+}
+
+export function ApplyInternship(props) {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  return (
+    <div>
+      <div className="applynow">
+        <button type="button" class="btn btn-lg btn-default" onClick={handleShow}>
+          Apply Now
+        </button>
+      </div>
+      <Modal show={show} onHide={handleClose} centered backdrop="static">
+        <Modal.Header closeButton>
+          <Modal.Title>Application</Modal.Title>
+        </Modal.Header>
+        <Modal.Body><ApplyForm onHide={handleClose} duration={props.duration}></ApplyForm></Modal.Body>
       </Modal>
     </div>
   )

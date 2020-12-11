@@ -5,6 +5,7 @@ import RecommInternship from "./RecommInternship"
 import { apiCall } from "../../services/api"
 import NotFoundSVG from "../../images/NotFound.js"
 import Loading from "../../images/Loading"
+import { ApplyInternship } from '../Global/Utilities'
 
 class InternshipDetail extends Component {
   constructor(props) {
@@ -12,64 +13,8 @@ class InternshipDetail extends Component {
     this.state = {
       exists: false,
       start: true,
-      details: {
-        faculty: {
-          photo: "https://www.w3schools.com/w3css/img_avatar3.png",
-          fname: "   ---    ",
-          lname: "   ---   ",
-        },
-        title: "  ---   ",
-        skillsRequired: ["    ", "     ", "    ", "      "],
-        duration: "  ---   ",
-        applyBy: "---",
-        posted_on: {
-          type: Date,
-          default: Date.now(),
-        },
-        numberOpenings: "   --   ",
-        otherRequirements: "   ---   ",
-        department: "    ---   ",
-        perks: "         ----------                 ",
-        whoCanApply: "    -----    ",
-        description: "        -------           ",
-        type: "    ----    ",
-
-      },
-      recommlist: [
-        {
-          faculty: {
-            photo: "https://www.w3schools.com/w3css/img_avatar3.png",
-            fname: " --  ",
-            lname: "  --  ",
-          },
-          title: "  --  ",
-          duration: "  --  ",
-          applyBy: new Date(),
-          type: "  --  ",
-        },
-        {
-          faculty: {
-            photo: "https://www.w3schools.com/w3css/img_avatar3.png",
-            fname: " --  ",
-            lname: "  --  ",
-          },
-          title: "  --  ",
-          duration: "  --  ",
-          applyBy: new Date(),
-          type: "  --  ",
-        },
-        {
-          faculty: {
-            photo: "https://www.w3schools.com/w3css/img_avatar3.png",
-            fname: " --  ",
-            lname: "  --  ",
-          },
-          title: "  --  ",
-          duration: "  --  ",
-          applyBy: new Date(),
-          type: "  --  ",
-        }
-      ]
+      details: {},
+      recommlist: []
     };
     this.contentDisplay = this.contentDisplay.bind(this);
   }
@@ -136,7 +81,7 @@ class InternshipDetail extends Component {
                       <div class="flex-item">
                         <h4>
                           <i class="fa fa-clock mr-1"></i>Duration
-                </h4><p>{this.state.details.duration}</p>
+                </h4><p>{this.state.details.duration} months</p>
                       </div>
                       <div class="flex-item">
                         <h4>
@@ -146,7 +91,7 @@ class InternshipDetail extends Component {
 
                       <div class="flex-item"><h4>
                         <i class="fa fa-hourglass mr-2"></i>Apply by
-                </h4><p>Nov 17 {/*this.state.details.applyBy.toDateString().substring(4,10) */}</p></div>
+                    </h4><p>Nov 17 {/*this.state.details.applyBy.toDateString().substring(4,10) */}</p></div>
                     </div><hr></hr>
                     <h3>About Internship</h3>
                     <p>{this.state.details.description}</p>
@@ -154,7 +99,7 @@ class InternshipDetail extends Component {
                     <p>{this.state.details.whoCanApply}</p>
                     <h3>Other Requirement</h3>
                     <p>{this.state.details.otherRequirements}</p>
-                    <h3>skills</h3>
+                    <h3>Skills Required</h3>
                     <div>
                       {this.state.details.skillsRequired.map((skill, ind) => {
                         return (
@@ -182,11 +127,7 @@ class InternshipDetail extends Component {
                         <span className="name">Vedant Nagani</span>
                       </span>
                     </span>
-                    <div className="applynow">
-                      <button type="button" class="btn btn-lg btn-default">
-                        Apply Now
-                      </button>
-                    </div>
+                    <ApplyInternship duration={this.state.details.duration}></ApplyInternship>
                   </div>
                 </div>
               </div>
