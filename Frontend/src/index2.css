@@ -652,4 +652,8 @@
       border-top: 1px solid #FFF;
     }
 
+    .list-inline li{
+      display:inline;
+      margin:5px;
+    }
 /**************** end Profile *************************/
