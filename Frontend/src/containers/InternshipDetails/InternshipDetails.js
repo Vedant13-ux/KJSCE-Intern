@@ -14,9 +14,12 @@ class InternshipDetail extends Component {
       exists: false,
       start: true,
       details: {},
-      recommlist: []
+      recommlist: [],
+      user: this.props.currentUser.user,
+      applied: false
     };
     this.contentDisplay = this.contentDisplay.bind(this);
+    this.onApply = this.onApply.bind(this);
   }
 
   componentWillMount() {
@@ -29,6 +32,9 @@ class InternshipDetail extends Component {
             apiCall('get', '/api/internship/search/skills?skills=' + data["skillsRequired"].join(','))
               .then(
                 async (recomm) => {
+                  if (this.state.user.applications.includes(this.props.match.params.id)) {
+                    await this.setState({ applied: true })
+                  }
                   await this.setState({ details: data, recommlist: recomm, exists: true, start: false });
                   console.log(this.state);
                 }).catch(
@@ -47,6 +53,10 @@ class InternshipDetail extends Component {
         }
       )
 
+  }
+  async onApply(e) {
+    e.preventDefault();
+    await this.setState({ applied: true })
   }
   contentDisplay(exists, start) {
     console.log("this tbh", exists, start)
@@ -127,7 +137,7 @@ class InternshipDetail extends Component {
                         <span className="name">Vedant Nagani</span>
                       </span>
                     </span>
-                    <ApplyInternship duration={this.state.details.duration}></ApplyInternship>
+                    <ApplyInternship onApply={this.onApply} duration={this.state.details.duration} user={this.state.user._id} internship={this.state.details._id} applied={this.state.applied}></ApplyInternship>
                   </div>
                 </div>
               </div>

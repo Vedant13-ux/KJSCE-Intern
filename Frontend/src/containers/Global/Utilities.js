@@ -70,7 +70,7 @@ export function FilterInternships() {
         <Modal.Header closeButton>
           <Modal.Title>Filter Internships</Modal.Title>
         </Modal.Header>
-        <Modal.Body><FilterForm onHide={handleClose}></FilterForm></Modal.Body>
+        <Modal.Body><FilterForm onHide={handleClose} ></FilterForm></Modal.Body>
       </Modal>
     </div>
   )
@@ -81,19 +81,29 @@ export function ApplyInternship(props) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  return (
-    <div>
+  if (!props.applied) {
+    return (
+      <div>
+        <div className="applynow">
+          <button type="button" class="btn btn-lg btn-default" onClick={handleShow}>
+            Apply Now
+          </button>
+        </div>
+        <Modal show={show} onHide={handleClose} centered backdrop="static">
+          <Modal.Header closeButton>
+            <Modal.Title>Application</Modal.Title>
+          </Modal.Header>
+          <Modal.Body><ApplyForm onApply={props.onApply} onHide={handleClose} duration={props.duration} user={props.user} internship={props.internship} applied={props.applied}></ApplyForm></Modal.Body>
+        </Modal>
+      </div>
+    )
+  } else {
+    return (
       <div className="applynow">
-        <button type="button" class="btn btn-lg btn-default" onClick={handleShow}>
-          Apply Now
+        <button type="button" class="btn btn-lg btn-default" disabled>
+          Applied
         </button>
       </div>
-      <Modal show={show} onHide={handleClose} centered backdrop="static">
-        <Modal.Header closeButton>
-          <Modal.Title>Application</Modal.Title>
-        </Modal.Header>
-        <Modal.Body><ApplyForm onHide={handleClose} duration={props.duration}></ApplyForm></Modal.Body>
-      </Modal>
-    </div>
-  )
+    )
+  }
 }

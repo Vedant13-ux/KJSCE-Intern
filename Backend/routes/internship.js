@@ -89,17 +89,6 @@ router.get('/search/skills', async (req, res, next) => {
 
 });
 
-// router.get('/search/faculty', (req, res, next) => {
-//     var regex = new RegExp(escapeRegex(req.query.faculty), 'gi');
-//     db.InternshipDetails.find().populate('faculty',)
-//         .then((internships) => {
-//             res.status(200).send(internships);
-//         })
-//         .catch(err => next(err));
-// });
-
-
-
 // Create Internship
 router.post('/details', (req, res, next) => {
     req.body.duration = parseInt(req.body.duration);
@@ -232,11 +221,11 @@ router.delete('/bookmark/:id', (req, res, next) => {
 
 
 // Apply in a Internship
-router.put('/apply/:id', (req, res, next) => {
-    db.InternshipDetails.findById(req.params.id)
+router.post('/apply', (req, res, next) => {
+    db.InternshipDetails.findById(req.body.internshipId)
         .then(async (internship) => {
             try {
-                let user = db.User.findById(req.body);
+                let user = db.User.findById(req.body.userId);
                 await user.applications.push(internship);
                 await internship.applicants.push(user);
                 await user.save();

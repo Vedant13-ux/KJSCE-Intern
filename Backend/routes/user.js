@@ -12,6 +12,16 @@ function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 }
 
+// Get user by id
+router.get('/user/:id', (req, res, next) => {
+    db.User.findById(req.params.id).populate('applications').populate('')
+        .then((user) => {
+            res.status(200).send(user);
+        }).catch((err) => {
+
+        });
+});
+
 // User Suggestions
 router.get('/profile/search', (req, res, next) => {
     let regex = new RegExp(escapeRegex(req.query.name), 'gi')
