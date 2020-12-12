@@ -101,7 +101,7 @@ class InternshipDetail extends Component {
 
                       <div class="flex-item"><h4>
                         <i class="fa fa-hourglass mr-2"></i>Apply by
-                    </h4><p>Nov 17 {/*this.state.details.applyBy.toDateString().substring(4,10) */}</p></div>
+                    </h4><p>{(new Date(this.state.details.applyBy)).toDateString().substring(4,10)}</p></div>
                     </div><hr></hr>
                     <h3>About Internship</h3>
                     <p>{this.state.details.description}</p>
