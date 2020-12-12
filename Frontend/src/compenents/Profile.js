@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Navbar from "../containers/Global/Navbar";
 import PageFooter from "../containers/Global/PageFooter";
 import { apiCall } from "../services/api";
-// import { Link } from 'react-router-dom';
 import Basic from '../containers/Profile/Basicinfo'
 import Moreinfo from '../containers/Profile/Moreinfo'
 import UserActivity from '../containers/Profile/UserActivity'
@@ -11,41 +10,22 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {
-        email: 'huzaifa@somaiya.edu',
-        // password: {
-        //   type: String,
-        //   required: true
-        // },
-        fname: 'huzaifa',
-        lname: 'khilawala',
-        dept: 'IT',
-        role: 'student',
-        year: '2nd',
-        rollNo: '1914095',
-        photo: 'https://www.jeumobi.com/wp-content/uploads/2020/10/among-us-mobile-240x240.png',
-        bookmarks: [],
-        notifications: [],
-        conversations: [],
-        interactions: [],
-        resume: 'ok',
-        internshipsOffered: [],
-        applications: [],
-        skills: ['python','java','bruh'],
-        posts: [],
-        liked: [],
-        commented: []
-      
-      
-      }
+      user: {},
+      owner: false,
     }
   }
-  componentDidMount(){
-    apiCall('get', '/api/user/profile/' + this.props.match.params.id, '').then(
-      (data)=>{
+  componentDidMount() {
+    console.log(this.props.match.params.id);
+    apiCall('get', '/api/user/' + this.props.match.params.id, '').then(
+      async (data) => {
         console.log(data);
+        await this.setState({ user: data });
+        if (this.props.currentUser.user._id === data._id) {
+          await this.setState({ owner: true });
+        }
       }
     )
+      .catch(err => console.log(err));
   }
   render() {
     return (
@@ -53,14 +33,14 @@ class Profile extends Component {
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"></link>
         <Navbar currentUser={this.props.currentUser} />
         <section id="content" className="container">
-          <Basic user={this.state.user}/>
+          <Basic user={this.state.user} owner={this.state.owner} />
           <div className="row">
-            <Moreinfo user={this.state.user}/>
-          <UserActivity user={this.state.user}/>
+            <Moreinfo user={this.state.user} owner={this.state.owner} />
+            <UserActivity user={this.state.user} owner={this.state.owner} />
           </div>
         </section>
         <PageFooter />
-        
+
       </div>
     )
   }

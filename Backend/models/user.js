@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const { mongo } = require('mongoose');
 const userScehma = new mongoose.Schema({
 	email: {
 		type: String,
@@ -100,7 +101,21 @@ const userScehma = new mongoose.Schema({
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Post'
 		}
-	]
+	],
+	certificates: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Certificate'
+		}
+	],
+	bio: String,
+	socialHandles: {
+		facebook: String,
+		twitter: String,
+		linkedin: String,
+		github: String,
+		mail: String
+	}
 
 
 });

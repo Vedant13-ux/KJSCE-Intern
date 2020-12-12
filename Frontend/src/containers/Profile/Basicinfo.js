@@ -1,17 +1,18 @@
-import React, { Component } from "react";
+import React from "react";
+import { Link } from 'react-router-dom'
 
 function Basic(props) {
   return (
     <div className="page-heading">
       <div className="media clearfix">
         <div className="media-left pr30">
-          <a href="/">
+          <Link href="/">
             <img
               className="media-object mw150"
               src={props.user.photo}
               alt="..."
             />
-          </a>
+          </Link>
         </div>
         <div className="media-body va-m">
           <h2 className="media-heading">
@@ -25,29 +26,29 @@ function Basic(props) {
           <div className="media-links">
             <ul className="list-inline list-unstyled">
               <li>
-                <a href="/" title="facebook link">
-                <span class="fa fa-facebook-square fs35 text-primary"></span>
-                </a>
+                <Link href="/" title="facebook link">
+                  <span class="fa fa-facebook-square fs35 text-primary"></span>
+                </Link>
               </li>
               <li>
-                <a href="/" title="twitter link">
-                <span class="fa fa-twitter-square fs35 text-info"></span>
-                </a>
+                <Link href="/" title="twitter link">
+                  <span class="fa fa-twitter-square fs35 text-info"></span>
+                </Link>
               </li>
               <li className="hidden">
-                <a href="/" title="linkedin link">
-                <span class="fa fa-linkedin-square fs35 text-info"></span>
-                </a>
+                <Link href="/" title="linkedin link">
+                  <span class="fa fa-linkedin-square fs35 text-info"></span>
+                </Link>
               </li>
               <li className="hidden">
-                <a href="/" title="github link">
-                <span class="fa fa-github-square fs35 text-dark"></span>
-                </a>
+                <Link href="/" title="github link">
+                  <span class="fa fa-github-square fs35 text-dark"></span>
+                </Link>
               </li>
               <li>
-                <a href={'mailto:'+props.user.email} title="email link">
-                <span class="fa fa-envelope-square fs35 text-muted"></span>
-                </a>
+                <Link href={'mailto:' + props.user.email} title="email link">
+                  <span class="fa fa-envelope-square fs35 text-muted"></span>
+                </Link>
               </li>
             </ul>
           </div>
