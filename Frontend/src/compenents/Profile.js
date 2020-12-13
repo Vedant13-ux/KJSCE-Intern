@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import Navbar from "../containers/Global/Navbar";
 import PageFooter from "../containers/Global/PageFooter";
 import { apiCall } from "../services/api";
-import Basic from '../containers/Profile/Basicinfo'
-import Moreinfo from '../containers/Profile/Moreinfo'
-import UserActivity from '../containers/Profile/UserActivity'
-import Loading from '../images/Loading'
+import Basic from "../containers/Profile/Basicinfo";
+import Moreinfo from "../containers/Profile/Moreinfo";
+import UserActivity from "../containers/Profile/UserActivity";
+import Loading from "../images/Loading";
 
 class Profile extends Component {
   constructor(props) {
@@ -14,11 +14,14 @@ class Profile extends Component {
       user: {
         skills: [],
         posts: [],
-        applications: []
+        applications: [],
       },
       owner: false,
-      start: true
-    }
+      start: true,
+      preskills: [],
+    };
+    this.changeskill = this.changeskill.bind(this);
+    this.addcert = this.addcert.bind(this);
   }
   async componentDidMount() {
     console.log(this.props.match.params.id);
@@ -26,45 +29,87 @@ class Profile extends Component {
       await this.setState({ user: this.props.currentUser.user, owner: true, start: false });
     }
     else {
-      console.log(this.props.match.params.id);
-      apiCall('get', '/api/user/' + this.props.match.params.id, '').then(
-        async (data) => {
-          console.log(data);
-          data["skills"]=['python','java']
-          await this.setState({ user: data, start: false });
+    console.log(this.props.match.params.id);
+    apiCall("get", "/api/user/" + this.props.match.params.id, "")
+      .then(async (data) => {
+        console.log(data);
+        data["skills"] = ["python", "java"];
+        data["certificate"]=[{title:'dance',provider:'udemy',link:'ok'}]
+        let i = 0;
+        for (i = 0; i < data.skills.length; i++) {
+          this.state.preskills.push({
+            text: data.skills[i],
+          });
         }
-    ).catch(err => console.log(err));
+        await this.setState({
+          owner:true,
+          user: data,
+          preskills: this.state.preskills,
+          start: false,
+        });
+      })
+      .catch((err) => console.log(err));
+    }
   }
-}
+  addcert(o){
+    let temp=this.state.user;
+    temp.certificate.push(o);
+    this.setState({user:temp})
+  }
+  changeskill(s) {
+    let temp = this.state.user;
+    temp["skills"] = s;
+    let i = 0;
+    let t=[]
+    for (i = 0; i < s.length; i++) {
+      t.push({
+        text: s[i],
+      });
+    }
+    this.setState({ user: temp, preskills: t });
+  }
   render() {
     if (this.state.start) {
       return (
         <div id="profile">
           <Navbar currentUser={this.props.currentUser} />
-          <div style={{ minHeight: '600px', display: 'flex', alignItems: 'center' }}>
+          <div
+            style={{
+              minHeight: "600px",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             <Loading className="loading" />
           </div>
           <PageFooter />
         </div>
-
-      )
-    }
-    else {
+      );
+    } else {
       return (
         <div id="profile">
-          <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"></link>
+          <link
+            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+            rel="stylesheet"
+          ></link>
           <Navbar currentUser={this.props.currentUser} />
           <section id="content" className="container">
             <Basic user={this.state.user} owner={this.state.owner} />
             <div className="row">
-              <Moreinfo user={this.state.user} owner={this.state.owner} />
+              <Moreinfo
+              addcert={this.addcert}
+              isowner={this.state.owner}
+              preskills={this.state.preskills}
+                changeskill={this.changeskill}
+                user={this.state.user}
+                owner={this.state.owner}
+              />
               <UserActivity user={this.state.user} owner={this.state.owner} />
             </div>
           </section>
           <PageFooter />
-
         </div>
-      )
+      );
     }
   }
 }
