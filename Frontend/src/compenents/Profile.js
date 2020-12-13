@@ -26,16 +26,14 @@ class Profile extends Component {
   async componentDidMount() {
     document.documentElement.scrollTop = 0;
     console.log(this.props.match.params.id);
-    if (this.props.currentUser.user.email.split('@')[0] === this.props.match.params.id) {
-      await this.setState({ user: this.props.currentUser.user, owner: true, start: false });
-    }
-    else {
+    // if (this.props.currentUser.user.email.split('@')[0] === this.props.match.params.id) {
+    //   await this.setState({ user: this.props.currentUser.user, owner: true, start: false });
+    // }
+    // else {
     console.log(this.props.match.params.id);
     apiCall("get", "/api/user/" + this.props.match.params.id, "")
       .then(async (data) => {
         console.log(data);
-        data["skills"] = ["python", "java"];
-        data["certificate"]=[{title:'dance',provider:'udemy',link:'ok'}]
         let i = 0;
         for (i = 0; i < data.skills.length; i++) {
           this.state.preskills.push({
@@ -50,12 +48,17 @@ class Profile extends Component {
         });
       })
       .catch((err) => console.log(err));
-    }
+    // }
   }
   addcert(o){
     let temp=this.state.user;
-    temp.certificate.push(o);
-    this.setState({user:temp})
+    o.ownerId='5fc3e5d1fc33db6a66886586';//this.props.currentUser._id;
+    temp.certificates.push(o);
+    
+    apiCall('put','/api/profile/update/certificates',{certificate:o,id:'5fc3e5d1fc33db6a66886586'}).then(
+      (d)=>console.log(d)
+    ).catch((e)=>console.log(e))
+    return this.setState({user:temp})
   }
   changeskill(s) {
     let temp = this.state.user;
@@ -67,7 +70,10 @@ class Profile extends Component {
         text: s[i],
       });
     }
-    this.setState({ user: temp, preskills: t });
+    apiCall('put','/api/profile/update/skills',{skills:s,id:'5fc3e5d1fc33db6a66886586'}).then(
+      (d)=>console.log(d)
+    ).catch((e)=>console.log(e))
+    return this.setState({ user: temp, preskills: t });
   }
   render() {
     if (this.state.start) {
