@@ -35,6 +35,7 @@ class Profile extends Component {
         }
     ).catch(err => console.log(err));
   }
+}
   render() {
     if (this.state.start) {
       return (
