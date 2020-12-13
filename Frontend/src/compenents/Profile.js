@@ -21,6 +21,7 @@ class Profile extends Component {
     }
   }
   async componentDidMount() {
+    document.documentElement.scrollTop = 0;
     console.log(this.props.match.params.id);
     if (this.props.currentUser.user.email.split('@')[0] === this.props.match.params.id) {
       await this.setState({ user: this.props.currentUser.user, owner: true, start: false });
@@ -30,12 +31,12 @@ class Profile extends Component {
       apiCall('get', '/api/user/' + this.props.match.params.id, '').then(
         async (data) => {
           console.log(data);
-          data["skills"]=['python','java']
+          data["skills"] = ['python', 'java']
           await this.setState({ user: data, start: false });
         }
-    ).catch(err => console.log(err));
+      ).catch(err => console.log(err));
+    }
   }
-}
   render() {
     if (this.state.start) {
       return (

@@ -670,6 +670,11 @@ body{
 #internshipdetail .applicant .appliList .name {
   line-height: 40px;
 }
+#internshipdetail .mailAppl{
+  color: #FFCA3D;
+  background-color: #020C53;
+  float: right;
+}
  .loading-anime{
    min-height: 700px;
    text-align: center;

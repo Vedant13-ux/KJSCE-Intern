@@ -5,7 +5,10 @@ import RecommInternship from "./RecommInternship"
 import { apiCall } from "../../services/api"
 import NotFoundSVG from "../../images/NotFound.js"
 import Loading from "../../images/Loading"
-import { ApplyInternship } from '../Global/Utilities'
+import { ApplyInternship } from '../Global/Utilities';
+import Modal from "react-bootstrap/Modal";
+import { Multiselect } from "multiselect-react-dropdown";
+
 
 class InternshipDetail extends Component {
   constructor(props) {
@@ -16,11 +19,24 @@ class InternshipDetail extends Component {
       details: {},
       recommlist: [],
       user: this.props.currentUser.user,
-      applied: false
+      applied: false,
+      owner: true,
+      show1: false,
+      show2: true,
+      emails: ['Hello', 'Vedant']
     };
     this.contentDisplay = this.contentDisplay.bind(this);
     this.onApply = this.onApply.bind(this);
+    this.handleClose1 = () => this.setState({ show1: false });
+    this.handleShow1 = () => this.setState({ show1: true });
   }
+
+  getApplicantsEmail() {
+    var emails = [];
+    this.state.details.applicants.map(app => emails.push(app['email']));
+    return emails;
+  }
+
 
   componentWillMount() {
     document.documentElement.scrollTop = '0';
@@ -36,6 +52,7 @@ class InternshipDetail extends Component {
                     await this.setState({ applied: true })
                   }
                   await this.setState({ details: data, recommlist: recomm, exists: true, start: false });
+                  // await this.setState({ emails: this.getApplicantsEmail() });
                   console.log(this.state);
                 }).catch(
                   (e) => this.setState({ exist: false, start: false })
@@ -101,7 +118,7 @@ class InternshipDetail extends Component {
 
                       <div class="flex-item"><h4>
                         <i class="fa fa-hourglass mr-2"></i>Apply by
-                    </h4><p>{(new Date(this.state.details.applyBy)).toDateString().substring(4,10)}</p></div>
+                    </h4><p>{(new Date(this.state.details.applyBy)).toDateString()}</p></div>
                     </div><hr></hr>
                     <h3>About Internship</h3>
                     <p>{this.state.details.description}</p>
@@ -125,7 +142,41 @@ class InternshipDetail extends Component {
                     <p>{this.state.details.numberOpenings}</p>
 
                     <h3>
-                      Applicants
+                      Applicants {this.state.owner &&
+                        <div>
+                          <button onClick={this.handleShow1} className="mailAppl ui small button">Mail Applicants</button>
+                          <Modal show={this.state.show1} onHide={this.handleClose1} centered>
+                            <Modal.Header closeButton backdrop="static">
+                              <Modal.Title>Send Mail</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                              <form className="ui form">
+                                <div className="field">
+                                  <label>To</label>
+                                  <Multiselect
+                                    options={this.state.emails}
+                                    selectedValues={this.state.emails}
+                                    displayValue="text"
+                                    onSearch={this.handleSkills}
+                                    ref={this.multiselectRef}
+                                  />
+                                </div>
+                                <div className="ui field">
+                                  <label>Subject</label>
+                                  <input type="text" required></input>
+                                </div>
+                                <div className="ui field">
+                                  <label>Text</label>
+                                  <textarea required></textarea>
+                                </div>
+                                <div style={{ textAlign: 'center' }}>
+                                  <button className="ui button">Send</button>
+                                </div>
+                              </form>
+                            </Modal.Body>
+                          </Modal>
+                        </div>
+                      }
                     </h3>
                     <span className="appliList">
                       <span className="applicant">

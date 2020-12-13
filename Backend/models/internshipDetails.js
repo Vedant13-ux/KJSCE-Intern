@@ -26,11 +26,15 @@ const internshipDetailsSchema = new mongoose.Schema({
   applications: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Application'  
+      ref: 'Application'
     }
   ],
   description: String,
-  type: String
+  type: String,
+  completed: {
+    type: Boolean,
+    default: false
+  }
 });
 
 module.exports = mongoose.model('InternshipDetails', internshipDetailsSchema);

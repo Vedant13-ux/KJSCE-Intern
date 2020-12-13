@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models');
 const skillJSON = require('../data binder/skills.json');
+const mailer = require('../handlers/mailer');
 
 // Search Internships
 
@@ -11,7 +12,8 @@ function escapeRegex(text) {
 
 router.get('/search/all', async (req, res, next) => {
     try {
-        let internships = await db.InternshipDetails.find().populate('faculty').exec();
+        var recentDate = new Date();
+        let internships = await db.InternshipDetails.find({ applyBy: { $gte: recentDate } }).populate('faculty').exec();
         res.status(200).send(internships);
     } catch (err) {
         next(err);
@@ -93,6 +95,12 @@ router.get('/search/skills', async (req, res, next) => {
 router.post('/details', (req, res, next) => {
     req.body.duration = parseInt(req.body.duration);
     req.body.numberOpenings = parseInt(req.body.numberOpenings);
+    // req.body.apply = new Date(req.body.apply).setHours(23);
+    // req.body.apply = new Date(req.body.apply).setMinutes(59);
+    // req.body.apply = new Date(req.body.apply).setSeconds(59);
+    // req.body.apply = new Date(req.body.apply).setMilliseconds(59);
+
+
     db.InternshipDetails.create(req.body)
         .then((internship) => {
             res.status(200).send(internship);
@@ -123,7 +131,7 @@ router.get('/skillSuggestion/:skill', (req, res, next) => {
 });
 // Get Internship Details
 router.get('/details/:id', (req, res, next) => {
-    db.InternshipDetails.findById(req.params.id).populate('faculty')
+    db.InternshipDetails.findById(req.params.id).populate('faculty', '_id fname lname photo email').populate('appicants', 'fname lname photo _id email')
         .exec((err, internship) => {
             if (!internship) {
                 return res.status(404).send({});
@@ -131,9 +139,9 @@ router.get('/details/:id', (req, res, next) => {
             if (err) {
                 return next(err);
             }
-            
+
             let curr = new Date();
-            internship["canApply"]= new Date(internship.applyBy) - curr > 0
+            internship["canApply"] = new Date(internship.applyBy) - curr > 0
             console.log(internship.canApply)
             return res.status(200).send(internship)
         })
@@ -230,10 +238,14 @@ router.post('/apply', (req, res, next) => {
         .then(async (internship) => {
             try {
                 let user = db.User.findById(req.body.userId);
-                await user.applications.push(internship);
-                await internship.applicants.push(user);
-                await user.save();
-                await internship.save();
+                if (user) {
+                    await user.applications.push(internship);
+                    await internship.applicants.push(user);
+                    await user.save();
+                    await internship.save();
+                } else {
+                    return next({ status: 404, message: 'User Not Found' })
+                }
             } catch (error) {
                 next(err);
             }
@@ -242,4 +254,33 @@ router.post('/apply', (req, res, next) => {
         });
 });
 
+// mail Applicants
+router.post('/mailapplicants', async (req, res, next) => {
+    // req.body = {
+    //     mailBody: {
+    //         subject,
+    //         emails: [],
+    //         text,
+    //     },
+    // userId,
+    //  internshipId,
+    // }
+    db.User.findById(req.body.userId, 'role')
+        .then(async user => {
+            if (!user) {
+                return next({ status: 404, message: 'User Not Found' })
+            }
+            if (user.role !== 'Faculty') {
+                return next({ status: 405, message: 'You are not allowed to send Mails' })
+            }
+            try {
+                let internship = db.Internship.findById(req.body.internshipId, 'faculty')
+                if (internship.faculty === user._id) {
+                    mailer(req.body.mailBody);
+                }
+            } catch (error) {
+                return next(err);
+            }
+        })
+})
 module.exports = router;

@@ -10,10 +10,10 @@ function seedDB() {
         data = {
             // faculty: "5fc3e5a0fe0c31080ccb2654",
             faculty: "5fc81a619619ea0017ecb856",
-            title: 'Web Development',
-            skillsRequired: ['Node.Js', "MongoDB"],
+            title: 'Marketting',
+            skillsRequired: ['Public Speaking', "Communication Skills"],
             duration: Math.floor(Math.random() * 13),
-            applyBy: Date.now(),
+            applyBy: new Date('2020-12-30T22:58:32.786Z'),
             numberOpenings: Math.floor(Math.random() * 3),
             description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque delectus tempore eos quibusdam, tenetur quas nihil asperiores molestiae ad sunt, dolore, minima blanditiis? Error unde sapiente, temporibus sit eius neque.",
             perks: 'Certificate',

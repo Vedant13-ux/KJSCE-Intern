@@ -26,6 +26,7 @@ class Intershipform extends Component {
         { text: "C++" },
         { text: "React Native" },
       ],
+
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -33,7 +34,7 @@ class Intershipform extends Component {
     this.handleSkills = this.handleSkills.bind(this);
     this.multiselectRef = React.createRef();
   }
-
+  
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -42,9 +43,9 @@ class Intershipform extends Component {
     var query = skillInput.value;
     console.log(query);
     apiCall("get", "/api/internship/skillSuggestion/" + query, "")
-      .then((data) => {
+      .then(async (data) => {
         console.log(data);
-        this.setState({ skillData: data });
+        await this.setState({ skillData: data });
       })
       .catch((err) => console.log(err));
   }
@@ -82,9 +83,9 @@ class Intershipform extends Component {
     } = this.state;
     return (
       <form onSubmit={this.handleSubmit} id="internshipForm">
-        <div classNameName="ui form">
-          <div classNameName="ui form">
-            <div classNameName="field">
+        <div className="ui form">
+          <div className="ui form">
+            <div className="field">
               <label>Title</label>
               <input
                 name="title"
@@ -111,7 +112,8 @@ class Intershipform extends Component {
                 <option value="cs">Comps</option>
                 <option value="extc">EXTC</option>
                 <option value="etrx">ETRX</option>
-                <option value="0">Mech</option>
+                <option value="mech">Mech</option>
+                <option value="neutral">Neutral</option>
               </select>
             </div>
 
@@ -155,27 +157,33 @@ class Intershipform extends Component {
           </div>
           <div className="field">
             <label>Type</label>
+
+            <span className="mr-4">
+              <input type="radio" id="wfh" onChange={this.handleChange} name="type" value="Work from Home" className="mr-2" />
+              <label for="wfh">Work from Home</label>
+            </span>
+            <span>
+              <input type="radio" id="ext" onChange={this.handleChange} name="type" value="External" className="mr-2" />
+              <label for="ext">External</label>
+            </span>
           </div>
-          <input type="radio" id="wfh" onChange={this.handleChange} name="type" value="Work from Home" />
-          <label for="wfh">Work from Home</label>
-          <br />
-          <input type="radio" id="ext" onChange={this.handleChange} name="type" value="External" />
-          <label for="ext">External</label>
-          <br></br>
         </div>
 
-        <label classNameName="skillsRequired">Skills Required</label>
-        <Multiselect
-          options={this.state.skillData} // Options to display in the dropdown
-          selectedValues={this.state.skillsRequired} // Preselected value to persist in dropdown
-          // onSelect={this.onSelect} // Function will trigger on select event
-          // onRemove={this.onRemove} // Function will trigger on remove event
-          displayValue="text" // Property name to display in the dropdown options
-          onSearch={this.handleSkills}
-          ref={this.multiselectRef}
-        />
+        <div className="field">
+          <label className="skillsRequired">Skills Required</label>
+          <Multiselect
+            options={this.state.skillData} // Options to display in the dropdown
+            selectedValues={this.state.skillsRequired} // Preselected value to persist in dropdown
+            // onSelect={this.onSelect} // Function will trigger on select event
+            // onRemove={this.onRemove} // Function will trigger on remove event
+            displayValue="text" // Property name to display in the dropdown options
+            onSearch={this.handleSkills}
+            ref={this.multiselectRef}
+            placeholder="Search and Select Skills"
+          />
+        </div>
 
-        <div classNameName="ui form">
+        <div className="ui form">
           <div className="field">
             <label>Who can Apply</label>
             <textarea
@@ -213,7 +221,7 @@ class Intershipform extends Component {
             ></textarea>
           </div>
           <div className="field">
-            <label>perks</label>
+            <label>Perks</label>
             <textarea
               maxlength="100"
               rows="2"
@@ -224,7 +232,7 @@ class Intershipform extends Component {
               onChange={this.handleChange}
             ></textarea>
           </div>
-          <div classNameName="submit">
+          <div className="submit">
             <button className="big ui button">ADD</button>
           </div>
         </div>
