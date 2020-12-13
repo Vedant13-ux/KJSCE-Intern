@@ -1,4 +1,4 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
 import { Multiselect } from "multiselect-react-dropdown";
 import { apiCall } from "../../services/api";
@@ -7,6 +7,11 @@ class Basic extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      certform: {
+        title: "",
+        provider: "",
+        link: "",
+      },
       skills: [
         { text: "Python" },
         { text: "Node.Js" },
@@ -15,18 +20,43 @@ class Basic extends Component {
         { text: "C++" },
         { text: "React Native" },
       ],
-      show1:false,
-      show2:false,
-      preskills:[]
+      show1: false,
+      show2: false,
     };
+    console.log(props);
+
+    this.multiselectRef = React.createRef();
     this.handleSkills = this.handleSkills.bind(this);
     this.multiselectRef = React.createRef();
 
-    this.handleClose1 = () => this.setState({show1:false});
-    this.handleShow1 = () => this.setState({show1:true});
+    this.handleClose1 = () => this.setState({ show1: false });
+    this.handleShow1 = () => this.setState({ show1: true });
 
-    this.handleClose2 = () => this.setState({show2:false});
-    this.handleShow2 = () => this.setState({show2:true});
+    this.handleskillssubmit = this.handleskillssubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
+    this.handleClose2 = () => this.setState({ show2: false });
+    this.handleShow2 = () => this.setState({ show2: true });
+  }
+
+  async handleskillssubmit(e) {
+    var skills = this.multiselectRef.current.getSelectedItems();
+    var skillArray = [];
+    skills.forEach((skill) => {
+      skillArray.push(skill.text);
+    });
+    console.log(skillArray);
+    this.props.changeskill(skillArray);
+    this.setState({ show1: false });
+  }
+  async handleSubmit(e) {
+    e.preventDefault();
+    this.props.addcert(this.state.certform);
+    this.setState({
+      certform: { title: "", provider: "", link: "" },
+      show2: false,
+    });
   }
 
   async handleSkills() {
@@ -41,8 +71,14 @@ class Basic extends Component {
       })
       .catch((err) => console.log(err));
   }
+  handleChange(e) {
+    let temp = this.state.certform;
+    temp[e.target.name] = e.target.value;
+    this.setState({ certform: temp });
+  }
 
   render() {
+    const { title, provider, link } = this.state.certform;
     return (
       <div className="col-md-4">
         <div className="panel">
@@ -82,9 +118,11 @@ class Basic extends Component {
               <i className="fa fa-trophy" />
             </span>
             <span className="panel-title">Skills</span>
-            <span onClick={this.handleShow1} className="add">
-              <i class="far fa-plus-square"></i>
-            </span>
+            {this.props.isowner && (
+              <span onClick={this.handleShow1} className="add">
+                <i class="far fa-plus-square"></i>
+              </span>
+            )}
           </div>
           <div className="panel-body pb5">
             {this.props.user.skills.map((s) => (
@@ -97,12 +135,18 @@ class Basic extends Component {
             </Modal.Header>
             <Modal.Body>
               <Multiselect
-                options={this.state.skills} 
-                selectedValues={this.state.preskills} 
+                options={this.state.skills}
+                selectedValues={this.props.preskills}
                 displayValue="text"
                 onSearch={this.handleSkills}
                 ref={this.multiselectRef}
               />
+              <button
+                onClick={this.handleskillssubmit}
+                className="medium ui button"
+              >
+                CONFIRM
+              </button>
             </Modal.Body>
           </Modal>
         </div>
@@ -112,16 +156,70 @@ class Basic extends Component {
               <i className="fa fa-pencil" />
             </span>
             <span className="panel-title">Certificates</span>
-            <span className="add" onClick={this.handleShow2}>
-              <i class="far fa-plus-square"></i>
-            </span>
+            {this.props.isowner && (
+              <span className="add" onClick={this.handleShow2}>
+                <i class="far fa-plus-square"></i>
+              </span>
+            )}
           </div>
-          <div className="panel-body pb5"></div>
+          <div className="panel-body pb5">
+            {this.props.user.certificate.map((s) => (
+              <a href={s.link}>
+                <h6>{s.provider}</h6>
+                <h4>{s.title}</h4>
+                <hr class="short br-lighter"></hr>
+              </a>
+            ))}
+          </div>
           <Modal show={this.state.show2} onHide={this.handleClose2} centered>
             <Modal.Header closeButton>
-              <Modal.Title>Filter Internships</Modal.Title>
+              <Modal.Title>Certificate</Modal.Title>
             </Modal.Header>
-            <Modal.Body>no</Modal.Body>
+            <Modal.Body>
+              <form onSubmit={this.handleSubmit} id="internshipForm">
+                <div classNameName="ui form">
+                  <div classNameName="field">
+                    <label>Title</label>
+                    <input
+                      name="title"
+                      maxLength="30"
+                      required
+                      val={title}
+                      onChange={this.handleChange}
+                      type="text"
+                      placeholder="eg. Completed Course on Java"
+                    ></input>
+                  </div>
+                  <div classNameName="field">
+                    <label>Provider</label>
+                    <input
+                      name="provider"
+                      maxLength="30"
+                      required
+                      val={provider}
+                      onChange={this.handleChange}
+                      type="text"
+                      placeholder="eg. Udemy"
+                    ></input>
+                  </div>
+                  <div classNameName="field">
+                    <label>Link</label>
+                    <input
+                      name="link"
+                      maxLength="100"
+                      required
+                      val={link}
+                      onChange={this.handleChange}
+                      type="text"
+                      placeholder="eg. https://www.udemy.com/certificate/UC-fb6...."
+                    ></input>
+                  </div>
+                  <div classNameName="submit">
+                    <button className="medium ui button">ADD</button>
+                  </div>
+                </div>
+              </form>
+            </Modal.Body>
           </Modal>
         </div>
       </div>
