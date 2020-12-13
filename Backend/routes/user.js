@@ -14,7 +14,7 @@ function escapeRegex(text) {
 
 // Get user by id
 router.get('/user/:id', (req, res, next) => {
-    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('applications', 'posts')
+    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('applications').populate('posts')
         .then((user) => {
             res.status(200).send(user);
         }).catch((err) => {
@@ -91,9 +91,31 @@ router.put('/profile/update/name', (req, res, next) => {
 router.put('/profile/update/skills', (req, res, next) => {
     db.User.findById(req.body.id)
         .then(async (user) => {
+            if (!user) {
+                return next({ status: 404, message: "User Not Found" });
+            }
             try {
                 await user.skills.push(req.body.skill);
                 await user.save();
+            } catch (error) {
+                next(error);
+            }
+        }).catch((err) => {
+            next(err);
+        });
+});
+
+router.put('/profile/update/certificates', (req, res, next) => {
+    db.User.findById(req.body.id)
+        .then(async user => {
+            if (!user) {
+                return next({ status: 404, message: "User Not Found" });
+            }
+            try {
+                let certificate = await db.Certificate.create(req.body.certificate)
+                await user.certificates.push(certificate);
+                await user.save();
+                res.send(certificate);
             } catch (error) {
                 next(error);
             }
