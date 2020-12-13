@@ -5,6 +5,7 @@ import { apiCall } from "../services/api";
 import Basic from '../containers/Profile/Basicinfo'
 import Moreinfo from '../containers/Profile/Moreinfo'
 import UserActivity from '../containers/Profile/UserActivity'
+import Loading from '../images/Loading'
 
 class Profile extends Component {
   constructor(props) {
@@ -36,6 +37,17 @@ class Profile extends Component {
     }
   }
   render() {
+    if (this.state.start){
+      return (
+        <div id="profile">
+          <Navbar currentUser={this.props.currentUser} />
+          <Loading className="loading"/>
+          <PageFooter />
+        </div>
+        
+      )
+    }
+    else{
     return (
       <div id="profile">
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"></link>
@@ -50,7 +62,7 @@ class Profile extends Component {
         <PageFooter />
 
       </div>
-    )
+    )}
   }
 }
 export default Profile;
