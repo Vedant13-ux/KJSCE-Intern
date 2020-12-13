@@ -125,7 +125,7 @@
       margin-top: 10px;
     }
     .pull-right{
-      float: none;
+      float: none !important;
     }
     .media-left,
     .media > .pull-left {
