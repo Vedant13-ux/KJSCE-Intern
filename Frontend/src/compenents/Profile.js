@@ -19,18 +19,21 @@ class Profile extends Component {
       start: true
     }
   }
-  componentDidMount() {
+  async componentDidMount() {
     console.log(this.props.match.params.id);
-    apiCall('get', '/api/user/' + this.props.match.params.id, '').then(
-      async (data) => {
-        console.log(data);
-        await this.setState({ user: data });
-        if (this.props.currentUser.user._id === data._id) {
-          await this.setState({ owner: true });
+    if (this.props.currentUser.user.email.split('@')[0] === this.props.match.params.id) {
+      await this.setState({ user: this.props.currentUser.user, owner: true });
+    }
+    else {
+      console.log(this.props.match.params.id);
+      apiCall('get', '/api/user/' + this.props.match.params.id, '').then(
+        async (data) => {
+          console.log(data);
+          await this.setState({ user: data });
         }
-      }
-    )
-      .catch(err => console.log(err));
+      )
+        .catch(err => console.log(err));
+    }
   }
   render() {
     return (

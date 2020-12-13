@@ -124,6 +124,9 @@
       font-weight: 600;
       margin-top: 10px;
     }
+    .pull-right{
+      float: none;
+    }
     .media-left,
     .media > .pull-left {
       padding-right: 10px;
