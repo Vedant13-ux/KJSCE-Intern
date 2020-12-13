@@ -262,7 +262,7 @@ router.post('/mailapplicants', async (req, res, next) => {
     //         emails: [],
     //         text,
     //     },
-    // userId,
+    //  userId,
     //  internshipId,
     // }
     db.User.findById(req.body.userId, 'role')

@@ -23,19 +23,58 @@ class InternshipDetail extends Component {
       owner: true,
       show1: false,
       show2: true,
-      emails: ['Hello', 'Vedant']
+      emails: [{ text: "Hello" }, { text: "Vedant" }],
+      role: "Student",
+      subject: '',
+      text: '',
+      error: ''
     };
     this.contentDisplay = this.contentDisplay.bind(this);
     this.onApply = this.onApply.bind(this);
     this.handleClose1 = () => this.setState({ show1: false });
     this.handleShow1 = () => this.setState({ show1: true });
+    this.onSendMail = this.onSendMail.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.multiselectRef = React.createRef();
   }
 
+
+  // For Mailing Applicants
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value })
+  }
   getApplicantsEmail() {
     var emails = [];
-    this.state.details.applicants.map(app => emails.push(app['email']));
+    this.state.details.applicants.map(app => emails.push({ text: app['email'] }));
     return emails;
   }
+  async onSendMail(e) {
+    e.preventDefault();
+    console.log('Onsend aaya');
+    var emails = this.multiselectRef.current.getSelectedItems();
+    if (emails.length === 0) {
+      return await this.setState({ erros: 'Atleast select one Recepient' });
+    }
+    var emailArray = [];
+    emails.forEach((email) => {
+      emailArray.push(email.text);
+    });
+    var mailBody = {
+      subject: this.state.subject,
+      text: this.state.text,
+      to: emailArray,
+    };
+    apiCall('post', '/api/internship/mailapplicants', { mailBody, userId: this.props.currentUser.user._id, internshipId: this.state.details._id })
+      .then(() => {
+        console.log('Sent Mail')
+      })
+      .catch(err => {
+        console.log(err)
+        this.setState({ errors: err.message });
+      })
+  }
+
+
 
 
   componentWillMount() {
@@ -52,7 +91,7 @@ class InternshipDetail extends Component {
                     await this.setState({ applied: true })
                   }
                   await this.setState({ details: data, recommlist: recomm, exists: true, start: false });
-                  // await this.setState({ emails: this.getApplicantsEmail() });
+                  await this.setState({ emails: this.getApplicantsEmail() });
                   console.log(this.state);
                 }).catch(
                   (e) => this.setState({ exist: false, start: false })
@@ -76,7 +115,6 @@ class InternshipDetail extends Component {
     await this.setState({ applied: true })
   }
   contentDisplay(exists, start) {
-    console.log("this tbh", exists, start)
     if (start) {
       return (
         <div className="loading-anime">
@@ -150,28 +188,29 @@ class InternshipDetail extends Component {
                               <Modal.Title>Send Mail</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                              <form className="ui form">
-                                <div className="field">
-                                  <label>To</label>
-                                  <Multiselect
-                                    options={this.state.emails}
-                                    selectedValues={this.state.emails}
-                                    displayValue="text"
-                                    onSearch={this.handleSkills}
-                                    ref={this.multiselectRef}
-                                  />
-                                </div>
+                              <div className="toField">
+                                <label>To</label>
+                                <Multiselect
+                                  options={this.state.emails}
+                                  selectedValues={this.state.emails}
+                                  displayValue="text"
+                                  onSearch={this.handleSkills}
+                                  ref={this.multiselectRef}
+                                />
+                              </div>
+                              <form className="ui form" onSubmit={this.onSendMail}>
                                 <div className="ui field">
                                   <label>Subject</label>
-                                  <input type="text" required></input>
+                                  <input type="text" required name="subject" onChange={this.handleChange}></input>
                                 </div>
                                 <div className="ui field">
                                   <label>Text</label>
-                                  <textarea required></textarea>
+                                  <textarea required name="text" onChange={this.handleChange}></textarea>
                                 </div>
                                 <div style={{ textAlign: 'center' }}>
                                   <button className="ui button">Send</button>
                                 </div>
+                                <p style={{ color: 'red' }}>{this.state.error}</p>
                               </form>
                             </Modal.Body>
                           </Modal>
@@ -188,7 +227,7 @@ class InternshipDetail extends Component {
                         <span className="name">Vedant Nagani</span>
                       </span>
                     </span>
-                    <ApplyInternship onApply={this.onApply} duration={this.state.details.duration} user={this.state.user._id} internship={this.state.details._id} applied={this.state.applied}></ApplyInternship>
+                    {this.state.role === "Student" && <ApplyInternship onApply={this.onApply} duration={this.state.details.duration} user={this.state.user._id} internship={this.state.details._id} applied={this.state.applied}></ApplyInternship>}
                   </div>
                 </div>
               </div>
@@ -221,7 +260,6 @@ class InternshipDetail extends Component {
 
   render() {
     const { exists, start } = this.state;
-    console.log(exists);
     return (
       <div>
         <Navbar currentUser={this.props.currentUser}></Navbar>
