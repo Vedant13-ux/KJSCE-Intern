@@ -30,12 +30,12 @@ class Profile extends Component {
       apiCall('get', '/api/user/' + this.props.match.params.id, '').then(
         async (data) => {
           console.log(data);
+          data["skills"]=['python','java']
           await this.setState({ user: data, start: false });
         }
-      )
-        .catch(err => console.log(err));
-    }
+    ).catch(err => console.log(err));
   }
+}
   render() {
     if (this.state.start) {
       return (
