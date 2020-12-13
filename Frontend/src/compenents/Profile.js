@@ -10,8 +10,13 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {},
+      user: {
+        skills: [],
+        posts: [],
+        applications: []
+      },
       owner: false,
+      start: true
     }
   }
   componentDidMount() {

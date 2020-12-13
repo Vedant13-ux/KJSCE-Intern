@@ -39,9 +39,9 @@ function Basic(props) {
           <span className="add"><i class="far fa-plus-square"></i></span>
         </div>
         <div className="panel-body pb5">
-          {/* {props.user.skills.map((s) => (
+          {props.user.skills.map((s) => (
             <div className="tagsskill">{s}</div>
-          ))} */}
+          ))}
         </div>
       </div>
       <div className="panel">

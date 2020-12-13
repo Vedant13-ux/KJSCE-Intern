@@ -14,7 +14,7 @@ function escapeRegex(text) {
 
 // Get user by id
 router.get('/user/:id', (req, res, next) => {
-    db.User.findById(req.params.id).populate('applications', 'posts')
+    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('applications', 'posts')
         .then((user) => {
             res.status(200).send(user);
         }).catch((err) => {

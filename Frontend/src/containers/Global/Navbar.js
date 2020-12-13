@@ -23,7 +23,7 @@ class Navbar extends Component {
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item userProfile">
                             <img className="avatar-pro" src={this.state.user.photo} alt="user-profile" />
-                            <Link className="nav-link username" to={'/user/' + this.state.user._id}>{this.state.user.fname} {this.state.user.lname} </Link>
+                            <Link className="nav-link username" to={'/profile/' + this.state.user.email.split('@')[0]}>{this.state.user.fname} {this.state.user.lname} </Link>
                         </li>
                     </ul>
                 )
