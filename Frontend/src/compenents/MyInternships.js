@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import Navbar from "../containers/Global/Navbar";
 import PageFooter from "../containers/Global/PageFooter";
-import { apiCall } from "../services/api";
-import Completed from '../containers/MyInternships/Completed'
+// import { apiCall } from "../services/api";
+// import Completed from '../containers/MyInternships/Completed'
 
 class Profile extends Component {
     constructor(props) {

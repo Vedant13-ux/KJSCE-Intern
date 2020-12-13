@@ -31,6 +31,7 @@ class Profile extends Component {
         if (this.props.currentUser.user._id === data._id) {
           return await this.setState({ owner: true ,start:false});
         }
+        data["skills"]=['python','java']
         await this.setState({ user: data,start:false });
         
       }
