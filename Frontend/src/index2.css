@@ -42,9 +42,10 @@
     .mw150{
       max-height: 500px;
       max-width: 170px;
-      height: 97%;
+      height: 100%;
       width: 97%;
       border-radius: 5px;
+      float: left;
     }
     
     .page-heading {
@@ -67,7 +68,7 @@
       margin-top: 78px;
     }
     .panel .tagsskill{
-        background-color: rgb(242, 242, 242);
+        background-color: #020b53;
         border-radius: 10px;
         display: inline;
         padding: 10px;
@@ -75,6 +76,8 @@
         padding-top: 5px;
         padding-bottom: 5px;
         margin: 5px;
+        color: #ffca3d;
+        font-weight: 450;
     }
    
     .panel-body {
@@ -131,8 +134,8 @@
       margin-bottom: 5px;
     }
     .media-links ul{
-      float: left;
       display: flex;
+      float: left;
       flex-direction: row;
       background-color: white;
       border-radius: 10px;

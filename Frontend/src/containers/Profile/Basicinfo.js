@@ -6,13 +6,11 @@ function Basic(props) {
     <div className="page-heading">
       <div className="media clearfix">
         <div className="media-left pr30">
-          <Link href="/">
-            <img
-              className="media-object mw150"
-              src={props.user.photo}
-              alt="..."
-            />
-          </Link>
+          <img
+            className="media-object mw150"
+            src={props.user.photo}
+            alt="..."
+          />
         </div>
         <div className="media-body va-m">
           <h2 className="media-heading">
