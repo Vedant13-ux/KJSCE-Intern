@@ -23,46 +23,49 @@ class Profile extends Component {
   async componentDidMount() {
     console.log(this.props.match.params.id);
     if (this.props.currentUser.user.email.split('@')[0] === this.props.match.params.id) {
-      await this.setState({ user: this.props.currentUser.user, owner: true });
+      await this.setState({ user: this.props.currentUser.user, owner: true, start: false });
     }
     else {
       console.log(this.props.match.params.id);
       apiCall('get', '/api/user/' + this.props.match.params.id, '').then(
         async (data) => {
           console.log(data);
-          await this.setState({ user: data });
+          await this.setState({ user: data, start: false });
         }
       )
         .catch(err => console.log(err));
     }
   }
   render() {
-    if (this.state.start){
+    if (this.state.start) {
       return (
         <div id="profile">
           <Navbar currentUser={this.props.currentUser} />
-          <Loading className="loading"/>
+          <div style={{ minHeight: '600px', display: 'flex', alignItems: 'center' }}>
+            <Loading className="loading" />
+          </div>
           <PageFooter />
         </div>
-        
+
       )
     }
-    else{
-    return (
-      <div id="profile">
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"></link>
-        <Navbar currentUser={this.props.currentUser} />
-        <section id="content" className="container">
-          <Basic user={this.state.user} owner={this.state.owner} />
-          <div className="row">
-            <Moreinfo user={this.state.user} owner={this.state.owner} />
-            <UserActivity user={this.state.user} owner={this.state.owner} />
-          </div>
-        </section>
-        <PageFooter />
+    else {
+      return (
+        <div id="profile">
+          <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"></link>
+          <Navbar currentUser={this.props.currentUser} />
+          <section id="content" className="container">
+            <Basic user={this.state.user} owner={this.state.owner} />
+            <div className="row">
+              <Moreinfo user={this.state.user} owner={this.state.owner} />
+              <UserActivity user={this.state.user} owner={this.state.owner} />
+            </div>
+          </section>
+          <PageFooter />
 
-      </div>
-    )}
+        </div>
+      )
+    }
   }
 }
 export default Profile;
