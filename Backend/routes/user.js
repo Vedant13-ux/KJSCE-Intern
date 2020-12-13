@@ -95,7 +95,7 @@ router.put('/profile/update/skills', (req, res, next) => {
                 return next({ status: 404, message: "User Not Found" });
             }
             try {
-                await user.skills.push(req.body.skill);
+                user.skills = req.body.skills;
                 await user.save();
             } catch (error) {
                 next(error);

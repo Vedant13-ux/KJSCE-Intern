@@ -163,7 +163,7 @@ class Basic extends Component {
             )}
           </div>
           <div className="panel-body pb5">
-            {this.props.user.certificate.map((s) => (
+            {this.props.user.certificates.map((s) => (
               <a href={s.link}>
                 <h6>{s.provider}</h6>
                 <h4>{s.title}</h4>
