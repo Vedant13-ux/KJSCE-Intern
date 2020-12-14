@@ -265,7 +265,7 @@ router.post('/mailapplicants', (req, res, next) => {
     //  userId,
     //  internshipId,
     // }
-    db.User.findById(req.body.userId, 'role')
+    db.User.findById(req.body.userId, 'role _id')
         .then(async user => {
             if (!user) {
                 return next({ status: 404, message: 'User Not Found' })

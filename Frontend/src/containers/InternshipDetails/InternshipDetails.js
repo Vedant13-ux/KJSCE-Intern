@@ -65,7 +65,7 @@ class InternshipDetail extends Component {
       to: emailArray,
     };
     console.log(mailBody);
-    apiCall('post', "/api/internship/mailapplicants", { mailBody, userId: this.props.currentUser.user._id, internshipId: this.state.details._id })
+    apiCall('post', "/api/internship/mailapplicants", { mailBody, userId: "5fc81a619619ea0017ecb856", internshipId: this.state.details._id })
       .then(() => {
         console.log('Sent Mail');
         this.handleClose1();
