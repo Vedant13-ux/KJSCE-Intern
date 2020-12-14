@@ -238,13 +238,17 @@ router.post('/apply', (req, res, next) => {
         .then(async (internship) => {
             try {
                 let user = db.User.findById(req.body.userId);
-                if (user) {
+                if (!user) {
+                    return next({ status: 404, message: 'User Not Found' })
+                }
+                console.log(user)
+                if (user.role == "Faculty") {
                     await user.applications.push(internship);
                     await internship.applicants.push(user);
                     await user.save();
                     await internship.save();
                 } else {
-                    return next({ status: 404, message: 'User Not Found' })
+                    return next({ status: 405, message: 'Only Students can apply in a Internship' });
                 }
             } catch (error) {
                 next(err);
@@ -256,15 +260,6 @@ router.post('/apply', (req, res, next) => {
 
 // mail Applicants
 router.post('/mailapplicants', (req, res, next) => {
-    // req.body = {
-    //     mailBody: {
-    //         subject,
-    //         emails: [],
-    //         text,
-    //     },
-    //  userId,
-    //  internshipId,
-    // }
     db.User.findById(req.body.userId, 'role _id')
         .then(async user => {
             if (!user) {
@@ -274,16 +269,17 @@ router.post('/mailapplicants', (req, res, next) => {
                 return next({ status: 405, message: 'You are not allowed to send Mails' })
             }
             try {
-                let internship = db.Internship.findById(req.body.internshipId, 'faculty')
-                if (internship.faculty === user._id) {
+                let internship = await db.InternshipDetails.findById(req.body.internshipId, 'faculty');
+                if (internship.faculty._id == req.body.userId) {
                     mailer(req.body.mailBody);
-                    res.send('Mail Sent');
+                    return res.send('Mail Sent');
                 } else {
                     next({ status: 405, message: 'You are not allowed to send mails for this internship' })
                 }
             } catch (error) {
-                return next(err);
+                return next(error);
             }
         })
+        .catch(err => { console.log(err.message); next(err) });
 })
 module.exports = router;

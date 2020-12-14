@@ -20,6 +20,7 @@ class ApplyForm extends Component {
     }
     handleSubmit(e) {
         e.preventDefault();
+        console.log('Apply ma aaay');
         const { applicantId, internshipId } = this.state;
         apiCall('post', 'api/internship/apply', { answers: [this.state.ans1, this.state.ans2], applicantId, internshipId })
             .then(() => {
@@ -32,7 +33,7 @@ class ApplyForm extends Component {
 
     render() {
         return (
-            <form id="applyForm" className="ui form">
+            <form id="applyForm" className="ui form" onSubmit={this.handleSubmit}>
                 <div class="field">
                     <label>{this.state.ques1}</label>
                     <textarea
@@ -55,9 +56,11 @@ class ApplyForm extends Component {
                         onChange={this.handleChange}
                     ></textarea>
                 </div>
-                <button type="button" class="btn btn-default" onClick={this.handleSubmit}>
-                    Apply Now
-                </button>
+                <div style={{ textAlign: 'center' }}>
+                    <button type="button" class="ui small button">
+                        Apply Now
+                    </button>
+                </div>
 
 
             </form>

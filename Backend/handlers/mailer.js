@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 const mailer = (mailBody) => {
+    console.log('Mail ke andar aaaya');
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -9,7 +10,7 @@ const mailer = (mailBody) => {
     });
     var mailOptions = {
         from: 'kjsceintern@gmail.com',
-        to: `${mailBody.emails.join(', ')}`,
+        to: `${mailBody.to.join(', ')}`,
         subject: mailBody.subject,
         text: mailBody.text
     }
@@ -20,8 +21,5 @@ const mailer = (mailBody) => {
         console.log('Message Sent : %s', info.messageId);
         console.log('Preview URL : %s', info.getTestMessageURL(info));
     });
-    return res.status(200).json({
-        ...newUser._doc, token
-    })
 }
 module.exports = mailer;
