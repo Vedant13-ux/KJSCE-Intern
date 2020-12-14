@@ -64,9 +64,11 @@ class InternshipDetail extends Component {
       text: this.state.text,
       to: emailArray,
     };
-    apiCall('post', '/api/internship/mailapplicants', { mailBody, userId: this.props.currentUser.user._id, internshipId: this.state.details._id })
+    console.log(mailBody);
+    apiCall('post', "/api/internship/mailapplicants", { mailBody, userId: this.props.currentUser.user._id, internshipId: this.state.details._id })
       .then(() => {
-        console.log('Sent Mail')
+        console.log('Sent Mail');
+        this.handleClose1();
       })
       .catch(err => {
         console.log(err)
@@ -208,7 +210,7 @@ class InternshipDetail extends Component {
                                   <textarea required name="text" onChange={this.handleChange}></textarea>
                                 </div>
                                 <div style={{ textAlign: 'center' }}>
-                                  <button className="ui button">Send</button>
+                                  <button className="ui button" >Send</button>
                                 </div>
                                 <p style={{ color: 'red' }}>{this.state.error}</p>
                               </form>
@@ -218,14 +220,13 @@ class InternshipDetail extends Component {
                       }
                     </h3>
                     <span className="appliList">
-                      <span className="applicant">
-                        <img src={this.props.currentUser.user.photo} alt=""></img>
-                        <span className="name">Vedant Nagani</span>
-                      </span>
-                      <span className="applicant">
-                        <img src={this.props.currentUser.user.photo} alt=""></img>
-                        <span className="name">Vedant Nagani</span>
-                      </span>
+                      {
+                        this.state.details.applicants.map(app =>
+                          <span className="applicant">
+                            <img src={app.photo} alt=""></img>
+                            <span className="name">{app.fname} {app.lname}</span>
+                          </span>
+                        )}
                     </span>
                     {this.state.role === "Student" && <ApplyInternship onApply={this.onApply} duration={this.state.details.duration} user={this.state.user._id} internship={this.state.details._id} applied={this.state.applied}></ApplyInternship>}
                   </div>

@@ -41,7 +41,7 @@ router.get('/profile/search', (req, res, next) => {
 });
 
 router.get('/profile/:id', (req, res, next) => {
-    db.User.findById(req.params.id).populate('internshipsOffered').populate('applications').populate('resume').populate('bookmarks').populate('posts').populate('certificates')
+    db.User.findById(req.params.id).populate('certificates')
         .exec((err, user) => {
             if (err) {
                 return next(err);

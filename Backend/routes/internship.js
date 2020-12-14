@@ -131,7 +131,7 @@ router.get('/skillSuggestion/:skill', (req, res, next) => {
 });
 // Get Internship Details
 router.get('/details/:id', (req, res, next) => {
-    db.InternshipDetails.findById(req.params.id).populate('faculty', '_id fname lname photo email').populate('appicants', 'fname lname photo _id email')
+    db.InternshipDetails.findById(req.params.id).populate('faculty', 'fname lname email _id photo').populate('applicants', 'fname lname email _id photo')
         .exec((err, internship) => {
             if (!internship) {
                 return res.status(404).send({});
@@ -255,7 +255,7 @@ router.post('/apply', (req, res, next) => {
 });
 
 // mail Applicants
-router.post('/mailapplicants', async (req, res, next) => {
+router.post('/mailapplicants', (req, res, next) => {
     // req.body = {
     //     mailBody: {
     //         subject,
@@ -277,6 +277,9 @@ router.post('/mailapplicants', async (req, res, next) => {
                 let internship = db.Internship.findById(req.body.internshipId, 'faculty')
                 if (internship.faculty === user._id) {
                     mailer(req.body.mailBody);
+                    res.send('Mail Sent');
+                } else {
+                    next({ status: 405, message: 'You are not allowed to send mails for this internship' })
                 }
             } catch (error) {
                 return next(err);
