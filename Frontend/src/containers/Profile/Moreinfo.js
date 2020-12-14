@@ -177,8 +177,8 @@ class Basic extends Component {
             </Modal.Header>
             <Modal.Body>
               <form onSubmit={this.handleSubmit} id="internshipForm">
-                <div classNameName="ui form">
-                  <div classNameName="field">
+                <div className="ui form">
+                  <div className="field">
                     <label>Title</label>
                     <input
                       name="title"
@@ -190,7 +190,7 @@ class Basic extends Component {
                       placeholder="eg. Completed Course on Java"
                     ></input>
                   </div>
-                  <div classNameName="field">
+                  <div className="field">
                     <label>Provider</label>
                     <input
                       name="provider"
@@ -202,7 +202,7 @@ class Basic extends Component {
                       placeholder="eg. Udemy"
                     ></input>
                   </div>
-                  <div classNameName="field">
+                  <div className="field">
                     <label>Link</label>
                     <input
                       name="link"
@@ -214,7 +214,7 @@ class Basic extends Component {
                       placeholder="eg. https://www.udemy.com/certificate/UC-fb6...."
                     ></input>
                   </div>
-                  <div classNameName="submit">
+                  <div className="submit">
                     <button className="medium ui button">ADD</button>
                   </div>
                 </div>

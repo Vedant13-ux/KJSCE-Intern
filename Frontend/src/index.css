@@ -61,7 +61,30 @@ style 2--
   display: flex;
   align-items: center;
 }
+.navbar .userProfile i {
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
 
+.navbar .userProfile .profile-dropdown{
+  position: absolute;
+  background-color: white;
+  top:55px;
+  border-radius: 10px;
+  border: rgba(0, 0, 0, 0.212) 1px solid;
+  right: 5%;
+}
+/* .navbar .userProfile .dropdown-item:hover{
+  border-radius: 10px;
+} */
+.navbar .userProfile .profile-dropdown{
+  transform: translateX(20%);
+}
+.navbar .userProfile .dropdown-item:focus, .dropdown-item:hover{
+  background-color: #020C53;
+  color: #FFCA3D;
+}
 /* ************Not Found SVG *************/
 #notFound {
    display:flex;

@@ -9,13 +9,17 @@ class Navbar extends Component {
         this.state = {
             query: "",
             user: this.props.currentUser.user,
-            isAuthenticated: this.props.currentUser.isAuthenticated
+            isAuthenticated: this.props.currentUser.isAuthenticated,
+            onPage: this.props.onPage,
+            showDropdown: false
         }
-        // this.handleChange = this.handleChange.bind(this);
+        this.showDropdown = this.showDropdown.bind(this);
     }
-    // handleChange(e) {
-    //     return this.setState({ query: e.target.value });
-    // }
+    showDropdown() {
+        console.log(this.state.showDropdown);
+        this.setState({ showDropdown: !this.state.showDropdown })
+    }
+
     render() {
         const rightContent = () => {
             if (this.state.isAuthenticated) {
@@ -23,7 +27,18 @@ class Navbar extends Component {
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item userProfile">
                             <img className="avatar-pro" src={this.state.user.photo} alt="user-profile" />
-                            <Link className="nav-link username" to={'/profile/' + this.state.user.email.split('@')[0]}>{this.state.user.fname} {this.state.user.lname} </Link>
+                            <Link className="nav-link username" to={'/profile/' + this.state.user.email.split('@')[0]}>{this.state.user.fname} {this.state.user.lname}
+                            </Link>
+                            <i className="fa" onClick={this.showDropdown} >&#xf0d7;</i>
+                            {
+                                this.state.showDropdown &&
+                                <div className="profile-dropdown" aria-labelledby="dropdownMenuButton" >
+                                    <Link class="dropdown-item" to={'/profile/' + this.state.user.email.split('@')[0]}>My Profile</Link>
+                                    <Link class="dropdown-item" to="">Account</Link>
+                                    <Link class="dropdown-item" to="">Logout</Link>
+                                </div>
+                            }
+
                         </li>
                     </ul>
                 )
@@ -62,11 +77,8 @@ class Navbar extends Component {
                                         </div>)
                                 }
                             </MContext.Consumer>
-
                         </div>
                         <ul className="navbar-nav mr-auto">
-
-
                             <li className="nav-item active">
                                 <Link className="nav-link" to="/home">
                                     <i className="fas fa-home mr-1"></i>Home <span className="sr-only" to="">(current)</span></Link>
@@ -81,7 +93,6 @@ class Navbar extends Component {
                             <li className="nav-item">
                                 <Link className="nav-link" to="/myinternships"><i class="fas fa-briefcase mr-1"></i>My Internships</Link>
                             </li>
-
                         </ul>
 
                         {rightContent()}
