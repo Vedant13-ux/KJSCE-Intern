@@ -41,7 +41,7 @@ class Profile extends Component {
           });
         }
         await this.setState({
-          owner:true,
+          owner: true,
           user: data,
           preskills: this.state.preskills,
           start: false,
@@ -50,29 +50,29 @@ class Profile extends Component {
       .catch((err) => console.log(err));
     // }
   }
-  addcert(o){
-    let temp=this.state.user;
-    o.ownerId='5fc3e5d1fc33db6a66886586';//this.props.currentUser._id;
+  addcert(o) {
+    let temp = this.state.user;
+    o.ownerId = '5fc3e5d1fc33db6a66886586';//this.props.currentUser._id;
     temp.certificates.push(o);
-    
-    apiCall('put','/api/profile/update/certificates',{certificate:o,id:'5fc3e5d1fc33db6a66886586'}).then(
-      (d)=>console.log(d)
-    ).catch((e)=>console.log(e))
-    return this.setState({user:temp})
+
+    apiCall('put', '/api/profile/update/certificates', { certificate: o, id: '5fc3e5d1fc33db6a66886586' }).then(
+      (d) => console.log(d)
+    ).catch((e) => console.log(e))
+    return this.setState({ user: temp })
   }
   changeskill(s) {
     let temp = this.state.user;
     temp["skills"] = s;
     let i = 0;
-    let t=[]
+    let t = []
     for (i = 0; i < s.length; i++) {
       t.push({
         text: s[i],
       });
     }
-    apiCall('put','/api/profile/update/skills',{skills:s,id:'5fc3e5d1fc33db6a66886586'}).then(
-      (d)=>console.log(d)
-    ).catch((e)=>console.log(e))
+    apiCall('put', '/api/profile/update/skills', { skills: s, id: '5fc3e5d1fc33db6a66886586' }).then(
+      (d) => console.log(d)
+    ).catch((e) => console.log(e))
     return this.setState({ user: temp, preskills: t });
   }
   render() {
@@ -104,9 +104,9 @@ class Profile extends Component {
             <Basic user={this.state.user} owner={this.state.owner} />
             <div className="row">
               <Moreinfo
-              addcert={this.addcert}
-              isowner={this.state.owner}
-              preskills={this.state.preskills}
+                addcert={this.addcert}
+                isowner={this.state.owner}
+                preskills={this.state.preskills}
                 changeskill={this.changeskill}
                 user={this.state.user}
                 owner={this.state.owner}
