@@ -23,7 +23,7 @@ class Basic extends Component {
       show1: false,
       show2: false,
     };
-    console.log(props);
+    // console.log(props);
 
     this.multiselectRef = React.createRef();
     this.handleSkills = this.handleSkills.bind(this);
@@ -164,11 +164,13 @@ class Basic extends Component {
           </div>
           <div className="panel-body pb5">
             {this.props.user.certificates.map((s) => (
-              <a href={s.link}>
-                <h6>{s.provider}</h6>
+              <div>
                 <h4>{s.title}</h4>
+                <h6>{s.provider}<br></br>
+                  <a href={s.link}>see creditential</a>
+                </h6>
                 <hr class="short br-lighter"></hr>
-              </a>
+              </div>
             ))}
           </div>
           <Modal show={this.state.show2} onHide={this.handleClose2} centered>
