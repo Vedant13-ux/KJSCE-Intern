@@ -6,6 +6,7 @@ import Basic from "../containers/Profile/Basicinfo";
 import Moreinfo from "../containers/Profile/Moreinfo";
 import UserActivity from "../containers/Profile/UserActivity";
 import Loading from "../images/Loading";
+import NotFound from "../images/NotFound"
 
 class Profile extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class Profile extends Component {
       },
       owner: false,
       start: true,
+      nof:false,
       preskills: [],
     };
     this.changeskill = this.changeskill.bind(this);
@@ -25,12 +27,12 @@ class Profile extends Component {
   }
   async componentDidMount() {
     document.documentElement.scrollTop = 0;
-    console.log(this.props.match.params.id);
-    // if (this.props.currentUser.user.email.split('@')[0] === this.props.match.params.id) {
-    //   await this.setState({ user: this.props.currentUser.user, owner: true, start: false });
-    // }
-    // else {
-    console.log(this.props.match.params.id);
+    // console.log(this.props.match.params.id);
+    if (this.props.currentUser.user.email.split('@')[0] === this.props.match.params.id) {
+      await this.setState({ user: this.props.currentUser.user, owner: true, start: false });
+    }
+    else {
+    // console.log(this.props.match.params.id);
     apiCall("get", "/api/user/" + this.props.match.params.id, "")
       .then(async (data) => {
         console.log(data);
@@ -41,21 +43,25 @@ class Profile extends Component {
           });
         }
         await this.setState({
-          owner:true,
           user: data,
           preskills: this.state.preskills,
           start: false,
         });
       })
-      .catch((err) => console.log(err));
-    // }
+      .catch((err) => {
+        console.log(err);
+        this.setState({
+          nof:true,
+        });
+      });
+    }
   }
   addcert(o){
     let temp=this.state.user;
-    o.ownerId='5fc3e5d1fc33db6a66886586';//this.props.currentUser._id;
+    o.ownerId=this.props.currentUser.user._id;
     temp.certificates.push(o);
     
-    apiCall('put','/api/profile/update/certificates',{certificate:o,id:'5fc3e5d1fc33db6a66886586'}).then(
+    apiCall('put','/api/profile/update/certificates',{certificate:o,id:this.props.currentUser.user._id}).then(
       (d)=>console.log(d)
     ).catch((e)=>console.log(e))
     return this.setState({user:temp})
@@ -70,7 +76,7 @@ class Profile extends Component {
         text: s[i],
       });
     }
-    apiCall('put','/api/profile/update/skills',{skills:s,id:'5fc3e5d1fc33db6a66886586'}).then(
+    apiCall('put','/api/profile/update/skills',{skills:s,id:this.props.currentUser.user._id}).then(
       (d)=>console.log(d)
     ).catch((e)=>console.log(e))
     return this.setState({ user: temp, preskills: t });
@@ -87,7 +93,7 @@ class Profile extends Component {
               alignItems: "center",
             }}
           >
-            <Loading className="loading" />
+            {this.state.nof?<NotFound className="loading"/>:<Loading className="loading" />}
           </div>
           <PageFooter />
         </div>
