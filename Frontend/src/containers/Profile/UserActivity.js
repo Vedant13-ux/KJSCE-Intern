@@ -73,13 +73,13 @@ class Basic extends Component {
               </Nav.Link>
             </Nav.Item>
           </Nav>
-          <div className="tab-content p30" style={{ minHeight: "730px" }}>
+          <div className="tab-content p30" style={{ maxHeight: "800px", overflowY: 'scroll', marginTop:'40px' }}>
             <div id="tab1" className="tab-pane active">
-              {display}
-            </div>
+            {display}
           </div>
         </div>
       </div>
+      </div >
     );
   }
 }
