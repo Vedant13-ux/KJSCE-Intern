@@ -189,19 +189,19 @@ style 2--
   background: #020C53;
   color: #FFCA3D;
 }
-.sections .rightSection .content .authForm,.loginForm .button{
+.sections .rightSection .content .authForm .button{
   background-color: #020C53;
   color: #FFCA3D;
   margin: 0 auto !important;
 }
-.sections .rightSection .content .submit{
+.sections .rightSection .content .authForm .submit{
   text-align: center;
 }
-.sections .rightSection .content .authForm,.loginForm .login{
+.sections .rightSection .content .authForm .login{
   color: #020C53;
   position: relative;
 } 
-.sections .rightSection .content .authForm,.loginForm .button:hover{
+.sections .rightSection .content .authForm .button:hover{
   color: #ffcb3dda;
 }
 
@@ -212,7 +212,11 @@ style 2--
   box-shadow: #020C53 1px 2px 2px ;
   animation: appear 0.6s forwards;
   margin: 30px 50px;
-
+}
+.sections .rightSection .content .loginForm .button{
+  background-color: #020C53;
+  color: #FFCA3D;
+  margin: 0 auto !important;
 }
 /* ******************Features************** */
 .sections .rightSection .content .features .featuresList {

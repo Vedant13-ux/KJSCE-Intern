@@ -69,7 +69,7 @@ class AuthForm extends Component {
                             <div className="four wide field">
                                 <label>Faculty ID</label>
                                 <div className="ui left icon input">
-                                    <input required type="text" name="facultyId" placeholder="Faculty ID" value={facultyId} onChange={this.handleChange} />
+                                    <input required type="text" name="facultyId" placeholder="Faculty ID" value={facultyId} onChange={this.handleChange} pattern="[0-9]{7}" />
                                     <i className="ui id card icon"></i>
                                 </div>
                             </div>
@@ -78,7 +78,7 @@ class AuthForm extends Component {
                             <div className="four wide field">
                                 <label>Roll No.</label>
                                 <div className="ui left icon input">
-                                    <input required type="text" name="rollNo" placeholder="Roll No." value={rollNo} onChange={this.handleChange} />
+                                    <input required type="text" name="rollNo" placeholder="Roll No." value={rollNo} onChange={this.handleChange} pattern="[0-9]{7}" />
                                     <i className="ui id card icon"></i>
                                 </div>
                             </div>
