@@ -29,7 +29,7 @@ class Login extends Component {
                     <div className="field">
                         <label>Somaiya Email</label>
                         <div className="ui left icon input">
-                            <input required type="email" name="email" placeholder="Somaiya Email" value={email} onChange={this.handleChange} />
+                            <input required type="email" name="email" placeholder="abcd@somaiya.edu" value={email} onChange={this.handleChange} pattern="somaiya.edu$" />
                             <i className="envelope icon"></i>
                         </div>
                     </div>
@@ -41,7 +41,7 @@ class Login extends Component {
                         </div>
                     </div>
 
-                    <div className="submit">
+                    <div style={{ textAlign: 'center' }}>
                         <button className="big ui button">
                             Login
                         </button>
