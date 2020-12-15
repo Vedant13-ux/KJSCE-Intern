@@ -46,7 +46,7 @@ const Homepage = (props) => {
                 </Carousel>
             </div>
             <MyProvider>
-                <Navbar currentUser={props.currentUser} ></Navbar>
+                <Navbar currentUser={props.currentUser} history={props.history} ></Navbar>
                 <FilterInternships />
                 <InternshipList />
             </MyProvider>

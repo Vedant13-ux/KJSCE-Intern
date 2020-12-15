@@ -30,7 +30,7 @@ class Application extends React.Component {
   render() {
     return (
       <div className="wrapper">
-        <Navbar isMobile={this.state.isMobile} {...this.props} />
+        <Navbar isMobile={this.state.isMobile} history={this.props.history} />
         <Feed isMobile={this.state.isMobile} />
         <ScrollTopButton />
         <PageFooter />
@@ -162,7 +162,7 @@ class Feed extends React.Component {
     return (
       <div id="feed">
         <div className="content-wrapper feed-wrapper">
-       
+
           <PostWall url="/api/community/posts/getAll" />
           <div className="right-side">
             <div className="controls">tags and recommended post</div>
@@ -235,7 +235,7 @@ export class PostWall extends React.Component {
 
     return (
       <div className="post-wall">
-         <PostCreate />
+        <PostCreate />
         {content}
       </div>
     );

@@ -19,7 +19,7 @@ class Profile extends Component {
     render() {
         return (
             <div>
-                <Navbar />
+                <Navbar history={this.props.history} currentUser={this.props.currentUser} />
                 <div id="myinternships" className="fluid-container">
                     <div className="completed">
                         <h1>⇒ Completed</h1>

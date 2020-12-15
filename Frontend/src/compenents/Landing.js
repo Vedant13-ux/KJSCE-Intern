@@ -58,11 +58,11 @@ class Landing extends Component {
                     <Carousel indicators={false}>
                         <Carousel.Item>
                             <div>
-                                <AuthForm onAuth={this.props.onAuth} heading="Student Signup" role="student" onVerify={this.verify} already={this.already} />
+                                <AuthForm heading="Student Signup" role="Student" onVerify={this.verify} already={this.already} />
                             </div>
                         </Carousel.Item>
                         <Carousel.Item>
-                            <AuthForm onAuth={this.props.onAuth} heading="Faculty Signup" role="faculty" onVerify={this.verify} already={this.already} />
+                            <AuthForm heading="Faculty Signup" role="Faculty" onVerify={this.verify} already={this.already} />
                         </Carousel.Item>
                     </Carousel>
             }
@@ -76,7 +76,7 @@ class Landing extends Component {
         if (this.state.content === 'Verification')
             content = <Verification />
         if (this.state.content === 'Login')
-            content = <Login />
+            content = <Login history={this.props.history} />
         return (
             <div>
                 <div className="sections">

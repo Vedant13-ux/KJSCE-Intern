@@ -15,17 +15,15 @@ import '../index2.css'
 
 
 const Main = (props) => {
-    const authUser = props.authUser;
-    const setCurrentUser = props.setCurrentUser;
     const currentUser = props.currentUser;
     return (
         <div>
             <Switch>
-                <Route exact path="/" render={props => <Landing {...props} onAuth={authUser} currentUser={currentUser} />} />
+                <Route exact path="/" render={props => <Landing {...props} currentUser={currentUser} />} />
                 <Route exact path="/home" render={props => <Homepage {...props} currentUser={currentUser} />} />
                 <Route exact path="/internship/:id" render={props => <IntershipDetail {...props} currentUser={currentUser} />} />
                 <Route exact path="/community" render={props => <Community {...props} currentUser={currentUser} />} />
-                <Route exact path="/verify-email/:token" render={props => <EmailVerificaton {...props} onVerify={setCurrentUser} />} />
+                <Route exact path="/verify-email/:token" render={props => <EmailVerificaton {...props} />} />
                 <Route exact path="/profile/:id" render={props => <Profile {...props} currentUser={currentUser} />} />
                 <Route exact path="/myinternships" render={props => <MyInternships {...props} currentUser={currentUser} />} />
                 <Route path="*" render={props => <NotFound {...props} />} />

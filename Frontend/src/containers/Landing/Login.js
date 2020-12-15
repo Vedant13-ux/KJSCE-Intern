@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { apiCall } from '../../services/api'
-import { Link } from 'react-router-dom'
+import { loginUser } from '../../store/actions/auth'
+import { connect } from 'react-redux';
+
+// import { Link } from 'react-router-dom'
 
 class Login extends Component {
     constructor(props) {
@@ -10,27 +12,35 @@ class Login extends Component {
             password: ''
         }
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleChange(e) {
         return this.setState({ [e.target.name]: e.target.value })
     }
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault();
         console.log(this.state);
-        // this.props.onAuth(this.state).then(() => { this.props.onVerify(); console.log('Logged In') }).catch(err => console.log(err));
+        this.props.loginUser(this.state)
+            .then((result) => {
+                console.log('Logged In')
+                return this.props.history.push('/home');
+            }).catch((err) => {
+                console.log(err.message);
+                return err;
+            });
     }
     render() {
         const { password, email } = this.state;
         return (
             <div className="loginForm">
-                <form className="ui form" onSubmit={this.handleSubmit}>
+                <form className="ui form" >
                     <div className="heading">Login</div>
                     <div className="field">
                         <label>Somaiya Email</label>
                         <div className="ui left icon input">
-                            <input required type="email" name="email"  placeholder="abcd@somaiya.edu" value={email} onChange={this.handleChange} pattern ="^[a-zA-Z0-9._%+-]+@somaiya\.edu$" />
+                            <input required type="email" name="email" placeholder="abcd@somaiya.edu" value={email} onChange={this.handleChange} />
                             <i className="envelope icon"></i>
+                            {/* pattern="^[a-zA-Z0-9._%+-]+@somaiya\.edu$" */}
                         </div>
                     </div>
                     <div className="field">
@@ -42,7 +52,7 @@ class Login extends Component {
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <button className="big ui button">
+                        <button type="submit" className="big ui button" onClick={this.handleSubmit}>
                             Login
                         </button>
                     </div>
@@ -52,4 +62,10 @@ class Login extends Component {
         )
     }
 }
-export default Login;
+function mapStateToProps(state) {
+    return {
+        currentUser: state.currentUser
+    }
+}
+
+export default connect(mapStateToProps, { loginUser })(Login);

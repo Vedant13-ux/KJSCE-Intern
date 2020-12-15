@@ -351,7 +351,7 @@ class InternshipDetail extends Component {
     const { exists, start } = this.state;
     return (
       <div>
-        <Navbar currentUser={this.props.currentUser}></Navbar>
+        <Navbar currentUser={this.props.currentUser} history={this.props.history}></Navbar>
         {this.contentDisplay(exists, start)}
         <PageFooter />
       </div>

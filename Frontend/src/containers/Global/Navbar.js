@@ -18,9 +18,9 @@ class Navbar extends Component {
         this.showDropdown = this.showDropdown.bind(this);
         this.logout = this.logout.bind(this);
     }
-    logout(e) {
+    async logout(e) {
         e.preventDefault();
-        this.props.logout();
+        await this.props.logout();
         this.props.history.push('/');
     }
     showDropdown() {
