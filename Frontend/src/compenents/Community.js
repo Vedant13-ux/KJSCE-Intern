@@ -30,13 +30,8 @@ class Application extends React.Component {
   render() {
     return (
       <div className="wrapper">
-<<<<<<< HEAD
-        <Navbar isMobile={this.state.isMobile} history={this.props.history} />
-        <Feed isMobile={this.state.isMobile} />
-=======
         <Navbar isMobile={this.state.isMobile} {...this.props} />
         <Feed isMobile={this.state.isMobile} currentUser={this.props.currentUser}/>
->>>>>>> 93c0c4a6045e97167db0771f4f63934c4ff2f721
         <ScrollTopButton />
         <PageFooter />
       </div>
@@ -167,13 +162,8 @@ class Feed extends React.Component {
     return (
       <div id="feed">
         <div className="content-wrapper feed-wrapper">
-<<<<<<< HEAD
-
-          <PostWall url="/api/community/posts/getAll" />
-=======
        
           <PostWall url="/api/community/posts/getAll" postcreate={true} currentUser={this.props.currentUser} />
->>>>>>> 93c0c4a6045e97167db0771f4f63934c4ff2f721
           <div className="right-side">
             <div className="controls">tags and recommended post</div>
           </div>
@@ -246,11 +236,7 @@ export class PostWall extends React.Component {
 
     return (
       <div className="post-wall">
-<<<<<<< HEAD
-        <PostCreate />
-=======
          {this.props.postcreate && <PostCreate />}
->>>>>>> 93c0c4a6045e97167db0771f4f63934c4ff2f721
         {content}
       </div>
     );
