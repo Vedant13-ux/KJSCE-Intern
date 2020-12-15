@@ -58,7 +58,6 @@ class Profile extends Component {
   }
   addcert(o){
     let temp=this.state.user;
-    o.ownerId=this.props.currentUser.user._id;
     temp.certificates.push(o);
     
     apiCall('put','/api/profile/update/certificates',{certificate:o,id:this.props.currentUser.user._id}).then(
