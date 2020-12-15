@@ -120,7 +120,7 @@ class Profile extends Component {
                 user={this.state.user}
                 owner={this.state.owner}
               />
-              <UserActivity owner={this.state.owner} user={this.state.user} owner={this.state.owner} />
+              <UserActivity owner={this.state.owner} user={this.state.user} />
             </div>
           </section>
           <PageFooter />
