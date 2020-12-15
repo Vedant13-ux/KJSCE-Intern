@@ -189,23 +189,31 @@ style 2--
   background: #020C53;
   color: #FFCA3D;
 }
-.sections .rightSection .content .authForm .button{
+.sections .rightSection .content .authForm,.loginForm .button{
   background-color: #020C53;
   color: #FFCA3D;
   margin: 0 auto !important;
 }
-.sections .rightSection .content .authForm .submit{
+.sections .rightSection .content .submit{
   text-align: center;
 }
-.sections .rightSection .content .authForm .login{
+.sections .rightSection .content .authForm,.loginForm .login{
   color: #020C53;
   position: relative;
 } 
-.sections .rightSection .content .authForm .button:hover{
+.sections .rightSection .content .authForm,.loginForm .button:hover{
   color: #ffcb3dda;
 }
 
+/* *******************Login ************** */
+.sections .rightSection .content .loginForm{
+  padding: 20px 45px;
+  border: #020C53 8px solid;  
+  box-shadow: #020C53 1px 2px 2px ;
+  animation: appear 0.6s forwards;
+  margin: 30px 50px;
 
+}
 /* ******************Features************** */
 .sections .rightSection .content .features .featuresList {
   padding: 20px 45px;

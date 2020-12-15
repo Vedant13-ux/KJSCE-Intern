@@ -19,7 +19,7 @@ class Profile extends Component {
       },
       owner: false,
       start: true,
-      nof:false,
+      nof: false,
       preskills: [],
     };
     this.changeskill = this.changeskill.bind(this);
@@ -43,7 +43,7 @@ class Profile extends Component {
           });
         }
         for (i = 0; i < data.certificates.length; i++) {
-          data.certificates[i].date= new Date(data.certificates[i].date)
+          data.certificates[i].date = new Date(data.certificates[i].date)
         }
         await this.setState({
           user: data,
@@ -54,19 +54,19 @@ class Profile extends Component {
       .catch((err) => {
         console.log(err);
         this.setState({
-          nof:true,
+          nof: true,
         });
       });
     // }
   }
-  addcert(o){
-    let temp=this.state.user;
+  addcert(o) {
+    let temp = this.state.user;
     temp.certificates.push(o);
-    
-    apiCall('put','/api/profile/update/certificates',{certificate:o,id:this.props.currentUser.user._id}).then(
-      (d)=>console.log(d)
-    ).catch((e)=>console.log(e))
-    return this.setState({user:temp})
+
+    apiCall('put', '/api/profile/update/certificates', { certificate: o, id: this.props.currentUser.user._id }).then(
+      (d) => console.log(d)
+    ).catch((e) => console.log(e))
+    return this.setState({ user: temp })
   }
   changeskill(s) {
     let temp = this.state.user;
@@ -78,9 +78,9 @@ class Profile extends Component {
         text: s[i],
       });
     }
-    apiCall('put','/api/profile/update/skills',{skills:s,id:this.props.currentUser.user._id}).then(
-      (d)=>console.log(d)
-    ).catch((e)=>console.log(e))
+    apiCall('put', '/api/profile/update/skills', { skills: s, id: this.props.currentUser.user._id }).then(
+      (d) => console.log(d)
+    ).catch((e) => console.log(e))
     return this.setState({ user: temp, preskills: t });
   }
   render() {
@@ -95,7 +95,7 @@ class Profile extends Component {
               alignItems: "center",
             }}
           >
-            {this.state.nof?<NotFound className="loading"/>:<Loading className="loading" />}
+            {this.state.nof ? <NotFound className="loading" /> : <Loading className="loading" />}
           </div>
           <PageFooter />
         </div>
