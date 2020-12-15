@@ -33,14 +33,13 @@ class Login extends Component {
         const { password, email } = this.state;
         return (
             <div className="loginForm">
-                <form className="ui form" >
+                <form className="ui form" onSubmit={this.handleSubmit}>
                     <div className="heading">Login</div>
                     <div className="field">
                         <label>Somaiya Email</label>
                         <div className="ui left icon input">
-                            <input required type="email" name="email" placeholder="abcd@somaiya.edu" value={email} onChange={this.handleChange} />
+                            <input required type="email" name="email" placeholder="abcd@somaiya.edu" value={email} onChange={this.handleChange} pattern="^[a-zA-Z0-9._%+-]+@somaiya\.edu$"/>
                             <i className="envelope icon"></i>
-                            {/* pattern="^[a-zA-Z0-9._%+-]+@somaiya\.edu$" */}
                         </div>
                     </div>
                     <div className="field">
@@ -52,7 +51,7 @@ class Login extends Component {
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <button type="submit" className="big ui button" onClick={this.handleSubmit}>
+                        <button className="big ui button" >
                             Login
                         </button>
                     </div>

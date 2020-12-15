@@ -30,8 +30,13 @@ class Application extends React.Component {
   render() {
     return (
       <div className="wrapper">
+<<<<<<< HEAD
         <Navbar isMobile={this.state.isMobile} history={this.props.history} />
         <Feed isMobile={this.state.isMobile} />
+=======
+        <Navbar isMobile={this.state.isMobile} {...this.props} />
+        <Feed isMobile={this.state.isMobile} currentUser={this.props.currentUser}/>
+>>>>>>> 93c0c4a6045e97167db0771f4f63934c4ff2f721
         <ScrollTopButton />
         <PageFooter />
       </div>
@@ -162,8 +167,13 @@ class Feed extends React.Component {
     return (
       <div id="feed">
         <div className="content-wrapper feed-wrapper">
+<<<<<<< HEAD
 
           <PostWall url="/api/community/posts/getAll" />
+=======
+       
+          <PostWall url="/api/community/posts/getAll" postcreate={true} currentUser={this.props.currentUser} />
+>>>>>>> 93c0c4a6045e97167db0771f4f63934c4ff2f721
           <div className="right-side">
             <div className="controls">tags and recommended post</div>
           </div>
@@ -176,15 +186,16 @@ class Feed extends React.Component {
 export class PostWall extends React.Component {
   constructor(props) {
     super(props);
-
+    console.log('this tbh',this.props.currentUser.user)
     this.state = {
       start: true,
-      loggedin: {
-        fname: "mai",
-        lname: "hu",
-        avatar: "https://i.redd.it/0cin4hvettn51.png",
-        id: "5fc3e5d1fc33db6a66886586",
-      },
+      loggedin: this.props.currentUser.user,
+      // {
+      //   fname: "mai",
+      //   lname: "hu",
+      //   avatar: "https://i.redd.it/0cin4hvettn51.png",
+      //   id: "5fc3e5d1fc33db6a66886586",
+      // },
       localList: {},
     };
   }
@@ -222,7 +233,7 @@ export class PostWall extends React.Component {
     apiCall("get", this.props.url, "")
       .then((data) => {
         this.setState({ ...this.state, localList: data, start: false });
-        console.log(this.state.localList);
+        // console.log(this.state.localList);
       })
       .catch((e) => {
         this.setState({ ...this.state, start: false });
@@ -235,7 +246,11 @@ export class PostWall extends React.Component {
 
     return (
       <div className="post-wall">
+<<<<<<< HEAD
         <PostCreate />
+=======
+         {this.props.postcreate && <PostCreate />}
+>>>>>>> 93c0c4a6045e97167db0771f4f63934c4ff2f721
         {content}
       </div>
     );
@@ -246,11 +261,11 @@ class Post extends React.Component {
   constructor(props) {
     super(props);
     let options = props.options;
-    console.log(options.comments)
+    // console.log(options.comments)
     this.state = {
       commentsExpanded: false,
       likes: options.likedBy.length,
-      isLiked: options.likedBy.includes(props.loggedin.id),
+      isLiked: options.likedBy.includes(props.loggedin._id),
       comments: options.comments,
       imageLoaded: false,
     };
@@ -294,7 +309,7 @@ class Post extends React.Component {
       apiCall(
         "post",
         "/api/community/posts/like/" + this.id,
-        this.props.loggedin
+        {id:this.props.loggedin._id}
       )
         .then((data) => console.log(data))
         .catch((e) => console.log(e));
@@ -304,7 +319,7 @@ class Post extends React.Component {
       apiCall(
         "put",
         "/api/community/posts/like/" + this.id,
-        this.props.loggedin
+        {id:this.props.loggedin._id}
       )
         .then((data) => console.log(data))
         .catch((e) => console.log(e));
@@ -324,7 +339,7 @@ class Post extends React.Component {
       "post",
       "/api/community/posts/comments/" + this.id,
       {
-        id: this.props.loggedin.id,
+        id: this.props.loggedin._id,
         text: commentText,
       }
     )
@@ -332,7 +347,7 @@ class Post extends React.Component {
       author: {
         fname: this.props.loggedin.fname,
         lname: this.props.loggedin.lname,
-        photo: this.props.loggedin.avatar,
+        photo: this.props.loggedin.photo,
       },
       text: commentText,
     });
@@ -459,7 +474,7 @@ class Comment extends React.Component {
   }
   render() {
     let val = this.state.data;
-    console.log(val);
+    // console.log(val);
     return (
       <div class="comment">
         <a class="avatar" href="/">
@@ -540,7 +555,7 @@ class CommentInput extends React.Component {
     return (
       <div className="comment-input">
         <div className="user-avatar">
-          <img src={this.props.loggedin.avatar} alt="user avatar"></img>
+          <img src={this.props.loggedin.photo} alt="user avatar"></img>
         </div>
         <form onSubmit={this.props.addCommentHandler}>
           <input
