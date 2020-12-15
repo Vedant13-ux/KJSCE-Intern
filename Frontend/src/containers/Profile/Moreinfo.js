@@ -171,7 +171,7 @@ class Basic extends Component {
               <div>
                 <h4>{s.title}</h4>
                 <p>{s.provider}<br></br>
-                Issued {s.date}<br></br>
+                Issued {s.date.toDateString()}<br></br>
                 <a href={s.link}>see creditential</a>
                 </p>
                 <hr class="short br-lighter"></hr>
