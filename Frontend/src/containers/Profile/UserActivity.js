@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Nav } from "react-bootstrap";
 import { Link } from 'react-router-dom';
-import {PostWall} from '../../compenents/Community'
+import { PostWall } from '../../compenents/Community'
 
 class Basic extends Component {
   constructor(props) {
@@ -13,11 +13,11 @@ class Basic extends Component {
   }
   componentWillMount() {
     let content = window.location.href.split("#")[1];
-    if (content===undefined) return
+    if (content === undefined) return
     return this.setState({ content: content });
   }
   handleSwitch(e) {
-    return this.setState({ content:e.target.name  });
+    return this.setState({ content: e.target.name });
   }
   render() {
     let display;
@@ -43,19 +43,19 @@ class Basic extends Component {
           <Nav variant="tabs" defaultActiveKey="experiences">
             <Nav.Item>
               <Nav.Link
-              name="experiences"
-              to="#experiences"
-              onClick={this.handleSwitch}
+                name="experiences"
+                to="#experiences"
+                onClick={this.handleSwitch}
               >Job Experiences
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-            <Nav.Link name="past" to="#past" onClick={this.handleSwitch}>
+              <Nav.Link name="past" to="#past" onClick={this.handleSwitch}>
                 Past Internships
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-            <Nav.Link
+              <Nav.Link
                 name="posts"
                 to="#posts"
                 onClick={this.handleSwitch}
@@ -64,7 +64,7 @@ class Basic extends Component {
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-            <Nav.Link
+              <Nav.Link
                 name="activity"
                 to="#activity"
                 onClick={this.handleSwitch}
