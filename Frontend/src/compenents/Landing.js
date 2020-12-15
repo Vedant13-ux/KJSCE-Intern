@@ -21,6 +21,7 @@ class Landing extends Component {
         }
         this.handleSwitch = this.handleSwitch.bind(this);
         this.verify = this.verify.bind(this);
+        this.already = this.already.bind(this);
     }
     componentWillMount() {
         let content = window.location.href.split('#')[1];
@@ -38,6 +39,9 @@ class Landing extends Component {
     handleSwitch(e) {
         return this.setState({ content: e.target.textContent })
     }
+    already(e) {
+        return this.setState({ content: 'Login' });
+    }
 
     verify() {
         this.setState({ content: 'Verification' });
@@ -54,11 +58,11 @@ class Landing extends Component {
                     <Carousel indicators={false}>
                         <Carousel.Item>
                             <div>
-                                <AuthForm onAuth={this.props.onAuth} heading="Student Signup" role="student" onVerify={this.verify} />
+                                <AuthForm onAuth={this.props.onAuth} heading="Student Signup" role="student" onVerify={this.verify} already={this.already} />
                             </div>
                         </Carousel.Item>
                         <Carousel.Item>
-                            <AuthForm onAuth={this.props.onAuth} heading="Faculty Signup" role="faculty" onVerify={this.verify} />
+                            <AuthForm onAuth={this.props.onAuth} heading="Faculty Signup" role="faculty" onVerify={this.verify} already={this.already} />
                         </Carousel.Item>
                     </Carousel>
             }

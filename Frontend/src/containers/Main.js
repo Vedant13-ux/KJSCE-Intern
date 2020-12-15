@@ -21,7 +21,7 @@ const Main = (props) => {
     return (
         <div>
             <Switch>
-                <Route exact path="/" render={props => <Landing {...props} onAuth={authUser} />} />
+                <Route exact path="/" render={props => <Landing {...props} onAuth={authUser} currentUser={currentUser} />} />
                 <Route exact path="/home" render={props => <Homepage {...props} currentUser={currentUser} />} />
                 <Route exact path="/internship/:id" render={props => <IntershipDetail {...props} currentUser={currentUser} />} />
                 <Route exact path="/community" render={props => <Community {...props} currentUser={currentUser} />} />

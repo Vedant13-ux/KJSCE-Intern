@@ -7,6 +7,12 @@ export function setCurrentUser(user) {
         user
     }
 }
+export function logout() {
+    return dispatch => {
+        localStorage.clear();
+        dispatch(setCurrentUser({}));
+    }
+}
 
 export function authUser(userData) {
     return dispatch => {

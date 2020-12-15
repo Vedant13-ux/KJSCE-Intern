@@ -30,6 +30,7 @@ class AuthForm extends Component {
         this.props.onAuth(this.state).then(() => { this.props.onVerify(); console.log('Logged In') }).catch(err => console.log(err));
     }
 
+
     render() {
         const { fname, lname, email, dept, year, rollNo, password, facultyId } = this.state;
         const { heading, role } = this.props;
@@ -118,7 +119,7 @@ class AuthForm extends Component {
                     </div>
                 </div>
                 <div>
-                    <Link className="login" to="/login">Already have an account? Login</Link>
+                    <Link className="login" onClick={this.props.already}>Already have an account? Login</Link>
                 </div>
                 <div className="submit">
                     <button className="big ui button">
