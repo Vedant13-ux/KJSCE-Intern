@@ -162,7 +162,8 @@ class Feed extends React.Component {
     return (
       <div id="feed">
         <div className="content-wrapper feed-wrapper">
-          <PostWall />
+        <PostCreate />
+          <PostWall url="/api/community/posts/getAll" />
           <div className="right-side">
             <div className="controls">tags and recommended post</div>
           </div>
@@ -172,13 +173,12 @@ class Feed extends React.Component {
   }
 }
 
-class PostWall extends React.Component {
+export class PostWall extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       start: true,
-      postList: {},
       loggedin: {
         fname: "mai",
         lname: "hu",
@@ -219,7 +219,7 @@ class PostWall extends React.Component {
   }
 
   componentDidMount() {
-    apiCall("get", "/api/community/posts/getAll", "")
+    apiCall("get", this.props.url, "")
       .then((data) => {
         this.setState({ ...this.state, localList: data, start: false });
         console.log(this.state.localList);
@@ -235,7 +235,6 @@ class PostWall extends React.Component {
 
     return (
       <div className="post-wall">
-        <PostCreate />
         {content}
       </div>
     );
