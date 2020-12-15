@@ -12,5 +12,44 @@ class Login extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleChange.bind(this);
     }
-    
+    handleChange(e) {
+        return this.setState({ [e.target.name]: e.target.value })
+    }
+    handleSubmit(e) {
+        e.preventDefault();
+        console.log(this.state);
+        // this.props.onAuth(this.state).then(() => { this.props.onVerify(); console.log('Logged In') }).catch(err => console.log(err));
+    }
+    render() {
+        const { password, email } = this.state;
+        return (
+            <div className="loginForm">
+                <form className="ui form" onSubmit={this.handleSubmit}>
+                    <div className="heading">Login</div>
+                    <div className="field">
+                        <label>Somaiya Email</label>
+                        <div className="ui left icon input">
+                            <input required type="email" name="email" placeholder="Somaiya Email" value={email} onChange={this.handleChange} />
+                            <i className="envelope icon"></i>
+                        </div>
+                    </div>
+                    <div className="field">
+                        <label>Password</label>
+                        <div className="ui left icon input">
+                            <input required type="password" name="password" placeholder="Password" onChange={this.handleChange} value={password} />
+                            <i className="lock icon"></i>
+                        </div>
+                    </div>
+
+                    <div className="submit">
+                        <button className="big ui button">
+                            Login
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        )
+    }
 }
+export default Login;

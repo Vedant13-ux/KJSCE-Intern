@@ -7,6 +7,7 @@ import AboutUs from '../containers/Landing/AboutUs'
 import Contact from '../containers/Landing/Contact'
 import Verification from '../containers/Landing/Verification';
 import Carousel from 'react-bootstrap/Carousel'
+import Login from '../containers/Landing/Login'
 
 
 
@@ -25,7 +26,7 @@ class Landing extends Component {
         let content = window.location.href.split('#')[1];
         if (content === 'signup')
             return this.setState({ content: 'Sign Up' })
-        if (content === 'signup')
+        if (content === 'login')
             return this.setState({ content: 'Login' })
         if (content === 'features')
             return this.setState({ content: 'Features' })
@@ -70,6 +71,8 @@ class Landing extends Component {
             content = <Contact />
         if (this.state.content === 'Verification')
             content = <Verification />
+        if (this.state.content === 'Login')
+            content = <Login />
         return (
             <div>
                 <div className="sections">
