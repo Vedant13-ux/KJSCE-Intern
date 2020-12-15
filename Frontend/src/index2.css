@@ -148,4 +148,13 @@ width: 200px;
 .media-links ul li{
 margin-right: 9px;
 }
-    
+
+
+.confirmdiv{
+  text-align: center;
+}
+
+.confirmdiv .confirm{
+  margin: 12px;
+  margin-bottom: 5px;
+}

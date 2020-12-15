@@ -10,6 +10,7 @@ class Basic extends Component {
       certform: {
         title: "",
         provider: "",
+        date: "",
         link: "",
       },
       skills: [
@@ -52,9 +53,10 @@ class Basic extends Component {
   }
   async handleSubmit(e) {
     e.preventDefault();
+    
     this.props.addcert(this.state.certform);
     this.setState({
-      certform: { title: "", provider: "", link: "" },
+      certform: { title: "", provider: "", link: "",date:'' },
       show2: false,
     });
   }
@@ -75,10 +77,11 @@ class Basic extends Component {
     let temp = this.state.certform;
     temp[e.target.name] = e.target.value;
     this.setState({ certform: temp });
+    console.log(this.state.certform);
   }
 
   render() {
-    const { title, provider, link } = this.state.certform;
+    const { title, provider,date, link } = this.state.certform;
     return (
       <div className="col-md-4">
         <div className="panel">
@@ -141,12 +144,13 @@ class Basic extends Component {
                 onSearch={this.handleSkills}
                 ref={this.multiselectRef}
               />
+              <div className="confirmdiv">
               <button
                 onClick={this.handleskillssubmit}
-                className="medium ui button"
+                className="confirm medium ui button"
               >
                 CONFIRM
-              </button>
+              </button></div>
             </Modal.Body>
           </Modal>
         </div>
@@ -166,9 +170,10 @@ class Basic extends Component {
             {this.props.user.certificates.map((s) => (
               <div>
                 <h4>{s.title}</h4>
-                <h6>{s.provider}<br></br>
-                  <a href={s.link}>see creditential</a>
-                </h6>
+                <p>{s.provider}<br></br>
+                Issued {s.date.toDateString()}<br></br>
+                <a href={s.link}>see creditential</a>
+                </p>
                 <hr class="short br-lighter"></hr>
               </div>
             ))}
@@ -205,6 +210,16 @@ class Basic extends Component {
                     ></input>
                   </div>
                   <div className="field">
+                    <label>Issued on</label>
+                    <input
+                      required
+                      type="Date"
+                      name="date"
+                      val={date}
+                      onChange={this.handleChange}
+                    ></input>
+                  </div>
+                  <div className="field">
                     <label>Link</label>
                     <input
                       name="link"
@@ -216,8 +231,8 @@ class Basic extends Component {
                       placeholder="eg. https://www.udemy.com/certificate/UC-fb6...."
                     ></input>
                   </div>
-                  <div className="submit">
-                    <button className="medium ui button">ADD</button>
+                  <div className="submit confirmdiv">
+                    <button className="medium ui button confirm">ADD</button>
                   </div>
                 </div>
               </form>

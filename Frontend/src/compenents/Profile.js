@@ -28,10 +28,10 @@ class Profile extends Component {
   async componentDidMount() {
     document.documentElement.scrollTop = 0;
     // console.log(this.props.match.params.id);
-    if (this.props.currentUser.user.email.split('@')[0] === this.props.match.params.id) {
-      await this.setState({ user: this.props.currentUser.user, owner: true, start: false });
-    }
-    else {
+    // if (this.props.currentUser.user.email.split('@')[0] === this.props.match.params.id) {
+    //   await this.setState({ user: this.props.currentUser.user, owner: true, start: false });
+    // }
+    // else {
     // console.log(this.props.match.params.id);
     apiCall("get", "/api/user/" + this.props.match.params.id, "")
       .then(async (data) => {
@@ -41,6 +41,9 @@ class Profile extends Component {
           this.state.preskills.push({
             text: data.skills[i],
           });
+        }
+        for (i = 0; i < data.certificates.length; i++) {
+          data.certificates[i].date= new Date(data.certificates[i].date)
         }
         await this.setState({
           user: data,
@@ -54,11 +57,10 @@ class Profile extends Component {
           nof:true,
         });
       });
-    }
+    // }
   }
   addcert(o){
     let temp=this.state.user;
-    o.ownerId=this.props.currentUser.user._id;
     temp.certificates.push(o);
     
     apiCall('put','/api/profile/update/certificates',{certificate:o,id:this.props.currentUser.user._id}).then(
