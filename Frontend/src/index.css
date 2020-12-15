@@ -208,7 +208,7 @@ style 2--
 
 /* ******************Features************** */
 .sections .rightSection .content .features .featuresList {
-  padding-left: 20px;
+  padding: 20px 45px;
   list-style: none;
 }
 .sections .rightSection .content .features .featuresList .featuresItem:nth-child(odd){
@@ -251,6 +251,9 @@ style 2--
 }
 
 /* ************About Us **************** */
+.sections .rightSection .content .aboutus{
+  padding: 20px 45px;
+}
 .sections .rightSection .content .aboutus p{
   font-size: 20px;
   animation: downShift 0.4s forwards;
@@ -265,6 +268,10 @@ style 2--
   }
 }
 /* *************Contact us */
+.sections .rightSection .content .contact{
+  padding: 20px 45px;
+}
+
 .sections .rightSection .content .contact p{
   font-size: 25px;
   text-align: center;

@@ -21,6 +21,19 @@ class Landing extends Component {
         this.handleSwitch = this.handleSwitch.bind(this);
         this.verify = this.verify.bind(this);
     }
+    componentWillMount() {
+        let content = window.location.href.split('#')[1];
+        if (content === 'signup')
+            return this.setState({ content: 'Sign Up' })
+        if (content === 'signup')
+            return this.setState({ content: 'Login' })
+        if (content === 'features')
+            return this.setState({ content: 'Features' })
+        if (content === 'about')
+            return this.setState({ content: 'About Us' })
+        if (content === 'contact')
+            return this.setState({ content: 'Contact' })
+    }
     handleSwitch(e) {
         return this.setState({ content: e.target.textContent })
     }
@@ -67,6 +80,7 @@ class Landing extends Component {
                     <section className="rightSection">
                         <nav class="nav justify-content-center">
                             <Link className="nav-link active signup" to="/#signup" onClick={this.handleSwitch} >Sign Up</Link>
+                            <Link className="nav-link contact" to="/#login" onClick={this.handleSwitch} >Login</Link>
                             <Link className="nav-link features" to="/#features" onClick={this.handleSwitch} >Features</Link>
                             <Link className="nav-link about" to="/#about" onClick={this.handleSwitch}>About Us</Link>
                             <Link className="nav-link contact" to="/#contact" onClick={this.handleSwitch} >Contact</Link>

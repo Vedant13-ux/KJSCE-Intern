@@ -93,6 +93,7 @@ class Navbar extends Component {
                             <li className="nav-item">
                                 <Link className="nav-link" to="/myinternships"><i class="fas fa-briefcase mr-1"></i>My Internships</Link>
                             </li>
+                            
                         </ul>
 
                         {rightContent()}
