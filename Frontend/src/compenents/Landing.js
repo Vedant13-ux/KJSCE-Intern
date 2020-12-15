@@ -53,11 +53,11 @@ class Landing extends Component {
                     <Carousel indicators={false}>
                         <Carousel.Item>
                             <div>
-                                <AuthForm onAuth={this.props.onAuth} buttonText="Register" heading="Student Signup" signUp onVerify={this.verify} />
+                                <AuthForm onAuth={this.props.onAuth} heading="Student Signup" role="student" onVerify={this.verify} />
                             </div>
                         </Carousel.Item>
                         <Carousel.Item>
-                            <AuthForm onAuth={this.props.onAuth} buttonText="Register" heading="Faculty Signup" signUp onVerify={this.verify} />
+                            <AuthForm onAuth={this.props.onAuth} heading="Faculty Signup" role="faculty" onVerify={this.verify} />
                         </Carousel.Item>
                     </Carousel>
             }
