@@ -29,7 +29,7 @@ class Basic extends Component {
         display = <div>ok1</div>;
         break;
       case "posts":
-        display = <PostWall url="/api/community/posts/getAll"  currentUser={{user:this.props.user}} />;
+        display = <PostWall url="/api/community/posts/getAll" postcreate={this.props.owner} currentUser={{user:this.props.user}} />;
         break;
       case "activity":
         display = <div>ok3</div>;

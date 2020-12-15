@@ -163,7 +163,7 @@ class Feed extends React.Component {
       <div id="feed">
         <div className="content-wrapper feed-wrapper">
        
-          <PostWall url="/api/community/posts/getAll"  currentUser={this.props.currentUser} />
+          <PostWall url="/api/community/posts/getAll" postcreate={true} currentUser={this.props.currentUser} />
           <div className="right-side">
             <div className="controls">tags and recommended post</div>
           </div>
@@ -236,7 +236,7 @@ export class PostWall extends React.Component {
 
     return (
       <div className="post-wall">
-         <PostCreate />
+         {this.props.postcreate && <PostCreate />}
         {content}
       </div>
     );
