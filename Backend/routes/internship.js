@@ -237,24 +237,25 @@ router.post('/apply', (req, res, next) => {
     db.InternshipDetails.findById(req.body.internshipId)
         .then(async (internship) => {
             try {
-                let user = db.User.findById(req.body.applicantId);
+                let user = await db.User.findById(req.body.applicantId);
                 if (!user) {
                     return next({ status: 404, message: 'User Not Found' })
                 }
-                console.log(user);
-                if (user.role == "Student") {
+                const isApplied = user.applications.includes(internshipId);
+                console.log(isApplied)
+                if (user.role == "Student" && isApplied === true) {
                     await user.applications.push(internship);
                     await internship.applicants.push(user);
                     await user.save();
                     await internship.save();
                 } else {
-                    return next({ status: 405, message: 'Only Students can apply in a Internship' });
+                    return next({ status: 405, message: 'Action is Not Permitted' });
                 }
             } catch (error) {
                 next(err);
             }
         }).catch((err) => {
-
+            next(err);
         });
 });
 
