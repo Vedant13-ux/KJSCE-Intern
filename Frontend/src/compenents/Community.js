@@ -2,7 +2,8 @@ import React from "react";
 import Navbar from "../containers/Global/Navbar";
 import PageFooter from "../containers/Global/PageFooter";
 import { apiCall } from "../services/api";
-import Modal from 'react-bootstrap/Modal'
+import Modal from 'react-bootstrap/Modal';
+import { Link } from 'react-router-dom';
 
 class Application extends React.Component {
   constructor(props) {
@@ -534,9 +535,9 @@ class UserInfo extends React.Component {
           </div>
           
           <div className="user-data">
-          <a href={"/profile/" + this.props.email.split("@")[0]}>
+          <Link to={"/profile/" + this.props.email.split("@")[0]}>
             <div className="username">{this.props.username}</div>
-            </a>
+            </Link>
             <div className="post-date">{this.props.date}</div>
           </div>
         
