@@ -9,7 +9,7 @@ class Basic extends Component {
     super(props);
     this.state = {
       content: "experiences",
-      posts:[],
+      posts:this.props.user.posts,
       start:true
     };
     this.handleSwitch = this.handleSwitch.bind(this);
@@ -20,13 +20,15 @@ class Basic extends Component {
     return this.setState({ content: content });
   }
   componentDidMount(){
-    apiCall("get", '/api/community/posts/getAll', "")
-      .then((data) => {
-        this.setState({ posts: data, start: false });
-      })
-      .catch((e) => {
-        this.setState({  start: false });
-      });
+    // if (!this.props.owner){
+    // apiCall("get", '/api/community/posts/getAll', "")
+    //   .then((data) => {
+    //     this.setState({ posts: data, start: false });
+    //   })
+    //   .catch((e) => {
+    //     this.setState({  start: false });
+    //   });
+    // }
   }
   handleSwitch(e) {
     return this.setState({ content: e.target.name });
