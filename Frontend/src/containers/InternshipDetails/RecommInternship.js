@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 
 class InternshipList extends Component {
   constructor(props) {
@@ -12,10 +13,10 @@ class InternshipList extends Component {
   }
   render() {
     return (
-      <div className="template">
+      <Link to={"/internship/"+this.props._id} className="template">
         <div className="top">
           <img src={this.props.faculty.photo} alt="pfp" className="avatar-pro"></img>
-          <a className="author" href="./home">{this.props.faculty.fname} {this.props.faculty.lname}</a>
+          <div className="author">{this.props.faculty.fname} {this.props.faculty.lname}</div>
         </div>
         <hr className='topHr' />
         <div className="container">
@@ -26,7 +27,7 @@ class InternshipList extends Component {
             <p><i class="fa fa-hourglass mr-2"></i>Apply by {this.dateFormat()}</p>
           </div>
         </div>
-      </div>
+      </Link>
     );
   }
 }

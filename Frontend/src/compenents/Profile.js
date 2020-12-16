@@ -29,7 +29,8 @@ class Profile extends Component {
   }
 
   componentWillUpdate(prevProp, prevState) {
-    if (prevState.profileId === this.props.match.params.id) {
+    if (prevState.profileId !== this.state.profileId) {
+      console.log('mount call kiya')
       this.componentDidMount();
     }
   }
