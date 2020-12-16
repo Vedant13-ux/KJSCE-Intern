@@ -17,15 +17,11 @@ class Navbar extends Component {
         }
         this.showDropdown = this.showDropdown.bind(this);
         this.logout = this.logout.bind(this);
-        this.goProfile = this.goProfile.bind(this);
     }
     async logout(e) {
         e.preventDefault();
         await this.props.logout();
         this.props.history.push('/');
-    }
-    goProfile() {
-        this.props.history.push('/profile/' + this.state.user.email.split('@')[0]);
     }
     showDropdown() {
         console.log(this.state.showDropdown);
@@ -39,15 +35,15 @@ class Navbar extends Component {
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item userProfile">
                             <img className="avatar-pro" src={this.state.user.photo} alt="user-profile" />
-                            <div className="nav-link username" onClick={this.goProfile}>{this.state.user.fname} {this.state.user.lname}
-                            </div>
+                            <Link to={'/profile/' + this.state.user.email.split('@')[0]} className="nav-link username">{this.state.user.fname} {this.state.user.lname}
+                            </Link>
                             <i className="fa" onClick={this.showDropdown} >&#xf0d7;</i>
                             {
                                 this.state.showDropdown &&
                                 <div className="profile-dropdown" aria-labelledby="dropdownMenuButton" >
-                                    <Link class="dropdown-item" to={'/profile/' + this.state.user.email.split('@')[0]}>My Profile</Link>
-                                    <Link class="dropdown-item" to="">Account</Link>
-                                    <Link class="dropdown-item" to="" onClick={this.logout}>Logout</Link>
+                                    <Link className="dropdown-item" to={'/profile/' + this.state.user.email.split('@')[0]}>My Profile</Link>
+                                    <Link className="dropdown-item" to="">Account</Link>
+                                    <Link className="dropdown-item" to="" onClick={this.logout}>Logout</Link>
                                 </div>
                             }
 

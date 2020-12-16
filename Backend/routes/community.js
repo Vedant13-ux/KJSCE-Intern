@@ -35,11 +35,24 @@ router.get('/posts/:id', (req, res, next) => {
 });
 
 router.post('/posts/create', (req, res, next) => {
-    db.Post.create(req.body)
-        .then((newPost) => {
-            res.status(200).send(newPost);
-        })
-        .catch(err => next(err))
+    db.User.findById(req.body.author)
+        .then((user) => {
+            if (!user) {
+                return next({
+                    status: 404,
+                    message: 'User Not Found'
+                })
+            }
+            db.Post.create(req.body)
+                .then(async (newPost) => {
+                    await user.posts.push(newPost);
+                    res.status(200).send(newPost);
+                })
+                .catch(err => next(err))
+        }).catch((err) => {
+
+        });
+
 });
 
 router.put('/posts/edit/:id', (req, res, next) => {
