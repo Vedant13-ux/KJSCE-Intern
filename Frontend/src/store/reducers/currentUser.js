@@ -11,15 +11,26 @@ const currentUserReducer = (state = defaultState, action) => {
                 isAuthenticated: !!Object.keys(action.user).length,
                 user: action.user
             }
-        // case UPDATE_USER_SKILLS:
+        case UPDATE_USER_SKILLS:
+            state.user.skills = action.skills;
+            return {
+                ...state
+            }
+        case UPDATE_USER_CERTIFICATES:
+            state.user.certificates.push(action.certificate);
+            return {
+                ...state
+            }
+        case UPDATE_USER_BIO:
+            state.user.bio = action.bio;
+            return {
+                ...state
+            }
+        // case UPDATE_USER_INFO:
+        //     state.user.bio = action.bio;
         //     return {
-        //         'user.skills': action.skills
+        //         ...state
         //     }
-        // case UPDATE_USER_CERTIFICATES:
-        //     return {
-        //         'user.certificates': AuthenticatorAssertionResponse.certificate
-        //     }
-
         default:
             return state
     }

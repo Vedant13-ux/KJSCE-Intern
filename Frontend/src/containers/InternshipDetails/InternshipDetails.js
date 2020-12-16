@@ -8,6 +8,7 @@ import Loading from "../../images/Loading"
 import Modal from "react-bootstrap/Modal";
 import { Multiselect } from "multiselect-react-dropdown";
 import CKEditor from 'ckeditor4-react';
+import { Link } from 'react-router-dom'
 
 
 
@@ -166,9 +167,9 @@ class InternshipDetail extends Component {
                         alt="pfp"
                         className="avatar-pro"
                       ></img>
-                      <a className="author" href={"./profile/"+this.props.faculty.email.split('@')[0]}>
+                      <Link className="author" to={"/profile/" + this.state.details.faculty.email.split('@')[0]}>
                         {this.state.details.faculty.fname} {this.state.details.faculty.lname}
-                      </a>
+                      </Link>
                     </div>
                     <br></br>
                     <div id="iconinfo" class="flex-container">
