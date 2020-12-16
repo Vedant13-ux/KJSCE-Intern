@@ -40,6 +40,9 @@ class Profile extends Component {
           text: temp.skills[i],
         });
       }
+      // for (i = 0; i < temp.posts.length; i++) {
+      //   temp.posts[i]["author"]=this.props.currentUser.user // temporary fix
+      // }
       for (i = 0; i < temp.certificates.length; i++) {
         temp.certificates[i].date = new Date(temp.certificates[i].date)
       }
