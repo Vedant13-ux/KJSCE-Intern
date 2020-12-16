@@ -113,8 +113,7 @@ const userScehma = new mongoose.Schema({
 		facebook: String,
 		twitter: String,
 		linkedin: String,
-		github: String,
-		mail: String
+		github: String
 	}
 
 

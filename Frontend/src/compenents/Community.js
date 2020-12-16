@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../containers/Global/Navbar";
 import PageFooter from "../containers/Global/PageFooter";
 import { apiCall } from "../services/api";
+import Modal from 'react-bootstrap/Modal'
 
 class Application extends React.Component {
   constructor(props) {
@@ -31,7 +32,10 @@ class Application extends React.Component {
     return (
       <div className="wrapper">
         <Navbar isMobile={this.state.isMobile} {...this.props} />
-        <Feed isMobile={this.state.isMobile} currentUser={this.props.currentUser}/>
+        <Feed
+          isMobile={this.state.isMobile}
+          currentUser={this.props.currentUser}
+        />
         <ScrollTopButton />
         <PageFooter />
       </div>
@@ -70,9 +74,10 @@ class ScrollTopButton extends React.Component {
         styles: {
           position: "fixed",
           top: "4.4rem",
-          left: `${document.querySelector(".feed-wrapper").getBoundingClientRect()
-            .left - 60
-            }px`,
+          left: `${
+            document.querySelector(".feed-wrapper").getBoundingClientRect()
+              .left - 60
+          }px`,
           display: `${this.state.visible ? "block" : "none"}`,
         },
       });
@@ -106,9 +111,10 @@ class ScrollTopButton extends React.Component {
       this.styles = {
         position: "fixed",
         top: "4.4rem",
-        left: `${document.querySelector(".feed-wrapper").getBoundingClientRect().left -
+        left: `${
+          document.querySelector(".feed-wrapper").getBoundingClientRect().left -
           60
-          }px`,
+        }px`,
         display: `${this.state.visible ? "block" : "none"}`,
       };
 
@@ -125,12 +131,28 @@ class ScrollTopButton extends React.Component {
 class PostCreate extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { show: false ,postdata:{
+      content:''
+    } };
+    this.handleChange=(e)=>{
+      this.state.postdata[e.target.name]=e.target.val
+      this.setState({...this.state})
+    }
+    this.handleSubmit=(e)=>{
+      //api call
+    }
+    this.handleClose=(e)=>{
+      this.setState({show:false})
+    }
+    this.handleShow=(e)=>{
+      this.setState({show:true})
+    }
   }
   render() {
+    const {content} = this.state.postdata
     return (
       <div class="posting-area">
-        <input class="posting-text" placeholder="start post"></input>
+        <div onClick={this.handleShow} class="posting-text" >start post</div>
         <div class="posting-but">
           <div class="posting-but1" onClick="">
             <i class="material-icons">insert_photo</i>Photo
@@ -139,6 +161,33 @@ class PostCreate extends React.Component {
             <i class="material-icons">videocam</i>Video
           </div>
         </div>
+        <Modal show={this.state.show} onHide={this.handleClose} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Create a post</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form onSubmit={this.handleSubmit}>
+              <div className="ui form">
+                <div className="field">
+                  <label>About post</label>
+                  <textarea
+                    maxlength="200"
+                    rows="2"
+                    required
+                    placeholder="What do you want to talk about?"
+                    name="content"
+                    val={content}
+                    onChange={this.handleChange}
+                  ></textarea>
+                </div>
+
+                <div className="submit confirmdiv">
+                  <button className="medium ui button confirm">POST</button>
+                </div>
+              </div>
+            </form>
+          </Modal.Body>
+        </Modal>
       </div>
     );
   }
@@ -162,8 +211,11 @@ class Feed extends React.Component {
     return (
       <div id="feed">
         <div className="content-wrapper feed-wrapper">
-       
-          <PostWall url="/api/community/posts/getAll" postcreate={true} currentUser={this.props.currentUser} />
+          <PostWall
+            url="/api/community/posts/getAll"
+            postcreate={true}
+            currentUser={this.props.currentUser}
+          />
           <div className="right-side">
             <div className="controls">tags and recommended post</div>
           </div>
@@ -176,16 +228,10 @@ class Feed extends React.Component {
 export class PostWall extends React.Component {
   constructor(props) {
     super(props);
-    console.log('this tbh',this.props.currentUser.user)
+    console.log("this tbh", this.props.currentUser.user);
     this.state = {
       start: true,
       loggedin: this.props.currentUser.user,
-      // {
-      //   fname: "mai",
-      //   lname: "hu",
-      //   avatar: "https://i.redd.it/0cin4hvettn51.png",
-      //   id: "5fc3e5d1fc33db6a66886586",
-      // },
       localList: {},
     };
   }
@@ -236,7 +282,7 @@ export class PostWall extends React.Component {
 
     return (
       <div className="post-wall">
-         {this.props.postcreate && <PostCreate />}
+        {this.props.postcreate && <PostCreate />}
         {content}
       </div>
     );
@@ -259,6 +305,7 @@ class Post extends React.Component {
     this.content = options.content;
     this.avatar = options.author.photo;
     this.name = options.author.fname + options.author.lname;
+    this.email=options.author.email
     function dateFormat(k) {
       let apply = new Date(k);
       return apply.toDateString();
@@ -292,21 +339,17 @@ class Post extends React.Component {
     if (!this.state.isLiked) {
       button.classList.toggle("liked");
       lik++;
-      apiCall(
-        "post",
-        "/api/community/posts/like/" + this.id,
-        {id:this.props.loggedin._id}
-      )
+      apiCall("post", "/api/community/posts/like/" + this.id, {
+        id: this.props.loggedin._id,
+      })
         .then((data) => console.log(data))
         .catch((e) => console.log(e));
     } else {
       button.classList.toggle("liked");
       lik--;
-      apiCall(
-        "put",
-        "/api/community/posts/like/" + this.id,
-        {id:this.props.loggedin._id}
-      )
+      apiCall("put", "/api/community/posts/like/" + this.id, {
+        id: this.props.loggedin._id,
+      })
         .then((data) => console.log(data))
         .catch((e) => console.log(e));
     }
@@ -321,14 +364,10 @@ class Post extends React.Component {
       form.text.value = "";
       return;
     }
-    apiCall(
-      "post",
-      "/api/community/posts/comments/" + this.id,
-      {
-        id: this.props.loggedin._id,
-        text: commentText,
-      }
-    )
+    apiCall("post", "/api/community/posts/comments/" + this.id, {
+      id: this.props.loggedin._id,
+      text: commentText,
+    });
     this.state.comments.push({
       author: {
         fname: this.props.loggedin.fname,
@@ -364,6 +403,7 @@ class Post extends React.Component {
           <UserInfo
             userAvatar={this.avatar}
             date={this.date}
+            email={this.email}
             username={this.name}
           />
           <div className="post-content">
@@ -439,7 +479,12 @@ class Comments extends React.Component {
     return (
       <div className="comments-container">
         {this.props.isExpanded ? hideButton : ""}
-        <div className="comments-wrapper ui threaded comments" ref={el => { this.commentEnd = el; }} >
+        <div
+          className="comments-wrapper ui threaded comments"
+          ref={(el) => {
+            this.commentEnd = el;
+          }}
+        >
           {commentsArr}
         </div>
       </div>
@@ -453,10 +498,10 @@ class Comment extends React.Component {
     this.state = {
       isliked: false,
       data: props.data,
-    }
+    };
   }
   handleLike(e) {
-    console.log(e)
+    console.log(e);
   }
   render() {
     let val = this.state.data;
@@ -468,7 +513,7 @@ class Comment extends React.Component {
         </a>
         <div class="content">
           <a href="/" class="author">
-            {val.author.fname + ' ' + val.author.lname}
+            {val.author.fname + " " + val.author.lname}
           </a>
           <div class="metadata">
             <span class="date">Today at 5:42PM</span>
@@ -477,11 +522,11 @@ class Comment extends React.Component {
           <div class="actions">
             <button onClick={this.handleLike} class="reply">
               Like
-              </button>
+            </button>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -489,15 +534,18 @@ class UserInfo extends React.Component {
   render() {
     return (
       <div className="user-info">
-        <div className="user-avatar">
-          <img src={this.props.userAvatar} alt="author"></img>
-        </div>
-
-        <div className="user-data">
-          <div className="username">{this.props.username}</div>
-
-          <div className="post-date">{this.props.date}</div>
-        </div>
+        
+          <div className="user-avatar">
+            <img src={this.props.userAvatar} alt="author"></img>
+          </div>
+          
+          <div className="user-data">
+          <a href={"./profile/" + this.props.email.split("@")[0]}>
+            <div className="username">{this.props.username}</div>
+            </a>
+            <div className="post-date">{this.props.date}</div>
+          </div>
+        
       </div>
     );
   }

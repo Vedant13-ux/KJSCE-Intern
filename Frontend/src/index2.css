@@ -149,6 +149,27 @@ width: 200px;
 margin-right: 9px;
 }
 
+.edit-but{
+	width:60px;
+	height:60px;
+	bottom:40px;
+  right: 40px;
+  margin-top: 170px;
+  margin-left:100px;
+	background-color: #020C53;
+  border-radius:50px;
+  border: 0px;
+  outline:0px;
+	text-align:center;
+  z-index: 5;
+}
+.edit-but:focus{
+  outline:0px;
+}
+.edit-but .fa-edit{
+  color:#FFCA3D;
+  scale: 2;
+}
 
 .confirmdiv{
   text-align: center;

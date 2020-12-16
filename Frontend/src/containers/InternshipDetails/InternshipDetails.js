@@ -166,7 +166,7 @@ class InternshipDetail extends Component {
                         alt="pfp"
                         className="avatar-pro"
                       ></img>
-                      <a className="author" href="./home">
+                      <a className="author" href={"./profile/"+this.props.faculty.email.split('@')[0]}>
                         {this.state.details.faculty.fname} {this.state.details.faculty.lname}
                       </a>
                     </div>

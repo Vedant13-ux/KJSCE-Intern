@@ -20,7 +20,7 @@ class InternshipList extends Component {
           <div className="template">
             <div className="top">
               <img src={this.props.faculty.photo} alt="pfp" className="avatar-pro"></img>
-              <a className="author" href="./home">{this.props.faculty.fname} {this.props.faculty.lname}</a>
+              <a className="author" href={"./profile/"+this.props.faculty.email.split('@')[0]}>{this.props.faculty.fname} {this.props.faculty.lname}</a>
             </div>
             <hr className='topHr' />
             <div className="container">
