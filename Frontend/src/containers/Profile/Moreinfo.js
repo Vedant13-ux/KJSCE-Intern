@@ -180,7 +180,7 @@ class Basic extends Component {
           </div>
 
         </div>
-        <Modal show={this.state.show2} onHide={this.handleClose2} centered backdrop="s">
+        <Modal show={this.state.show2} onHide={this.handleClose2} centered backdrop="static">
           <Modal.Header closeButton>
             <Modal.Title>Certificate</Modal.Title>
           </Modal.Header>
