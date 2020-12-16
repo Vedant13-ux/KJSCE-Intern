@@ -46,6 +46,7 @@ router.post('/posts/create', (req, res, next) => {
             db.Post.create(req.body)
                 .then(async (newPost) => {
                     await user.posts.push(newPost);
+                    await user.save();
                     res.status(200).send(newPost);
                 })
                 .catch(err => next(err))
