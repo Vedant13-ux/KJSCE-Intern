@@ -1,21 +1,36 @@
 import React from "react";
 import { Link } from 'react-router-dom'
+import Modal from 'react-bootstrap/Modal'
 
-function Basic(props) {
+class Basic extends React.Component {
+  constructor(props){
+    super(props)
+    this.state={
+      show:false
+    }
+    this.handleshow=(e)=>{
+      console.log("ok lol")
+      this.setState({show:true})
+    }
+    this.handleClose=(e)=>{
+      this.setState({show:false})
+    }
+  }
+  render(){
   return (
     <div className="page-heading">
       <div className="media clearfix">
         <div className="media-left pr30">
           <img
             className="media-object mw150"
-            src={props.user.photo}
+            src={this.props.user.photo}
             alt="..."
           />
         </div>
         <div className="media-body va-m">
           <h2 className="media-heading">
-            {props.user.fname + " " + props.user.lname}
-            <small> - {props.user.role}</small>
+            {this.props.user.fname + " " + this.props.user.lname}
+            <small> - {this.props.user.role}</small>
           </h2>
           <p className="lead">
             Lorem ipsum dolor sit amet ctetur adicing elit, sed do eiusmod
@@ -44,16 +59,49 @@ function Basic(props) {
                 </Link>
               </li>
               <li>
-                <Link to={'mailto:' + props.user.email} title="email link">
+                <a href={'mailto:' + this.props.user.email} title="email link">
                   <span className="fa fa-envelope-square fs35 text-muted"></span>
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
+          
         </div>
+        <button class="edit-but" onClick={this.handleshow}>
+        <i class="fa fa-edit"></i>
+        </button>
+        <Modal show={this.state.show} onHide={this.handleClose} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Create a post</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form >
+              <div className="ui form">
+                <div className="field">
+                  <label>About post</label>
+                  <textarea
+                    maxlength="200"
+                    rows="2"
+                    required
+                    placeholder="What do you want to talk about?"
+                    name="content"
+                    // val={content}
+                    // onChange={this.handleChange}
+                  ></textarea>
+                </div>
+
+                <div className="submit confirmdiv">
+                  <button className="medium ui button confirm">POST</button>
+                </div>
+              </div>
+            </form>
+          </Modal.Body>
+        </Modal>
+      
       </div>
     </div>
   );
+  }
 }
 
 export default Basic;
