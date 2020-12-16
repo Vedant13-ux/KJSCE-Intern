@@ -16,7 +16,7 @@ class Basic extends React.Component {
       this.setState({show:false})
     }
     this.handleSubmit=(e)=>{
-      
+
     }
   }
   render(){
@@ -36,8 +36,7 @@ class Basic extends React.Component {
             <small> - {this.props.user.role}</small>
           </h2>
           <p className="lead">
-            Lorem ipsum dolor sit amet ctetur adicing elit, sed do eiusmod
-            tempor incididunt
+            {this.props.user.bio}
           </p>
           <div className="media-links">
             <ul className="list-inline list-unstyled">
@@ -62,9 +61,9 @@ class Basic extends React.Component {
                 </Link>
               </li>
               <li>
-                <a href={'mailto:' + this.props.user.email} title="email link">
+                <Link to={'mailto:' + this.props.user.email} title="email link">
                   <span className="fa fa-envelope-square fs35 text-muted"></span>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
