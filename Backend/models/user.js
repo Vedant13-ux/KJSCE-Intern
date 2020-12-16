@@ -78,6 +78,7 @@ const userScehma = new mongoose.Schema({
 			ref: 'InternshipDetails'
 		}
 	],
+	
 	skills: [
 		{
 			type: String

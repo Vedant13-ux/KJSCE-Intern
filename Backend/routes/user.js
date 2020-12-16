@@ -14,7 +14,7 @@ function escapeRegex(text) {
 
 // Get user by id
 router.get('/user/:id', (req, res, next) => {
-    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('applications').populate('posts').populate('certificates')
+    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('applications').populate('posts').populate('certificates').exec()
         .then((user) => {
             res.status(200).send(user);
         }).catch((err) => {
@@ -40,15 +40,6 @@ router.get('/profile/search', (req, res, next) => {
         });
 });
 
-router.get('/profile/:id', (req, res, next) => {
-    db.User.findById(req.params.id).populate('certificates')
-        .exec((err, user) => {
-            if (err) {
-                return next(err);
-            }
-            return res.status(200).send(user)
-        });
-})
 // const formData = new FormData();
 // const imagefile = document.querySelector('#file');
 // formData.append("image", imagefile.files[0]);

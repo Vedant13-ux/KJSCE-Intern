@@ -42,7 +42,7 @@ exports.signin = async function (req, res, next) {
   try {
     let user = await db.User.findOne({
       email: req.body.email
-    });
+    }).populate('certificates').populate('applications').populate('posts').populate('certificates').populate({ path: 'commented', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } }).populate({ path: 'liked', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } }).exec();
     console.log(user);
     let isMatch = await user.comparePassword(req.body.password, next);
     console.log(isMatch);
