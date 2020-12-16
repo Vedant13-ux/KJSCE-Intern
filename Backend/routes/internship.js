@@ -242,7 +242,6 @@ router.post('/apply', (req, res, next) => {
                     return next({ status: 404, message: 'User Not Found' })
                 }
                 const isApplied = user.applications.find(app => app == req.body.internshipId);
-                console.log(isApplied)
                 if (user.role == "Student" && isApplied === true) {
                     await user.applications.push(internship);
                     await internship.applicants.push(user);
