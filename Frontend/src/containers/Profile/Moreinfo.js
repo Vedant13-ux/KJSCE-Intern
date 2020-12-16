@@ -171,7 +171,7 @@ class Basic extends Component {
               <div>
                 <h4>{s.title}</h4>
                 <p>{s.provider}<br></br>
-                Issued {s.date.toDateString()}<br></br>
+                Issued {new Date(s.date).toDateString()}<br></br>
                   <a href={s.link}>see creditential</a>
                 </p>
                 <hr class="short br-lighter"></hr>
@@ -180,7 +180,7 @@ class Basic extends Component {
           </div>
 
         </div>
-        <Modal show={this.state.show2} onHide={this.handleClose2} centered backdrop="static">
+        <Modal show={this.state.show2} onHide={this.handleClose2} centered backdrop="s">
           <Modal.Header closeButton>
             <Modal.Title>Certificate</Modal.Title>
           </Modal.Header>
