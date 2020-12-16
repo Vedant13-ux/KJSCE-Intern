@@ -17,11 +17,15 @@ class Navbar extends Component {
         }
         this.showDropdown = this.showDropdown.bind(this);
         this.logout = this.logout.bind(this);
+        this.goProfile = this.goProfile.bind(this);
     }
     async logout(e) {
         e.preventDefault();
         await this.props.logout();
         this.props.history.push('/');
+    }
+    goProfile() {
+        this.props.history.push('/profile/' + this.state.user.email.split('@')[0]);
     }
     showDropdown() {
         console.log(this.state.showDropdown);
@@ -35,8 +39,8 @@ class Navbar extends Component {
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item userProfile">
                             <img className="avatar-pro" src={this.state.user.photo} alt="user-profile" />
-                            <Link className="nav-link username" to={'/profile/' + this.state.user.email.split('@')[0]}>{this.state.user.fname} {this.state.user.lname}
-                            </Link>
+                            <div className="nav-link username" onClick={this.goProfile}>{this.state.user.fname} {this.state.user.lname}
+                            </div>
                             <i className="fa" onClick={this.showDropdown} >&#xf0d7;</i>
                             {
                                 this.state.showDropdown &&
@@ -81,7 +85,6 @@ class Navbar extends Component {
                                 {
                                     context => (
                                         <div><input onKeyPress={e => { if (e.which === 13) { context.filter() } }} onChange={(e) => context.setMessage(e.target.value)} className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="internshipSerach" />
-                                            <button onClick={(e) => { context.filter() }} className="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
                                         </div>)
                                 }
                             </MContext.Consumer>

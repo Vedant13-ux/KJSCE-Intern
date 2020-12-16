@@ -22,14 +22,22 @@ class Profile extends Component {
       start: true,
       nof: false,
       preskills: [],
+      profileId: this.props.match.params.id
     };
     this.changeskill = this.changeskill.bind(this);
     this.addcert = this.addcert.bind(this);
   }
+
+  componentWillUpdate(prevProp, prevState) {
+    if (prevState.profileId === this.props.match.params.id) {
+      this.componentDidMount();
+    }
+  }
+
   async componentDidMount() {
     document.documentElement.scrollTop = 0;
     // console.log(this.props.match.params.id);
-    if (this.props.currentUser.user.email.split('@')[0] === this.props.match.params.id) {
+    if (this.props.currentUser.user.email.split('@')[0] === this.state.profileId) {
       let i = 0;
       let temp = this.props.currentUser.user
       for (i = 0; i < temp.certificates.length; i++) {
