@@ -29,7 +29,12 @@ class Profile extends Component {
     document.documentElement.scrollTop = 0;
     // console.log(this.props.match.params.id);
     if (this.props.currentUser.user.email.split('@')[0] === this.props.match.params.id) {
-      await this.setState({ user: this.props.currentUser.user, owner: true, start: false });
+      let i=0;
+      let temp=this.props.currentUser.user
+      for (i = 0; i < temp.certificates.length; i++) {
+        temp.certificates[i].date = new Date(temp.certificates[i].date)
+      }
+      await this.setState({ user: temp, owner: true, start: false });
     }
     else {
       // console.log(this.props.match.params.id);
