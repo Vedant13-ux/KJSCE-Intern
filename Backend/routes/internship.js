@@ -237,12 +237,12 @@ router.post('/apply', (req, res, next) => {
     db.InternshipDetails.findById(req.body.internshipId)
         .then(async (internship) => {
             try {
-                let user = db.User.findById(req.body.userId);
+                let user = db.User.findById(req.body.applicantId);
                 if (!user) {
                     return next({ status: 404, message: 'User Not Found' })
                 }
-                console.log(user)
-                if (user.role == "Faculty") {
+                console.log(user);
+                if (user.role == "Student") {
                     await user.applications.push(internship);
                     await internship.applicants.push(user);
                     await user.save();
