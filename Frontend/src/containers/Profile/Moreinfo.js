@@ -10,7 +10,7 @@ class Basic extends Component {
       certform: {
         title: "",
         provider: "",
-        date: "",
+        date: new Date(),
         link: "",
       },
       skills: [
@@ -56,7 +56,7 @@ class Basic extends Component {
     
     this.props.addcert(this.state.certform);
     this.setState({
-      certform: { title: "", provider: "", link: "",date:'' },
+      certform: { title: "", provider: "", link: "",date:new Date() },
       show2: false,
     });
   }
