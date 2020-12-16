@@ -2,12 +2,15 @@ import React, { Component } from "react";
 import { Nav } from "react-bootstrap";
 // import { Link } from 'react-router-dom';
 import { PostWall } from '../../compenents/Community'
+import { apiCall } from "../../services/api";
 
 class Basic extends Component {
   constructor(props) {
     super(props);
     this.state = {
       content: "experiences",
+      posts:[],
+      start:true
     };
     this.handleSwitch = this.handleSwitch.bind(this);
   }
@@ -15,6 +18,15 @@ class Basic extends Component {
     let content = window.location.href.split("#")[1];
     if (content === undefined) return
     return this.setState({ content: content });
+  }
+  componentDidMount(){
+    apiCall("get", '/api/community/posts/getAll', "")
+      .then((data) => {
+        this.setState({ posts: data, start: false });
+      })
+      .catch((e) => {
+        this.setState({  start: false });
+      });
   }
   handleSwitch(e) {
     return this.setState({ content: e.target.name });
@@ -29,7 +41,7 @@ class Basic extends Component {
         display = <div>ok1</div>;
         break;
       case "posts":
-        display = <PostWall url="/api/community/posts/getAll" postcreate={this.props.owner} currentUser={{user:this.props.user}} />;
+        display = <PostWall {...this.state}  postcreate={this.props.owner} currentUser={{user:this.props.user}} />;
         break;
       case "activity":
         display = <div>ok3</div>;

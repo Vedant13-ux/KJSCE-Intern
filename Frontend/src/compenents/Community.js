@@ -196,25 +196,35 @@ class PostCreate extends React.Component {
 class Feed extends React.Component {
   constructor(props) {
     super(props);
-    this.changePostsCount = this.changePostsCount.bind(this);
+    this.state={
+      posts:[],
+      start:true
+
+    }
   }
 
-  componentDidMount() {
-    document.addEventListener("scroll", this.fixedScrollHandler);
+  componentWillMount() {
+    apiCall("get", '/api/community/posts/getAll', "")
+      .then((data) => {
+        
+        this.setState({ posts: data, start: false });
+        console.log(this.state)
+      })
+      .catch((e) => {
+        console.log("error")
+        this.setState({  start: false });
+      });
   }
 
-  changePostsCount(current, total) {
-    this.setState({ postsOnScreen: current, totalPosts: total });
-  }
 
   render() {
     return (
       <div id="feed">
         <div className="content-wrapper feed-wrapper">
           <PostWall
-            url="/api/community/posts/getAll"
             postcreate={true}
             currentUser={this.props.currentUser}
+            {...this.state}
           />
           <div className="right-side">
             <div className="controls">tags and recommended post</div>
@@ -228,33 +238,28 @@ class Feed extends React.Component {
 export class PostWall extends React.Component {
   constructor(props) {
     super(props);
-    console.log("this tbh", this.props.currentUser.user);
-    this.state = {
-      start: true,
-      loggedin: this.props.currentUser.user,
-      localList: {},
-    };
+    console.log(this.props)
   }
 
   getPostById(id) {
-    if (!this.state.localList[id]) return;
+    if (!this.props.posts[id]) return;
     return (
       <Post
         id={id}
         key={id}
-        loggedin={this.state.loggedin}
-        options={this.state.localList[id]}
+        loggedin={this.props.currentUser.user}
+        options={this.props.posts[id]}
       />
     );
   }
 
   renderAll() {
     let elem = [];
-    for (let key in this.state.localList) {
+    for (let key in this.props.posts) {
       elem.unshift(this.getPostById(key));
     }
     if (!elem.length) {
-      if (this.state.start) elem.push(<div></div>);
+      if (this.props.start) elem.push(<div></div>);
       else
         elem.push(
           <div className="message" key={-2}>
@@ -263,17 +268,6 @@ export class PostWall extends React.Component {
         );
     }
     return elem;
-  }
-
-  componentDidMount() {
-    apiCall("get", this.props.url, "")
-      .then((data) => {
-        this.setState({ ...this.state, localList: data, start: false });
-        // console.log(this.state.localList);
-      })
-      .catch((e) => {
-        this.setState({ ...this.state, start: false });
-      });
   }
 
   render() {
@@ -377,7 +371,7 @@ class Post extends React.Component {
       text: commentText,
     });
     form.text.value = "";
-    this.setState({ ...this.state, commentsExpanded: true }); //vedant kya karta hai
+    this.setState({ ...this.state, commentsExpanded: true });
   }
 
   showComments(e) {
@@ -470,7 +464,7 @@ class Comments extends React.Component {
 
     let hideButton = (
       <div className="hide-comments-button">
-        <div href="#" onClick={this.props.hideComment}>
+        <div onClick={this.props.hideComment}>
           Hide comments
         </div>
       </div>
@@ -540,7 +534,7 @@ class UserInfo extends React.Component {
           </div>
           
           <div className="user-data">
-          <a href={"./profile/" + this.props.email.split("@")[0]}>
+          <a href={"/profile/" + this.props.email.split("@")[0]}>
             <div className="username">{this.props.username}</div>
             </a>
             <div className="post-date">{this.props.date}</div>
