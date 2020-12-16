@@ -141,12 +141,18 @@ class PostCreate extends React.Component {
     this.handleSubmit=(e)=>{
       //api call
     }
+    this.handleClose=(e)=>{
+      this.setState({show:false})
+    }
+    this.handleShow=(e)=>{
+      this.setState({show:true})
+    }
   }
   render() {
     const {content} = this.state.postdata
     return (
       <div class="posting-area">
-        <input class="posting-text" placeholder="start post"></input>
+        <div onClick={this.handleShow} class="posting-text" >start post</div>
         <div class="posting-but">
           <div class="posting-but1" onClick="">
             <i class="material-icons">insert_photo</i>Photo
@@ -168,7 +174,7 @@ class PostCreate extends React.Component {
                     maxlength="200"
                     rows="2"
                     required
-                    placeholder=""
+                    placeholder="What do you want to talk about?"
                     name="content"
                     val={content}
                     onChange={this.handleChange}

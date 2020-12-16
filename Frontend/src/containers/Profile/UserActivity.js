@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Nav } from "react-bootstrap";
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { PostWall } from '../../compenents/Community'
 
 class Basic extends Component {
