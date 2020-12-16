@@ -7,6 +7,7 @@ import Moreinfo from "../containers/Profile/Moreinfo";
 import UserActivity from "../containers/Profile/UserActivity";
 import Loading from "../images/Loading";
 import NotFound from "../images/NotFound"
+import { connect } from 'react-redux'
 
 class Profile extends Component {
   constructor(props) {
@@ -29,8 +30,8 @@ class Profile extends Component {
     document.documentElement.scrollTop = 0;
     // console.log(this.props.match.params.id);
     if (this.props.currentUser.user.email.split('@')[0] === this.props.match.params.id) {
-      let i=0;
-      let temp=this.props.currentUser.user
+      let i = 0;
+      let temp = this.props.currentUser.user
       for (i = 0; i < temp.certificates.length; i++) {
         temp.certificates[i].date = new Date(temp.certificates[i].date)
       }
@@ -67,16 +68,16 @@ class Profile extends Component {
   }
   addcert(o) {
     let temp = this.state.user;
-    o.date=new Date(o.date)
+    o.date = new Date(o.date)
     temp.certificates.push(o);
-    
+
     console.log(temp)
-    
+
 
     apiCall('put', '/api/profile/update/certificates', { certificate: o, id: this.props.currentUser.user._id }).then(
       (d) => console.log(d)
     ).catch((e) => console.log(e))
-    
+
     return this.setState({ user: temp })
   }
   changeskill(s) {
@@ -139,4 +140,9 @@ class Profile extends Component {
     }
   }
 }
-export default Profile;
+function mapStateToProps(state) {
+  return {
+    currentUser: state.currentUser
+  }
+}
+export default connect(mapStateToProps, {})(Profile);

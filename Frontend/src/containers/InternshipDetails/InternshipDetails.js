@@ -131,7 +131,7 @@ class InternshipDetail extends Component {
   handleApply(e) {
     e.preventDefault();
     console.log('Apply ma aaay');
-    const applicantId = "5fc81a619619ea0017ecb856";
+    const applicantId = this.state.user._id;
     const internshipId = this.state.details._id;
     const applyBody = { answers: [this.state.ans1, this.state.ans2], applicantId, internshipId };
     console.log(applyBody);
