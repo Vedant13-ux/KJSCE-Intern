@@ -243,7 +243,9 @@ router.post('/apply', (req, res, next) => {
                 }
                 const isApplied = user.applications.find(app => app == req.body.internshipId);
                 if (user.role == "Student" && isApplied === true) {
+                    let application = await db.Application.create(req.body);
                     await user.applications.push(internship);
+                    await internship.applications(application);
                     await internship.applicants.push(user);
                     await user.save();
                     await internship.save();
