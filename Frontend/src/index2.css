@@ -70,9 +70,8 @@ margin-top: 78px;
 .panel .tagsskill{
   background-color: #020b53;
   border-radius: 10px;
-  display: inline;
+  display: inline-block;
   padding: 10px;
-  /* float:left; */
   padding-top: 5px;
   padding-bottom: 5px;
   margin: 5px;

@@ -8,6 +8,7 @@ import UserActivity from "../containers/Profile/UserActivity";
 import Loading from "../images/Loading";
 import NotFound from "../images/NotFound"
 import { connect } from 'react-redux'
+import { updateSkills, updateCertificates } from '../store/actions/user'
 
 class Profile extends Component {
   constructor(props) {
@@ -76,17 +77,17 @@ class Profile extends Component {
         });
     }
   }
-  addcert(o) {
+  addcert(cert) {
     let temp = this.state.user;
-    o.date = new Date(o.date)
-    temp.certificates.push(o);
+    cert.date = new Date(cert.date)
+    temp.certificates.push(cert, this.state.user._id);
 
     console.log(temp)
 
 
-    apiCall('put', '/api/profile/update/certificates', { certificate: o, id: this.props.currentUser.user._id }).then(
-      (d) => console.log(d)
-    ).catch((e) => console.log(e))
+    this.props.updateCertificates(cert).then(
+      () => console.log('Certificate Added')
+    ).catch((err) => err)
 
     return this.setState({ user: temp })
   }
@@ -100,9 +101,9 @@ class Profile extends Component {
         text: s[i],
       });
     }
-    apiCall('put', '/api/profile/update/skills', { skills: s, id: this.props.currentUser.user._id }).then(
-      (d) => console.log(d)
-    ).catch((e) => console.log(e))
+    this.props.updateSkills(s, this.state.user._id).then(
+      () => console.log('Skills Added')
+    ).catch((err) => err)
     return this.setState({ user: temp, preskills: t });
   }
   render() {
@@ -155,4 +156,4 @@ function mapStateToProps(state) {
     currentUser: state.currentUser
   }
 }
-export default connect(mapStateToProps, {})(Profile);
+export default connect(mapStateToProps, { updateSkills, updateCertificates })(Profile);
