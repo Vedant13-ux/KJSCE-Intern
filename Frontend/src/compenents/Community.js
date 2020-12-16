@@ -223,6 +223,7 @@ class Feed extends React.Component {
       <div id="feed">
         <div className="content-wrapper feed-wrapper">
           <PostWall
+            isprofile={false}
             postcreate={true}
             currentUser={this.props.currentUser}
             {...this.state}
@@ -246,6 +247,7 @@ export class PostWall extends React.Component {
     if (!this.props.posts[id]) return;
     return (
       <Post
+        isprofile={this.props.isprofile}
         id={id}
         key={id}
         loggedin={this.props.currentUser.user}
@@ -298,9 +300,16 @@ class Post extends React.Component {
     };
     this.id = options._id;
     this.content = options.content;
+    if(!props.isprofile){
     this.avatar = options.author.photo;
-    this.name = options.author.fname + options.author.lname;
+    this.name = options.author.fname +' '+ options.author.lname;
     this.email=options.author.email
+  }
+  else{
+    this.avatar = props.loggedin.photo;
+    this.name = props.loggedin.fname +' '+ props.loggedin.lname;
+    this.email=props.loggedin.email
+  }
     function dateFormat(k) {
       let apply = new Date(k);
       return apply.toDateString();

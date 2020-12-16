@@ -43,7 +43,7 @@ class Basic extends Component {
         display = <div>ok1</div>;
         break;
       case "posts":
-        display = <PostWall {...this.state}  postcreate={this.props.owner} currentUser={{user:this.props.user}} />;
+        display = <PostWall {...this.state} isprofile={true} postcreate={this.props.owner} currentUser={{user:this.props.user}} />;
         break;
       case "activity":
         display = <div>ok3</div>;
