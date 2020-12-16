@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER } from '../actionTypes';
+import { SET_CURRENT_USER, UPDATE_USER_SKILLS, UPDATE_USER_CERTIFICATES, UPDATE_USER_BIO, UPDATE_USER_INFO } from '../actionTypes';
 
 const defaultState = {
     isAuthenticated: false,
@@ -11,6 +11,15 @@ const currentUserReducer = (state = defaultState, action) => {
                 isAuthenticated: !!Object.keys(action.user).length,
                 user: action.user
             }
+        // case UPDATE_USER_SKILLS:
+        //     return {
+        //         'user.skills': action.skills
+        //     }
+        // case UPDATE_USER_CERTIFICATES:
+        //     return {
+        //         'user.certificates': AuthenticatorAssertionResponse.certificate
+        //     }
+
         default:
             return state
     }
