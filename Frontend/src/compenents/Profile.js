@@ -52,7 +52,6 @@ class Profile extends Component {
             data.certificates[i].date = new Date(data.certificates[i].date)
           }
           await this.setState({
-            //owner:true,
             user: data,
             preskills: this.state.preskills,
             start: false,

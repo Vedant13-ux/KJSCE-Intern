@@ -53,10 +53,10 @@ class Basic extends Component {
   }
   async handleSubmit(e) {
     e.preventDefault();
-    
+
     this.props.addcert(this.state.certform);
     this.setState({
-      certform: { title: "", provider: "", link: "",date:new Date() },
+      certform: { title: "", provider: "", link: "", date: new Date() },
       show2: false,
     });
   }
@@ -81,7 +81,7 @@ class Basic extends Component {
   }
 
   render() {
-    const { title, provider,date, link } = this.state.certform;
+    const { title, provider, date, link } = this.state.certform;
     return (
       <div className="col-md-4">
         <div className="panel">
@@ -145,16 +145,16 @@ class Basic extends Component {
                 ref={this.multiselectRef}
               />
               <div className="confirmdiv">
-              <button
-                onClick={this.handleskillssubmit}
-                className="confirm medium ui button"
-              >
-                CONFIRM
+                <button
+                  onClick={this.handleskillssubmit}
+                  className="confirm medium ui button"
+                >
+                  CONFIRM
               </button></div>
             </Modal.Body>
           </Modal>
         </div>
-        <div className="panel">
+        <div className="panel" id="certificates">
           <div className="panel-heading">
             <span className="panel-icon">
               <i className="fa fa-pencil" />
@@ -172,74 +172,76 @@ class Basic extends Component {
                 <h4>{s.title}</h4>
                 <p>{s.provider}<br></br>
                 Issued {s.date.toDateString()}<br></br>
-                <a href={s.link}>see creditential</a>
+                  <a href={s.link}>see creditential</a>
                 </p>
                 <hr class="short br-lighter"></hr>
               </div>
             ))}
           </div>
-          <Modal show={this.state.show2} onHide={this.handleClose2} centered>
-            <Modal.Header closeButton>
-              <Modal.Title>Certificate</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <form onSubmit={this.handleSubmit} id="internshipForm">
-                <div className="ui form">
-                  <div className="field">
-                    <label>Title</label>
-                    <input
-                      name="title"
-                      maxLength="30"
-                      required
-                      val={title}
-                      onChange={this.handleChange}
-                      type="text"
-                      placeholder="eg. Completed Course on Java"
-                    ></input>
-                  </div>
-                  <div className="field">
-                    <label>Provider</label>
-                    <input
-                      name="provider"
-                      maxLength="30"
-                      required
-                      val={provider}
-                      onChange={this.handleChange}
-                      type="text"
-                      placeholder="eg. Udemy"
-                    ></input>
-                  </div>
-                  <div className="field">
-                    <label>Issued on</label>
-                    <input
-                      required
-                      type="Date"
-                      name="date"
-                      val={date}
-                      onChange={this.handleChange}
-                    ></input>
-                  </div>
-                  <div className="field">
-                    <label>Link</label>
-                    <input
-                      name="link"
-                      maxLength="100"
-                      required
-                      val={link}
-                      onChange={this.handleChange}
-                      type="text"
-                      placeholder="eg. https://www.udemy.com/certificate/UC-fb6...."
-                    ></input>
-                  </div>
-                  <div className="submit confirmdiv">
-                    <button className="medium ui button confirm">ADD</button>
-                  </div>
-                </div>
-              </form>
-            </Modal.Body>
-          </Modal>
+
         </div>
+        <Modal show={this.state.show2} onHide={this.handleClose2} centered backdrop="static">
+          <Modal.Header closeButton>
+            <Modal.Title>Certificate</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form onSubmit={this.handleSubmit} id="internshipForm">
+              <div className="ui form">
+                <div className="field">
+                  <label>Title</label>
+                  <input
+                    name="title"
+                    maxLength="30"
+                    required
+                    val={title}
+                    onChange={this.handleChange}
+                    type="text"
+                    placeholder="eg. Completed Course on Java"
+                  ></input>
+                </div>
+                <div className="field">
+                  <label>Provider</label>
+                  <input
+                    name="provider"
+                    maxLength="30"
+                    required
+                    val={provider}
+                    onChange={this.handleChange}
+                    type="text"
+                    placeholder="eg. Udemy"
+                  ></input>
+                </div>
+                <div className="field">
+                  <label>Issued on</label>
+                  <input
+                    required
+                    type="Date"
+                    name="date"
+                    val={date}
+                    onChange={this.handleChange}
+                  ></input>
+                </div>
+                <div className="field">
+                  <label>Link</label>
+                  <input
+                    name="link"
+                    maxLength="100"
+                    required
+                    val={link}
+                    onChange={this.handleChange}
+                    type="text"
+                    placeholder="eg. https://www.udemy.com/certificate/UC-fb6...."
+                  ></input>
+                </div>
+                <div className="submit confirmdiv">
+                  <button className="medium ui button confirm">ADD</button>
+                </div>
+              </div>
+            </form>
+          </Modal.Body>
+        </Modal>
       </div>
+
     );
   }
 }

@@ -22,7 +22,7 @@ class InternshipDetail extends Component {
       recommlist: [],
       user: this.props.currentUser.user,
       applied: false,
-      owner: true,
+      owner: false,
       show1: false,
       show2: false,
       emails: [{ text: "Hello" }, { text: "Vedant" }],
@@ -79,7 +79,7 @@ class InternshipDetail extends Component {
       to: emailArray,
     };
     console.log(mailBody);
-    apiCall('post', "/api/internship/mailapplicants", { mailBody, userId: "5fc81a619619ea0017ecb856", internshipId: this.state.details._id })
+    apiCall('post', "/api/internship/mailapplicants", { mailBody, userId: this.state.user._id, internshipId: this.state.details._id })
       .then(() => {
         console.log('Sent Mail');
         this.handleClose1();
@@ -103,6 +103,9 @@ class InternshipDetail extends Component {
             apiCall('get', '/api/internship/search/skills?skills=' + data["skillsRequired"].join(','))
               .then(
                 async (recomm) => {
+                  if (this.state.user._id === data.faculty._id) {
+                    await this.setState({ owner: true });
+                  }
                   if (this.state.user.applications.includes(this.props.match.params.id)) {
                     await this.setState({ applied: true })
                   }
@@ -262,7 +265,7 @@ class InternshipDetail extends Component {
                           </span>
                         )}
                     </span>
-                    {this.state.role === "Student" &&
+                    {this.state.user.role === "Student" &&
                       <div>
                         {!this.state.applied &&
                           <div>
