@@ -110,10 +110,22 @@ const userScehma = new mongoose.Schema({
 	],
 	bio: String,
 	socialHandles: {
-		facebook: String,
-		twitter: String,
-		linkedin: String,
-		github: String
+		facebook: {
+			type: String,
+			default: ''
+		},
+		twitter: {
+			type: String,
+			default: ''
+		},
+		linkedin: {
+			type: String,
+			default: ''
+		},
+		github: {
+			type: String,
+			default: ''
+		},
 	}
 
 

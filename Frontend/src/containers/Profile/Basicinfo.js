@@ -15,6 +15,9 @@ class Basic extends React.Component {
     this.handleClose=(e)=>{
       this.setState({show:false})
     }
+    this.handleSubmit=(e)=>{
+      
+    }
   }
   render(){
   return (
@@ -75,7 +78,7 @@ class Basic extends React.Component {
             <Modal.Title>Create a post</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <form >
+            <form onSubmit={this.handleSubmit}>
               <div className="ui form">
                 <div className="field">
                   <label>About post</label>
