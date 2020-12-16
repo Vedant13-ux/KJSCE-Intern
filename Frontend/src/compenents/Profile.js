@@ -28,11 +28,8 @@ class Profile extends Component {
     this.addcert = this.addcert.bind(this);
   }
 
-  componentWillUpdate(prevProp, prevState) {
-    if (prevState.profileId !== this.state.profileId) {
-      console.log('mount call kiya')
-      this.componentDidMount();
-    }
+  componentWillReceiveProps(newProps) {
+    this.componentDidMount();
   }
 
   async componentDidMount() {
