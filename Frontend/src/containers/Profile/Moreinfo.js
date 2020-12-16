@@ -172,7 +172,7 @@ class Basic extends Component {
                 <h4>{s.title}</h4>
                 <p>{s.provider}<br></br>
                 Issued {new Date(s.date).toDateString()}<br></br>
-                  <a href={s.link}>see creditential</a>
+                  <a href={s.link} target="_blank" rel="noreferrer">see creditential</a>
                 </p>
                 <hr class="short br-lighter"></hr>
               </div>

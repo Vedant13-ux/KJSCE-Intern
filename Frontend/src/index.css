@@ -675,6 +675,9 @@ body{
    font-size: 14px;
    padding-bottom: 5px;
 }
+#internshipdetail .recommendations .template{
+  color: rgba(0, 0, 0, 0.788);
+}
 #internshipdetail .recommendations .scroll{
   overflow-y: scroll
 }
