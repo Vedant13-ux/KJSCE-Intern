@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { apiCall } from '../../services/api'
 
 
 class AuthForm extends Component {
@@ -26,24 +27,41 @@ class AuthForm extends Component {
     }
     handleSubmit(e) {
         e.preventDefault();
-        console.log(this.state);
-        this.props.onAuth(this.state).then(() => { this.props.onVerify(); console.log('Logged In') }).catch(err => console.log(err));
+        const { fname, lname, email, dept, year, rollNo, password, role, facultyId } = this.state;
+        var data = {};
+        if (this.state.role === 'Student') {
+            data = {
+                fname, lname, email, dept, year, rollNo, password, role
+            }
+        } else {
+            data = {
+                fname, lname, email, dept, year, facultyId, password, role
+            }
+        }
+        console.log(data);
+        apiCall('post', '/api/auth/signup', data)
+            .then(async (response) => {
+                console.log(response)
+                await this.props.onVerify();
+            }).catch((err) => {
+                console.log(err);
+                return err;
+            });
     }
+
 
     render() {
         const { fname, lname, email, dept, year, rollNo, password, facultyId } = this.state;
         const { heading, role } = this.props;
-        const className = role === "student" ? "two fields" : "field";
+        const className = role === "Student" ? "two fields" : "field";
         return (
 
             <form className="ui form authForm" onSubmit={this.handleSubmit}>
                 <div className="heading">
-                    {role === "student" && <i className=" mr-2 fas fa-user-graduate"></i>}
-                    {role === "faculty" && <i class="mr-2 fas fa-user-tie"></i>}
+                    {role === "Student" && <i className=" mr-2 fas fa-user-graduate"></i>}
+                    {role === "Faculty" && <i class="mr-2 fas fa-user-tie"></i>}
                     {heading}
                 </div>
-                {role === 'student' && <input type="hidden" name="role" value="Student"></input>}
-                {role === 'faculty' && <input type="hidden" name="role" value="Faculty"></input>}
 
                 <div className="field">
                     <label>Name</label>
@@ -65,7 +83,7 @@ class AuthForm extends Component {
                                 <i className="envelope icon"></i>
                             </div>
                         </div>
-                        {role === "faculty" &&
+                        {role === "Faculty" &&
                             <div className="four wide field">
                                 <label>Faculty ID</label>
                                 <div className="ui left icon input">
@@ -74,7 +92,7 @@ class AuthForm extends Component {
                                 </div>
                             </div>
                         }
-                        {role === "student" &&
+                        {role === "Student" &&
                             <div className="four wide field">
                                 <label>Roll No.</label>
                                 <div className="ui left icon input">
@@ -97,7 +115,7 @@ class AuthForm extends Component {
                             <option value="etrx">Electronics</option>
                         </select>
                     </div>
-                    {role === "student" &&
+                    {role === "Student" &&
                         <div className="field">
                             <label>Year</label>
                             <select className="ui fluid dropdown" name="year" onChange={this.handleChange} value={year}>
@@ -118,12 +136,12 @@ class AuthForm extends Component {
                     </div>
                 </div>
                 <div>
-                    <Link className="login" to="/login">Already have an account? Login</Link>
+                    <Link className="login" onClick={this.props.already}>Already have an account? Login</Link>
                 </div>
                 <div className="submit">
                     <button className="big ui button">
                         Register
-                        </button>
+                    </button>
                 </div>
             </form>
 

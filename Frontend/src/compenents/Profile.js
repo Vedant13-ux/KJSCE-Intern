@@ -32,32 +32,32 @@ class Profile extends Component {
       await this.setState({ user: this.props.currentUser.user, owner: true, start: false });
     }
     else {
-    // console.log(this.props.match.params.id);
-    apiCall("get", "/api/user/" + this.props.match.params.id, "")
-      .then(async (data) => {
-        console.log(data);
-        let i = 0;
-        for (i = 0; i < data.skills.length; i++) {
-          this.state.preskills.push({
-            text: data.skills[i],
+      // console.log(this.props.match.params.id);
+      apiCall("get", "/api/user/" + this.props.match.params.id, "")
+        .then(async (data) => {
+          console.log(data);
+          let i = 0;
+          for (i = 0; i < data.skills.length; i++) {
+            this.state.preskills.push({
+              text: data.skills[i],
+            });
+          }
+          for (i = 0; i < data.certificates.length; i++) {
+            data.certificates[i].date = new Date(data.certificates[i].date)
+          }
+          await this.setState({
+            //owner:true,
+            user: data,
+            preskills: this.state.preskills,
+            start: false,
           });
-        }
-        for (i = 0; i < data.certificates.length; i++) {
-          data.certificates[i].date = new Date(data.certificates[i].date)
-        }
-        await this.setState({
-          //owner:true,
-          user: data,
-          preskills: this.state.preskills,
-          start: false,
+        })
+        .catch((err) => {
+          console.log(err);
+          this.setState({
+            nof: true,
+          });
         });
-      })
-      .catch((err) => {
-        console.log(err);
-        this.setState({
-          nof: true,
-        });
-      });
     }
   }
   addcert(o) {
@@ -88,7 +88,7 @@ class Profile extends Component {
     if (this.state.start) {
       return (
         <div id="profile">
-          <Navbar currentUser={this.props.currentUser} />
+          <Navbar currentUser={this.props.currentUser} history={this.props.history} />
           <div
             style={{
               minHeight: "600px",
@@ -120,7 +120,7 @@ class Profile extends Component {
                 user={this.state.user}
                 owner={this.state.owner}
               />
-              <UserActivity owner={this.state.owner} user={this.state.user} owner={this.state.owner} />
+              <UserActivity owner={this.state.owner} user={this.state.user} />
             </div>
           </section>
           <PageFooter />

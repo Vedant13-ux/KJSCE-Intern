@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-// import { Redirect } from 'react-router-dom';
-import { apiCall } from '../../services/api';
+import { connect } from 'react-redux';
+import { authUser } from '../../store/actions/auth'
+
 
 class Emailverification extends Component {
     constructor(props) {
@@ -13,10 +14,8 @@ class Emailverification extends Component {
     }
     componentWillMount() {
         console.log(this.state.emailToken)
-        apiCall('get', '/api/auth/verify-email/' + this.state.emailToken, '')
-            .then(async (user) => {
-                console.log('User is Verified');
-                this.props.onVerify(user);
+        this.props.authUser(this.state.emailToken)
+            .then(async () => {
                 await this.setState({
                     status: 'Email Verification Completed. Redirecting to KJSCE Connect.'
                 });
@@ -37,6 +36,11 @@ class Emailverification extends Component {
 
     }
 }
+function mapStateToProps(state) {
+    return {
+        currentUser: state.currentUser
+    }
+}
 
-export default Emailverification;
+export default connect(mapStateToProps, { authUser })(Emailverification);
 

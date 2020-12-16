@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const { mongo } = require('mongoose');
 const userScehma = new mongoose.Schema({
 	email: {
 		type: String,
@@ -24,8 +23,7 @@ const userScehma = new mongoose.Schema({
 	role: String,
 	year: String,
 	rollNo: {
-		type: String,
-		required: true
+		type: String
 	},
 	facultyId: String,
 	photo: {
@@ -123,11 +121,11 @@ const userScehma = new mongoose.Schema({
 
 userScehma.methods.comparePassword = async function (password, next) {
 	try {
-		let isMatch = bcrypt.compare(password, this.password);
+		let isMatch = await bcrypt.compare(password, this.password);
 		return isMatch;
 
 	} catch (err) {
-		next(err);
+		return next(err);
 	}
 }
 

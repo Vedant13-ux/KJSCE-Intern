@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import logo from '../../images/logo.png';
 import { MContext } from '../../services/Provider'
+import { connect } from 'react-redux';
+import { logout } from '../../store/actions/auth'
 
 class Navbar extends Component {
     constructor(props) {
@@ -14,6 +16,12 @@ class Navbar extends Component {
             showDropdown: false
         }
         this.showDropdown = this.showDropdown.bind(this);
+        this.logout = this.logout.bind(this);
+    }
+    async logout(e) {
+        e.preventDefault();
+        await this.props.logout();
+        this.props.history.push('/');
     }
     showDropdown() {
         console.log(this.state.showDropdown);
@@ -35,7 +43,7 @@ class Navbar extends Component {
                                 <div className="profile-dropdown" aria-labelledby="dropdownMenuButton" >
                                     <Link class="dropdown-item" to={'/profile/' + this.state.user.email.split('@')[0]}>My Profile</Link>
                                     <Link class="dropdown-item" to="">Account</Link>
-                                    <Link class="dropdown-item" to="">Logout</Link>
+                                    <Link class="dropdown-item" to="" onClick={this.logout}>Logout</Link>
                                 </div>
                             }
 
@@ -93,7 +101,7 @@ class Navbar extends Component {
                             <li className="nav-item">
                                 <Link className="nav-link" to="/myinternships"><i class="fas fa-briefcase mr-1"></i>My Internships</Link>
                             </li>
-                            
+
                         </ul>
 
                         {rightContent()}
@@ -105,7 +113,12 @@ class Navbar extends Component {
     }
 
 }
+function mapStateToProps(state) {
+    return {
+        currentUser: state.currentUser
+    }
+}
 
 
 
-export default Navbar;
+export default connect(mapStateToProps, { logout })(Navbar);

@@ -24,28 +24,28 @@ function Basic(props) {
           <div className="media-links">
             <ul className="list-inline list-unstyled">
               <li>
-                <Link href="/" title="facebook link">
-                  <span class="fa fa-facebook-square fs35 text-primary"></span>
+                <Link to="/" title="facebook link">
+                  <span className="fa fa-facebook-square fs35 text-primary"></span>
                 </Link>
               </li>
               <li>
-                <Link href="/" title="twitter link">
-                  <span class="fa fa-twitter-square fs35 text-info"></span>
+                <Link to="/" title="twitter link">
+                  <span className="fa fa-twitter-square fs35 text-info"></span>
                 </Link>
               </li>
               <li className="hidden">
-                <Link href="/" title="linkedin link">
-                  <span class="fa fa-linkedin-square fs35 text-info"></span>
+                <Link to="/" title="linkedin link">
+                  <span className="fa fa-linkedin-square fs35 text-info"></span>
                 </Link>
               </li>
               <li className="hidden">
-                <Link href="/" title="github link">
-                  <span class="fa fa-github-square fs35 text-dark"></span>
+                <Link to="/" title="github link">
+                  <span className="fa fa-github-square fs35 text-dark"></span>
                 </Link>
               </li>
               <li>
-                <Link href={'mailto:' + props.user.email} title="email link">
-                  <span class="fa fa-envelope-square fs35 text-muted"></span>
+                <Link to={'mailto:' + props.user.email} title="email link">
+                  <span className="fa fa-envelope-square fs35 text-muted"></span>
                 </Link>
               </li>
             </ul>
