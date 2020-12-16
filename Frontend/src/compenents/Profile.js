@@ -75,13 +75,13 @@ class Profile extends Component {
   }
   addcert(cert) {
     let temp = this.state.user;
-    cert.date = new Date(cert.date)
-    temp.certificates.push(cert, this.state.user._id);
+    cert.date = new Date(cert.date);
+    temp.certificates.push(cert);
 
-    console.log(temp)
+    console.log(temp.certificates[0].date);
 
 
-    this.props.updateCertificates(cert).then(
+    this.props.updateCertificates(cert, this.state.user._id).then(
       () => console.log('Certificate Added')
     ).catch((err) => err)
 
