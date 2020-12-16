@@ -21,10 +21,10 @@ const Main = (props) => {
             <Switch>
                 <Route exact path="/" render={props => <Landing {...props} currentUser={currentUser} />} />
                 <Route exact path="/home" render={props => <Homepage {...props} currentUser={currentUser} />} />
-                <Route exact path="/internship/:id" render={props => <IntershipDetail {...props} currentUser={currentUser} />} />
+                <Route exact path="/internship/:id" render={props => <IntershipDetail key={props.match.params.id} {...props} currentUser={currentUser} />} />
                 <Route exact path="/community" render={props => <Community {...props} currentUser={currentUser} />} />
                 <Route exact path="/verify-email/:token" render={props => <EmailVerificaton {...props} />} />
-                <Route exact path="/profile/:id" render={props => <Profile {...props} currentUser={currentUser} />} />
+                <Route exact path="/profile/:id" render={props => <Profile key={props.match.params.id} {...props} currentUser={currentUser} />} />
                 <Route exact path="/myinternships" render={props => <MyInternships {...props} currentUser={currentUser} />} />
                 <Route path="*" render={props => <NotFound {...props} />} />
             </Switch>
