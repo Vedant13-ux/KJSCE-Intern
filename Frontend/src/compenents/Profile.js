@@ -29,10 +29,6 @@ class Profile extends Component {
     this.addcert = this.addcert.bind(this);
   }
 
-  componentWillReceiveProps(newProps) {
-    this.componentDidMount();
-  }
-
   async componentDidMount() {
     document.documentElement.scrollTop = 0;
     // console.log(this.props.match.params.id);
