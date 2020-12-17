@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import { apiCall } from "../../services/api";
 
@@ -42,6 +41,7 @@ class Basic extends React.Component {
       apiCall("put", "/api/profile/update/basicinfo", data)
         .then((response) => {
           console.log(response);
+          this.handleClose();
         })
         .catch((err) => {
           console.log(err);
@@ -49,7 +49,7 @@ class Basic extends React.Component {
     };
     this.handleChange = (e) => {
       let userdata = this.state.userdata;
-      userdata[e.target.name] = e.taret.value;
+      userdata[e.target.name] = e.target.value;
       this.setState({ userdata });
     };
   }
@@ -75,47 +75,47 @@ class Basic extends React.Component {
           </div>
           <div className="media-body va-m">
             <h2 className="media-heading">
-              {this.props.user.fname + " " + this.props.user.lname}
+              {fname + " " + lname}
               <small> - {this.props.user.role}</small>
             </h2>
-            <p className="lead">{this.props.user.bio}</p>
+            <p className="lead">{bio}</p>
             <div className="media-links">
               <ul className="list-inline list-unstyled">
-                {this.props.user.socialHandles.facebook !== "" && (
+                {facebook !== "" && (
                   <li>
-                    <Link to="/" title="facebook link">
+                    <a target="_blank" rel="noreferrer" href={facebook} title="facebook link">
                       <span className="fa fa-facebook-square fs35 text-primary"></span>
-                    </Link>
+                    </a>
                   </li>
                 )}
-                {this.props.user.socialHandles.twitter !== "" && (
+                {twitter !== "" && (
                   <li>
-                    <Link to="/" title="twitter link">
+                    <a target="_blank" rel="noreferrer" href={twitter} title="twitter link">
                       <span className="fa fa-twitter-square fs35 text-info"></span>
-                    </Link>
+                    </a>
                   </li>
                 )}
-                {this.props.user.socialHandles.linkedin !== "" && (
+                {linkedin !== "" && (
                   <li className="hidden">
-                    <Link to="/" title="linkedin link">
+                    <a target="_blank" rel="noreferrer" href={linkedin} title="linkedin link">
                       <span className="fa fa-linkedin-square fs35 text-info"></span>
-                    </Link>
+                    </a>
                   </li>
                 )}
-                {this.props.user.socialHandles.github !== "" && (
+                {github !== "" && (
                   <li className="hidden">
-                    <Link to="/" title="github link">
+                    <a target="_blank" rel="noreferrer" href={github} title="github link">
                       <span className="fa fa-github-square fs35 text-dark"></span>
-                    </Link>
+                    </a>
                   </li>
                 )}
                 <li>
-                  <Link
-                    to={"mailto:" + this.props.user.email}
+                  <a target="_blank" rel="noreferrer"
+                    href={"mailto:" + this.props.user.email}
                     title="email link"
                   >
                     <span className="fa fa-envelope-square fs35 text-muted"></span>
-                  </Link>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -163,7 +163,7 @@ class Basic extends React.Component {
                       required
                       placeholder="What do you want to talk about?"
                       name="bio"
-                      val={bio}
+                      value={bio}
                       onChange={this.handleChange}
                     ></textarea>
                   </div>
