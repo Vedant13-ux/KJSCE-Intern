@@ -98,7 +98,7 @@ router.put('/profile/update/skills', (req, res, next) => {
 
 
 router.put('/profile/update/basicinfo', (req, res, next) => {
-    console.log("aya")
+    console.log(req.body);
     db.User.findById(req.body.id)
         .then(async (user) => {
             if (!user) {
@@ -109,8 +109,7 @@ router.put('/profile/update/basicinfo', (req, res, next) => {
                 user.lname = req.body.lname;
                 user.bio = req.body.bio;
                 await user.save();
-                // user.socialHandles = req.body.socialHandles;
-                // await user.save();
+                res.send('Updated!');
             } catch (error) {
                 next(error);
             }

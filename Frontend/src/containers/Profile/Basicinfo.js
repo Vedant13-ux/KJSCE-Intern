@@ -9,13 +9,13 @@ class Basic extends React.Component {
     this.state = {
       show: false,
       userdata: {
-        fname: props.user.fname,
-        lname: props.user.lname,
-        bio: props.user.bio,
-        facebook: props.user.socialHandles.facebook,
-        twitter: props.user.socialHandles.twitter,
-        linkedin: props.user.socialHandles.linkedin,
-        github: props.user.socialHandles.github,
+        fname: this.props.user.fname,
+        lname: this.props.user.lname,
+        bio: this.props.user.bio,
+        facebook: this.props.user.socialHandles.facebook,
+        twitter: this.props.user.socialHandles.twitter,
+        linkedin: this.props.user.socialHandles.linkedin,
+        github: this.props.user.socialHandles.github,
       },
     };
     this.handleshow = (e) => {
@@ -48,9 +48,9 @@ class Basic extends React.Component {
         });
     };
     this.handleChange = (e) => {
-      let t = this.state;
-      t.userdata[e.target.name] = e.target.value;
-      this.setState({...t});
+      let userdata = this.state.userdata;
+      userdata[e.target.name] = e.taret.value;
+      this.setState({ userdata });
     };
   }
   render() {

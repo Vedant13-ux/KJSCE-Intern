@@ -78,7 +78,7 @@ const userScehma = new mongoose.Schema({
 			ref: 'InternshipDetails'
 		}
 	],
-	
+
 	skills: [
 		{
 			type: String
@@ -126,7 +126,22 @@ const userScehma = new mongoose.Schema({
 			type: String,
 			default: ''
 		},
-	}
+	},
+	events: [{
+		date: Date,
+		image: String,
+		imageId: String,
+		name: String,
+		timings: String,
+		description: String
+	}],
+	members: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'CouncilMember',
+		}
+	],
+
 
 
 });
