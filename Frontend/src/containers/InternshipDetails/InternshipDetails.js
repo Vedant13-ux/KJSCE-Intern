@@ -33,7 +33,8 @@ class InternshipDetail extends Component {
       ques2: "Are you avaiable for " + this.props.duration + " months, starting immediately? If not, what is the time period you are avaiable for and the earliest date you can start this internhsip on?",
       ans1: '',
       ans2: '',
-      error: ''
+      error: '',
+      passed: false
     };
     this.contentDisplay = this.contentDisplay.bind(this);
     this.handleClose1 = () => this.setState({ show1: false });
@@ -106,8 +107,11 @@ class InternshipDetail extends Component {
                   if (this.state.user._id === data.faculty._id) {
                     await this.setState({ owner: true });
                   }
-                  if (this.state.user.applications.includes(this.props.match.params.id)) {
+                  if (this.state.user.applications.findIndex(app => app._id === this.props.match.params.id) !== -1) {
                     await this.setState({ applied: true })
+                  }
+                  if (new Date(this.state.details.applyBy) > Date.now()) {
+                    this.setState({ passed: true });
                   }
                   await this.setState({ details: data, recommlist: recomm, exists: true, start: false });
                   await this.setState({ emails: this.getApplicantsEmail() });
@@ -267,12 +271,12 @@ class InternshipDetail extends Component {
                     </span>
                     {this.state.user.role === "Student" &&
                       <div>
-                        {!this.state.applied &&
+                        {!this.state.applied && !this.state.passed &&
                           <div>
                             <div className="applynow">
                               <button type="button" class="btn btn-lg btn-default" onClick={this.handleShow2}>
                                 Apply Now
-                            </button>
+                              </button>
                             </div>
                             <Modal show={this.state.show2} onHide={this.handleClose2} centered backdrop="static">
                               <Modal.Header closeButton>
@@ -306,29 +310,24 @@ class InternshipDetail extends Component {
                                     <button class="ui small button" >
                                       Apply Now
                                     </button>
-                                    {
-                                      this.state.applied ?
-                                        (
-                                          <div className="applynow">
-                                            <button type="button" class="btn btn-lg btn-default" disabled>
-                                              Applied
-                                          </button>
-                                          </div>
-                                        )
-                                        :
-                                        (
-                                          <div className="applynow">
-                                            <button type="button" class="btn btn-lg btn-default">
-                                              Apply Now
-                                          </button>
-                                          </div>
-                                        )
-
-                                    }
                                   </div>
                                 </form>
                               </Modal.Body>
                             </Modal>
+                          </div>
+                        }
+                        {this.state.applied && !this.state.passed &&
+                          <div className="applynow">
+                            <button type="button" class="btn btn-lg btn-default" disabled="true">
+                              Applied
+                          </button>
+                          </div>
+                        }
+                        {this.state.passed &&
+                          <div className="applynow">
+                            <button type="button" class="btn btn-lg btn-default" disabled="true">
+                              Internship Expired
+                            </button>
                           </div>
                         }
 
