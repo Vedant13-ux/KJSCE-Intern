@@ -107,12 +107,14 @@ class AuthForm extends Component {
                     <div className="field">
                         <label>Department</label>
                         <select className="ui fluid dropdown" name="dept" onChange={this.handleChange} value={dept} required>
-                            <option value="">Department</option>
-                            <option value="cs">Computer Science</option>
-                            <option value="it">Infomration Technology</option>
-                            <option value="mech">Mechanical</option>
-                            <option value="extc">Electromics and Telecommunication</option>
-                            <option value="etrx">Electronics</option>
+                        <option value="">Department</option>
+                      <option value="cs">Computer Science</option>
+                      <option value="it">Information Technology</option>
+                      <option value="mech">Mechanical</option>
+                      <option value="extc">
+                      Electronics and Telecommunication
+                      </option>
+                      <option value="etrx">Electronics</option>
                         </select>
                     </div>
                     {role === "Student" &&

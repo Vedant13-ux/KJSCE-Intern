@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
 import { Multiselect } from "multiselect-react-dropdown";
 import { apiCall } from "../../services/api";
+import { connect } from 'react-redux'
+import { updateinfo } from '../../store/actions/user'
 
 class Basic extends Component {
   constructor(props) {
@@ -21,8 +23,14 @@ class Basic extends Component {
         { text: "C++" },
         { text: "React Native" },
       ],
+      info:{
+        year:props.user.year,
+        dept:props.user.dept,
+        rollNo:props.user.rollNo
+      },
       show1: false,
       show2: false,
+      show3: false,
     };
     // console.log(props);
 
@@ -39,6 +47,29 @@ class Basic extends Component {
 
     this.handleClose2 = () => this.setState({ show2: false });
     this.handleShow2 = () => this.setState({ show2: true });
+
+    this.handleClose3 = () => this.setState({ show3: false });
+    this.handleShow3 = () => this.setState({ show3: true });
+
+    this.handlesubinfo = (e) => {
+      e.preventDefault();
+      let data = {
+        id: this.props.user._id,
+        user: {
+          year: this.state.info.year,
+          rollNo: this.state.info.rollNo,
+          dept: this.state.info.dept,
+          
+        }
+      }
+      console.log(data)
+      props.updateinfo(data).then((d)=>this.handleClose3())
+    };
+    this.handleChange1=(e)=>{
+      let t=this.state.info
+      t[e.target.name]=e.target.value;
+      this.setState({info:t})
+    }
   }
 
   async handleskillssubmit(e) {
@@ -82,6 +113,7 @@ class Basic extends Component {
 
   render() {
     const { title, provider, date, link } = this.state.certform;
+    const {rollNo,year,dept} =this.state.info;
     return (
       <div className="col-md-4">
         <div className="panel">
@@ -90,9 +122,11 @@ class Basic extends Component {
               <i className="fa fa-star" />
             </span>
             <span className="panel-title">Info</span>
-            <span className="add">
-              <i class="fas fa-edit"></i>
-            </span>
+            {this.props.isowner && (
+              <span onClick={this.handleShow3} className="add">
+                <i class="fas fa-edit"></i>
+              </span>
+            )}
           </div>
           <div className="panel-body pn">
             <table className="table mbn tc-icon-1 tc-med-2 tc-bold-last">
@@ -114,6 +148,72 @@ class Basic extends Component {
               </tbody>
             </table>
           </div>
+          <Modal show={this.state.show3} onHide={this.handleClose3} centered>
+            <Modal.Header closeButton>
+              <Modal.Title>Info</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <form onSubmit={this.handlesubinfo}>
+                <div className="ui form">
+                  
+                  <div className="field">
+                    <label>Department</label>
+                    <select
+                      className="ui fluid dropdown"
+                      name="dept"
+                      onChange={this.handleChange1}
+                      value={dept}
+                      required
+                    >
+                      <option value="">Department</option>
+                      <option value="cs">Computer Science</option>
+                      <option value="it">Information Technology</option>
+                      <option value="mech">Mechanical</option>
+                      <option value="extc">
+                      Electronics and Telecommunication
+                      </option>
+                      <option value="etrx">Electronics</option>
+                    </select>
+                  </div>
+                  <div className="field">
+                    <label>Year</label>
+                    <select
+                      className="ui fluid dropdown"
+                      name="year"
+                      onChange={this.handleChange1}
+                      value={year}
+                    >
+                      <option value="">Year</option>
+                      <option value="1">FY</option>
+                      <option value="2">SY</option>
+                      <option value="3">TY</option>
+                      <option value="4">LY</option>
+                    </select>
+                  </div>
+                  <div className="field">
+                    <label>Roll No.</label>
+                    <div className="ui left icon input">
+                      <input
+                        required
+                        type="text"
+                        name="rollNo"
+                        placeholder="Roll No."
+                        value={rollNo}
+                        onChange={this.handleChange1}
+                        pattern="[0-9]{7}"
+                      />
+                      <i className="ui id card icon"></i>
+                    </div>
+                  </div>
+                  <div className="submit confirmdiv">
+                    <button className="medium ui button confirm">
+                      CONFIRM
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </Modal.Body>
+          </Modal>
         </div>
         <div className="panel">
           <div className="panel-heading">
@@ -150,7 +250,8 @@ class Basic extends Component {
                   className="confirm medium ui button"
                 >
                   CONFIRM
-              </button></div>
+                </button>
+              </div>
             </Modal.Body>
           </Modal>
         </div>
@@ -170,17 +271,26 @@ class Basic extends Component {
             {this.props.user.certificates.map((s) => (
               <div>
                 <h4>{s.title}</h4>
-                <p>{s.provider}<br></br>
-                Issued {new Date(s.date).toDateString()}<br></br>
-                  <a href={s.link} target="_blank" rel="noreferrer">see creditential</a>
+                <p>
+                  {s.provider}
+                  <br></br>
+                  Issued {new Date(s.date).toDateString()}
+                  <br></br>
+                  <a href={s.link} target="_blank" rel="noreferrer">
+                    see creditential
+                  </a>
                 </p>
                 <hr class="short br-lighter"></hr>
               </div>
             ))}
           </div>
-
         </div>
-        <Modal show={this.state.show2} onHide={this.handleClose2} centered backdrop="static">
+        <Modal
+          show={this.state.show2}
+          onHide={this.handleClose2}
+          centered
+          backdrop="static"
+        >
           <Modal.Header closeButton>
             <Modal.Title>Certificate</Modal.Title>
           </Modal.Header>
@@ -241,9 +351,8 @@ class Basic extends Component {
           </Modal.Body>
         </Modal>
       </div>
-
     );
   }
 }
 
-export default Basic;
+export default connect(()=>{},{updateinfo})(Basic);

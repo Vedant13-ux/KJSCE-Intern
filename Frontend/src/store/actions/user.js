@@ -22,6 +22,27 @@ export function updateSkills(skills, id) {
     }
 }
 
+function userinfo(user) {
+    return {
+        type: UPDATE_USER_INFO,
+        user
+    }
+}
+
+export function updateinfo(data) {
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('put', "/api/profile/update/basicinfo", data)
+                .then(() => {
+                    dispatch(userinfo(data.user));
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+    }
+}
+
 function userCertificates(certificate) {
     return {
         type: UPDATE_USER_CERTIFICATES,

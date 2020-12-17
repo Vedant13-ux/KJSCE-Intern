@@ -16,6 +16,13 @@ const currentUserReducer = (state = defaultState, action) => {
             return {
                 ...state
             }
+        case UPDATE_USER_INFO:
+            state.user.dept = action.user.dept;
+            state.user.year = action.user.year;
+            state.user.rollNo = action.user.rollNo;
+            return {
+                ...state
+            }
         case UPDATE_USER_CERTIFICATES:
             state.user.certificates.push(action.certificate);
             return {

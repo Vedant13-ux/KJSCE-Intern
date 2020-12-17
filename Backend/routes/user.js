@@ -98,7 +98,7 @@ router.put('/profile/update/skills', (req, res, next) => {
 
 
 router.put('/profile/update/basicinfo', (req, res, next) => {
-    console.log(req.body);
+    // console.log(req.body);
     db.User.findByIdAndUpdate(req.body.id, req.body.user)
         .then(async (user) => {
             res.send('Updated!');
@@ -106,6 +106,7 @@ router.put('/profile/update/basicinfo', (req, res, next) => {
             next(err);
         });
 });
+
 
 router.put('/profile/update/certificates', (req, res, next) => {
     db.User.findById(req.body.id)
