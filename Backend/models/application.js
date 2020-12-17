@@ -4,11 +4,11 @@ const applicationScehma = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    
+
     internshipId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'InternshipDetails'
     },
-    answers: [{ String }]
+    answers: [{ type: String }]
 })
 module.exports = mongoose.model('Application', applicationScehma);

@@ -306,19 +306,32 @@ class InternshipDetail extends Component {
                                     <button class="ui small button" >
                                       Apply Now
                                     </button>
+                                    {
+                                      this.state.applied ?
+                                        (
+                                          <div className="applynow">
+                                            <button type="button" class="btn btn-lg btn-default" disabled>
+                                              Applied
+                                          </button>
+                                          </div>
+                                        )
+                                        :
+                                        (
+                                          <div className="applynow">
+                                            <button type="button" class="btn btn-lg btn-default">
+                                              Apply Now
+                                          </button>
+                                          </div>
+                                        )
+
+                                    }
                                   </div>
                                 </form>
                               </Modal.Body>
                             </Modal>
                           </div>
                         }
-                        {this.state.appiled &&
-                          <div className="applynow">
-                            <button type="button" class="btn btn-lg btn-default" disabled>
-                              Applied
-                            </button>
-                          </div>
-                        }
+
                       </div>
                     }
                   </div>

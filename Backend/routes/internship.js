@@ -234,6 +234,7 @@ router.delete('/bookmark/:id', (req, res, next) => {
 
 // Apply in a Internship
 router.post('/apply', (req, res, next) => {
+    console.log(req.body);
     db.InternshipDetails.findById(req.body.internshipId)
         .then(async (internship) => {
             try {
@@ -241,11 +242,11 @@ router.post('/apply', (req, res, next) => {
                 if (!user) {
                     return next({ status: 404, message: 'User Not Found' })
                 }
-                const isApplied = user.applications.find(app => app == req.body.internshipId);
-                if (user.role == "Student" && isApplied == false) {
+                let isApplied = user.applications.includes(internship._id);
+                if (user.role === "Student" && !isApplied) {
                     let application = await db.Application.create(req.body);
                     await user.applications.push(internship);
-                    await internship.applications(application);
+                    await internship.applications.push(application);
                     await internship.applicants.push(user);
                     await user.save();
                     await internship.save();
