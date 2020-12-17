@@ -242,7 +242,7 @@ router.post('/apply', (req, res, next) => {
                     return next({ status: 404, message: 'User Not Found' })
                 }
                 const isApplied = user.applications.find(app => app == req.body.internshipId);
-                if (user.role == "Student" && isApplied === true) {
+                if (user.role == "Student" && !isApplied) {
                     let application = await db.Application.create(req.body);
                     await user.applications.push(internship);
                     await internship.applications(application);
