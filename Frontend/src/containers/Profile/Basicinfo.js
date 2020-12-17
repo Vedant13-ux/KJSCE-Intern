@@ -38,7 +38,7 @@ class Basic extends React.Component {
           github: this.state.userdata.github,
         },
       };
-      console.log("bheja")
+      console.log(data)
       apiCall("put", "/api/profile/update/basicinfo", data)
         .then((response) => {
           console.log(response);
@@ -49,8 +49,8 @@ class Basic extends React.Component {
     };
     this.handleChange = (e) => {
       let t = this.state;
-      t.userdata[e.target.name] = e.target.val;
-      this.setState(t);
+      t.userdata[e.target.name] = e.target.value;
+      this.setState({...t});
     };
   }
   render() {
