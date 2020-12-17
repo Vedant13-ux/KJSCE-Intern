@@ -68,16 +68,16 @@ router.get('/profile/search', (req, res, next) => {
 // });
 
 // Update Name
-router.put('/profile/update/name', (req, res, next) => {
-    db.User.findById(req.body.name)
-        .then((user) => {
-            user.name = req.query.newName;
-            user.save();
-            res.status(200).send(user);
-        }).catch((err) => {
-            next(err);
-        });
-});
+// router.put('/profile/update/name', (req, res, next) => {
+//     db.User.findById(req.body.name)
+//         .then((user) => {
+//             user.name = req.query.newName;
+//             user.save();
+//             res.status(200).send(user);
+//         }).catch((err) => {
+//             next(err);
+//         });
+// });
 
 router.put('/profile/update/skills', (req, res, next) => {
     db.User.findById(req.body.id)
@@ -88,6 +88,29 @@ router.put('/profile/update/skills', (req, res, next) => {
             try {
                 user.skills = req.body.skills;
                 await user.save();
+            } catch (error) {
+                next(error);
+            }
+        }).catch((err) => {
+            next(err);
+        });
+});
+
+
+router.put('/profile/update/basicinfo', (req, res, next) => {
+    console.log("aya")
+    db.User.findById(req.body.id)
+        .then(async (user) => {
+            if (!user) {
+                return next({ status: 404, message: "User Not Found" });
+            }
+            try {
+                user.fname = req.body.fname;
+                user.lname = req.body.lname;
+                user.bio = req.body.bio;
+                await user.save();
+                // user.socialHandles = req.body.socialHandles;
+                // await user.save();
             } catch (error) {
                 next(error);
             }
