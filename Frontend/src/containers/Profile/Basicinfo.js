@@ -27,15 +27,17 @@ class Basic extends React.Component {
       e.preventDefault();
       let data = {
         id: this.props.user._id,
-        fname: this.state.userdata.fname,
-        lname: this.state.userdata.lname,
-        bio: this.state.userdata.bio,
-        socialHandles: {
-          facebook: this.state.userdata.facebook,
-          twitter: this.state.userdata.twitter,
-          linkedin: this.state.userdata.linkedin,
-          github: this.state.userdata.github,
-        },
+        user: {
+          fname: this.state.userdata.fname,
+          lname: this.state.userdata.lname,
+          bio: this.state.userdata.bio,
+          socialHandles: {
+            facebook: this.state.userdata.facebook,
+            twitter: this.state.userdata.twitter,
+            linkedin: this.state.userdata.linkedin,
+            github: this.state.userdata.github,
+          }
+        }
       };
       console.log(data)
       apiCall("put", "/api/profile/update/basicinfo", data)

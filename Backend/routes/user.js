@@ -99,20 +99,9 @@ router.put('/profile/update/skills', (req, res, next) => {
 
 router.put('/profile/update/basicinfo', (req, res, next) => {
     console.log(req.body);
-    db.User.findById(req.body.id)
+    db.User.findByIdAndUpdate(req.body.id, req.body.user)
         .then(async (user) => {
-            if (!user) {
-                return next({ status: 404, message: "User Not Found" });
-            }
-            try {
-                user.fname = req.body.fname;
-                user.lname = req.body.lname;
-                user.bio = req.body.bio;
-                await user.save();
-                res.send('Updated!');
-            } catch (error) {
-                next(error);
-            }
+            res.send('Updated!');
         }).catch((err) => {
             next(err);
         });
