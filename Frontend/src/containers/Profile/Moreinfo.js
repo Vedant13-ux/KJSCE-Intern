@@ -32,7 +32,6 @@ class Basic extends Component {
       show2: false,
       show3: false,
     };
-    // console.log(props);
 
     this.multiselectRef = React.createRef();
     this.handleSkills = this.handleSkills.bind(this);

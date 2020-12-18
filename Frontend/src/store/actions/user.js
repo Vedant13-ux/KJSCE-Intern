@@ -1,5 +1,5 @@
 import { apiCall } from '../../services/api';
-import { UPDATE_USER_SKILLS, UPDATE_USER_CERTIFICATES, UPDATE_USER_BIO, UPDATE_USER_INFO } from '../actionTypes';
+import { UPDATE_USER_SKILLS, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO } from '../actionTypes';
 
 
 function userSkills(skills) {
@@ -35,6 +35,27 @@ export function updateinfo(data) {
             return apiCall('put', "/api/profile/update/basicinfo", data)
                 .then(() => {
                     dispatch(userinfo(data.user));
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+    }
+}
+
+function userbasicinfo(user) {
+    return {
+        type: UPDATE_USER_BASIC_INFO,
+        user
+    }
+}
+
+export function updatebasicinfo(data) {
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('put', "/api/profile/update/basicinfo", data)
+                .then(() => {
+                    dispatch(userbasicinfo(data.user));
                     res();
                 }).catch((err) => {
                     rej(err);
