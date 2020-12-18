@@ -34,7 +34,7 @@ class ApplyForm extends Component {
     render() {
         return (
             <form id="applyForm" className="ui form" onSubmit={this.handleSubmit}>
-                <div class="field">
+                <div className="field">
                     <label>{this.state.ques1}</label>
                     <textarea
                         maxlength="200"
@@ -45,7 +45,7 @@ class ApplyForm extends Component {
                         onChange={this.handleChange}
                     ></textarea>
                 </div>
-                <div class="field">
+                <div className="field">
                     <label>{this.state.ques2}</label>
                     <textarea
                         maxlength="200"
@@ -57,7 +57,7 @@ class ApplyForm extends Component {
                     ></textarea>
                 </div>
                 <div style={{ textAlign: 'center' }}>
-                    <button type="button" class="ui small button">
+                    <button type="button" className="ui small button">
                         Apply Now
                     </button>
                 </div>

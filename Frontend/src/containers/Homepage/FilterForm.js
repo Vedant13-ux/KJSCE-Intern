@@ -71,7 +71,7 @@ class FilterForm extends Component {
                             // onChangeComplete={value => console.log(value)}
                             value={context.state.value} />
 
-                        <button type="button" class="btn btn-default" onClick={async (e) => {
+                        <button type="button" className="btn btn-default" onClick={async (e) => {
                             if (context.state.home === false && context.state.external === false) {
                                 return await this.setState({ error: 'Select atleast one type.' })
                             } else {

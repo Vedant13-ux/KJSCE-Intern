@@ -155,20 +155,20 @@ class InternshipDetail extends Component {
     if (start) {
       return (
         <div className="loading-anime">
-          <Loading class="loading-wheel" />
+          <Loading className="loading-wheel" />
         </div>
       )
     }
     if (exists) {
       return (
         <div id="internshipdetail">
-          <div class="container">
-            <div class="row">
-              <div class="col-8">
+          <div className="container">
+            <div className="row">
+              <div className="col-8">
                 <div className="card">
                   <div className="card-body">
                     <h1>{this.state.details.title}</h1>
-                    <div class="provider">
+                    <div className="provider">
                       <img
                         src={this.state.details.faculty.photo}
                         alt="pfp"
@@ -179,20 +179,20 @@ class InternshipDetail extends Component {
                       </Link>
                     </div>
                     <br></br>
-                    <div id="iconinfo" class="flex-container">
-                      <div class="flex-item">
+                    <div id="iconinfo" className="flex-container">
+                      <div className="flex-item">
                         <h4>
-                          <i class="fa fa-clock mr-1"></i>Duration
+                          <i className="fa fa-clock mr-1"></i>Duration
                 </h4><p>{this.state.details.duration} months</p>
                       </div>
-                      <div class="flex-item">
+                      <div className="flex-item">
                         <h4>
                           <i className="fa fa-home mr-1"></i>Type
                 </h4><p> {this.state.details.type}</p>
                       </div>
 
-                      <div class="flex-item"><h4>
-                        <i class="fa fa-hourglass mr-2"></i>Apply by
+                      <div className="flex-item"><h4>
+                        <i className="fa fa-hourglass mr-2"></i>Apply by
                     </h4><p>{(new Date(this.state.details.applyBy)).toDateString()}</p></div>
                     </div><hr></hr>
                     <h3>About Internship</h3>
@@ -274,7 +274,7 @@ class InternshipDetail extends Component {
                         {!this.state.applied && !this.state.passed &&
                           <div>
                             <div className="applynow">
-                              <button type="button" class="btn btn-lg btn-default" onClick={this.handleShow2}>
+                              <button type="button" className="btn btn-lg btn-default" onClick={this.handleShow2}>
                                 Apply Now
                               </button>
                             </div>
@@ -284,7 +284,7 @@ class InternshipDetail extends Component {
                               </Modal.Header>
                               <Modal.Body>
                                 <form id="applyForm" className="ui form" onSubmit={this.handleApply}>
-                                  <div class="field">
+                                  <div className="field">
                                     <label>{this.state.ques1}</label>
                                     <textarea
                                       maxlength="200"
@@ -295,7 +295,7 @@ class InternshipDetail extends Component {
                                       onChange={this.handleChange}
                                     ></textarea>
                                   </div>
-                                  <div class="field">
+                                  <div className="field">
                                     <label>{this.state.ques2}</label>
                                     <textarea
                                       maxlength="200"
@@ -307,7 +307,7 @@ class InternshipDetail extends Component {
                                     ></textarea>
                                   </div>
                                   <div style={{ textAlign: 'center' }}>
-                                    <button class="ui small button" >
+                                    <button className="ui small button" >
                                       Apply Now
                                     </button>
                                   </div>
@@ -318,14 +318,14 @@ class InternshipDetail extends Component {
                         }
                         {this.state.applied && !this.state.passed &&
                           <div className="applynow">
-                            <button type="button" class="btn btn-lg btn-default" disabled="true">
+                            <button type="button" className="btn btn-lg btn-default" disabled="true">
                               Applied
                           </button>
                           </div>
                         }
                         {this.state.passed &&
                           <div className="applynow">
-                            <button type="button" class="btn btn-lg btn-default" disabled="true">
+                            <button type="button" className="btn btn-lg btn-default" disabled="true">
                               Internship Expired
                             </button>
                           </div>
@@ -336,8 +336,8 @@ class InternshipDetail extends Component {
                   </div>
                 </div>
               </div>
-              <div class="col-4 recommendations">
-                <div class="card recomm">
+              <div className="col-4 recommendations">
+                <div className="card recomm">
                   <h3>Recommendations</h3>
                   <hr></hr>
                   <div className="scroll">

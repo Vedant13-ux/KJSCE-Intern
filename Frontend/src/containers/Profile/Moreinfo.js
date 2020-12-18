@@ -123,7 +123,7 @@ class Basic extends Component {
             <span className="panel-title">Info</span>
             {this.props.isowner && (
               <span onClick={this.handleShow3} className="add">
-                <i class="fas fa-edit"></i>
+                <i className="fas fa-edit"></i>
               </span>
             )}
           </div>
@@ -222,7 +222,7 @@ class Basic extends Component {
             <span className="panel-title">Skills</span>
             {this.props.isowner && (
               <span onClick={this.handleShow1} className="add">
-                <i class="far fa-plus-square"></i>
+                <i className="far fa-plus-square"></i>
               </span>
             )}
           </div>
@@ -262,7 +262,7 @@ class Basic extends Component {
             <span className="panel-title">Certificates</span>
             {this.props.isowner && (
               <span className="add" onClick={this.handleShow2}>
-                <i class="far fa-plus-square"></i>
+                <i className="far fa-plus-square"></i>
               </span>
             )}
           </div>
@@ -279,7 +279,7 @@ class Basic extends Component {
                     see creditential
                   </a>
                 </p>
-                <hr class="short br-lighter"></hr>
+                <hr className="short br-lighter"></hr>
               </div>
             ))}
           </div>

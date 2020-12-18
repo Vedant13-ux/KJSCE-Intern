@@ -55,10 +55,10 @@ class Navbar extends Component {
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
                             <Link className="nav-link" to="/#signup">
-                                <i class="fas fa-user-plus mr-1"></i>Signup</Link>
+                                <i className="fas fa-user-plus mr-1"></i>Signup</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/#"><i class="fas fa-sign-in-alt mr-1"></i>Signin</Link>
+                            <Link className="nav-link" to="/#"><i className="fas fa-sign-in-alt mr-1"></i>Signin</Link>
                         </li>
                     </ul>
                 )
@@ -92,13 +92,13 @@ class Navbar extends Component {
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/community">
-                                    <i class="fas fa-users mr-1"></i>Community</Link>
+                                    <i className="fas fa-users mr-1"></i>Community</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/messaging"><i class="fas fa-envelope mr-1"></i>Messaging</Link>
+                                <Link className="nav-link" to="/messaging"><i className="fas fa-envelope mr-1"></i>Messaging</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/myinternships"><i class="fas fa-briefcase mr-1"></i>My Internships</Link>
+                                <Link className="nav-link" to="/myinternships"><i className="fas fa-briefcase mr-1"></i>My Internships</Link>
                             </li>
 
                         </ul>

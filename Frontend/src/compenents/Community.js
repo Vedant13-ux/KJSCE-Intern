@@ -152,14 +152,14 @@ class PostCreate extends React.Component {
   render() {
     const {content} = this.state.postdata
     return (
-      <div class="posting-area">
-        <div onClick={this.handleShow} class="posting-text" >start post</div>
-        <div class="posting-but">
-          <div class="posting-but1" onClick="">
-            <i class="material-icons">insert_photo</i>Photo
+      <div className="posting-area">
+        <div onClick={this.handleShow} className="posting-text" >start post</div>
+        <div className="posting-but">
+          <div className="posting-but1" onClick="">
+            <i className="material-icons">insert_photo</i>Photo
           </div>
-          <div class="posting-but2" onClick="">
-            <i class="material-icons">videocam</i>Video
+          <div className="posting-but2" onClick="">
+            <i className="material-icons">videocam</i>Video
           </div>
         </div>
         <Modal show={this.state.show} onHide={this.handleClose} centered>
@@ -414,8 +414,8 @@ class Post extends React.Component {
             <p>{this.content}</p>
 
             <img onLoad={this.handleImageLoad} src={this.img} alt=""></img>
-            {/* <div class="ui placeholder">
-              <div class="square image"></div>
+            {/* <div className="ui placeholder">
+              <div className="square image"></div>
             </div> */}
           </div>
           <PostInfo
@@ -511,20 +511,20 @@ class Comment extends React.Component {
     let val = this.state.data;
     // console.log(val);
     return (
-      <div class="comment">
-        <a class="avatar" href="/">
+      <div className="comment">
+        <a className="avatar" href="/">
           <img alt="" src={val.author.photo} />
         </a>
-        <div class="content">
-          <a href="/" class="author">
+        <div className="content">
+          <a href="/" className="author">
             {val.author.fname + " " + val.author.lname}
           </a>
-          <div class="metadata">
-            <span class="date">Today at 5:42PM</span>
+          <div className="metadata">
+            <span className="date">Today at 5:42PM</span>
           </div>
-          <div class="text">{val.text}</div>
-          <div class="actions">
-            <button onClick={this.handleLike} class="reply">
+          <div className="text">{val.text}</div>
+          <div className="actions">
+            <button onClick={this.handleLike} className="reply">
               Like
             </button>
           </div>
