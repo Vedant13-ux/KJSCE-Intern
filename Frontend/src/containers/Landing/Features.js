@@ -14,13 +14,13 @@ const Features = (props) => {
                 </li>
 
                 <li className="featuresItem">
-                    <i class="fas fa-globe leftIcon"></i>
+                    <i className="fas fa-globe leftIcon"></i>
                     KJSCE Connect Community comprises of Somaiya Family brought together with the help of internet. Here you can showcase your achivements, float important notices, or ask for collabrations.
                     Its baciscally like a social media for KJSCE.
                 </li>
                 <li className="featuresItem">
                     KJSCE Connect Messanger can be used for direct communication with faculty and students. It can be used by the student to ask queries regarding the internships from the faculty or communicate with other students regaring collabrations or other issues.
-                    <i class="fas fa-envelope rightIcon"></i>
+                    <i className="fas fa-envelope rightIcon"></i>
                 </li>
             </ul>
         </div >

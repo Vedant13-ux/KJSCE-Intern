@@ -1,6 +1,7 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
-import { apiCall } from "../../services/api";
+import { connect } from 'react-redux'
+import { updatebasicinfo } from '../../store/actions/user'
 
 class Basic extends React.Component {
   constructor(props) {
@@ -40,14 +41,7 @@ class Basic extends React.Component {
         }
       };
       console.log(data)
-      apiCall("put", "/api/profile/update/basicinfo", data)
-        .then((response) => {
-          console.log(response);
-          this.handleClose();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      props.updatebasicinfo(data).then(()=>this.handleClose())
     };
     this.handleChange = (e) => {
       let userdata = this.state.userdata;
@@ -78,36 +72,36 @@ class Basic extends React.Component {
           </div>
           <div className="media-body va-m">
             <h2 className="media-heading">
-              {fname + " " + lname}
+              {this.props.user.fname + " " + this.props.user.lname}
               <small> - {this.props.user.role}</small>
             </h2>
-            <p className="lead">{bio}</p>
+            <p className="lead">{this.props.user.bio}</p>
             <div className="media-links">
               <ul className="list-inline list-unstyled">
-                {facebook !== "" && (
+                {this.props.user.socialHandles.facebook !== "" && (
                   <li>
-                    <a target="_blank" rel="noreferrer" href={facebook} title="facebook link">
+                    <a target="_blank" rel="noreferrer" href={this.props.user.socialHandles.facebook} title="facebook link">
                       <span className="fa fa-facebook-square fs35 text-primary"></span>
                     </a>
                   </li>
                 )}
-                {twitter !== "" && (
+                {this.props.user.socialHandles.twitter !== "" && (
                   <li>
-                    <a target="_blank" rel="noreferrer" href={twitter} title="twitter link">
+                    <a target="_blank" rel="noreferrer" href={this.props.user.socialHandles.twitter} title="twitter link">
                       <span className="fa fa-twitter-square fs35 text-info"></span>
                     </a>
                   </li>
                 )}
-                {linkedin !== "" && (
+                {this.props.user.socialHandles.linkedin !== "" && (
                   <li className="hidden">
-                    <a target="_blank" rel="noreferrer" href={linkedin} title="linkedin link">
+                    <a target="_blank" rel="noreferrer" href={this.props.user.socialHandles.linkedin} title="linkedin link">
                       <span className="fa fa-linkedin-square fs35 text-info"></span>
                     </a>
                   </li>
                 )}
-                {github !== "" && (
+                {this.props.user.socialHandles.github !== "" && (
                   <li className="hidden">
-                    <a target="_blank" rel="noreferrer" href={github} title="github link">
+                    <a target="_blank" rel="noreferrer" href={this.props.user.socialHandles.github} title="github link">
                       <span className="fa fa-github-square fs35 text-dark"></span>
                     </a>
                   </li>
@@ -123,8 +117,8 @@ class Basic extends React.Component {
               </ul>
             </div>
           </div>
-          <button class="edit-but" onClick={this.handleshow}>
-            <i class="fa fa-edit"></i>
+          <button className="edit-but" onClick={this.handleshow}>
+            <i className="fa fa-edit"></i>
           </button>
           <Modal show={this.state.show} onHide={this.handleClose} centered>
             <Modal.Header closeButton>
@@ -225,4 +219,4 @@ class Basic extends React.Component {
   }
 }
 
-export default Basic;
+export default connect(()=>{},{updatebasicinfo})(Basic);

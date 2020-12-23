@@ -26,7 +26,7 @@ class InternshipList extends Component {
             if (context.state.list.length !== 0) {
               return (
                 <div id="intershiplist">
-                  <div class="row">
+                  <div className="row">
                     {context.state.list.map((internship) => {
                       return (
                         <Internship
@@ -41,7 +41,7 @@ class InternshipList extends Component {
             } else if(context.state.start){
               return (
                     <div className="loading-anime">
-                      <Loading class="loading-wheel" />
+                      <Loading className="loading-wheel" />
                     </div>
                   );
 

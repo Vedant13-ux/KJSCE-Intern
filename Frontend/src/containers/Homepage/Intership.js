@@ -15,7 +15,7 @@ class InternshipList extends Component {
   render() {
     const id = '/internship/' + this.props._id;
     return (
-      <div class="col-md-4 col-lg-3">
+      <div className="col-md-4 col-lg-3">
         <div className="card">
           <div className="template">
             <div className="top">
@@ -28,9 +28,9 @@ class InternshipList extends Component {
               <p className="description">{this.props.description}</p>
 
               <div className="extraDetails">
-                <p><i class="fa fa-home mr-1"></i>  {this.props.type}</p>
-                <p><i class="fa fa-clock mr-1"></i>  {this.props.duration} months</p>
-                <p><i class="fa fa-hourglass mr-2"></i>Apply by {this.dateFormat()}</p>
+                <p><i className="fa fa-home mr-1"></i>  {this.props.type}</p>
+                <p><i className="fa fa-clock mr-1"></i>  {this.props.duration} months</p>
+                <p><i className="fa fa-hourglass mr-2"></i>Apply by {this.dateFormat()}</p>
               </div>
             </div>
             <hr></hr>
@@ -45,7 +45,7 @@ class InternshipList extends Component {
                 type="button"
                 className="btn btn-default btn-circle btn-md"
               >
-                <i class="fa fa-bookmark"></i>
+                <i className="fa fa-bookmark"></i>
               </button>
               <Link className="btn" to={id}>
                 More Info

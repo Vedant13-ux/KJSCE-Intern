@@ -12,8 +12,8 @@ export function InternshipCreate(props) {
   const handleShow = () => setShow(true);
   return (
     <div>
-      <button onClick={handleShow} class="float-bx">
-        <i class="fa fa-plus"></i>
+      <button onClick={handleShow} className="float-bx">
+        <i className="fa fa-plus"></i>
       </button>
       <Modal size="lg" show={show} onHide={handleClose} backdrop="static">
         <Modal.Header closeButton>
@@ -34,7 +34,7 @@ export function FilterInternships() {
     <div>
       <div id="top-bar">
         <button type="button" className="btn btn-default btn-circle btn-lg" onClick={handleShow}>
-          <i class="fa fa-filter"></i>
+          <i className="fa fa-filter"></i>
         </button>
       </div>
       <Modal show={show} onHide={handleClose} centered>
@@ -56,7 +56,7 @@ export function ApplyInternship(props) {
     return (
       <div>
         <div className="applynow">
-          <button type="button" class="btn btn-lg btn-default" onClick={handleShow}>
+          <button type="button" className="btn btn-lg btn-default" onClick={handleShow}>
             Apply Now
           </button>
         </div>
@@ -71,7 +71,7 @@ export function ApplyInternship(props) {
   } else {
     return (
       <div className="applynow">
-        <button type="button" class="btn btn-lg btn-default" disabled>
+        <button type="button" className="btn btn-lg btn-default" disabled>
           Applied
         </button>
       </div>

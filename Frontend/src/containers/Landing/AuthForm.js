@@ -59,7 +59,7 @@ class AuthForm extends Component {
             <form className="ui form authForm" onSubmit={this.handleSubmit}>
                 <div className="heading">
                     {role === "Student" && <i className=" mr-2 fas fa-user-graduate"></i>}
-                    {role === "Faculty" && <i class="mr-2 fas fa-user-tie"></i>}
+                    {role === "Faculty" && <i className="mr-2 fas fa-user-tie"></i>}
                     {heading}
                 </div>
 

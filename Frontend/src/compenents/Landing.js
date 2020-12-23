@@ -85,7 +85,7 @@ class Landing extends Component {
                     </section>
 
                     <section className="rightSection">
-                        <nav class="nav justify-content-center">
+                        <nav className="nav justify-content-center">
                             <Link className="nav-link active signup" to="/#signup" onClick={this.handleSwitch} >Sign Up</Link>
                             <Link className="nav-link contact" to="/#login" onClick={this.handleSwitch} >Login</Link>
                             <Link className="nav-link features" to="/#features" onClick={this.handleSwitch} >Features</Link>
