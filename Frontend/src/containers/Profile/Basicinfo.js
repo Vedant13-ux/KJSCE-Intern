@@ -74,6 +74,7 @@ class Basic extends React.Component {
               src={this.props.user.photo}
               alt="..."
             />
+            <div className="uploadBtn" onClick={this.handleImageUpload}>Update</div>
           </div>
           <div className="media-body va-m">
             <h2 className="media-heading">

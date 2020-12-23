@@ -39,13 +39,23 @@
 .p30 {
   padding: 30px !important;
 }
+.pr30 .uploadBtn{
+  bottom: 5em;
+  color: black;
+  text-align: center;
+  background-color: #FFCA3D;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+}
 .mw150{
-max-height: 500px;
-max-width: 170px;
-height: 100%;
-width: 97%;
-border-radius: 5px;
-float: left;
+  max-height: 500px;
+  max-width: 170px;
+  height: 100%;
+  width: 97%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  width: 100%;
 }
 
 .page-heading {
