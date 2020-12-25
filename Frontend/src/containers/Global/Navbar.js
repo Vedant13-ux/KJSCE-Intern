@@ -10,7 +10,6 @@ class Navbar extends Component {
         super(props);
         this.state = {
             query: "",
-            user: this.props.currentUser.user,
             isAuthenticated: this.props.currentUser.isAuthenticated,
             onPage: this.props.onPage,
             showDropdown: false
@@ -34,8 +33,8 @@ class Navbar extends Component {
                 return (
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item userProfile">
-                            <img className="avatar-pro" src={this.state.user.photo} alt="user-profile" />
-                            <Link to={'/profile/' + this.state.user.email.split('@')[0]} className="nav-link username">{this.state.user.fname} {this.state.user.lname}
+                            <img className="avatar-pro" src={this.props.currentUser.user.photo} alt="user-profile" />
+                            <Link to={'/profile/' + this.props.currentUser.user.email.split('@')[0]} className="nav-link username">{this.props.currentUser.user.fname} {this.props.currentUser.user.lname}
                             </Link>
                             <i className="fa" onClick={this.showDropdown} >&#xf0d7;</i>
                             {

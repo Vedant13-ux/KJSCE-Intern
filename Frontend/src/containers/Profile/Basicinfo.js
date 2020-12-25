@@ -17,6 +17,7 @@ class Basic extends React.Component {
         linkedin: this.props.user.socialHandles.linkedin,
         github: this.props.user.socialHandles.github,
       },
+      selectedFile: null
     };
     this.handleshow = (e) => {
       this.setState({ show: true });
@@ -41,13 +42,20 @@ class Basic extends React.Component {
         }
       };
       console.log(data)
-      props.updatebasicinfo(data).then(()=>this.handleClose())
+      props.updatebasicinfo(data).then(() => this.handleClose())
     };
     this.handleChange = (e) => {
       let userdata = this.state.userdata;
       userdata[e.target.name] = e.target.value;
       this.setState({ userdata });
     };
+    this.handleImageUpload = (e) => {
+      e.preventDefault();
+      this.setState({
+        selectedFile: e.target.files[0],
+        loaded: 0,
+      })
+    }
   }
   render() {
     const {
@@ -219,4 +227,4 @@ class Basic extends React.Component {
   }
 }
 
-export default connect(()=>{},{updatebasicinfo})(Basic);
+export default connect(() => { }, { updatebasicinfo })(Basic);
