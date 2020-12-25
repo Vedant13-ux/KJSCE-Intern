@@ -37,16 +37,16 @@ class Basic extends Component {
     let display;
     switch (this.state.content) {
       case "experiences":
-        display = <div>ok</div>;
+        display = <div>experiences</div>;
         break;
-      case "past":
-        display = <div>ok1</div>;
+      case "Education":
+        display = <div>education</div>;
         break;
       case "posts":
         display = <PostWall {...this.state} isprofile={true} postcreate={this.props.owner} currentUser={{user:this.props.user}} />;
         break;
       case "activity":
-        display = <div>ok3</div>;
+        display = <div>activity</div>;
         break;
       default:
         break;
@@ -54,18 +54,18 @@ class Basic extends Component {
     return (
       <div className="col-md-8">
         <div className="tab-block">
-          <Nav variant="tabs" defaultActiveKey="experiences">
+          <Nav variant="tabs">
             <Nav.Item>
               <Nav.Link
                 name="experiences"
                 to="#experiences"
                 onClick={this.handleSwitch}
-              >Job Experiences
+              >Experiences
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link name="past" to="#past" onClick={this.handleSwitch}>
-                Past Internships
+              <Nav.Link name="Education" to="#Education" onClick={this.handleSwitch}>
+                Education
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>

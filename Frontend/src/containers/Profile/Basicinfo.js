@@ -116,9 +116,9 @@ class Basic extends React.Component {
               </ul>
             </div>
           </div>
-          <button className="edit-but" onClick={this.handleshow}>
+          {this.props.owner && <button className="edit-but" onClick={this.handleshow}>
             <i className="fa fa-edit"></i>
-          </button>
+          </button>}
           <Modal show={this.state.show} onHide={this.handleClose} centered>
             <Modal.Header closeButton>
               <Modal.Title>Edit info</Modal.Title>
