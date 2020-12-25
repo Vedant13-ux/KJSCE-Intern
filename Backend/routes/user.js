@@ -127,6 +127,26 @@ router.put('/profile/update/certificates', (req, res, next) => {
         });
 });
 
+router.put('/profile/edit/certificates', (req, res, next) => {
+    db.User.findById(req.body.userId)
+        .then(async user => {
+            if (!user) {
+                return next({ status: 404, message: "User Not Found" });
+            }
+            try {
+                let certificate = await db.Certificate.create(req.body.certificate)
+                await user.certificates.push(certificate);
+                await user.save();
+                res.send(certificate);
+            } catch (error) {
+                next(error);
+            }
+        }).catch((err) => {
+            next(err);
+        });
+});
+
+
 router.put('/profile/update/resume', (req, res, next) => {
     db.User.findById(req.body.id)
         .then(async (user) => {
