@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal'
 import Internshipform from '../Homepage/Internshipform'
 import FilterForm from '../Homepage/FilterForm'
 import ApplyForm from '../InternshipDetails/ApplyForm';
-
+import {ExperienceForm} from '../Profile/Sections'
 
 export function InternshipCreate(props) {
   const [show, setShow] = useState(false);
@@ -20,6 +20,26 @@ export function InternshipCreate(props) {
           <Modal.Title>Fill internship Details</Modal.Title>
         </Modal.Header>
         <Modal.Body><Internshipform userId={props.userId} {...props}></Internshipform></Modal.Body>
+      </Modal>
+    </div>
+  )
+}
+
+export function ExperienceCreate(props) {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  return (
+    <div>
+      <button onClick={handleShow} className="float-bx">
+        <i className="fa fa-plus"></i>
+      </button>
+      <Modal size="lg" show={show} onHide={handleClose} backdrop="static">
+        <Modal.Header closeButton>
+          <Modal.Title>Fill Experience Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body><ExperienceForm userId={props.userId} {...props}></ExperienceForm></Modal.Body>
       </Modal>
     </div>
   )
