@@ -799,7 +799,7 @@ body {
 
 .right-side .controls {
    position: sticky;
-   top:60px;
+   top:65px;
    width: 200px;
    height: 405px;
    padding: 10px 20px;
