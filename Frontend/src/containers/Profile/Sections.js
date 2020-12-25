@@ -26,9 +26,15 @@ export class ExperienceForm extends Component{
                     // val={title}
                     onChange={this.handleChange}
                     type="text"
-                    placeholder="eg. Completed Course on Java"
+                    placeholder="eg. Retail sales manager"
                   ></input>
                 </div>
+                {//employement type
+                //company
+                //checkbox currently working
+                //start date end date
+                //description
+            }
                 <div className="field">
                   <label>Issued on</label>
                   <input
