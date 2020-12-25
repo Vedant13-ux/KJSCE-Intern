@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
 
-export class Experience{
+export class Experience extends Component{
     constructor(props){
         super(props)
 
     }
     render(){
-
+        return (<div></div>)
     }
 }
 
-export class ExperienceForm{
+export class ExperienceForm extends Component{
     constructor(props){
         super(props)
     }
     render(){
-        <form onSubmit={this.handleSubmit} id="internshipForm">
+        return (<form onSubmit={this.handleSubmit} id="internshipForm">
               <div className="ui form">
                 <div className="field">
                   <label>Title</label>
@@ -23,7 +23,7 @@ export class ExperienceForm{
                     name="title"
                     maxLength="30"
                     required
-                    val={title}
+                    // val={title}
                     onChange={this.handleChange}
                     type="text"
                     placeholder="eg. Completed Course on Java"
@@ -35,7 +35,7 @@ export class ExperienceForm{
                     required
                     type="Date"
                     name="date"
-                    val={date}
+                    // val={date}
                     onChange={this.handleChange}
                   ></input>
                 </div>
@@ -43,6 +43,6 @@ export class ExperienceForm{
                   <button className="medium ui button confirm">ADD</button>
                 </div>
               </div>
-            </form>
+            </form>)
     }
 }
