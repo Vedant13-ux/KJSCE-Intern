@@ -40,7 +40,7 @@ class Navbar extends Component {
                             {
                                 this.state.showDropdown &&
                                 <div className="profile-dropdown" aria-labelledby="dropdownMenuButton" >
-                                    <Link className="dropdown-item" to={'/profile/' + this.state.user.email.split('@')[0]}>My Profile</Link>
+                                    <Link className="dropdown-item" to={'/profile/' + this.props.currentUser.user.email.split('@')[0]}>My Profile</Link>
                                     <Link className="dropdown-item" to="">Account</Link>
                                     <Link className="dropdown-item" to="" onClick={this.logout}>Logout</Link>
                                 </div>
