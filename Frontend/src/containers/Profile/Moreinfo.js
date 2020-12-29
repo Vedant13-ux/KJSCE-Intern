@@ -31,6 +31,7 @@ class Basic extends Component {
       show1: false,
       show2: false,
       show3: false,
+      preskills:[]
     };
 
     this.multiselectRef = React.createRef();
@@ -38,7 +39,17 @@ class Basic extends Component {
     this.multiselectRef = React.createRef();
 
     this.handleClose1 = () => this.setState({ show1: false });
-    this.handleShow1 = () => this.setState({ show1: true });
+    this.handleShow1 = () => {
+      let temp=this.props.user.skills
+      let i=0;
+      for (i = 0; i < temp.length; i++) {
+        this.state.preskills.push({
+          text: temp[i],
+        });
+      }
+      this.setState({ show1: true ,preskills:this.state.preskills});
+
+    }
 
     this.handleskillssubmit = this.handleskillssubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -236,7 +247,7 @@ class Basic extends Component {
             <span className="panel-title">Skills</span>
             {this.props.isowner && (
               <span onClick={this.handleShow1} className="add">
-                <i className="far fa-plus-square"></i>
+                <i className="far fa-edit"></i>
               </span>
             )}
           </div>
@@ -252,7 +263,7 @@ class Basic extends Component {
             <Modal.Body>
               <Multiselect
                 options={this.state.skills}
-                selectedValues={this.props.preskills}
+                selectedValues={this.state.preskills}
                 displayValue="text"
                 onSearch={this.handleSkills}
                 ref={this.multiselectRef}
