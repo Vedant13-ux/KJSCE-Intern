@@ -77,33 +77,34 @@ class Profile extends Component {
     }
   }
   addcert(cert) {
-    let temp = this.state.user;
+    // let temp = this.state.user;
     cert.date = new Date(cert.date);
-    temp.certificates.push(cert);
+    // temp.certificates.push(cert);
 
-    console.log(temp.certificates[0].date);
+    // console.log(temp.certificates[0].date);
 
 
     this.props.updateCertificates(cert, this.state.user._id).then(
       () => console.log('Certificate Added')
     ).catch((err) => err)
 
-    return this.setState({ user: temp })
+    // return this.setState({ user: temp })
   }
   changeskill(s) {
-    let temp = this.state.user;
-    temp["skills"] = s;
-    let i = 0;
-    let t = []
-    for (i = 0; i < s.length; i++) {
-      t.push({
-        text: s[i],
-      });
-    }
+    // let temp = this.state.user;
+    // temp["skills"] = s;
+    // let i = 0;
+    // let t = []
+    // for (i = 0; i < s.length; i++) {
+    //   t.push({
+    //     text: s[i],
+    //   });
+    // }
+    console.log("aya")
     this.props.updateSkills(s, this.state.user._id).then(
       () => console.log('Skills Added')
-    ).catch((err) => err)
-    return this.setState({ user: temp, preskills: t });
+    ).catch((err) => console.log(err))
+    // return this.setState({ user: temp, preskills: t });
   }
   render() {
     if (this.state.start) {
