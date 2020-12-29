@@ -82,7 +82,7 @@ router.post('/posts/like/:id', (req, res, next) => {
                 let user = await db.User.findById(req.body.id);
                 if (post.likedBy.findIndex((u) => u == req.body.id) == -1) {
                     await post.likedBy.push(user);
-                    return await post.save();
+                    res.status(200).send(await post.save());
                 }
                 return next({
                     status: 403,
@@ -110,7 +110,7 @@ router.put('/posts/like/:id', (req, res, next) => {
                 });
                 if (to_remove !== -1) {
                     await post.likedBy.splice(to_remove, 1)
-                    return await post.save();
+                    res.status(200).send(await post.save());
                 }
 
                 return next({
