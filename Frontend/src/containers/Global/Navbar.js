@@ -19,6 +19,7 @@ class Navbar extends Component {
     }
     async logout(e) {
         e.preventDefault();
+        await this.setState({ isAuthenticated: false })
         await this.props.logout();
         this.props.history.push('/');
     }
@@ -29,7 +30,7 @@ class Navbar extends Component {
 
     render() {
         const rightContent = () => {
-            if (this.state.isAuthenticated) {
+            if (this.state.isAuthenticated === true) {
                 return (
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item userProfile">
