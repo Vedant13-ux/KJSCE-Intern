@@ -3,8 +3,7 @@ import { Switch, Route, withRouter } from 'react-router-dom';
 import Homepage from '../compenents/Homepage'
 import Landing from '../compenents/Landing';
 import { connect } from 'react-redux';
-import { authUser } from '../store/actions/auth'
-import { setCurrentUser } from '../store/actions/auth'
+import { authUser,setCurrentUser } from '../store/actions/auth'
 import IntershipDetail from './InternshipDetails/InternshipDetails'
 import Community from '../compenents/Community'
 import NotFound from '../images/NotFound'

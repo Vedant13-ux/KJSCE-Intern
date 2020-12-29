@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { apiCall } from '../../services/api'
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { addBookmark, deleteBookmark } from '../../store/actions/user'
 
 class Internship extends Component {
   constructor(props) {
@@ -20,7 +22,7 @@ class Internship extends Component {
   bookmark(e) {
     if (this.state.bookmarked) {
       console.log(this.props._id, this.props.userId)
-      apiCall('put', '/api/internship/bookmark/delete/' + this.props._id, { userId: this.props.userId })
+      this.props.deleteBookmark(this.props._id, this.props.currentUser.user._id)
         .then(async () => {
           console.log('bookmark removed');
           await this.setState({ bookmarked: false });
@@ -30,7 +32,7 @@ class Internship extends Component {
         });
 
     } else {
-      apiCall('put', '/api/internship/bookmark/add/' + this.props._id, { userId: this.props.userId })
+      this.props.addBookmark(this.props._id, this.props.currentUser.user._id)
         .then(async () => {
           console.log('bookmark added');
           this.setState({ style: { color: '#ffca3d' } });
@@ -38,7 +40,6 @@ class Internship extends Component {
         }).catch((err) => {
           console.log(err);
         });
-
     }
   }
   render() {
@@ -90,4 +91,10 @@ class Internship extends Component {
   }
 }
 
-export default Internship;
+function mapStateToProps(state) {
+  return {
+    currentUser: state.currentUser
+  }
+}
+
+export default withRouter(connect(mapStateToProps, { addBookmark, deleteBookmark })(Internship));

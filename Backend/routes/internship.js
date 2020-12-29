@@ -208,7 +208,7 @@ router.put('/bookmark/add/:id', (req, res, next) => {
             }
             try {
                 let user = await db.User.findById(req.body.userId);
-                if (user.bookmarks.includes(internship._id)) {
+                if (user.bookmarks.includes(JSON.stringify(internship._id))) {
                     return next({
                         status: 405,
                         message: 'You have already bookmarked this post'
@@ -216,7 +216,7 @@ router.put('/bookmark/add/:id', (req, res, next) => {
                 }
                 await user.bookmarks.push(internship);
                 await user.save();
-                res.send('Bookmark Added')
+                res.send('Bookmark Added');
             } catch (error) {
                 return next(error);
             }
@@ -235,6 +235,7 @@ router.put('/bookmark/delete/:id', (req, res, next) => {
                 })
             }
             try {
+                console.log(req.body);
                 let user = await db.User.findById(req.body.userId);
                 let to_remove = user.bookmarks.findIndex((u) => {
                     return u == internship._id;
