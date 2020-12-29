@@ -13,7 +13,6 @@ class InternshipList extends Component {
       query: "",
     };
   }
-  componentWillMount() {}
 
   render() {
     // if (this.state.start) {
