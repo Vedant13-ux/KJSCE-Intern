@@ -9,7 +9,7 @@ import Modal from "react-bootstrap/Modal";
 import { Multiselect } from "multiselect-react-dropdown";
 import CKEditor from 'ckeditor4-react';
 import { Link } from 'react-router-dom';
-// import {Excel} from "react-data-export";
+// import * from "react-data-export"
 
 
 

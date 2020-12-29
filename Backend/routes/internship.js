@@ -199,11 +199,11 @@ router.get('/bookmark/:id', (req, res, next) => {
                 })
             }
             try {
-                let user = await db.User.findById(req.body);
+                let user = await db.User.findById(req.body.userId);
                 await user.bookmarks.push(internship);
                 await user.save();
             } catch (error) {
-                next(error);
+                return  next(error);
             }
         }).catch((err) => {
             next(err);
@@ -220,7 +220,7 @@ router.delete('/bookmark/:id', (req, res, next) => {
                 })
             }
             try {
-                let user = await db.User.findById(req.body.id);
+                let user = await db.User.findById(req.body.userId);
                 user.bookmarks = user.bookmarks.filter((b) => internship._id !== i);
                 await user.save();
             } catch (error) {

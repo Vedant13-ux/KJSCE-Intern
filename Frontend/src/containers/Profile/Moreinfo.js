@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import { Multiselect } from "multiselect-react-dropdown";
 import { apiCall } from "../../services/api";
 import { connect } from 'react-redux'
-import { updateinfo,updateSkills, updateCertificates  } from '../../store/actions/user'
+import { updateinfo, updateSkills, updateCertificates } from '../../store/actions/user'
 
 class Basic extends Component {
   constructor(props) {
@@ -23,10 +23,10 @@ class Basic extends Component {
         { text: "C++" },
         { text: "React Native" },
       ],
-      info:{
-        year:props.user.year,
-        dept:props.user.dept,
-        rollNo:props.user.rollNo
+      info: {
+        year: props.user.year,
+        dept: props.user.dept,
+        rollNo: props.user.rollNo
       },
       show1: false,
       show2: false,
@@ -70,17 +70,17 @@ class Basic extends Component {
           year: this.state.info.year,
           rollNo: this.state.info.rollNo,
           dept: this.state.info.dept,
-          
+
         }
       }
-      props.updateinfo(data).then((d)=>this.handleClose3())
+      props.updateinfo(data).then((d) => this.handleClose3())
     };
-    this.handleChange1=(e)=>{
-      let t=this.state.info
-      t[e.target.name]=e.target.value;
-      this.setState({info:t});
+    this.handleChange1 = (e) => {
+      let t = this.state.info
+      t[e.target.name] = e.target.value;
+      this.setState({ info: t });
     }
-    this.addcert=(cert)=>{
+    this.addcert = (cert) => {
       cert.date = new Date(cert.date);
       this.props.updateCertificates(cert, this.props.user._id).then(
         () => {
@@ -92,7 +92,7 @@ class Basic extends Component {
         }
       ).catch((err) => err)
     }
-    this.changeskill=(s)=>{
+    this.changeskill = (s) => {
       console.log("aya")
       this.props.updateSkills(s, this.props.user._id).then(
         () => {
@@ -105,6 +105,7 @@ class Basic extends Component {
 
   handleskillssubmit(e) {
     var skills = this.multiselectRef.current.getSelectedItems();
+    console.log(skills);
     var skillArray = [];
     skills.forEach((skill) => {
       skillArray.push(skill.text);
@@ -137,7 +138,7 @@ class Basic extends Component {
 
   render() {
     const { title, provider, date, link } = this.state.certform;
-    const {rollNo,year,dept} =this.state.info;
+    const { rollNo, year, dept } = this.state.info;
     console.log(this.props.user.skills)
     return (
       <div className="col-md-4">
@@ -180,7 +181,7 @@ class Basic extends Component {
             <Modal.Body>
               <form onSubmit={this.handlesubinfo}>
                 <div className="ui form">
-                  
+
                   <div className="field">
                     <label>Department</label>
                     <select
@@ -195,7 +196,7 @@ class Basic extends Component {
                       <option value="it">Information Technology</option>
                       <option value="mech">Mechanical</option>
                       <option value="extc">
-                      Electronics and Telecommunication
+                        Electronics and Telecommunication
                       </option>
                       <option value="etrx">Electronics</option>
                     </select>
@@ -380,4 +381,4 @@ class Basic extends Component {
   }
 }
 
-export default connect(()=>{},{updateinfo,updateSkills, updateCertificates})(Basic);
+export default connect(() => { }, { updateinfo, updateSkills, updateCertificates })(Basic);
