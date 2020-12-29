@@ -31,6 +31,7 @@ class Basic extends Component {
       show1: false,
       show2: false,
       show3: false,
+      preskills:[]
     };
 
     this.multiselectRef = React.createRef();
@@ -38,7 +39,17 @@ class Basic extends Component {
     this.multiselectRef = React.createRef();
 
     this.handleClose1 = () => this.setState({ show1: false });
-    this.handleShow1 = () => this.setState({ show1: true });
+    this.handleShow1 = () => {
+      let temp=this.props.user.skills
+      let i=0;
+      for (i = 0; i < temp.length; i++) {
+        this.state.preskills.push({
+          text: temp[i],
+        });
+      }
+      this.setState({ show1: true ,preskills:this.state.preskills});
+
+    }
 
     this.handleskillssubmit = this.handleskillssubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -71,37 +82,41 @@ class Basic extends Component {
     this.addcert = (cert) => {
       cert.date = new Date(cert.date);
       this.props.updateCertificates(cert, this.props.user._id).then(
-        () => console.log('Certificate Added')
+        () => {
+          console.log('Certificate Added')
+          this.setState({
+            certform: { title: "", provider: "", link: "", date: new Date() },
+            show2: false,
+          });
+        }
       ).catch((err) => err)
     }
     this.changeskill = (s) => {
       console.log("aya")
       this.props.updateSkills(s, this.props.user._id).then(
         () => {
-          console.log('Skills Added');
+          console.log('Skills Added')
+          this.setState({ show1: false });
         }
       ).catch((err) => console.log(err))
     }
   }
 
-  async handleskillssubmit(e) {
+  handleskillssubmit(e) {
     var skills = this.multiselectRef.current.getSelectedItems();
     console.log(skills);
     var skillArray = [];
     skills.forEach((skill) => {
       skillArray.push(skill.text);
     });
-    await this.changeskill(skillArray);
-    this.setState({ show1: false });
+    this.changeskill(skillArray);
+    
   }
-  async handleSubmit(e) {
+  handleSubmit(e) {
     e.preventDefault();
 
     this.addcert(this.state.certform);
-    this.setState({
-      certform: { title: "", provider: "", link: "", date: new Date() },
-      show2: false,
-    });
+    
   }
 
   async handleSkills() {
@@ -233,7 +248,7 @@ class Basic extends Component {
             <span className="panel-title">Skills</span>
             {this.props.isowner && (
               <span onClick={this.handleShow1} className="add">
-                <i className="far fa-plus-square"></i>
+                <i className="far fa-edit"></i>
               </span>
             )}
           </div>
@@ -249,7 +264,7 @@ class Basic extends Component {
             <Modal.Body>
               <Multiselect
                 options={this.state.skills}
-                selectedValues={this.props.preskills}
+                selectedValues={this.state.preskills}
                 displayValue="text"
                 onSearch={this.handleSkills}
                 ref={this.multiselectRef}

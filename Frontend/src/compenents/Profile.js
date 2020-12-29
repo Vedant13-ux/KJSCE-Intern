@@ -20,7 +20,6 @@ class Profile extends Component {
       owner: false,
       start: true,
       nof: false,
-      preskills: [],
       profileId: this.props.match.params.id
     };
   }
@@ -30,32 +29,21 @@ class Profile extends Component {
     if (this.props.currentUser.user.email.split('@')[0] === this.state.profileId) {
       let i = 0;
       let temp = this.props.currentUser.user
-      for (i = 0; i < temp.skills.length; i++) {
-        this.state.preskills.push({
-          text: temp.skills[i],
-        });
-      }
       for (i = 0; i < temp.certificates.length; i++) {
         temp.certificates[i].date = new Date(temp.certificates[i].date)
       }
-      await this.setState({ user: temp, preskills: this.state.preskills, owner: true, start: false });
+      await this.setState({ user: temp, owner: true, start: false });
     }
     else {
       apiCall("get", "/api/user/" + this.props.match.params.id, "")
         .then(async (data) => {
           console.log(data);
           let i = 0;
-          for (i = 0; i < data.skills.length; i++) {
-            this.state.preskills.push({
-              text: data.skills[i],
-            });
-          }
           for (i = 0; i < data.certificates.length; i++) {
             data.certificates[i].date = new Date(data.certificates[i].date)
           }
           await this.setState({
             user: data,
-            preskills: this.state.preskills,
             start: false,
           });
         })
@@ -97,7 +85,6 @@ class Profile extends Component {
             <div className="row">
               <Moreinfo
                 isowner={this.state.owner}
-                preskills={this.state.preskills}
                 user={this.props.currentUser.user}
               />
               <UserActivity owner={this.state.owner} user={this.state.user} />
