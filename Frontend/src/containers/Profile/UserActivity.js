@@ -49,7 +49,7 @@ class Basic extends Component {
             isprofile={true}
             postcreate={this.props.owner}
             currentUser={ this.props.user }
-            loggedin={this.props.loggedin}
+            loggedin={{user:this.props.loggedin}}
           />
         );
         break;

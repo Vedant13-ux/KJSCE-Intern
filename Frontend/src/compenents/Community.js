@@ -295,7 +295,7 @@ export class Post extends React.Component {
     this.state = {
       commentsExpanded: false,
       likes: options.likedBy.length,
-      isLiked: options.likedBy.includes(props.loggedin._id),
+      isLiked: options.likedBy.includes(props.loggedin.user._id),
       comments: options.comments,
       imageLoaded: false,
     };
@@ -337,7 +337,7 @@ export class Post extends React.Component {
     let lik = this.state.likes;
     if (!this.state.isLiked) {
       apiCall("post", "/api/community/posts/like/" + this.id, {
-        id: this.props.loggedin._id,
+        id: this.props.loggedin.user._id,
       })
         .then((data) => {
           console.log(data);
@@ -348,7 +348,7 @@ export class Post extends React.Component {
         .catch((e) => console.log(e));
     } else {
       apiCall("put", "/api/community/posts/like/" + this.id, {
-        id: this.props.loggedin._id,
+        id: this.props.loggedin.user._id,
       })
         .then((data) => {
           console.log(data);
@@ -370,14 +370,14 @@ export class Post extends React.Component {
       return;
     }
     apiCall("post", "/api/community/posts/comments/" + this.id, {
-      id: this.props.loggedin._id,
+      id: this.props.loggedin.user._id,
       text: commentText,
     });
     this.state.comments.push({
       author: {
-        fname: this.props.loggedin.fname,
-        lname: this.props.loggedin.lname,
-        photo: this.props.loggedin.photo,
+        fname: this.props.loggedin.user.fname,
+        lname: this.props.loggedin.user.lname,
+        photo: this.props.loggedin.user.photo,
       },
       text: commentText,
     });
@@ -434,7 +434,7 @@ export class Post extends React.Component {
             hideComment={this.hideComment}
           />
           <CommentInput
-            loggedin={this.props.loggedin}
+            loggedin={this.props.loggedin.user}
             addCommentHandler={this.addCommentDecorator}
           />
         </div>
