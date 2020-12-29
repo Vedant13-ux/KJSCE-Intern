@@ -13,7 +13,7 @@ function escapeRegex(text) {
 router.get('/search/all', async (req, res, next) => {
     try {
         var recentDate = new Date();
-        let internships = await db.InternshipDetails.find({ applyBy: { $gte: recentDate } }).populate('faculty').exec();
+        let internships = await db.InternshipDetails.find({ applyBy: { $gte: recentDate } }).populate({ path: 'faculty', select: 'fname lname photo email _id' }).exec();
         res.status(200).send(internships);
     } catch (err) {
         next(err);
@@ -189,7 +189,15 @@ router.delete('/details/:id', async (req, res, next) => {
 });
 
 // Bookmarks
-router.get('/bookmark/:id', (req, res, next) => {
+router.get('/bookmarks/:id', (req, res, next) => {
+    db.User.findById(req.params.id).populate({ path: 'bookmarks', populate: { path: 'faculty', select: 'fname lname photo email _id' } }).exec()
+        .then((user) => {
+            res.send(user.bookmarks);
+        }).catch((err) => {
+            next(err);
+        });
+})
+router.put('/bookmark/add/:id', (req, res, next) => {
     db.InternshipDetails.findById(req.params.id)
         .then(async (internship) => {
             if (!internship) {
@@ -200,17 +208,24 @@ router.get('/bookmark/:id', (req, res, next) => {
             }
             try {
                 let user = await db.User.findById(req.body.userId);
+                if (user.bookmarks.includes(internship._id)) {
+                    return next({
+                        status: 405,
+                        message: 'You have already bookmarked this post'
+                    })
+                }
                 await user.bookmarks.push(internship);
                 await user.save();
+                res.send('Bookmark Added')
             } catch (error) {
-                return  next(error);
+                return next(error);
             }
         }).catch((err) => {
             next(err);
         });
 });
 
-router.delete('/bookmark/:id', (req, res, next) => {
+router.put('/bookmark/delete/:id', (req, res, next) => {
     db.InternshipDetails.findById(req.params.id)
         .then(async (internship) => {
             if (!internship) {
@@ -221,8 +236,20 @@ router.delete('/bookmark/:id', (req, res, next) => {
             }
             try {
                 let user = await db.User.findById(req.body.userId);
-                user.bookmarks = user.bookmarks.filter((b) => internship._id !== i);
-                await user.save();
+                let to_remove = user.bookmarks.findIndex((u) => {
+                    return u == internship._id;
+                });
+                if (to_remove !== -1) {
+                    await user.bookmarks.splice(to_remove, 1)
+                    await post.save();
+                    return res.send('Bookmark Deleted')
+                } else {
+                    return next({
+                        status: 405,
+                        message: 'You have not bookmarked this internship'
+                    })
+                }
+
             } catch (error) {
                 next(error);
             }

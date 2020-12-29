@@ -46,11 +46,11 @@ const Homepage = (props) => {
                 </Carousel>
             </div>
             <MyProvider>
-                <Navbar currentUser={props.currentUser} history={props.history} ></Navbar>
+                <Navbar history={props.history} ></Navbar>
                 <FilterInternships />
-                <InternshipList />
+                <InternshipList user={props.currentUser.user} />
             </MyProvider>
-            { props.currentUser.user.role==="Faculty" && <InternshipCreate userId={props.currentUser.user._id} {...props} />}
+            { props.currentUser.user.role === "Faculty" && <InternshipCreate userId={props.currentUser.user._id} {...props} />}
             <PageFooter />
 
         </div>

@@ -1,16 +1,45 @@
 import React, { Component } from "react";
 import { Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { apiCall } from '../../services/api'
 
-class InternshipList extends Component {
+class Internship extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
-    this.dateFormat = this.dateFormat.bind(this)
+    this.state = {
+      bookmarked: this.props.bookmarked,
+      style: this.props.bookmarked ? { color: '#ffca3d' } : { color: '#000000' }
+    }
+    this.dateFormat = this.dateFormat.bind(this);
+    this.bookmark = this.bookmark.bind(this);
   }
   dateFormat() {
     let apply = new Date(this.props.applyBy);
     return apply.toDateString();
+  }
+  bookmark(e) {
+    if (this.state.bookmarked) {
+      console.log(this.props._id, this.props.userId)
+      apiCall('put', '/api/internship/bookmark/delete/' + this.props._id, { userId: this.props.userId })
+        .then(async () => {
+          console.log('bookmark removed');
+          await this.setState({ bookmarked: false });
+          this.setState({ style: { color: '#000000' } });
+        }).catch((err) => {
+          console.log(err);
+        });
+
+    } else {
+      apiCall('put', '/api/internship/bookmark/add/' + this.props._id, { userId: this.props.userId })
+        .then(async () => {
+          console.log('bookmark added');
+          this.setState({ style: { color: '#ffca3d' } });
+          await this.setState({ bookmarked: true })
+        }).catch((err) => {
+          console.log(err);
+        });
+
+    }
   }
   render() {
     const id = '/internship/' + this.props._id;
@@ -44,6 +73,8 @@ class InternshipList extends Component {
               <button
                 type="button"
                 className="btn btn-default btn-circle btn-md"
+                style={this.state.style}
+                onClick={this.bookmark}
               >
                 <i className="fa fa-bookmark"></i>
               </button>
@@ -59,4 +90,4 @@ class InternshipList extends Component {
   }
 }
 
-export default InternshipList;
+export default Internship;

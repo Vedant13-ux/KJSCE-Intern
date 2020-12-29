@@ -31,6 +31,7 @@ class InternshipList extends Component {
                         <Internship
                           key={internship._id}
                           {...internship}
+                          bookmarked={this.props.user.bookmarks.includes(internship._id)}
                         ></Internship>
                       );
                     })}
