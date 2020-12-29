@@ -2,8 +2,8 @@ import React from "react";
 import Navbar from "../containers/Global/Navbar";
 import PageFooter from "../containers/Global/PageFooter";
 import { apiCall } from "../services/api";
-import Modal from 'react-bootstrap/Modal';
-import { Link } from 'react-router-dom';
+import Modal from "react-bootstrap/Modal";
+import { Link } from "react-router-dom";
 
 class Application extends React.Component {
   constructor(props) {
@@ -65,7 +65,6 @@ class ScrollTopButton extends React.Component {
   }
 
   resizeHandler() {
-    console.log(`resize`);
     if (this.isThrottled === undefined) this.isThrottled = false;
     if (this.isQueueEmpty === undefined) this.isQueueEmpty = true;
 
@@ -132,28 +131,33 @@ class ScrollTopButton extends React.Component {
 class PostCreate extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { show: false ,postdata:{
-      content:''
-    } };
-    this.handleChange=(e)=>{
-      this.state.postdata[e.target.name]=e.target.val
-      this.setState({...this.state})
-    }
-    this.handleSubmit=(e)=>{
+    this.state = {
+      show: false,
+      postdata: {
+        content: "",
+      },
+    };
+    this.handleChange = (e) => {
+      this.state.postdata[e.target.name] = e.target.val;
+      this.setState({ ...this.state });
+    };
+    this.handleSubmit = (e) => {
       //api call
-    }
-    this.handleClose=(e)=>{
-      this.setState({show:false})
-    }
-    this.handleShow=(e)=>{
-      this.setState({show:true})
-    }
+    };
+    this.handleClose = (e) => {
+      this.setState({ show: false });
+    };
+    this.handleShow = (e) => {
+      this.setState({ show: true });
+    };
   }
   render() {
-    const {content} = this.state.postdata
+    const { content } = this.state.postdata;
     return (
       <div className="posting-area">
-        <div onClick={this.handleShow} className="posting-text" >start post</div>
+        <div onClick={this.handleShow} className="posting-text">
+          start post
+        </div>
         <div className="posting-but">
           <div className="posting-but1" onClick="">
             <i className="material-icons">insert_photo</i>Photo
@@ -197,26 +201,22 @@ class PostCreate extends React.Component {
 class Feed extends React.Component {
   constructor(props) {
     super(props);
-    this.state={
-      posts:[],
-      start:true
-
-    }
+    this.state = {
+      posts: [],
+      start: true,
+    };
   }
 
   componentWillMount() {
-    apiCall("get", '/api/community/posts/getAll', "")
+    apiCall("get", "/api/community/posts/getAll", "")
       .then((data) => {
-        
         this.setState({ posts: data, start: false });
-        console.log(this.state)
       })
       .catch((e) => {
-        console.log("error")
-        this.setState({  start: false });
+        console.log("error");
+        this.setState({ start: false });
       });
   }
-
 
   render() {
     return (
@@ -241,7 +241,6 @@ class Feed extends React.Component {
 export class PostWall extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props)
   }
 
   getPostById(id) {
@@ -302,16 +301,15 @@ export class Post extends React.Component {
     };
     this.id = options._id;
     this.content = options.content;
-    if(!props.isprofile){
-    this.avatar = options.author.photo;
-    this.name = options.author.fname +' '+ options.author.lname;
-    this.email=options.author.email
-  }
-  else{
-    this.avatar = props.userprofile.photo;
-    this.name = props.userprofile.fname +' '+ props.userprofile.lname;
-    this.email=props.userprofile.email
-  }
+    if (!props.isprofile) {
+      this.avatar = options.author.photo;
+      this.name = options.author.fname + " " + options.author.lname;
+      this.email = options.author.email;
+    } else {
+      this.avatar = props.userprofile.photo;
+      this.name = props.userprofile.fname + " " + props.userprofile.lname;
+      this.email = props.userprofile.email;
+    }
     function dateFormat(k) {
       let apply = new Date(k);
       return apply.toDateString();
@@ -338,23 +336,29 @@ export class Post extends React.Component {
     let button = e.target.closest(".likes");
     let lik = this.state.likes;
     if (!this.state.isLiked) {
-      button.classList.toggle("liked");
-      lik++;
       apiCall("post", "/api/community/posts/like/" + this.id, {
         id: this.props.loggedin._id,
       })
-        .then((data) => console.log(data))
+        .then((data) => {
+          console.log(data);
+          button.classList.toggle("liked");
+          lik++;
+          this.setState({ ...this.state, isLiked: !this.state.isLiked, likes: lik });
+        })
         .catch((e) => console.log(e));
     } else {
-      button.classList.toggle("liked");
-      lik--;
       apiCall("put", "/api/community/posts/like/" + this.id, {
         id: this.props.loggedin._id,
       })
-        .then((data) => console.log(data))
+        .then((data) => {
+          console.log(data);
+          button.classList.toggle("liked");
+          lik--;
+          this.setState({ ...this.state, isLiked: !this.state.isLiked, likes: lik });
+        })
         .catch((e) => console.log(e));
     }
-    this.setState({ ...this.state, isLiked: !this.state.isLiked, likes: lik });
+    
   }
 
   addCommentHandler(e) {
@@ -471,9 +475,7 @@ class Comments extends React.Component {
 
     let hideButton = (
       <div className="hide-comments-button">
-        <div onClick={this.props.hideComment}>
-          Hide comments
-        </div>
+        <div onClick={this.props.hideComment}>Hide comments</div>
       </div>
     );
 
@@ -502,11 +504,10 @@ class Comment extends React.Component {
     };
   }
   handleLike(e) {
-    console.log(e);
+    // console.log(e);
   }
   render() {
     let val = this.state.data;
-    // console.log(val);
     return (
       <div className="comment">
         <a className="avatar" href="/">
@@ -517,7 +518,7 @@ class Comment extends React.Component {
             {val.author.fname + " " + val.author.lname}
           </a>
           <div className="metadata">
-            <span className="date">Today at 5:42PM</span>
+            <span className="date">Today at 5:42PM hardcoded</span>
           </div>
           <div className="text">{val.text}</div>
           <div className="actions">
@@ -535,18 +536,16 @@ class UserInfo extends React.Component {
   render() {
     return (
       <div className="user-info">
-        
-          <div className="user-avatar">
-            <img src={this.props.userAvatar} alt="author"></img>
-          </div>
-          
-          <div className="user-data">
+        <div className="user-avatar">
+          <img src={this.props.userAvatar} alt="author"></img>
+        </div>
+
+        <div className="user-data">
           <Link to={"/profile/" + this.props.email.split("@")[0]}>
             <div className="username">{this.props.username}</div>
-            </Link>
-            <div className="post-date">{this.props.date}</div>
-          </div>
-        
+          </Link>
+          <div className="post-date">{this.props.date}</div>
+        </div>
       </div>
     );
   }
