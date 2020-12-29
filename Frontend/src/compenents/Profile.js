@@ -79,11 +79,7 @@ class Profile extends Component {
   addcert(cert) {
     let temp = this.state.user;
     cert.date = new Date(cert.date);
-    temp.certificates.push(cert);
-
     console.log(temp.certificates[0].date);
-
-
     this.props.updateCertificates(cert, this.state.user._id).then(
       () => console.log('Certificate Added')
     ).catch((err) => err)
@@ -103,7 +99,6 @@ class Profile extends Component {
     this.props.updateSkills(s, this.state.user._id).then(
       () => console.log('Skills Added')
     ).catch((err) => err)
-    return this.setState({ user: temp, preskills: t });
   }
   render() {
     if (this.state.start) {
