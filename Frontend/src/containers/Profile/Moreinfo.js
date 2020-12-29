@@ -41,6 +41,7 @@ class Basic extends Component {
     this.handleClose1 = () => this.setState({ show1: false });
     this.handleShow1 = () => {
       let temp=this.props.user.skills
+      this.state.preskills=[]
       let i=0;
       for (i = 0; i < temp.length; i++) {
         this.state.preskills.push({
