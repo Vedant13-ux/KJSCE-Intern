@@ -817,7 +817,7 @@ body {
    min-height: 800px;
 }
 
-.post-wall .post {
+.post-wall .post ,#postalone .post{
   box-sizing: border-box;
   border:1.5px solid rgba(0,0,0,.125);
    max-width: 620px;
@@ -1204,6 +1204,10 @@ body {
    background-color: DodgerBlue !important; 
    color: #ffffff; 
  }
+
+#postalone{
+  margin-top: 65px;
+}
 
  /* **********Internship Details************* */
 

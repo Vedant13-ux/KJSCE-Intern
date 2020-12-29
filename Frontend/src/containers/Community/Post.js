@@ -27,7 +27,7 @@ class PostMain extends Component {
   }
   render() {
     return (
-      <div>
+      <div id="postalone">
         <Navbar
           currentUser={this.props.currentUser}
           history={this.props.history}
