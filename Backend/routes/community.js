@@ -21,7 +21,7 @@ router.get('/posts/getNext', (req, res, next) => {
         .catch(err => next(err))
 });
 router.get('/posts/:id', (req, res, next) => {
-    db.Post.findById(req.params.id)
+    db.Post.findById(req.params.id).populate("author")
         .then((post) => {
             if (!post) {
                 return next({
@@ -29,7 +29,7 @@ router.get('/posts/:id', (req, res, next) => {
                     message: "Post Not Found"
                 })
             }
-            req.status(200).send(post);
+            res.status(200).send(post);
         })
         .catch(err => next(err))
 });
