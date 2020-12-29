@@ -225,7 +225,8 @@ class Feed extends React.Component {
           <PostWall
             isprofile={false}
             postcreate={true}
-            currentUser={this.props.currentUser}
+            loggedin={this.props.currentUser}
+            currentUser={null}
             {...this.state}
           />
           <div className="right-side">
@@ -250,7 +251,8 @@ export class PostWall extends React.Component {
         isprofile={this.props.isprofile}
         id={id}
         key={id}
-        loggedin={this.props.currentUser.user}
+        userprofile={this.props.currentUser}
+        loggedin={this.props.loggedin}
         options={this.props.posts[id]}
       />
     );
@@ -286,7 +288,7 @@ export class PostWall extends React.Component {
   }
 }
 
-class Post extends React.Component {
+export class Post extends React.Component {
   constructor(props) {
     super(props);
     let options = props.options;
@@ -306,9 +308,9 @@ class Post extends React.Component {
     this.email=options.author.email
   }
   else{
-    this.avatar = props.loggedin.photo;
-    this.name = props.loggedin.fname +' '+ props.loggedin.lname;
-    this.email=props.loggedin.email
+    this.avatar = props.userprofile.photo;
+    this.name = props.userprofile.fname +' '+ props.userprofile.lname;
+    this.email=props.userprofile.email
   }
     function dateFormat(k) {
       let apply = new Date(k);
@@ -324,11 +326,6 @@ class Post extends React.Component {
     this.addCommentDecorator = this.addCommentDecorator.bind(this);
     this.handleImageLoad = this.handleImageLoad.bind(this);
   }
-  // assignMessageEnd(el) {
-  //   console.log(el);
-  //   el.preventDefault();
-  //   this.messagesEnd = el;
-  // }
   handleImageLoad(e) {
     this.setState({ imageLoaded: true });
   }

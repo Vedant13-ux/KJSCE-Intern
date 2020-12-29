@@ -11,6 +11,7 @@ import NotFound from '../images/NotFound'
 import EmailVerificaton from '../containers/Utils/EmailVerification';
 import Profile from '../compenents/Profile';
 import MyInternships from '../compenents/MyInternships';
+import Post from './Community/Post'
 import '../index2.css'
 
 
@@ -23,6 +24,7 @@ const Main = (props) => {
                 <Route exact path="/home" render={props => <Homepage {...props} currentUser={currentUser} />} />
                 <Route exact path="/internship/:id" render={props => <IntershipDetail key={props.match.params.id} {...props} currentUser={currentUser} />} />
                 <Route exact path="/community" render={props => <Community {...props} currentUser={currentUser} />} />
+                <Route exact path="/post/:id" render={props => <Post key={props.match.params.id} {...props} currentUser={currentUser} />} />
                 <Route exact path="/verify-email/:token" render={props => <EmailVerificaton {...props} />} />
                 <Route exact path="/profile/:id" render={props => <Profile key={props.match.params.id} {...props} currentUser={currentUser} />} />
                 <Route exact path="/myinternships" render={props => <MyInternships {...props} currentUser={currentUser} />} />
