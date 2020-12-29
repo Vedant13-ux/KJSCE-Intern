@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import { Multiselect } from "multiselect-react-dropdown";
 import { apiCall } from "../../services/api";
 import { connect } from 'react-redux'
-import { updateinfo } from '../../store/actions/user'
+import { updateinfo,updateSkills, updateCertificates  } from '../../store/actions/user'
 
 class Basic extends Component {
   constructor(props) {
@@ -61,13 +61,26 @@ class Basic extends Component {
           
         }
       }
-      console.log(data)
       props.updateinfo(data).then((d)=>this.handleClose3())
     };
     this.handleChange1=(e)=>{
       let t=this.state.info
       t[e.target.name]=e.target.value;
-      this.setState({info:t})
+      this.setState({info:t});
+    }
+    this.addcert=(cert)=>{
+      cert.date = new Date(cert.date);
+      this.props.updateCertificates(cert, this.props.user._id).then(
+        () => console.log('Certificate Added')
+      ).catch((err) => err)
+    }
+    this.changeskill=(s)=>{
+      console.log("aya")
+      this.props.updateSkills(s, this.props.user._id).then(
+        () => {
+          console.log('Skills Added')
+        }
+      ).catch((err) => console.log(err))
     }
   }
 
@@ -77,14 +90,13 @@ class Basic extends Component {
     skills.forEach((skill) => {
       skillArray.push(skill.text);
     });
-    console.log(skillArray);
-    this.props.changeskill(skillArray);
+    this.changeskill(skillArray);
     this.setState({ show1: false });
   }
   async handleSubmit(e) {
     e.preventDefault();
 
-    this.props.addcert(this.state.certform);
+    this.addcert(this.state.certform);
     this.setState({
       certform: { title: "", provider: "", link: "", date: new Date() },
       show2: false,
@@ -95,10 +107,8 @@ class Basic extends Component {
     await this.setState({ error: "" });
     const skillInput = document.querySelector(".searchBox");
     var query = skillInput.value;
-    console.log(query);
     apiCall("get", "/api/internship/skillSuggestion/" + query, "")
       .then((data) => {
-        console.log(data);
         this.setState({ skills: data });
       })
       .catch((err) => console.log(err));
@@ -107,12 +117,12 @@ class Basic extends Component {
     let temp = this.state.certform;
     temp[e.target.name] = e.target.value;
     this.setState({ certform: temp });
-    console.log(this.state.certform);
   }
 
   render() {
     const { title, provider, date, link } = this.state.certform;
     const {rollNo,year,dept} =this.state.info;
+    console.log(this.props.user.skills)
     return (
       <div className="col-md-4">
         <div className="panel">
@@ -354,4 +364,4 @@ class Basic extends Component {
   }
 }
 
-export default connect(()=>{},{updateinfo})(Basic);
+export default connect(()=>{},{updateinfo,updateSkills, updateCertificates})(Basic);

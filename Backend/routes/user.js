@@ -67,30 +67,11 @@ router.get('/profile/search', (req, res, next) => {
 //         .catch(err => next(err))
 // });
 
-// Update Name
-// router.put('/profile/update/name', (req, res, next) => {
-//     db.User.findById(req.body.name)
-//         .then((user) => {
-//             user.name = req.query.newName;
-//             user.save();
-//             res.status(200).send(user);
-//         }).catch((err) => {
-//             next(err);
-//         });
-// });
 
 router.put('/profile/update/skills', (req, res, next) => {
-    db.User.findById(req.body.id)
+    db.User.findByIdAndUpdate(req.body.id, {skills:req.body.skills})
         .then(async (user) => {
-            if (!user) {
-                return next({ status: 404, message: "User Not Found" });
-            }
-            try {
-                user.skills = req.body.skills;
-                await user.save();
-            } catch (error) {
-                next(error);
-            }
+            res.send('Updated!');
         }).catch((err) => {
             next(err);
         });
@@ -98,7 +79,6 @@ router.put('/profile/update/skills', (req, res, next) => {
 
 
 router.put('/profile/update/basicinfo', (req, res, next) => {
-    // console.log(req.body);
     db.User.findByIdAndUpdate(req.body.id, req.body.user)
         .then(async (user) => {
             res.send('Updated!');
