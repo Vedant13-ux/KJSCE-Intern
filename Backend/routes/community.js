@@ -21,7 +21,7 @@ router.get('/posts/getNext', (req, res, next) => {
         .catch(err => next(err))
 });
 router.get('/posts/:id', (req, res, next) => {
-    db.Post.findById(req.params.id)
+    db.Post.findById(req.params.id).populate("author")
         .then((post) => {
             if (!post) {
                 return next({
@@ -29,7 +29,7 @@ router.get('/posts/:id', (req, res, next) => {
                     message: "Post Not Found"
                 })
             }
-            req.status(200).send(post);
+            res.status(200).send(post);
         })
         .catch(err => next(err))
 });
@@ -82,7 +82,7 @@ router.post('/posts/like/:id', (req, res, next) => {
                 let user = await db.User.findById(req.body.id);
                 if (post.likedBy.findIndex((u) => u == req.body.id) == -1) {
                     await post.likedBy.push(user);
-                    return await post.save();
+                    res.status(200).send(await post.save());
                 }
                 return next({
                     status: 403,
@@ -110,7 +110,7 @@ router.put('/posts/like/:id', (req, res, next) => {
                 });
                 if (to_remove !== -1) {
                     await post.likedBy.splice(to_remove, 1)
-                    return await post.save();
+                    res.status(200).send(await post.save());
                 }
 
                 return next({
@@ -132,7 +132,7 @@ router.get('/posts/comments/:id', (req, res, next) => {
                     message: 'Post Not Found'
                 })
             }
-            res.send(post.comments);
+            res.status(200).send(post.comments);
 
         }).catch((err) => {
             next(err);

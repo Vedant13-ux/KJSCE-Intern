@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Nav } from "react-bootstrap";
 // import { Link } from 'react-router-dom';
-import { PostWall } from '../../compenents/Community'
+import { PostWall } from "../../compenents/Community";
 import { apiCall } from "../../services/api";
 
 class Basic extends Component {
@@ -9,17 +9,17 @@ class Basic extends Component {
     super(props);
     this.state = {
       content: "experiences",
-      posts:this.props.user.posts,
-      start:true
+      posts: this.props.user.posts,
+      start: true,
     };
     this.handleSwitch = this.handleSwitch.bind(this);
   }
   componentWillMount() {
     let content = window.location.href.split("#")[1];
-    if (content === undefined) return
+    if (content === undefined) return;
     return this.setState({ content: content });
   }
-  componentDidMount(){
+  componentDidMount() {
     // if (!this.props.owner){
     // apiCall("get", '/api/community/posts/getAll', "")
     //   .then((data) => {
@@ -43,7 +43,15 @@ class Basic extends Component {
         display = <div>education</div>;
         break;
       case "posts":
-        display = <PostWall {...this.state} isprofile={true} postcreate={this.props.owner} currentUser={{user:this.props.user}} />;
+        display = (
+          <PostWall
+            {...this.state}
+            isprofile={true}
+            postcreate={this.props.owner}
+            currentUser={ this.props.user }
+            loggedin={{user:this.props.loggedin}}
+          />
+        );
         break;
       case "activity":
         display = <div>activity</div>;
@@ -60,20 +68,21 @@ class Basic extends Component {
                 name="experiences"
                 to="#experiences"
                 onClick={this.handleSwitch}
-              >Experiences
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link name="Education" to="#Education" onClick={this.handleSwitch}>
-                Education
+              >
+                Experiences
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link
-                name="posts"
-                to="#posts"
+                name="Education"
+                to="#Education"
                 onClick={this.handleSwitch}
               >
+                Education
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link name="posts" to="#posts" onClick={this.handleSwitch}>
                 Posts
               </Nav.Link>
             </Nav.Item>
@@ -87,13 +96,20 @@ class Basic extends Component {
               </Nav.Link>
             </Nav.Item>
           </Nav>
-          <div className="tab-content p30" style={{ maxHeight: "800px", overflowY: 'scroll', marginTop:'40px' }}>
+          <div
+            className="tab-content p30"
+            style={{
+              maxHeight: "800px",
+              overflowY: "scroll",
+              marginTop: "40px",
+            }}
+          >
             <div id="tab1" className="tab-pane active">
-            {display}
+              {display}
+            </div>
           </div>
         </div>
       </div>
-      </div >
     );
   }
 }

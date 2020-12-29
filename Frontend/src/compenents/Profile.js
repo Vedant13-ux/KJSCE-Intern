@@ -87,7 +87,7 @@ class Profile extends Component {
                 isowner={this.state.owner}
                 user={this.props.currentUser.user}
               />
-              <UserActivity owner={this.state.owner} user={this.state.user} />
+              <UserActivity owner={this.state.owner} user={this.state.user} loggedin={this.props.currentUser.user} />
             </div>
           </section>
           <PageFooter />

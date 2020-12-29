@@ -41,6 +41,7 @@ class Basic extends Component {
     this.handleClose1 = () => this.setState({ show1: false });
     this.handleShow1 = () => {
       let temp=this.props.user.skills
+      this.state.preskills=[]
       let i=0;
       for (i = 0; i < temp.length; i++) {
         this.state.preskills.push({
@@ -138,7 +139,6 @@ class Basic extends Component {
   render() {
     const { title, provider, date, link } = this.state.certform;
     const { rollNo, year, dept } = this.state.info;
-    console.log(this.props.user.skills)
     return (
       <div className="col-md-4">
         <div className="panel">
