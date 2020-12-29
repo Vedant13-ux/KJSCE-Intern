@@ -132,7 +132,7 @@ router.get('/posts/comments/:id', (req, res, next) => {
                     message: 'Post Not Found'
                 })
             }
-            res.send(post.comments);
+            res.status(200).send(post.comments);
 
         }).catch((err) => {
             next(err);

@@ -372,17 +372,21 @@ export class Post extends React.Component {
     apiCall("post", "/api/community/posts/comments/" + this.id, {
       id: this.props.loggedin.user._id,
       text: commentText,
-    });
-    this.state.comments.push({
-      author: {
-        fname: this.props.loggedin.user.fname,
-        lname: this.props.loggedin.user.lname,
-        photo: this.props.loggedin.user.photo,
-      },
-      text: commentText,
-    });
-    form.text.value = "";
-    this.setState({ ...this.state, commentsExpanded: true });
+    }).then(
+      ()=>{
+        this.state.comments.push({
+          author: {
+            fname: this.props.loggedin.user.fname,
+            lname: this.props.loggedin.user.lname,
+            photo: this.props.loggedin.user.photo,
+          },
+          text: commentText,
+        });
+        form.text.value = "";
+        this.setState({ ...this.state, commentsExpanded: true });
+      }
+    )
+    
   }
 
   showComments(e) {
