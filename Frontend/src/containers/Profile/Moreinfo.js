@@ -71,7 +71,13 @@ class Basic extends Component {
     this.addcert=(cert)=>{
       cert.date = new Date(cert.date);
       this.props.updateCertificates(cert, this.props.user._id).then(
-        () => console.log('Certificate Added')
+        () => {
+          console.log('Certificate Added')
+          this.setState({
+            certform: { title: "", provider: "", link: "", date: new Date() },
+            show2: false,
+          });
+        }
       ).catch((err) => err)
     }
     this.changeskill=(s)=>{
@@ -79,28 +85,26 @@ class Basic extends Component {
       this.props.updateSkills(s, this.props.user._id).then(
         () => {
           console.log('Skills Added')
+          this.setState({ show1: false });
         }
       ).catch((err) => console.log(err))
     }
   }
 
-  async handleskillssubmit(e) {
+  handleskillssubmit(e) {
     var skills = this.multiselectRef.current.getSelectedItems();
     var skillArray = [];
     skills.forEach((skill) => {
       skillArray.push(skill.text);
     });
     this.changeskill(skillArray);
-    this.setState({ show1: false });
+    
   }
-  async handleSubmit(e) {
+  handleSubmit(e) {
     e.preventDefault();
 
     this.addcert(this.state.certform);
-    this.setState({
-      certform: { title: "", provider: "", link: "", date: new Date() },
-      show2: false,
-    });
+    
   }
 
   async handleSkills() {
