@@ -31,22 +31,23 @@ class InternshipList extends Component {
                         <Internship
                           key={internship._id}
                           {...internship}
+                          bookmarked={this.props.bookmarks.includes(internship._id)}
                         ></Internship>
                       );
                     })}
                   </div>
                 </div>
               );
-            } else if(context.state.start){
+            } else if (context.state.start) {
               return (
-                    <div className="loading-anime">
-                      <Loading className="loading-wheel" />
-                    </div>
-                  );
+                <div className="loading-anime">
+                  <Loading className="loading-wheel" />
+                </div>
+              );
 
             }
-            
-            else{
+
+            else {
               return <NoResults></NoResults>;
             }
 

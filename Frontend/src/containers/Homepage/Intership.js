@@ -1,16 +1,46 @@
 import React, { Component } from "react";
 import { Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { addBookmark, deleteBookmark } from '../../store/actions/user'
 
-class InternshipList extends Component {
+class Internship extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
-    this.dateFormat = this.dateFormat.bind(this)
+    this.state = {
+      bookmarked: this.props.bookmarked,
+      style: this.props.bookmarked ? { color: '#ffca3d' } : { color: '#000000' }
+    }
+    this.dateFormat = this.dateFormat.bind(this);
+    this.bookmark = this.bookmark.bind(this);
   }
   dateFormat() {
     let apply = new Date(this.props.applyBy);
     return apply.toDateString();
+  }
+  bookmark(e) {
+    if (this.state.bookmarked) {
+      console.log(this.props._id, this.props.userId)
+      this.props.deleteBookmark(this.props._id, this.props.currentUser.user._id)
+        .then(async () => {
+          console.log('bookmark removed');
+          await this.setState({ bookmarked: false });
+          this.setState({ style: { color: '#000000' } });
+        }).catch((err) => {
+          console.log(err);
+        });
+
+    } else {
+      this.props.addBookmark(this.props._id, this.props.currentUser.user._id)
+        .then(async () => {
+          console.log('bookmark added');
+          this.setState({ style: { color: '#ffca3d' } });
+          await this.setState({ bookmarked: true })
+        }).catch((err) => {
+          console.log(err);
+        });
+    }
   }
   render() {
     const id = '/internship/' + this.props._id;
@@ -44,6 +74,8 @@ class InternshipList extends Component {
               <button
                 type="button"
                 className="btn btn-default btn-circle btn-md"
+                style={this.state.style}
+                onClick={this.bookmark}
               >
                 <i className="fa fa-bookmark"></i>
               </button>
@@ -59,4 +91,10 @@ class InternshipList extends Component {
   }
 }
 
-export default InternshipList;
+function mapStateToProps(state) {
+  return {
+    currentUser: state.currentUser
+  }
+}
+
+export default withRouter(connect(mapStateToProps, { addBookmark, deleteBookmark })(Internship));

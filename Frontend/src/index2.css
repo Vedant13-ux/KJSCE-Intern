@@ -198,3 +198,14 @@ margin-right: 9px;
 /* #profile .post-wall{
   margin-top: 0px !important;
 } */
+
+
+/* ************BookMarks************** */
+#bookmarks{
+  margin-top: 100px !important;
+  max-width: 1400px;
+  padding: 0 20px;
+  margin: 0 auto;
+  animation: fadeIn;
+  min-height: 800px;
+}

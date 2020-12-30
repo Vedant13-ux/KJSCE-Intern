@@ -28,7 +28,7 @@ async function seedDB() {
             title: faker.lorem.words(3),
             content: faker.lorem.lines(3),
             image: 'https://www.nme.com/wp-content/uploads/2020/10/Among-Us-2.jpg',
-            author: "5fd78c0e0bccef3be8cc08ab",
+            author: "5fd791a15cec3a4d9374a02e",
             hashtags: faker.lorem.word(1)
         }
         let user = await db.User.findById(data.author);

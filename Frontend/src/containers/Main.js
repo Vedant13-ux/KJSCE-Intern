@@ -3,8 +3,7 @@ import { Switch, Route, withRouter } from 'react-router-dom';
 import Homepage from '../compenents/Homepage'
 import Landing from '../compenents/Landing';
 import { connect } from 'react-redux';
-import { authUser } from '../store/actions/auth'
-import { setCurrentUser } from '../store/actions/auth'
+import { authUser, setCurrentUser } from '../store/actions/auth'
 import IntershipDetail from './InternshipDetails/InternshipDetails'
 import Community from '../compenents/Community'
 import NotFound from '../images/NotFound'
@@ -12,8 +11,8 @@ import EmailVerificaton from '../containers/Utils/EmailVerification';
 import Profile from '../compenents/Profile';
 import MyInternships from '../compenents/MyInternships';
 import Post from './Community/Post'
+import Bookmarks from '../compenents/Bookmarks'
 import '../index2.css'
-
 
 const Main = (props) => {
     const currentUser = props.currentUser;
@@ -28,6 +27,7 @@ const Main = (props) => {
                 <Route exact path="/verify-email/:token" render={props => <EmailVerificaton {...props} />} />
                 <Route exact path="/profile/:id" render={props => <Profile key={props.match.params.id} {...props} currentUser={currentUser} />} />
                 <Route exact path="/myinternships" render={props => <MyInternships {...props} currentUser={currentUser} />} />
+                <Route exact path="/bookmarks" render={props => <Bookmarks {...props} currentUser={currentUser} />} />
                 <Route path="*" render={props => <NotFound {...props} />} />
             </Switch>
         </div>

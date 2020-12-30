@@ -1,5 +1,6 @@
+
 import { apiCall } from '../../services/api';
-import { UPDATE_USER_SKILLS, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO } from '../actionTypes';
+import { UPDATE_USER_SKILLS, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK } from '../actionTypes';
 
 
 function userSkills(skills) {
@@ -76,6 +77,46 @@ export function updateCertificates(certificate, id) {
             return apiCall('put', '/api/profile/update/certificates', { certificate, id })
                 .then((newCertificate) => {
                     dispatch(userCertificates(newCertificate));
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+    }
+}
+
+function addBook(bookmark) {
+    return {
+        type: ADD_BOOKMARK,
+        bookmark
+    }
+}
+export function addBookmark(bookmark, userId) {
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('put', '/api/internship/bookmark/add/' + bookmark, { userId })
+                .then(() => {
+                    dispatch(addBook(bookmark));
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+    }
+}
+
+function deleteBook(bookmark) {
+    return {
+        type: DELETE_BOOKMARK,
+        bookmark
+    }
+}
+export function deleteBookmark(bookmark, userId) {
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('put', '/api/internship/bookmark/delete/' + bookmark, { userId })
+                .then(() => {
+                    dispatch(deleteBook(bookmark));
                     res();
                 }).catch((err) => {
                     rej(err);

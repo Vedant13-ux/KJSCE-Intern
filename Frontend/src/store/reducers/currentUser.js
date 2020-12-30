@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, UPDATE_USER_SKILLS, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO } from '../actionTypes';
+import { SET_CURRENT_USER, UPDATE_USER_SKILLS, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK } from '../actionTypes';
 
 const defaultState = {
     isAuthenticated: false,
@@ -36,6 +36,17 @@ const currentUserReducer = (state = defaultState, action) => {
             return {
                 ...state
             }
+        case ADD_BOOKMARK:
+            state.user.bookmarks.push(action.bookmark);
+            return {
+                ...state
+            }
+        case DELETE_BOOKMARK:
+            state.user.bookmarks = state.user.bookmarks.filter(b => b !== action.bookmark)
+            return {
+                ...state
+            }
+
         default:
             return state
     }
