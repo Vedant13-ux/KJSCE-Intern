@@ -1,59 +1,180 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import { Modal } from "react-bootstrap";
 
-export class Experience extends Component{
-    constructor(props){
-        super(props)
+export class Experience extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      list:[
+        {
+          title: "intership with senpai",
+          type: "internship",
+          company: "bruh",
+          startdate: "2020-12-29T16:32:44.456Z",
+          enddate: null,
+          description: "i did a lot work",
+        }
 
-    }
-    render(){
-        return (<div></div>)
-    }
+      ],
+      show: false,
+    };
+    this.handleshow = () => {
+      this.setState({ show: true });
+    };
+    this.handleclose = () => {
+      this.setState({ show: false });
+    };
+  }
+  render() {
+    return (
+      <div id="experience">
+        <button onClick={this.handleshow} className="experience-add btn btn-primary">add</button>
+        {this.state.list.map((e,i)=>{
+          return (<div className="experience-ele">
+          <h4>{e.title}<sub>{e.type}</sub></h4>
+          <p>
+            <h5>{e.company}</h5>
+            {new Date(e.startdate).toDateString()+'-'+(e.enddate===null?"Present":new Date(e.enddate).toDateString())}
+            <br></br>
+            <h6>
+              {e.description}
+            </h6>
+          </p>
+          <hr className="short br-lighter"></hr>
+        </div>)
+        })}
+        
+        <Modal size="lg" show={this.state.show} onHide={this.handleclose} backdrop="static">
+          <Modal.Header closeButton>
+            <Modal.Title>Fill Experience Details</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <ExperienceForm {...this.props}></ExperienceForm>
+          </Modal.Body>
+        </Modal>
+      </div>
+    );
+  }
 }
 
-export class ExperienceForm extends Component{
-    constructor(props){
-        super(props)
+class ExperienceForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: "",
+      type: "",
+      company: "",
+      startdate: "",
+      enddate: null,
+      description: "",
+    };
+    this.handleenddate=(e)=>{
+      if( this.state.enddate===null){
+        this.setState({enddate:false})
+
+      }
+      else{
+        this.setState({enddate:null})
+      }
     }
-    render(){
-        return (<form onSubmit={this.handleSubmit} id="internshipForm">
-              <div className="ui form">
-                <div className="field">
-                  <label>Title</label>
-                  <input
-                    name="title"
-                    maxLength="30"
-                    required
-                    // val={title}
-                    onChange={this.handleChange}
-                    type="text"
-                    placeholder="eg. Retail sales manager"
-                  ></input>
-                </div>
-                {//employement type
-                //company
-                //checkbox currently working
-                //start date end date
-                //description
-            }
-                <div className="field">
-                  <label>Issued on</label>
-                  <input
-                    required
-                    type="Date"
-                    name="date"
-                    // val={date}
-                    onChange={this.handleChange}
-                  ></input>
-                </div>
-                <div className="submit confirmdiv">
-                  <button className="medium ui button confirm">ADD</button>
-                </div>
-              </div>
-            </form>)
-    }
+  }
+  render() {
+    const {
+      title,
+      type,
+      company,
+      startdate,
+      enddate,
+      description,
+    } = this.state;
+    return (
+      <form onSubmit={this.handleSubmit} id="internshipForm">
+        <div className="ui form">
+          <div className="field">
+            <label>Title</label>
+            <input
+              name="title"
+              maxLength="30"
+              required
+              val={title}
+              onChange={this.handleChange}
+              type="text"
+              placeholder="eg. Retail sales manager"
+            ></input>
+          </div>
+          <div className="field">
+            <label>Type</label>
+            <select
+              className="ui fluid dropdown"
+              name="type"
+              onChange={this.handleChange}
+              value={type}
+            >
+              <option value="">None</option>
+              <option value="job">Job</option>
+              <option value="internship">Internship</option>
+              <option value="research">Research</option>
+            </select>
+          </div>
+          <div className="field">
+            <label>Company</label>
+            <input
+              name="company"
+              maxLength="30"
+              required
+              val={company}
+              onChange={this.handleChange}
+              type="text"
+              placeholder="eg. Microsoft"
+            ></input>
+          </div>
+          <div className="field">
+            
+            <input type="checkbox" defaultChecked={true} onClick={this.handleenddate}></input>currently working
+          </div>
+          <div className="field">
+            <label>Start date</label>
+            <input
+              required
+              type="Date"
+              name="startdate"
+              val={startdate}
+              onChange={this.handleChange}
+            ></input>
+          </div>
+          {this.state.enddate!==null &&
+          <div className="field">
+            <label>End date</label>
+            <input
+              required
+              type="Date"
+              name="enddate"
+              val={enddate}
+              onChange={this.handleChange}
+            ></input>
+          </div>}
+          <div className="field">
+            <label>description</label>
+            <textarea
+              maxlength="200"
+              rows="2"
+              placeholder="eg. was assigned to tech team"
+              name="description"
+              val={description}
+              onChange={this.handleChange}
+            ></textarea>
+          </div>
+          <div className="submit confirmdiv">
+            <button className="medium ui button confirm">ADD</button>
+          </div>
+        </div>
+      </form>
+    );
+  }
 }
 
-{/* <div class="ui feed">
+{
+  /* <div class="ui feed">
   <div class="event">
     <div class="label">
       <img src="/images/avatar/small/elliot.jpg">
@@ -159,4 +280,5 @@ export class ExperienceForm extends Component{
       </div>
     </div>
   </div>
-</div> */}
+</div> */
+}
