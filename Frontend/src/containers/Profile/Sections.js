@@ -68,6 +68,12 @@ class ExperienceForm extends Component {
       enddate: null,
       description: "",
     };
+    this.handleSubmit=()=>{
+
+    }
+    this.handleChange=(e)=>{
+      this.setState({[e.target.name]:e.target.value})
+    }
     this.handleenddate=(e)=>{
       if( this.state.enddate===null){
         this.setState({enddate:false})

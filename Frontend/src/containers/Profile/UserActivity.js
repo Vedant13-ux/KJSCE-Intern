@@ -3,7 +3,7 @@ import { Nav } from "react-bootstrap";
 // import { Link } from 'react-router-dom';
 import { PostWall } from "../../compenents/Community";
 import { apiCall } from "../../services/api";
-import {Experience} from './Sections'
+import { Experience } from "./Sections";
 
 class Basic extends Component {
   constructor(props) {
@@ -38,7 +38,7 @@ class Basic extends Component {
     let display;
     switch (this.state.content) {
       case "experiences":
-        display = <Experience/>;
+        display = <Experience loggedin={{ user: this.props.loggedin }} />;
         break;
       case "Education":
         display = <div>education</div>;
@@ -49,8 +49,8 @@ class Basic extends Component {
             {...this.state}
             isprofile={true}
             postcreate={this.props.owner}
-            currentUser={ this.props.user }
-            loggedin={{user:this.props.loggedin}}
+            currentUser={this.props.user}
+            loggedin={{ user: this.props.loggedin }}
           />
         );
         break;
