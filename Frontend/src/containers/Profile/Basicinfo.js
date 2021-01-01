@@ -2,12 +2,14 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import { connect } from 'react-redux'
 import { updatebasicinfo } from '../../store/actions/user'
+import { apiCall } from '../../services/api'
 
 class Basic extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       show: false,
+      show2: false,
       userdata: {
         fname: this.props.user.fname,
         lname: this.props.user.lname,
@@ -17,13 +19,20 @@ class Basic extends React.Component {
         linkedin: this.props.user.socialHandles.linkedin,
         github: this.props.user.socialHandles.github,
       },
-      selectedFile: null
+      selectedFile: null,
+      fileLabel: 'Choose Image to Upload'
     };
     this.handleshow = (e) => {
       this.setState({ show: true });
     };
     this.handleClose = (e) => {
       this.setState({ show: false });
+    };
+    this.handleshow2 = (e) => {
+      this.setState({ show2: true });
+    };
+    this.handleClose2 = (e) => {
+      this.setState({ show2: false });
     };
     this.handleSubmit = (e) => {
       e.preventDefault();
@@ -42,19 +51,60 @@ class Basic extends React.Component {
         }
       };
       console.log(data)
-      props.updatebasicinfo(data).then(() => this.handleClose())
+      props.updatebasicinfo(data).then(() => this.handleClose());
+
     };
     this.handleChange = (e) => {
       let userdata = this.state.userdata;
       userdata[e.target.name] = e.target.value;
       this.setState({ userdata });
     };
+
     this.handleImageUpload = (e) => {
       e.preventDefault();
-      this.setState({
-        selectedFile: e.target.files[0],
-        loaded: 0,
-      })
+      const data = new FormData();
+      data.append('file', e.target.elements.file.files[0]);
+      const obj = {
+        id: this.props.currentUser.user._id,
+        data
+      }
+      apiCall('put', '/api/profile/update/photo', { obj })
+        .then(() => {
+          console.log('Image Uploaded');
+        }).catch((err) => {
+          console.log('Image Upload Failed !!!!');
+        });
+    }
+
+    this.fileValidation = async (e) => {
+      // var fi = e.target;
+      await this.setState({
+        selectedFile: e.target.files[0]
+      });
+      console.log(e.target.files[0])
+      // if (fi.files.length > 0) {
+      //   for (let i = 0; i <= fi.files.length - 1; i++) {
+      //     let fsize = fi.files.item(i).size;
+      //     let file = Math.round(fsize / 1024);
+      //     // The size of the file.
+      //     var fullPath = fi.value;
+      //     if (fullPath) {
+      //       var startIndex =
+      //         fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/');
+      //       var filename = fullPath.substring(startIndex);
+      //       if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+      //         filename = filename.substring(1);
+      //       }
+      //       this.setState({ fileLabel: `${filename} (${file} kB)` })
+      //     }
+      //     if (file > 4096) {
+      //       return false;
+      //     } else {
+      //       return true;
+      //     }
+      //   }
+      // }
+      // }
     }
   }
   render() {
@@ -76,7 +126,25 @@ class Basic extends React.Component {
               src={this.props.user.photo}
               alt="..."
             />
-            <div className="uploadBtn" onClick={this.handleImageUpload}>Update</div>
+            {this.props.owner && <div className="uploadBtn" onClick={this.handleshow2}>Update</div>}
+            <Modal show={this.state.show2} onHide={this.handleClose2} centered>
+              <Modal.Header closeButton>
+                <Modal.Title>Update Profile Picture</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <form onSubmit={this.handleImageUpload}>
+                  <div className="input-group">
+                    <div className="custom-file" style={{ display: 'block' }}>
+                      <label className="custom-file-label" style={{ textAlign: "left" }}>{this.state.fileLabel}</label>
+                      <input type="file" id="file" name="file" onchange={this.fileValidation} className="custom-file-input" style={{ outline: "none", border: "none" }} accept=".gif,.jpg,.png | image/*" required />
+                    </div>
+                    <div style={{ textAlign: 'center', display: 'block' }}>
+                      <button className="ui button">Upload</button>
+                    </div>
+                  </div>
+                </form>
+              </Modal.Body>
+            </Modal>
           </div>
           <div className="media-body va-m">
             <h2 className="media-heading">
@@ -221,10 +289,17 @@ class Basic extends React.Component {
               </form>
             </Modal.Body>
           </Modal>
+
         </div>
       </div>
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    currentUser: state.currentUser
+  }
+}
 
-export default connect(() => { }, { updatebasicinfo })(Basic);
+export default connect(mapStateToProps, { updatebasicinfo })(Basic);
+

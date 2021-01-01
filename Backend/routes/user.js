@@ -40,36 +40,29 @@ router.get('/profile/search', (req, res, next) => {
         });
 });
 
-// const formData = new FormData();
-// const imagefile = document.querySelector('#file');
-// formData.append("image", imagefile.files[0]);
-// axios.post('upload_file', formData, {
-//     headers: {
-//       'Content-Type': 'multipart/form-data'
-//     }
-// })
-
-// router.put('/profile/update/photo', (req, res, next) => {
-//     db.User.findById(req.body.id)
-//         .then(async (user) => {
-//             cloudinary.v2.uploader.upload(req.body.file, function (err, result) {
-//                 if (err) {
-//                     return next({
-//                         status: 500,
-//                         message: 'Image Could not be Uploaded. Please try again.'
-//                     });
-//                 }
-//                 user.photoId = result.public_id;
-//                 user.photo = result.secure_url;
-//                 await user.save();
-//             });
-//         })
-//         .catch(err => next(err))
-// });
+router.put('/profile/update/photo', (req, res, next) => {
+    console.log(req.body);
+    db.User.findById(req.body.id)
+        .then((user) => {
+            cloudinary.v2.uploader.upload(req.body.data, async function (err, result) {
+                if (err) {
+                    return next({
+                        status: 500,
+                        message: 'Image Could not be Uploaded. Please try again.'
+                    });
+                }
+                user.photoId = result.public_id;
+                user.photo = result.secure_url;
+                await user.save();
+                res.send('Image Uploaded');
+            });
+        })
+        .catch(err => next(err))
+});
 
 
 router.put('/profile/update/skills', (req, res, next) => {
-    db.User.findByIdAndUpdate(req.body.id, {skills:req.body.skills})
+    db.User.findByIdAndUpdate(req.body.id, { skills: req.body.skills })
         .then(async (user) => {
             res.send('Updated!');
         }).catch((err) => {
