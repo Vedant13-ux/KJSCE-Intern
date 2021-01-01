@@ -21,12 +21,12 @@ class Internship extends Component {
   }
   bookmark(e) {
     if (this.state.bookmarked) {
-      console.log(this.props._id, this.props.userId)
+      console.log(this.props._id, this.props.currentUser.user._id)
       this.props.deleteBookmark(this.props._id, this.props.currentUser.user._id)
         .then(async () => {
           console.log('bookmark removed');
           await this.setState({ bookmarked: false });
-          this.setState({ style: { color: '#000000' } });
+          await this.setState({ style: { color: '#000000' } });
         }).catch((err) => {
           console.log(err);
         });

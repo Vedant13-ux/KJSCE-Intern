@@ -60,12 +60,13 @@ class Basic extends React.Component {
       this.setState({ userdata });
     };
 
-    this.handleImageUpload = (e) => {
+    this.handleImageUpload = async (e) => {
       e.preventDefault();
       const data = new FormData();
-      console.log(this.state.selectedFile)
-      data.append('file', this.state.selectedFile)
-      // console.log(data);
+      await data.append('file', this.state.selectedFile);
+      for (var entry of data.entries()) {
+        console.log(entry);
+      }
       const obj = {
         id: this.props.currentUser.user._id,
         data: data
@@ -116,7 +117,7 @@ class Basic extends React.Component {
                   <div className="input-group">
                     <div className="custom-file" style={{ display: 'block' }}>
                       <label className="custom-file-label" style={{ textAlign: "left" }}>{this.state.fileLabel}</label>
-                      <input type="file" id="file" name="file" onChange={this.fileValidation} className="custom-file-input" style={{ outline: "none", border: "none" }} accept=".gif,.jpg,.png | image/*" required />
+                      <input type="file" id="file" name="file" onChange={this.fileValidation} className="custom-file-input" style={{ outline: "none", border: "none" }} accept=".jpg,.png | image/*" required />
                     </div>
                     <div style={{ textAlign: 'center', display: 'block' }}>
                       <button className="ui button">Upload</button>

@@ -237,12 +237,11 @@ router.put('/bookmark/delete/:id', (req, res, next) => {
             try {
                 console.log(req.body);
                 let user = await db.User.findById(req.body.userId);
-                let to_remove = user.bookmarks.findIndex((u) => {
-                    return u == internship._id;
-                });
+                let to_remove = user.bookmarks.findIndex((u) => JSON.stringify(u) == JSON.stringify(internship._id));
+                console.log(to_remove);
                 if (to_remove !== -1) {
                     await user.bookmarks.splice(to_remove, 1)
-                    await post.save();
+                    await user.save();
                     return res.send('Bookmark Deleted')
                 } else {
                     return next({
