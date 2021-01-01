@@ -35,7 +35,7 @@ class PostMain extends Component {
         {this.state.data!==null?
         <Post
           isprofile={false}
-          loggedin={this.props.currentUser.user}
+          loggedin={{user:this.props.currentUser.user}}
           userprofile={null}
           options={this.state.data}
         />:this.state.start?<Loading/>:

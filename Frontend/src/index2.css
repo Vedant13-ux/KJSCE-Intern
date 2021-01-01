@@ -198,8 +198,13 @@ margin-right: 9px;
 /* #profile .post-wall{
   margin-top: 0px !important;
 } */
-
-
+#experience .experience-ele h5{
+  margin:0px;
+  padding:0px;
+}
+#experience .experience-add{
+  margin:10px;
+}
 /* ************BookMarks************** */
 #bookmarks{
   margin-top: 100px !important;
