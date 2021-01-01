@@ -1,12 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models');
-var cloudinary = require('cloudinary');
+const cloudinary = require('cloudinary');
+const multer = require('multer');
 cloudinary.config({
     cloud_name: 'ved13',
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '../public');
+    },
+
+    filename: function (req, file, callback) {
+        callback(null, Date.now() + file.originalname);
+    }
+});
+const imageFilter = function (req, file, cb) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+        return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+};
+const upload = multer({ storage: storage, fileFilter: imageFilter }).single('file');
+
 
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
@@ -40,24 +58,33 @@ router.get('/profile/search', (req, res, next) => {
         });
 });
 
+// Profile Picture Upload
 router.put('/profile/update/photo', (req, res, next) => {
     console.log(req.body);
-    db.User.findById(req.body.id)
-        .then((user) => {
-            cloudinary.v2.uploader.upload(req.body.data, async function (err, result) {
-                if (err) {
-                    return next({
-                        status: 500,
-                        message: 'Image Could not be Uploaded. Please try again.'
-                    });
-                }
-                user.photoId = result.public_id;
-                user.photo = result.secure_url;
-                await user.save();
-                res.send('Image Uploaded');
-            });
-        })
-        .catch(err => next(err))
+    // db.User.findById(req.body.id)
+    //     .then((user) => {
+    //         cloudinary.v2.uploader.upload(req.body.data, async function (err, result) {
+    //             if (err) {
+    //                 return next({
+    //                     status: 500,
+    //                     message: 'Image Could not be Uploaded. Please try again.'
+    //                 });
+    //             }
+    //             user.photoId = result.public_id;
+    //             user.photo = result.secure_url;
+    //             await user.save();
+    //             res.send('Image Uploaded');
+    //         });
+    //     })
+    //     .catch(err => next(err))
+    upload(req, res, function (err) {
+        if (err instanceof multer.MulterError) {
+            return res.status(500).json(err)
+        } else if (err) {
+            return res.status(500).json(err)
+        }
+        return res.status(200).send(req.file)
+    });
 });
 
 
