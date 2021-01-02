@@ -13,6 +13,9 @@ class InternshipList extends Component {
       query: "",
     };
   }
+  componentDidMount(){
+    document.documentElement.scrollTop = '0';
+  }
   render() {
     return (
       <div className="homeSection">

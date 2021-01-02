@@ -11,8 +11,6 @@ import { FilterInternships } from '../containers/Global/Utilities'
 
 
 const Homepage = (props) => {
-    // document.documentElement.scrollTop = '0';
-    // console.log(props.currentUser);
     return (
         <div className='homePage'>
             <div className="carousel-home">
