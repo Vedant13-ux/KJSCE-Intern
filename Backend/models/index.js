@@ -32,3 +32,4 @@ module.exports.Update = require('./updates');
 module.exports.File = require('./files');
 module.exports.Application = require('./application');
 module.exports.Certificate = require('./certificate')
+module.exports.Experience = require('./experience')

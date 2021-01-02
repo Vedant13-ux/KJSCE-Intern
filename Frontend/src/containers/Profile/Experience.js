@@ -1,21 +1,13 @@
 import React, { Component } from "react";
 import { Modal } from "react-bootstrap";
+import { connect } from 'react-redux'
+import { updateExperiences } from '../../store/actions/user'
 
-export class Experience extends Component {
+class Experience extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list:[
-        {
-          title: "intership with senpai",
-          type: "internship",
-          company: "bruh",
-          startdate: "2020-12-29T16:32:44.456Z",
-          enddate: null,
-          description: "i did a lot work",
-        }
-
-      ],
+      list:this.props.currentUser.user.experiences,
       show: false,
     };
     this.handleshow = () => {
@@ -23,6 +15,17 @@ export class Experience extends Component {
     };
     this.handleclose = () => {
       this.setState({ show: false });
+    };
+    this.handleexpsub=(data)=>{
+      this.props.updateExperiences(data,this.props.currentUser.user._id).then(
+        () => {
+          console.log('Certificate Added')
+          // this.setState({
+          //   certform: { title: "", provider: "", link: "", date: new Date() },
+          //   show2: false,
+          // });
+        }
+      ).catch((err) => err)
     };
   }
   render() {
@@ -49,13 +52,14 @@ export class Experience extends Component {
             <Modal.Title>Fill Experience Details</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <ExperienceForm {...this.props}></ExperienceForm>
+            <ExperienceForm {...this.props} onexpsub={this.handleexpsub}></ExperienceForm>
           </Modal.Body>
         </Modal>
       </div>
     );
   }
 }
+
 
 class ExperienceForm extends Component {
   constructor(props) {
@@ -68,8 +72,9 @@ class ExperienceForm extends Component {
       enddate: null,
       description: "",
     };
-    this.handleSubmit=()=>{
-
+    this.handleSubmit=(e)=>{
+      e.preventDefault()
+      props.onexpsub(this.state)
     }
     this.handleChange=(e)=>{
       this.setState({[e.target.name]:e.target.value})
@@ -120,10 +125,11 @@ class ExperienceForm extends Component {
               <option value="job">Job</option>
               <option value="internship">Internship</option>
               <option value="research">Research</option>
+              <option value="member">Member</option>
             </select>
           </div>
           <div className="field">
-            <label>Company</label>
+            <label>Company/Team</label>
             <input
               name="company"
               maxLength="30"
@@ -138,6 +144,7 @@ class ExperienceForm extends Component {
             
             <input type="checkbox" defaultChecked={true} onClick={this.handleenddate}></input>currently working
           </div>
+          <div className="two fields">
           <div className="field">
             <label>Start date</label>
             <input
@@ -159,6 +166,7 @@ class ExperienceForm extends Component {
               onChange={this.handleChange}
             ></input>
           </div>}
+          </div>
           <div className="field">
             <label>description</label>
             <textarea
@@ -178,8 +186,14 @@ class ExperienceForm extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    currentUser: state.currentUser
+  }
+}
 
-{
+export default connect(mapStateToProps, { updateExperiences })(Experience);
+
   /* <div class="ui feed">
   <div class="event">
     <div class="label">
@@ -287,4 +301,3 @@ class ExperienceForm extends Component {
     </div>
   </div>
 </div> */
-}

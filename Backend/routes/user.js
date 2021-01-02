@@ -32,7 +32,7 @@ function escapeRegex(text) {
 
 // Get user by id
 router.get('/user/:id', (req, res, next) => {
-    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('applications').populate('posts').populate('certificates').exec()
+    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('applications').populate('posts').populate('certificates').populate('experience').exec()
         .then((user) => {
             res.status(200).send(user);
         }).catch((err) => {
@@ -167,5 +167,23 @@ router.put('/profile/update/resume', (req, res, next) => {
         })
 });
 
+router.put('/profile/update/experiences', (req, res, next) => {
+    db.User.findById(req.body.id)
+        .then(async user => {
+            if (!user) {
+                return next({ status: 404, message: "User Not Found" });
+            }
+            try {
+                let experience = await db.Experience.create(req.body.experience)
+                await user.experiences.push(experience);
+                await user.save();
+                res.send(experience);
+            } catch (error) {
+                next(error);
+            }
+        }).catch((err) => {
+            next(err);
+        });
+});
 
 module.exports = router;

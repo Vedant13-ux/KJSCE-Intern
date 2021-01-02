@@ -25,8 +25,7 @@ class Internship extends Component {
       this.props.deleteBookmark(this.props._id, this.props.currentUser.user._id)
         .then(async () => {
           console.log('bookmark removed');
-          await this.setState({ bookmarked: false });
-          await this.setState({ style: { color: '#000000' } });
+          await this.setState({ bookmarked: false ,style: { color: '#000000' }});
         }).catch((err) => {
           console.log(err);
         });
@@ -35,8 +34,7 @@ class Internship extends Component {
       this.props.addBookmark(this.props._id, this.props.currentUser.user._id)
         .then(async () => {
           console.log('bookmark added');
-          this.setState({ style: { color: '#ffca3d' } });
-          await this.setState({ bookmarked: true })
+          await this.setState({ bookmarked: true ,style: { color: '#ffca3d' }})
         }).catch((err) => {
           console.log(err);
         });
