@@ -19,11 +19,8 @@ class Experience extends Component {
     this.handleexpsub = (data) => {
       this.props.updateExperiences(data, this.props.currentUser.user._id).then(
         () => {
-          console.log('Certificate Added')
-          // this.setState({
-          //   certform: { title: "", provider: "", link: "", date: new Date() },
-          //   show2: false,
-          // });
+          console.log('Experience Added')
+          this.setState({show:false})
         }
       ).catch((err) => err)
     };
@@ -74,7 +71,15 @@ class ExperienceForm extends Component {
     };
     this.handleSubmit = (e) => {
       e.preventDefault()
-      props.onexpsub(this.state)
+      props.onexpsub(this.state);
+      this.setState({
+        title: "",
+        type: "",
+        company: "",
+        startdate: "",
+        enddate: null,
+        description: "",
+      })
     }
     this.handleChange = (e) => {
       this.setState({ [e.target.name]: e.target.value })
@@ -116,6 +121,7 @@ class ExperienceForm extends Component {
           <div className="field">
             <label>Type</label>
             <select
+            required
               className="ui fluid dropdown"
               name="type"
               onChange={this.handleChange}
