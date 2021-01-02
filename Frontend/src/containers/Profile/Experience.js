@@ -121,6 +121,7 @@ class ExperienceForm extends Component {
           <div className="field">
             <label>Type</label>
             <select
+            required
               className="ui fluid dropdown"
               name="type"
               onChange={this.handleChange}
