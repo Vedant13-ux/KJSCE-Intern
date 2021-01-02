@@ -13,11 +13,7 @@ class InternshipList extends Component {
       query: "",
     };
   }
-
   render() {
-    // if (this.state.start) {
-    //  
-    // } else {
     return (
       <div className="homeSection">
         <MContext.Consumer>
@@ -50,15 +46,6 @@ class InternshipList extends Component {
             else {
               return <NoResults></NoResults>;
             }
-
-            // if (this.state.query !== context.state.query && context.state.query !== "") {
-            //   return apiCall('get', '/api/internship/search/title/' + context.state.query, '')
-            //     .then((interns) => {
-            //       console.log(interns)
-            //     })
-            //     .catch(err => console.log(err))
-            // }
-            // return <p>{context.state.query}</p>
           }}
         </MContext.Consumer>
       </div>

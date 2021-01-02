@@ -108,6 +108,12 @@ const userScehma = new mongoose.Schema({
 			ref: 'Certificate'
 		}
 	],
+	experiences: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Experience'
+		}
+	],
 	bio: String,
 	socialHandles: {
 		facebook: {

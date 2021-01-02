@@ -1,6 +1,6 @@
 
 import { apiCall } from '../../services/api';
-import { UPDATE_USER_SKILLS, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK } from '../actionTypes';
+import { UPDATE_USER_SKILLS, UPDATE_USER_EXPERIENCE,UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK } from '../actionTypes';
 
 
 function userSkills(skills) {
@@ -77,6 +77,26 @@ export function updateCertificates(certificate, id) {
             return apiCall('put', '/api/profile/update/certificates', { certificate, id })
                 .then((newCertificate) => {
                     dispatch(userCertificates(newCertificate));
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+    }
+}
+
+function userExperience(experience) {
+    return {
+        type: UPDATE_USER_EXPERIENCE,
+        experience
+    }
+}
+export function updateExperiences(experience, id) {
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('put', '/api/profile/update/experiences', { experience, id })
+                .then((newExperience) => {
+                    dispatch(userExperience(newExperience));
                     res();
                 }).catch((err) => {
                     rej(err);
