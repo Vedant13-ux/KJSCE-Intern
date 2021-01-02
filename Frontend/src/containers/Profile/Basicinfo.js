@@ -113,7 +113,7 @@ class Basic extends React.Component {
                 <Modal.Title>Update Profile Picture</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <form onSubmit={this.handleImageUpload}>
+                <form onSubmit={this.handleImageUpload} enctype="multipart/form-data">
                   <div className="input-group">
                     <div className="custom-file" style={{ display: 'block' }}>
                       <label className="custom-file-label" style={{ textAlign: "left" }}>{this.state.fileLabel}</label>
