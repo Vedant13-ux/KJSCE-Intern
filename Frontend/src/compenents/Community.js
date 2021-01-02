@@ -230,7 +230,140 @@ class Feed extends React.Component {
             {...this.state}
           />
           <div className="right-side">
-            <div className="controls">tags and recommended post</div>
+            <div className="controls">
+              <form>
+                <h5>From</h5>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="student"
+                  />
+                  <label class="form-check-label" for="student">
+                    Student
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="faculty"
+                  />
+                  <label class="form-check-label" for="faculty">
+                    Faculty
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="alumni" />
+                  <label class="form-check-label" for="alumni">
+                    Alumni
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="council"
+                  />
+                  <label class="form-check-label" for="council">
+                    Council
+                  </label>
+                </div>
+                <h5>Department</h5>
+                
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="cs"
+                  />
+                  <label class="form-check-label" for="cs">
+                  Computer Science
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="mech" />
+                  <label class="form-check-label" for="mech">
+                  Mechanical
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="etrx"
+                  />
+                  <label class="form-check-label" for="etrx">
+                  Electronics
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="extc"
+                  />
+                  <label class="form-check-label" for="extc">
+                  Electronics and Telecommunication
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="it"
+                  />
+                  <label class="form-check-label" for="it">
+                  Information Technology
+                  </label>
+                </div>
+                <h5>Year</h5>
+                
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="1"
+                  />
+                  <label class="form-check-label" for="1">
+                  FY
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="2"
+                  />
+                  <label class="form-check-label" for="2">
+                  SY
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="3"
+                  />
+                  <label class="form-check-label" for="3">
+                  TY
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="4"
+                  />
+                  <label class="form-check-label" for="4">
+                  LY
+                  </label>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Submit
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -343,7 +476,11 @@ export class Post extends React.Component {
           console.log(data);
           button.classList.toggle("liked");
           lik++;
-          this.setState({ ...this.state, isLiked: !this.state.isLiked, likes: lik });
+          this.setState({
+            ...this.state,
+            isLiked: !this.state.isLiked,
+            likes: lik,
+          });
         })
         .catch((e) => console.log(e));
     } else {
@@ -354,11 +491,14 @@ export class Post extends React.Component {
           console.log(data);
           button.classList.toggle("liked");
           lik--;
-          this.setState({ ...this.state, isLiked: !this.state.isLiked, likes: lik });
+          this.setState({
+            ...this.state,
+            isLiked: !this.state.isLiked,
+            likes: lik,
+          });
         })
         .catch((e) => console.log(e));
     }
-    
   }
 
   addCommentHandler(e) {
@@ -372,21 +512,18 @@ export class Post extends React.Component {
     apiCall("post", "/api/community/posts/comments/" + this.id, {
       id: this.props.loggedin.user._id,
       text: commentText,
-    }).then(
-      ()=>{
-        this.state.comments.push({
-          author: {
-            fname: this.props.loggedin.user.fname,
-            lname: this.props.loggedin.user.lname,
-            photo: this.props.loggedin.user.photo,
-          },
-          text: commentText,
-        });
-        form.text.value = "";
-        this.setState({ ...this.state, commentsExpanded: true });
-      }
-    )
-    
+    }).then(() => {
+      this.state.comments.push({
+        author: {
+          fname: this.props.loggedin.user.fname,
+          lname: this.props.loggedin.user.lname,
+          photo: this.props.loggedin.user.photo,
+        },
+        text: commentText,
+      });
+      form.text.value = "";
+      this.setState({ ...this.state, commentsExpanded: true });
+    });
   }
 
   showComments(e) {
