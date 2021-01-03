@@ -23,12 +23,12 @@ async function seedDB() {
     //         .catch(err => console.log(err))
     // }
     // data = {};
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 3; i++) {
         data = {
             title: faker.lorem.words(3),
             content: faker.lorem.lines(3),
-            image: 'https://www.nme.com/wp-content/uploads/2020/10/Among-Us-2.jpg',
-            author: "5fd791a15cec3a4d9374a02e",
+            image: 'https://lh3.googleusercontent.com/4xhPnTIwrmREmHVKhwAmTRovdrkhNEOneYsx9YQ8DAUyTpjIVemMn03MdZbDN1rk3MqLTUg5xcThfDjpgfPKHZZ1RY0=w640-h400-e365-rj-sc0x00ffffff',
+            author: "5ff05ad4c3b7a10a3c967062",
             hashtags: faker.lorem.word(1)
         }
         let user = await db.User.findById(data.author);
