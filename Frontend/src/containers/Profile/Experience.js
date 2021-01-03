@@ -7,7 +7,7 @@ class Experience extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: this.props.currentUser.user.experiences,
+      list: this.props.user.experiences,
       show: false,
     };
     this.handleshow = () => {
@@ -17,7 +17,7 @@ class Experience extends Component {
       this.setState({ show: false });
     };
     this.handleexpsub = (data) => {
-      this.props.updateExperiences(data, this.props.currentUser.user._id).then(
+      this.props.updateExperiences(data, this.props.user._id).then(
         () => {
           console.log('Experience Added')
           this.setState({show:false})
@@ -28,7 +28,7 @@ class Experience extends Component {
   render() {
     return (
       <div id="experience">
-        <button onClick={this.handleshow} className="experience-add btn btn-primary">add</button>
+        {this.props.owner && <button onClick={this.handleshow} className="experience-add btn btn-primary">add</button>}
         {this.state.list.map((e, i) => {
           return (<div className="experience-ele">
             <h4>{e.title}<sub>{e.type}</sub></h4>
@@ -192,13 +192,8 @@ class ExperienceForm extends Component {
     );
   }
 }
-function mapStateToProps(state) {
-  return {
-    currentUser: state.currentUser
-  }
-}
 
-export default connect(mapStateToProps, { updateExperiences })(Experience);
+export default connect(()=>{}, { updateExperiences })(Experience);
 
 /* <div class="ui feed">
 <div class="event">

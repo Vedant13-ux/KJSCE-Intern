@@ -38,10 +38,7 @@ class Basic extends Component {
     let display;
     switch (this.state.content) {
       case "experiences":
-        display = <Experience loggedin={{ user: this.props.loggedin }} />;
-        break;
-      case "Education":
-        display = <div>education</div>;
+        display = <Experience owner={this.props.owner} user={this.props.user} />;
         break;
       case "posts":
         display = (
@@ -71,15 +68,6 @@ class Basic extends Component {
                 onClick={this.handleSwitch}
               >
                 Experiences
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link
-                name="Education"
-                to="#Education"
-                onClick={this.handleSwitch}
-              >
-                Education
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
