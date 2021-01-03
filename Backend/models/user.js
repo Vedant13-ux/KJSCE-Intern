@@ -13,11 +13,9 @@ const userScehma = new mongoose.Schema({
 	emailToken: String,
 	fname: {
 		type: String,
-		required: true
 	},
 	lname: {
 		type: String,
-		required: true
 	},
 	dept: String,
 	role: String,
@@ -147,6 +145,10 @@ const userScehma = new mongoose.Schema({
 			ref: 'CouncilMember',
 		}
 	],
+	councilName: String,
+	passedOut: String,
+	workingAt: String,
+	position: String
 
 
 

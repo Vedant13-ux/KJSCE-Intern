@@ -8,6 +8,9 @@ import Contact from '../containers/Landing/Contact'
 import Verification from '../containers/Landing/Verification';
 import Carousel from 'react-bootstrap/Carousel'
 import Login from '../containers/Landing/Login'
+import CouncilSignup from '../containers/Landing/AuthFormCouncil'
+import AlumniSignup from '../containers/Landing/AuthFormAlumni'
+// import Login from '../containers/Landing/AuthFormCouncil'
 
 
 
@@ -63,6 +66,12 @@ class Landing extends Component {
                         </Carousel.Item>
                         <Carousel.Item>
                             <AuthForm heading="Faculty Signup" role="Faculty" onVerify={this.verify} already={this.already} />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <CouncilSignup onVerify={this.verify}></CouncilSignup>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <AlumniSignup onVerify={this.verify}></AlumniSignup>
                         </Carousel.Item>
                     </Carousel>
             }

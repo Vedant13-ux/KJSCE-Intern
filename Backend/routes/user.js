@@ -32,7 +32,7 @@ function escapeRegex(text) {
 
 // Get user by id
 router.get('/user/:id', (req, res, next) => {
-    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('applications').populate('posts').populate('certificates').populate('experience').exec()
+    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('applications').populate('posts').populate('certificates').populate('experiences').exec()
         .then((user) => {
             res.status(200).send(user);
         }).catch((err) => {
@@ -61,6 +61,9 @@ router.get('/profile/search', (req, res, next) => {
 // Profile Picture Upload
 router.put('/profile/update/photo', (req, res, next) => {
     console.log(req.body);
+    for (var entry of req.body.entries()) {
+        console.log(entry);
+    }
     // db.User.findById(req.body.id)
     //     .then((user) => {
     //         cloudinary.v2.uploader.upload(req.body.data, async function (err, result) {

@@ -85,7 +85,7 @@ class Profile extends Component {
             <div className="row">
               <Moreinfo
                 isowner={this.state.owner}
-                user={this.props.currentUser.user}
+                user={this.state.user}
               />
               <UserActivity owner={this.state.owner} user={this.state.user} loggedin={this.props.currentUser.user} />
             </div>

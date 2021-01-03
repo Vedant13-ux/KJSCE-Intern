@@ -17,21 +17,29 @@ class Basic extends Component {
       },
       skills: [
         { text: "Python" },
-        { text: "Node.Js" },
+        { text: "Node.js" },
         { text: "Django" },
         { text: "Javascript" },
         { text: "C++" },
         { text: "React Native" },
       ],
       info: {
+        // Student
         year: props.user.year,
         dept: props.user.dept,
-        rollNo: props.user.rollNo
+        rollNo: props.user.rollNo,
+        // Faculty
+        facultyId: props.user.facultyId,
+        position: props.user.position,
+        // Alumni
+        passedOut: props.user.passedOut,
+        workingAt: props.user.workingAt,
+
       },
       show1: false,
       show2: false,
       show3: false,
-      preskills:[]
+      preskills: []
     };
 
     this.multiselectRef = React.createRef();
@@ -40,15 +48,15 @@ class Basic extends Component {
 
     this.handleClose1 = () => this.setState({ show1: false });
     this.handleShow1 = () => {
-      let temp=this.props.user.skills
-      this.state.preskills=[]
-      let i=0;
+      let temp = this.props.user.skills
+      this.state.preskills = []
+      let i = 0;
       for (i = 0; i < temp.length; i++) {
         this.state.preskills.push({
           text: temp[i],
         });
       }
-      this.setState({ show1: true ,preskills:this.state.preskills});
+      this.setState({ show1: true, preskills: this.state.preskills });
 
     }
 
@@ -64,17 +72,32 @@ class Basic extends Component {
 
     this.handlesubinfo = (e) => {
       e.preventDefault();
-      let data = {
-        id: this.props.user._id,
-        user: {
+      var user = {};
+      if (props.user.role === "Student") {
+        user = {
           year: this.state.info.year,
           rollNo: this.state.info.rollNo,
           dept: this.state.info.dept,
-
+        }
+      } else if (props.user.role === "Faculty") {
+        user = {
+          year: this.state.info.year,
+          dept: this.state.info.dept,
+          position: this.state.info.position
+        }
+      } else {
+        user = {
+          passedOut: this.state.info.passedOut,
+          workingAt: this.state.info.workingAt,
+          position: this.state.info.position
         }
       }
+      const data = {
+        id: props.user._id,
+        user
+      }
       props.updateinfo(data).then((d) => this.handleClose3())
-    };
+    }
     this.handleChange1 = (e) => {
       let t = this.state.info
       t[e.target.name] = e.target.value;
@@ -111,13 +134,13 @@ class Basic extends Component {
       skillArray.push(skill.text);
     });
     this.changeskill(skillArray);
-    
+
   }
   handleSubmit(e) {
     e.preventDefault();
 
     this.addcert(this.state.certform);
-    
+
   }
 
   async handleSkills() {
@@ -156,20 +179,51 @@ class Basic extends Component {
           <div className="panel-body pn">
             <table className="table mbn tc-icon-1 tc-med-2 tc-bold-last">
               <tbody>
-                <tr>
-                  <td>Department</td>
-                  <td style={{ textTransform: "uppercase" }}>
-                    {this.props.user.dept}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Year</td>
-                  <td>{this.props.user.year}</td>
-                </tr>
-                <tr>
-                  <td>Roll number</td>
-                  <td>{this.props.user.rollNo}</td>
-                </tr>
+                {(this.props.user.role === "Faculty" || this.props.user.role === "Student") &&
+                  <tr>
+                    <td>Department</td>
+                    <td style={{ textTransform: "uppercase" }}>
+                      {this.props.user.dept}
+                    </td>
+                  </tr>
+                }
+
+                {this.props.user.role === "Student" &&
+                  <div style={{ width: '100%' }}>
+                    <tr>
+                      <td>Year</td>
+                      <td>{this.props.user.year}</td>
+                    </tr>
+                    <tr>
+                      <td>Roll number</td>
+                      <td>{this.props.user.rollNo}</td>
+                    </tr>
+                  </div>
+                }
+                {
+                  this.props.user.role === "Faculty" &&
+                  <tr>
+                    <td>Position</td>
+                    <td>{this.props.user.position}</td>
+                  </tr>
+                }
+                {this.props.user.role === 'Alumni' &&
+                  <div>
+                    <tr>
+                      <td>Year of Passing Out</td>
+                      <td>{this.props.user.passedOut}</td>
+                    </tr>
+                    <tr>
+                      <td>Working At</td>
+                      <td>{this.props.user.workingAt}</td>
+                    </tr>
+                    <tr>
+                      <td>Position at Company</td>
+                      <td>{this.props.user.position}</td>
+                    </tr>
+                  </div>
+                }
+
               </tbody>
             </table>
           </div>
@@ -180,56 +234,111 @@ class Basic extends Component {
             <Modal.Body>
               <form onSubmit={this.handlesubinfo}>
                 <div className="ui form">
-
-                  <div className="field">
-                    <label>Department</label>
-                    <select
-                      className="ui fluid dropdown"
-                      name="dept"
-                      onChange={this.handleChange1}
-                      value={dept}
-                      required
-                    >
-                      <option value="">Department</option>
-                      <option value="cs">Computer Science</option>
-                      <option value="it">Information Technology</option>
-                      <option value="mech">Mechanical</option>
-                      <option value="extc">
-                        Electronics and Telecommunication
-                      </option>
-                      <option value="etrx">Electronics</option>
-                    </select>
-                  </div>
-                  <div className="field">
-                    <label>Year</label>
-                    <select
-                      className="ui fluid dropdown"
-                      name="year"
-                      onChange={this.handleChange1}
-                      value={year}
-                    >
-                      <option value="">Year</option>
-                      <option value="1">FY</option>
-                      <option value="2">SY</option>
-                      <option value="3">TY</option>
-                      <option value="4">LY</option>
-                    </select>
-                  </div>
-                  <div className="field">
-                    <label>Roll No.</label>
-                    <div className="ui left icon input">
-                      <input
-                        required
-                        type="text"
-                        name="rollNo"
-                        placeholder="Roll No."
-                        value={rollNo}
+                  {
+                    (this.props.user.role === "Student" && this.props.user.role === "Faculty") &&
+                    <div className="field">
+                      <label>Deparment</label>
+                      <select
+                        className="ui fluid dropdown"
+                        name="dept"
                         onChange={this.handleChange1}
-                        pattern="[0-9]{7}"
-                      />
-                      <i className="ui id card icon"></i>
+                        value={dept}
+                        required
+                      >
+                        <option value="">Department</option>
+                        <option value="cs">Computer Science</option>
+                        <option value="it">Information Technology</option>
+                        <option value="mech">Mechanical</option>
+                        <option value="extc">
+                          Electronics and Telecommunication
+                        </option>
+                        <option value="etrx">Electronics</option>
+                      </select>
                     </div>
-                  </div>
+                  }
+                  {this.props.user.role === "Student" &&
+                    <div>
+                      <div className="field">
+                        <label>Year</label>
+                        <select
+                          className="ui fluid dropdown"
+                          name="year"
+                          onChange={this.handleChange1}
+                          value={year}
+                        >
+                          <option value="">Year</option>
+                          <option value="1">FY</option>
+                          <option value="2">SY</option>
+                          <option value="3">TY</option>
+                          <option value="4">LY</option>
+                        </select>
+                      </div>
+
+                      <div className="field">
+                        <label>Roll No.</label>
+                        <div className="ui left icon input">
+                          <input
+                            required
+                            type="text"
+                            name="rollNo"
+                            placeholder="Roll No."
+                            value={rollNo}
+                            onChange={this.handleChange1}
+                            pattern="[0-9]{7}"
+                          />
+                          <i className="ui id card icon"></i>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                  {
+                    this.props.user.role === "Alumni" &&
+                    <div>
+                      <div className="field">
+                        <label>Year of Passing Out</label>
+                        <div className="ui left icon input">
+                          <input
+                            required
+                            type="text"
+                            name="passedOut"
+                            placeholder="Year"
+                            value={this.props.user.passsedOut}
+                            onChange={this.handleChange1}
+                            pattern="[0-9]{4}"
+                          />
+                          <i className="ui graduation cap icon"></i>
+                        </div>
+                      </div>
+                      <div className="field">
+                        <label>Working At</label>
+                        <div className="ui left icon input">
+                          <input
+                            required
+                            type="text"
+                            name="workingAt"
+                            placeholder="Eg. Microsoft"
+                            value={this.props.user.workingAt}
+                            onChange={this.handleChange1}
+                          />
+                          <i className="ui building icon"></i>
+                        </div>
+                      </div>
+                      <div className="field">
+                        <label>Position</label>
+                        <div className="ui left icon input">
+                          <input
+                            required
+                            type="text"
+                            name="workingAt"
+                            placeholder="Eg. Hr, Software Engineer"
+                            value={this.props.user.position}
+                            onChange={this.handleChange1}
+                          />
+                          <i className="ui id card icon"></i>
+                        </div>
+                      </div>
+                    </div>
+                  }
                   <div className="submit confirmdiv">
                     <button className="medium ui button confirm">
                       CONFIRM
@@ -293,21 +402,22 @@ class Basic extends Component {
             )}
           </div>
           <div className="panel-body pb5">
-            {this.props.user.certificates.map((s) => (
-              <div>
-                <h4>{s.title}</h4>
-                <p>
-                  {s.provider}
-                  <br></br>
+            {
+              this.props.user.certificates.map((s) => (
+                <div>
+                  <h4>{s.title}</h4>
+                  <p>
+                    {s.provider}
+                    <br></br>
                   Issued {new Date(s.date).toDateString()}
-                  <br></br>
-                  <a href={s.link} target="_blank" rel="noreferrer">
-                    see creditential
+                    <br></br>
+                    <a href={s.link} target="_blank" rel="noreferrer">
+                      see creditential
                   </a>
-                </p>
-                <hr className="short br-lighter"></hr>
-              </div>
-            ))}
+                  </p>
+                  <hr className="short br-lighter"></hr>
+                </div>
+              ))}
           </div>
         </div>
         <Modal
@@ -368,6 +478,7 @@ class Basic extends Component {
                     placeholder="eg. https://www.udemy.com/certificate/UC-fb6...."
                   ></input>
                 </div>
+
                 <div className="submit confirmdiv">
                   <button className="medium ui button confirm">ADD</button>
                 </div>
@@ -375,7 +486,7 @@ class Basic extends Component {
             </form>
           </Modal.Body>
         </Modal>
-      </div>
+      </div >
     );
   }
 }

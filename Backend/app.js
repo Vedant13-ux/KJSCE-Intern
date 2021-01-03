@@ -14,6 +14,7 @@ require('dotenv').config();
 const { loginRequired, ensureCorrectUser } = require('./middleware');
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 // Database
 require('./models/index');

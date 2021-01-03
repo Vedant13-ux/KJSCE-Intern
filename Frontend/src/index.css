@@ -159,6 +159,12 @@ style 2--
 
         
             /* *******************************Auth From ********************* */
+/* .sections .rightSection .content {
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  justify-items: stretch;
+} */
 .sections .rightSection .content .authForm{
   top:50%;
   border: #020C53 8px solid;  

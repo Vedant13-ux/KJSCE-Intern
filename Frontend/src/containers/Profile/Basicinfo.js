@@ -62,16 +62,21 @@ class Basic extends React.Component {
 
     this.handleImageUpload = async (e) => {
       e.preventDefault();
-      const data = new FormData();
-      await data.append('file', this.state.selectedFile);
-      for (var entry of data.entries()) {
-        console.log(entry);
-      }
-      const obj = {
-        id: this.props.currentUser.user._id,
-        data: data
-      }
-      apiCall('put', '/api/profile/update/photo', obj)
+      // const data = new FormData();
+      // await data.append('file', this.state.selectedFile);
+      // await data.append('text', this.props.currentUser.user._id)
+      // for (var entry of data.entries()) {
+      //   console.log(entry);
+      // }
+      // const obj = {
+      //   id: this.props.currentUser.user._id,
+      //   data: data
+      // }
+      var form = document.forms.namedItem('uploadForm');
+      const data = new FormData(form);
+      await data.append('id', this.props.currentUser.user._id);
+
+      apiCall('put', '/api/profile/update/photo', data)
         .then((file) => {
           console.log('Image Uploaded');
           console.log(file)
@@ -113,12 +118,13 @@ class Basic extends React.Component {
                 <Modal.Title>Update Profile Picture</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <form onSubmit={this.handleImageUpload} enctype="multipart/form-data">
+                <form onSubmit={this.handleImageUpload} enctype="multipart/form-data" name="uploadForm">
                   <div className="input-group">
                     <div className="custom-file" style={{ display: 'block' }}>
                       <label className="custom-file-label" style={{ textAlign: "left" }}>{this.state.fileLabel}</label>
                       <input type="file" id="file" name="file" onChange={this.fileValidation} className="custom-file-input" style={{ outline: "none", border: "none" }} accept=".jpg,.png | image/*" required />
                     </div>
+
                     <div style={{ textAlign: 'center', display: 'block' }}>
                       <button className="ui button">Upload</button>
                     </div>
