@@ -206,6 +206,7 @@ margin-right: 9px;
   padding: 10px;
   margin: 10px;
   /* border-bottom: 2px solid rgb(168, 163, 163); */
+  border: 1.5px solid #bdbdbdd2;
 }
 #experience .experience-ele h4{
   /* background-color: #FFCA3D; */
