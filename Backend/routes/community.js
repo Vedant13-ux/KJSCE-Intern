@@ -12,10 +12,10 @@ router.get('/posts/getAll', (req, res, next) => {
         })
         .catch(err => next(err));
 });
-
+// {$in:req.body.roles}
 router.put('/posts/getSpecific', (req, res, next) => {
     console.log(req.body)
-    db.Post.find().populate({path:'author',match:{role:{$in:req.body.roles}}}).populate({ path: 'comments', populate: { path: 'author' } }).limit(10).exec()
+    db.Post.find().populate({path:'author',match:{role:"Student"}}).populate({ path: 'comments', populate: { path: 'author' } }).limit(10).exec()
 
         .then(posts => {
             res.status(200).send(posts);
