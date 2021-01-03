@@ -12,6 +12,17 @@ router.get('/posts/getAll', (req, res, next) => {
         })
         .catch(err => next(err));
 });
+
+router.put('/posts/getSpecific', (req, res, next) => {
+    console.log(req.body)
+    db.Post.find().populate({path:'author',match:{role:{$in:req.body.roles}}}).populate({ path: 'comments', populate: { path: 'author' } }).limit(10).exec()
+
+        .then(posts => {
+            res.status(200).send(posts);
+        })
+        .catch(err => next(err));
+});
+
 router.get('/posts/getNext', (req, res, next) => {
     let curId = req.query.curId;
     db.Post.find({ _id: { $gt: curId } }).sort({ created: -1 }).limit(1).exec()

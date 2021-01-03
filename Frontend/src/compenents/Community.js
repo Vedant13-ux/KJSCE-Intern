@@ -205,10 +205,10 @@ class Feed extends React.Component {
       posts: [],
       start: true,
       filter:{
-        student:true,
-        faculty:true,
-        alumni:true,
-        council:true,
+        Student:true,
+        Faculty:true,
+        Alumni:true,
+        Council:true,
         it:true,
         cs:true,
         mech:true,
@@ -222,7 +222,21 @@ class Feed extends React.Component {
     };
     this.handleSubmit=(e)=>{
       e.preventDefault()
-      console.log(this.state)
+      let roles=[]
+      let allroles=["Student","Faculty","Alumni","Council"]
+      for (let i in allroles){
+        if (this.state.filter[allroles[i]]){
+          roles.push(allroles[i])
+        }
+      }
+      apiCall("put", "/api/community/posts/getSpecific", {roles})
+        .then((data) => {
+          console.log("hua sahi se",data)
+          this.setState({ posts: data });
+        })
+        .catch((e) => {
+          console.log("error");
+        });
     }
     this.handleChange=(e)=>{
       console.log(e.target.checked,e.target.id)
@@ -265,9 +279,9 @@ class Feed extends React.Component {
                     class="form-check-input"
                     defaultChecked={true}
                     onChange={this.handleChange}
-                    id="student"
+                    id="Student"
                   />
-                  <label class="form-check-label" for="student">
+                  <label class="form-check-label" for="Student">
                     Student
                   </label>
                 </div>
@@ -277,17 +291,17 @@ class Feed extends React.Component {
                     class="form-check-input"
                     defaultChecked={true}
                     onChange={this.handleChange}
-                    id="faculty"
+                    id="Faculty"
                   />
-                  <label class="form-check-label" for="faculty">
+                  <label class="form-check-label" for="Faculty">
                     Faculty
                   </label>
                 </div>
                 <div class="form-check">
                   <input type="checkbox" class="form-check-input"
                     defaultChecked={true}
-                    onChange={this.handleChange} id="alumni" />
-                  <label class="form-check-label" for="alumni">
+                    onChange={this.handleChange} id="Alumni" />
+                  <label class="form-check-label" for="Alumni">
                     Alumni
                   </label>
                 </div>
@@ -297,9 +311,9 @@ class Feed extends React.Component {
                     class="form-check-input"
                     defaultChecked={true}
                     onChange={this.handleChange}
-                    id="council"
+                    id="Council"
                   />
-                  <label class="form-check-label" for="council">
+                  <label class="form-check-label" for="Council">
                     Council
                   </label>
                 </div>
@@ -415,7 +429,7 @@ class Feed extends React.Component {
                 </div>
                 </div>
                 <button type="submit" class="btn btn-primary">
-                  Submit
+                  Apply
                 </button>
               </form>
             </div>
