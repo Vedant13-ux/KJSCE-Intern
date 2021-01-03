@@ -139,46 +139,48 @@ class Basic extends React.Component {
               <small> - {this.props.user.role}</small>
             </h2>
             <p className="lead">{this.props.user.bio}</p>
-            <div className="media-links">
-              <ul className="list-inline list-unstyled">
-                {this.props.user.socialHandles.facebook !== "" && (
+            {this.props.user.socialHandles !== {} &&
+              <div className="media-links">
+                <ul className="list-inline list-unstyled">
+                  {this.props.user.socialHandles.facebook !== "" && (
+                    <li>
+                      <a target="_blank" rel="noreferrer" href={this.props.user.socialHandles.facebook} title="facebook link">
+                        <span className="fa fa-facebook-square fs35 text-primary"></span>
+                      </a>
+                    </li>
+                  )}
+                  {this.props.user.socialHandles.twitter !== "" && (
+                    <li>
+                      <a target="_blank" rel="noreferrer" href={this.props.user.socialHandles.twitter} title="twitter link">
+                        <span className="fa fa-twitter-square fs35 text-info"></span>
+                      </a>
+                    </li>
+                  )}
+                  {this.props.user.socialHandles.linkedin !== "" && (
+                    <li className="hidden">
+                      <a target="_blank" rel="noreferrer" href={this.props.user.socialHandles.linkedin} title="linkedin link">
+                        <span className="fa fa-linkedin-square fs35 text-info"></span>
+                      </a>
+                    </li>
+                  )}
+                  {this.props.user.socialHandles.github !== "" && (
+                    <li className="hidden">
+                      <a target="_blank" rel="noreferrer" href={this.props.user.socialHandles.github} title="github link">
+                        <span className="fa fa-github-square fs35 text-dark"></span>
+                      </a>
+                    </li>
+                  )}
                   <li>
-                    <a target="_blank" rel="noreferrer" href={this.props.user.socialHandles.facebook} title="facebook link">
-                      <span className="fa fa-facebook-square fs35 text-primary"></span>
+                    <a target="_blank" rel="noreferrer"
+                      href={"mailto:" + this.props.user.email}
+                      title="email link"
+                    >
+                      <span className="fa fa-envelope-square fs35 text-muted"></span>
                     </a>
                   </li>
-                )}
-                {this.props.user.socialHandles.twitter !== "" && (
-                  <li>
-                    <a target="_blank" rel="noreferrer" href={this.props.user.socialHandles.twitter} title="twitter link">
-                      <span className="fa fa-twitter-square fs35 text-info"></span>
-                    </a>
-                  </li>
-                )}
-                {this.props.user.socialHandles.linkedin !== "" && (
-                  <li className="hidden">
-                    <a target="_blank" rel="noreferrer" href={this.props.user.socialHandles.linkedin} title="linkedin link">
-                      <span className="fa fa-linkedin-square fs35 text-info"></span>
-                    </a>
-                  </li>
-                )}
-                {this.props.user.socialHandles.github !== "" && (
-                  <li className="hidden">
-                    <a target="_blank" rel="noreferrer" href={this.props.user.socialHandles.github} title="github link">
-                      <span className="fa fa-github-square fs35 text-dark"></span>
-                    </a>
-                  </li>
-                )}
-                <li>
-                  <a target="_blank" rel="noreferrer"
-                    href={"mailto:" + this.props.user.email}
-                    title="email link"
-                  >
-                    <span className="fa fa-envelope-square fs35 text-muted"></span>
-                  </a>
-                </li>
-              </ul>
-            </div>
+                </ul>
+              </div>
+            }
           </div>
           {this.props.owner && <button className="edit-but" onClick={this.handleshow}>
             <i className="fa fa-edit"></i>

@@ -6,7 +6,8 @@ class CouncilSignup extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            councilName: '',
+            fname: '',
+            lname: '',
             email: '',
             password: '',
             role: 'Council'
@@ -32,7 +33,7 @@ class CouncilSignup extends Component {
             });
     }
     render() {
-        const { councilName, email, password } = this.state;
+        const { fname, email, password } = this.state;
         return (
             <form className="ui form authForm" onSubmit={this.handleSubmit}>
                 <div className="heading">
@@ -40,7 +41,7 @@ class CouncilSignup extends Component {
                 </div>
                 <div className="field">
                     <label>Council Name</label>
-                    <input required type="text" name="councilName" placeholder="Name of your Council" value={councilName} onChange={this.handleChange} />
+                    <input required type="text" name="councilName" placeholder="Name of your Council" value={fname} onChange={this.handleChange} />
                 </div>
                 <div className="field">
                     <label>Somaiya Email</label>

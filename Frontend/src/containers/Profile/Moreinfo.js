@@ -70,7 +70,7 @@ class Basic extends Component {
     this.handleClose3 = () => this.setState({ show3: false });
     this.handleShow3 = () => this.setState({ show3: true });
 
-    this.handlesubinfo = (e) => {
+    this.handlesubinfo = async (e) => {
       e.preventDefault();
       var user = {};
       if (props.user.role === "Student") {
@@ -81,7 +81,6 @@ class Basic extends Component {
         }
       } else if (props.user.role === "Faculty") {
         user = {
-          year: this.state.info.year,
           dept: this.state.info.dept,
           position: this.state.info.position
         }
@@ -96,7 +95,7 @@ class Basic extends Component {
         id: props.user._id,
         user
       }
-      props.updateinfo(data).then(() => this.handleClose3())
+      await props.updateinfo(data).then(() => this.handleClose3())
     }
     this.handleChange1 = (e) => {
       let t = this.state.info
@@ -161,7 +160,7 @@ class Basic extends Component {
 
   render() {
     const { title, provider, date, link } = this.state.certform;
-    const { rollNo, year, dept } = this.state.info;
+    const { rollNo, year, workingAt, passedOut, facultyId, dept, position } = this.state.info;
     return (
       <div className="col-md-4">
         <div className="panel">
@@ -257,14 +256,14 @@ class Basic extends Component {
                   }
                   {this.props.user.role === "Faculty" &&
                     <div className="field">
-                      <label>Position</label>
+                      <label>Designation</label>
                       <div className="ui left icon input">
                         <input
                           required
                           type="text"
                           name="position"
                           placeholder="Eg. Lab Assistant"
-                          value={this.props.user.position}
+                          value={position}
                           onChange={this.handleChange1}
                         />
                         <i className="ui id badge icon"></i>
@@ -317,7 +316,7 @@ class Basic extends Component {
                             type="text"
                             name="passedOut"
                             placeholder="Year"
-                            value={this.props.user.passsedOut}
+                            value={passedOut}
                             onChange={this.handleChange1}
                             pattern="[0-9]{4}"
                           />
@@ -332,7 +331,7 @@ class Basic extends Component {
                             type="text"
                             name="workingAt"
                             placeholder="Eg. Microsoft"
-                            value={this.props.user.workingAt}
+                            value={workingAt}
                             onChange={this.handleChange1}
                           />
                           <i className="ui building icon"></i>
@@ -344,9 +343,9 @@ class Basic extends Component {
                           <input
                             required
                             type="text"
-                            name="workingAt"
+                            name="position"
                             placeholder="Eg. Hr, Software Engineer"
-                            value={this.props.user.position}
+                            value={position}
                             onChange={this.handleChange1}
                           />
                           <i className="ui id card icon"></i>

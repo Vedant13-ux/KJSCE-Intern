@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, UPDATE_USER_SKILLS,UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK } from '../actionTypes';
+import { SET_CURRENT_USER, UPDATE_USER_SKILLS, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK } from '../actionTypes';
 
 const defaultState = {
     isAuthenticated: false,
@@ -17,11 +17,9 @@ const currentUserReducer = (state = defaultState, action) => {
                 ...state
             }
         case UPDATE_USER_INFO:
-            state.user.dept = action.user.dept;
-            state.user.year = action.user.year;
-            state.user.rollNo = action.user.rollNo;
+            state.user = { ...state.user, ...action.user }
             return {
-                ...state
+                ...state,
             }
         case UPDATE_USER_CERTIFICATES:
             state.user.certificates.push(action.certificate);
