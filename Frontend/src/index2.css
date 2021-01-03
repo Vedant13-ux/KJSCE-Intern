@@ -201,11 +201,11 @@ margin-right: 9px;
 } */
 
 #experience .experience-ele{
-  background-color: rgb(242, 242, 242);
+  background-color: #f5f5f5d2;
   border-radius: 10px;
   padding: 10px;
   margin: 10px;
-  border-bottom: 2px solid rgb(168, 163, 163);
+  /* border-bottom: 2px solid rgb(168, 163, 163); */
 }
 #experience .experience-ele h4{
   /* background-color: #FFCA3D; */
