@@ -189,7 +189,7 @@ class Basic extends Component {
                 }
 
                 {this.props.user.role === "Student" &&
-                  <div style={{ width: '100%' }}>
+                  <span>
                     <tr>
                       <td>Year</td>
                       <td>{this.props.user.year}</td>
@@ -198,7 +198,7 @@ class Basic extends Component {
                       <td>Roll number</td>
                       <td>{this.props.user.rollNo}</td>
                     </tr>
-                  </div>
+                  </span>
                 }
                 {
                   this.props.user.role === "Faculty" &&
@@ -235,7 +235,7 @@ class Basic extends Component {
               <form onSubmit={this.handlesubinfo}>
                 <div className="ui form">
                   {
-                    (this.props.user.role === "Student" && this.props.user.role === "Faculty") &&
+                    (this.props.user.role === "Student" || this.props.user.role === "Faculty") &&
                     <div className="field">
                       <label>Deparment</label>
                       <select
@@ -253,6 +253,23 @@ class Basic extends Component {
                           Electronics and Telecommunication
                         </option>
                         <option value="etrx">Electronics</option>
+                      </select>
+                    </div>
+                  }
+                  {this.props.user.role === "Faculty" &&
+                    <div className="field">
+                      <label>Position</label>
+                      <select
+                        className="ui fluid dropdown"
+                        name="year"
+                        onChange={this.handleChange1}
+                        value={this.props.user.position}
+                      >
+                        <option value="">Year</option>
+                        <option value="1">FY</option>
+                        <option value="2">SY</option>
+                        <option value="3">TY</option>
+                        <option value="4">LY</option>
                       </select>
                     </div>
                   }
