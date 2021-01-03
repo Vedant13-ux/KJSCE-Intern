@@ -17,9 +17,23 @@ const currentUserReducer = (state = defaultState, action) => {
                 ...state
             }
         case UPDATE_USER_INFO:
-            state.user = { ...state.user, ...action.user }
+            if (state.user.role === "Student") {
+                state.user.year = action.user.year;
+                state.user.rollNo = action.user.rollNo;
+                state.user.dept = action.user.dept;
+
+            } else if (state.user.role === "Faculty") {
+                state.user.dept = action.user.dept;
+                state.user.position = action.user.position
+
+            } else {
+                state.user.passedOut = action.user.passedOut;
+                state.user.workingAt = action.user.workingAt;
+                state.user.position = action.user.position;
+            }
+
             return {
-                ...state,
+                ...state
             }
         case UPDATE_USER_CERTIFICATES:
             state.user.certificates.push(action.certificate);
