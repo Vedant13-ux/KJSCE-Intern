@@ -29,23 +29,24 @@ class Experience extends Component {
     return (
       <div id="experience">
         {this.props.owner && <button onClick={this.handleshow} className="experience-add ui button ">Add + </button>}
-        {this.state.list.map((e, i) => {
-          return (
-            <div className="experience-ele">
-              <h4>{e.title}</h4>
-              <sub>{e.type}</sub>
-              <p>
-                <h5>{e.company}</h5>
-                {new Date(e.startdate).toDateString() + '-' + (e.enddate === null ? "Present" : new Date(e.enddate).toDateString())}
-                <br></br>
-                <h6>
-                  {e.description}
-                </h6>
-              </p>
-              <hr className="short br-lighter"></hr>
-            </div>)
-        })}
-
+        <div style={{ overflowY: 'auto', maxHeight: '800px' }}>
+          {this.state.list.map((e, i) => {
+            return (
+              <div className="experience-ele">
+                <h4>{e.title}</h4>
+                <sub>{e.type}</sub>
+                <p>
+                  <h5>{e.company}</h5>
+                  {new Date(e.startdate).toDateString() + '-' + (e.enddate === null ? "Present" : new Date(e.enddate).toDateString())}
+                  <br></br>
+                  <h6>
+                    {e.description}
+                  </h6>
+                </p>
+                {/* <hr className="short br-lighter"></hr> */}
+              </div>)
+          })}
+        </div>
         <Modal size="lg" show={this.state.show} onHide={this.handleclose} backdrop="static">
           <Modal.Header closeButton>
             <Modal.Title>Fill Experience Details</Modal.Title>
