@@ -91,6 +91,7 @@ style 2--
    display:flex;
    justify-content: center;
    padding-top:100px;
+   /* mar */
 }
 #notFound svg{
    max-width:1100px;

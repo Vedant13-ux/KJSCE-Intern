@@ -98,9 +98,6 @@ class Navbar extends Component {
                                 <Link className="nav-link" to="/messaging"><i className="fas fa-envelope mr-1"></i>Messaging</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/myinternships"><i className="fas fa-briefcase mr-1"></i>My Internships</Link>
-                            </li>
-                            <li className="nav-item">
                                 <Link className="nav-link" to="/bookmarks"><i class="fas fa-bookmark mr-1"></i>Bookmarks</Link>
                             </li>
                         </ul>

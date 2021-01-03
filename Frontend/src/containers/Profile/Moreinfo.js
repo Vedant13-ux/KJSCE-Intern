@@ -96,7 +96,7 @@ class Basic extends Component {
         id: props.user._id,
         user
       }
-      props.updateinfo(data).then((d) => this.handleClose3())
+      props.updateinfo(data).then(() => this.handleClose3())
     }
     this.handleChange1 = (e) => {
       let t = this.state.info
@@ -178,53 +178,51 @@ class Basic extends Component {
           </div>
           <div className="panel-body pn">
             <table className="table mbn tc-icon-1 tc-med-2 tc-bold-last">
-              <tbody>
-                {(this.props.user.role === "Faculty" || this.props.user.role === "Student") &&
-                  <tr>
-                    <td>Department</td>
-                    <td style={{ textTransform: "uppercase" }}>
-                      {this.props.user.dept}
-                    </td>
-                  </tr>
-                }
 
-                {this.props.user.role === "Student" &&
-                  <span>
-                    <tr>
-                      <td>Year</td>
-                      <td>{this.props.user.year}</td>
-                    </tr>
-                    <tr>
-                      <td>Roll number</td>
-                      <td>{this.props.user.rollNo}</td>
-                    </tr>
-                  </span>
-                }
-                {
-                  this.props.user.role === "Faculty" &&
+              {(this.props.user.role === "Faculty" || this.props.user.role === "Student") &&
+                <tr>
+                  <td>Department</td>
+                  <td style={{ textTransform: "uppercase" }}>
+                    {this.props.user.dept}
+                  </td>
+                </tr>
+              }
+
+              {this.props.user.role === "Student" &&
+                <tbody>
                   <tr>
-                    <td>Position</td>
+                    <td>Year</td>
+                    <td>{this.props.user.year}</td>
+                  </tr>
+                  <tr>
+                    <td>Roll number</td>
+                    <td>{this.props.user.rollNo}</td>
+                  </tr>
+                </tbody>
+              }
+              {
+                this.props.user.role === "Faculty" &&
+                <tr>
+                  <td>Designation</td>
+                  <td>{this.props.user.position}</td>
+                </tr>
+              }
+              {this.props.user.role === 'Alumni' &&
+                <tbody>
+                  <tr>
+                    <td>Year of Graduation</td>
+                    <td>{this.props.user.passedOut}</td>
+                  </tr>
+                  <tr>
+                    <td>Working At</td>
+                    <td>{this.props.user.workingAt}</td>
+                  </tr>
+                  <tr>
+                    <td>Position at Company</td>
                     <td>{this.props.user.position}</td>
                   </tr>
-                }
-                {this.props.user.role === 'Alumni' &&
-                  <div>
-                    <tr>
-                      <td>Year of Passing Out</td>
-                      <td>{this.props.user.passedOut}</td>
-                    </tr>
-                    <tr>
-                      <td>Working At</td>
-                      <td>{this.props.user.workingAt}</td>
-                    </tr>
-                    <tr>
-                      <td>Position at Company</td>
-                      <td>{this.props.user.position}</td>
-                    </tr>
-                  </div>
-                }
-
-              </tbody>
+                </tbody>
+              }
             </table>
           </div>
           <Modal show={this.state.show3} onHide={this.handleClose3} centered>
@@ -253,24 +251,24 @@ class Basic extends Component {
                           Electronics and Telecommunication
                         </option>
                         <option value="etrx">Electronics</option>
+                        <option value="other">Other</option>
                       </select>
                     </div>
                   }
                   {this.props.user.role === "Faculty" &&
                     <div className="field">
                       <label>Position</label>
-                      <select
-                        className="ui fluid dropdown"
-                        name="year"
-                        onChange={this.handleChange1}
-                        value={this.props.user.position}
-                      >
-                        <option value="">Year</option>
-                        <option value="1">FY</option>
-                        <option value="2">SY</option>
-                        <option value="3">TY</option>
-                        <option value="4">LY</option>
-                      </select>
+                      <div className="ui left icon input">
+                        <input
+                          required
+                          type="text"
+                          name="position"
+                          placeholder="Eg. Lab Assistant"
+                          value={this.props.user.position}
+                          onChange={this.handleChange1}
+                        />
+                        <i className="ui id badge icon"></i>
+                      </div>
                     </div>
                   }
                   {this.props.user.role === "Student" &&

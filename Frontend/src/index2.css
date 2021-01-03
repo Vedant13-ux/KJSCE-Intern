@@ -37,7 +37,10 @@
 }
 
 .p30 {
-  padding: 30px !important;
+  margin:15px 15px !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+  
 }
 .pr30 .uploadBtn{
   bottom: 5em;
@@ -198,12 +201,33 @@ margin-right: 9px;
 /* #profile .post-wall{
   margin-top: 0px !important;
 } */
+#experience .experience-ele h4{
+  background-color: #FFCA3D;
+  border-radius: 5px;
+  display: inline-block;
+  padding: 3px 6px;
+  font-size: 14px;
+}
 #experience .experience-ele h5{
   margin:0px;
   padding:0px;
 }
+#experience .experience-ele h6{
+  word-break: break-all;
+}
+#experience .experience-ele p{
+  margin-left: 8px;
+}
+#experience .experience-ele sub{
+  background-color: rgb(242, 242, 242);
+  padding: 4px;
+}
 #experience .experience-add{
-  margin:10px;
+  margin:10px 0;
+  color: #020b53;
+  background-color: #020b53;
+  color: #FFCA3D;
+  padding: 7px 10px !important;
 }
 /* ************BookMarks************** */
 #bookmarks{
@@ -212,5 +236,5 @@ margin-right: 9px;
   padding: 0 20px;
   margin: 0 auto;
   animation: fadeIn;
-  min-height: 800px;
+  min-height: 500px;
 }

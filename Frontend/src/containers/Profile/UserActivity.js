@@ -87,11 +87,6 @@ class Basic extends Component {
           </Nav>
           <div
             className="tab-content p30"
-            style={{
-              maxHeight: "800px",
-              overflowY: "scroll",
-              marginTop: "40px",
-            }}
           >
             <div id="tab1" className="tab-pane active">
               {display}

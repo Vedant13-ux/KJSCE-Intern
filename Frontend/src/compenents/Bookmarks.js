@@ -15,9 +15,11 @@ class Bookmarks extends Component {
         }
     }
     componentDidMount() {
+        document.documentElement.scrollTop = 0;
         apiCall('get', '/api/internship/bookmarks/' + this.props.currentUser.user._id, '')
             .then(async bookmarks => {
                 this.setState({ bookmarks, start: false });
+                console.log(bookmarks)
             })
             .catch(err => {
                 console.log(err);
@@ -32,12 +34,12 @@ class Bookmarks extends Component {
                         <Loading className="loading-wheel" />
                     </div>
                 }
-                {this.state.bookmarks === [] &&
+                {this.state.bookmarks.length === 0 &&
                     <NoBookmarks />
                 }
                 {
-                    !this.state.start &&
-                    <div id="bookmarks">
+                    (!this.state.start && this.state.bookmarks.length !== 0) &&
+                    < div id="bookmarks">
                         <div className="row">
                             {
                                 this.state.bookmarks.map((internship) => {

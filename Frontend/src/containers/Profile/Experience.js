@@ -20,7 +20,7 @@ class Experience extends Component {
       this.props.updateExperiences(data, this.props.user._id).then(
         () => {
           console.log('Experience Added')
-          this.setState({show:false})
+          this.setState({ show: false })
         }
       ).catch((err) => err)
     };
@@ -28,20 +28,22 @@ class Experience extends Component {
   render() {
     return (
       <div id="experience">
-        {this.props.owner && <button onClick={this.handleshow} className="experience-add btn btn-primary">add</button>}
+        {this.props.owner && <button onClick={this.handleshow} className="experience-add ui button ">Add + </button>}
         {this.state.list.map((e, i) => {
-          return (<div className="experience-ele">
-            <h4>{e.title}<sub>{e.type}</sub></h4>
-            <p>
-              <h5>{e.company}</h5>
-              {new Date(e.startdate).toDateString() + '-' + (e.enddate === null ? "Present" : new Date(e.enddate).toDateString())}
-              <br></br>
-              <h6>
-                {e.description}
-              </h6>
-            </p>
-            <hr className="short br-lighter"></hr>
-          </div>)
+          return (
+            <div className="experience-ele">
+              <h4>{e.title}</h4>
+              <sub>{e.type}</sub>
+              <p>
+                <h5>{e.company}</h5>
+                {new Date(e.startdate).toDateString() + '-' + (e.enddate === null ? "Present" : new Date(e.enddate).toDateString())}
+                <br></br>
+                <h6>
+                  {e.description}
+                </h6>
+              </p>
+              <hr className="short br-lighter"></hr>
+            </div>)
         })}
 
         <Modal size="lg" show={this.state.show} onHide={this.handleclose} backdrop="static">
@@ -121,7 +123,7 @@ class ExperienceForm extends Component {
           <div className="field">
             <label>Type</label>
             <select
-            required
+              required
               className="ui fluid dropdown"
               name="type"
               onChange={this.handleChange}
@@ -193,7 +195,7 @@ class ExperienceForm extends Component {
   }
 }
 
-export default connect(()=>{}, { updateExperiences })(Experience);
+export default connect(() => { }, { updateExperiences })(Experience);
 
 /* <div class="ui feed">
 <div class="event">
