@@ -204,7 +204,32 @@ class Feed extends React.Component {
     this.state = {
       posts: [],
       start: true,
+      filter:{
+        student:true,
+        faculty:true,
+        alumni:true,
+        council:true,
+        it:true,
+        cs:true,
+        mech:true,
+        extc:true,
+        etrx:true,
+        "1":true,
+        "2":true,
+        "3":true,
+        "4":true,
+      }
     };
+    this.handleSubmit=(e)=>{
+      e.preventDefault()
+      console.log(this.state)
+    }
+    this.handleChange=(e)=>{
+      console.log(e.target.checked,e.target.id)
+      let d=this.state.filter
+      d[e.target.id]=e.target.checked
+      this.setState({filter:d})
+    }
   }
 
   componentWillMount() {
@@ -231,12 +256,15 @@ class Feed extends React.Component {
           />
           <div className="right-side">
             <div className="controls">
-              <form>
+              <form onSubmit={this.handleSubmit}>
                 <h5>From</h5>
+                <div>
                 <div class="form-check">
                   <input
                     type="checkbox"
                     class="form-check-input"
+                    defaultChecked={true}
+                    onChange={this.handleChange}
                     id="student"
                   />
                   <label class="form-check-label" for="student">
@@ -247,6 +275,8 @@ class Feed extends React.Component {
                   <input
                     type="checkbox"
                     class="form-check-input"
+                    defaultChecked={true}
+                    onChange={this.handleChange}
                     id="faculty"
                   />
                   <label class="form-check-label" for="faculty">
@@ -254,7 +284,9 @@ class Feed extends React.Component {
                   </label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="alumni" />
+                  <input type="checkbox" class="form-check-input"
+                    defaultChecked={true}
+                    onChange={this.handleChange} id="alumni" />
                   <label class="form-check-label" for="alumni">
                     Alumni
                   </label>
@@ -263,18 +295,23 @@ class Feed extends React.Component {
                   <input
                     type="checkbox"
                     class="form-check-input"
+                    defaultChecked={true}
+                    onChange={this.handleChange}
                     id="council"
                   />
                   <label class="form-check-label" for="council">
                     Council
                   </label>
                 </div>
+                </div>
                 <h5>Department</h5>
-                
+                <div>
                 <div class="form-check">
                   <input
                     type="checkbox"
                     class="form-check-input"
+                    defaultChecked={true}
+                    onChange={this.handleChange}
                     id="cs"
                   />
                   <label class="form-check-label" for="cs">
@@ -282,7 +319,9 @@ class Feed extends React.Component {
                   </label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="mech" />
+                  <input type="checkbox" class="form-check-input"
+                    defaultChecked={true}
+                    onChange={this.handleChange} id="mech" />
                   <label class="form-check-label" for="mech">
                   Mechanical
                   </label>
@@ -291,6 +330,8 @@ class Feed extends React.Component {
                   <input
                     type="checkbox"
                     class="form-check-input"
+                    defaultChecked={true}
+                    onChange={this.handleChange}
                     id="etrx"
                   />
                   <label class="form-check-label" for="etrx">
@@ -301,6 +342,8 @@ class Feed extends React.Component {
                   <input
                     type="checkbox"
                     class="form-check-input"
+                    defaultChecked={true}
+                    onChange={this.handleChange}
                     id="extc"
                   />
                   <label class="form-check-label" for="extc">
@@ -311,18 +354,23 @@ class Feed extends React.Component {
                   <input
                     type="checkbox"
                     class="form-check-input"
+                    defaultChecked={true}
+                    onChange={this.handleChange}
                     id="it"
                   />
                   <label class="form-check-label" for="it">
                   Information Technology
                   </label>
                 </div>
+                </div>
                 <h5>Year</h5>
-                
+                <div>
                 <div class="form-check">
                   <input
                     type="checkbox"
                     class="form-check-input"
+                    defaultChecked={true}
+                    onChange={this.handleChange}
                     id="1"
                   />
                   <label class="form-check-label" for="1">
@@ -333,6 +381,8 @@ class Feed extends React.Component {
                   <input
                     type="checkbox"
                     class="form-check-input"
+                    defaultChecked={true}
+                    onChange={this.handleChange}
                     id="2"
                   />
                   <label class="form-check-label" for="2">
@@ -343,6 +393,8 @@ class Feed extends React.Component {
                   <input
                     type="checkbox"
                     class="form-check-input"
+                    defaultChecked={true}
+                    onChange={this.handleChange}
                     id="3"
                   />
                   <label class="form-check-label" for="3">
@@ -353,11 +405,14 @@ class Feed extends React.Component {
                   <input
                     type="checkbox"
                     class="form-check-input"
+                    defaultChecked={true}
+                    onChange={this.handleChange}
                     id="4"
                   />
                   <label class="form-check-label" for="4">
                   LY
                   </label>
+                </div>
                 </div>
                 <button type="submit" class="btn btn-primary">
                   Submit
