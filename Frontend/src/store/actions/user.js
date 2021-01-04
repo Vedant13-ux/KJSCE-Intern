@@ -1,6 +1,6 @@
 
 import { apiCall } from '../../services/api';
-import { UPDATE_USER_SKILLS, UPDATE_USER_EXPERIENCE,UPDATE_USER_PROJECT,UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK } from '../actionTypes';
+import { UPDATE_USER_SKILLS, UPDATE_USER_EXPERIENCE, UPDATE_USER_PROJECT, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER } from '../actionTypes';
 
 
 function userSkills(skills) {
@@ -157,6 +157,52 @@ export function deleteBookmark(bookmark, userId) {
             return apiCall('put', '/api/internship/bookmark/delete/' + bookmark, { userId })
                 .then(() => {
                     dispatch(deleteBook(bookmark));
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+    }
+}
+
+
+function addMemb(bookmark) {
+    return {
+        type: ADD_MEMBER,
+        bookmark
+    }
+}
+export function addMember(member, id) {
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('put', '/api/council/addMember/' + id, member)
+                .then((newMember) => {
+                    newMember.member = {
+                        _id: newMember.member._id,
+                        ...member.member
+                    }
+                    console.log(newMember);
+                    dispatch(addMemb());
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+    }
+}
+
+function deleteMemb(member) {
+    return {
+        type: DELETE_MEMBER,
+        member
+    }
+}
+export function deleteMember(userId, memberId) {
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('put', '/api/council/deleteMember/' + userId + '/' + memberId, '')
+                .then(() => {
+                    dispatch(deleteMemb(memberId));
                     res();
                 }).catch((err) => {
                     rej(err);

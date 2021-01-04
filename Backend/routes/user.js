@@ -31,7 +31,7 @@ function escapeRegex(text) {
 }
 // Get user by id
 router.get('/user/:id', (req, res, next) => {
-    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('applications').populate('posts').populate('certificates').populate('experiences').populate('projects').exec()
+    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('applications').populate('posts').populate('certificates').populate('experiences').populate('projects').populate({ path: 'members', populate: { path: 'member', select: 'fname lname _id email photo' } }).exec()
         .then((user) => {
             res.status(200).send(user);
         }).catch((err) => {
@@ -228,4 +228,59 @@ router.get('/council/findMembers/:name', (req, res, next) => {
             });
     }
 });
+
+router.put('/council/addMember/:id', (req, res, next) => {
+    console.log(req.body)
+    db.User.findById(req.params.id)
+        .then(async (user) => {
+            if (!user) {
+                return next({
+                    status: 404,
+                    message: "User Not Found"
+                })
+            }
+            try {
+                let member = await db.CouncilMember.create(req.body);
+                await user.members.push(member);
+                await user.save();
+                member = await member.populate({ path: 'member', select: 'fname lname email _id photo' });
+                res.send(member);
+            } catch (err) {
+                next(err);
+            }
+        }).catch((err) => {
+
+        });
+})
+
+router.delete('/council/deleteMember/:userId/:memberId', (req, res, next) => {
+    db.User.findById(req.params.userId)
+        .then(async (user) => {
+            if (!user) {
+                return next({
+                    status: 404,
+                    message: "User Not Found"
+                })
+            }
+            try {
+                let member = db.CouncilMember.find(req.params.memberId);
+                if (member) {
+                    await member.remove();
+                    let to_remove = user.members.findIndex((m) => JSON.stringify(m) == JSON.stringify(member._id));
+                    await user.members.splice(to_remove, 1);
+                    await user.save();
+                    res.send('Member Added');
+                } else {
+                    return next({
+                        status: 404,
+                        message: "Member Not Found"
+                    })
+                }
+            } catch (err) {
+                next(err);
+            }
+        }).catch((err) => {
+
+        });
+})
 module.exports = router;

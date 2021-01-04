@@ -33,4 +33,5 @@ module.exports.File = require('./files');
 module.exports.Application = require('./application');
 module.exports.Certificate = require('./certificate')
 module.exports.Experience = require('./experience')
-module.exports.Project = require('./project')
+module.exports.Project = require('./project');
+module.exports.CouncilMember = require('./councilMembers')

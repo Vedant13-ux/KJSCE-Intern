@@ -703,7 +703,7 @@ body{
   overflow-y: auto;
   margin-bottom: 40px;
 }
-#internshipdetail .appliList .applicant {
+.applicant {
   background-color: rgb(242, 242, 242);
   border-radius: 30px;
   padding: 0px;
@@ -713,14 +713,14 @@ body{
 
   
 }
-#internshipdetail .appliList img{
+.applicant img{
   width: 40px;
   height: 40px;
   border-radius: 30px;
   display: inline;
   margin-right: 4px;
 }
-#internshipdetail .applicant .appliList .name {
+.applicant.name {
   line-height: 40px;
 }
 #internshipdetail .mailAppl{

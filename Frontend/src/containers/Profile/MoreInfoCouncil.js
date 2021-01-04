@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Modal from "react-bootstrap/Modal";
 import { Link } from 'react-router-dom';
 import { apiCall } from '../../services/api'
+import { addMember, deleteMember } from '../../store/actions/user'
 
 
 
@@ -13,37 +14,38 @@ class MoreInfoCouncil extends Component {
             show: false,
             position: '',
             memberEmail: '',
-            members: [
-                {
-                    photo: 'https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png',
-                    fname: 'Vedant',
-                    lname: 'Nagani',
-                    email: 'vedant.nagani@somaiya.edu',
-                    roleInCouncil: 'PR'
-                },
-                {
-                    photo: 'https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png',
-                    fname: 'Vedant',
-                    lname: 'Nagani',
-                    email: 'vedant.nagani@somaiya.edu',
-                    roleInCouncil: 'PR'
-                }
-            ],
-            showDropdown: false,
-            suggestedMembers: []
+            suggestedMembers: [],
+            selectedMember: {},
+            inputValue: ""
         }
         this.handleChange = (e) => {
             this.setState({ [e.target.name]: e.target.value });
         }
         this.handleSubmit = (e) => {
             e.preventDefault();
+            const member = {
+                member: this.state.selectedMember,
+                position: this.state.position
+            }
+            console.log(member);
+            console.log('Add Member ma aya');
+            props.addMember(member, props.user._id)
+                .then(async (member) => {
+                    await this.setState({ selectMember: {} });
+                    this.handleClose();
+                }).catch((err) => {
+                    console.log(err);
+                });
         }
         this.filterFunction = (e) => {
             e.preventDefault();
             console.log('filter ma aaya');
             var filter;
             filter = e.target.value;
-            console.log(filter);
+
+            if (filter === "") {
+                return this.setState({ suggestedMembers: [] })
+            }
             apiCall('get', '/api/council/findMembers/' + filter, '')
                 .then(async (users) => {
                     await this.setState({ suggestedMembers: users });
@@ -51,21 +53,18 @@ class MoreInfoCouncil extends Component {
                     console.log(err);
                 });
         }
-        this.handleDropdown = () => {
-            this.setState({ showDropdown: !this.state.showDropdown });
+        this.selectMember = async (member) => {
+            console.log(member);
+            await this.setState({ selectedMember: member, suggestedMembers: [], inputValue: `${member.fname} ${member.lname}` });
+            console.log(this.state.selectedMember);
         }
-        this.handleClose = () => this.setState({ show: false, showDropdown: false });
+
+        this.handleClose = () => this.setState({ show: false, suggestedMembers: [] });
         this.handleShow = () => this.setState({ show: true });
 
     }
     render() {
         const { position, memberEmail } = this.state;
-        var style = {};
-        if (this.state.showDropdown) {
-            style = { display: "block" }
-        } else {
-            style = { display: "none" }
-        }
         return (
             <div className="col-md-4">
                 <div className="panel">
@@ -82,17 +81,17 @@ class MoreInfoCouncil extends Component {
                     </div>
                     <div className="panel-body pbn">
                         <div>
-                            {this.state.members.map(member => (
+                            {this.props.user.members.map(member => (
                                 <div className="eachMember">
                                     <div className="row">
                                         <div className="col-8">
                                             <span className="details">
-                                                <img className="avatar-pro mr-2" src={member.photo} alt="member"></img>
-                                                <Link to={"/profile/" + member.email.split('@')[0]}>{member.fname} {member.lname}</Link>
+                                                <img className="avatar-pro mr-2" src={member.member.photo} alt="member"></img>
+                                                <Link to={"/profile/" + member.member.email.split('@')[0]}>{member.member.fname} {member.member.lname}</Link>
                                             </span>
                                         </div>
                                         <div className="col-4">
-                                            <span className="position">{member.roleInCouncil}</span>
+                                            <span className="position">{member.position}</span>
                                         </div>
                                     </div>
                                     <hr className="short br-lighter"></hr>
@@ -113,7 +112,7 @@ class MoreInfoCouncil extends Component {
                             <Modal.Title>Add members +</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <form onSubmit={this.handleSubmit} id="internshipForm" autoComplete="off">
+                            <form onSubmit={this.handleSubmit} autoComplete="off">
                                 <div className="ui form">
                                     <div className="field">
                                         <label>Position</label>
@@ -127,18 +126,30 @@ class MoreInfoCouncil extends Component {
                                             placeholder="Eg. PR, PRO"
                                         ></input>
                                     </div>
-                                    <div className="dropdown">
-                                        <button type="button" onClick={this.handleDropdown} className="dropbtn">Dropdown</button>
-                                        <div id="myDropdown" className="dropdown-content" style={style}>
-                                            <input type="text" placeholder="Search.." id="myInput" onKeyUp={this.filterFunction} />
-                                            {this.state.suggestedMembers.map(member => (
-                                                <Link to="#hello">{member.fname} {member.lname}</Link>
-                                            ))}
+                                    <div className="field">
+                                        <label>Search Member</label>
+                                        <div className="dropdown">
+                                            <div id="myDropdown" className="dropdown-content">
+                                                <input type="search" placeholder="Search.." id="myInput" value={this.state.inputValue} onChange={this.handleChange} onKeyUp={this.filterFunction} name="inputValue" />
+
+                                                {this.state.suggestedMembers.map(member => (
+                                                    <div className="suggested" onClick={this.selectMember.bind(this, member)}>
+                                                        <img src={member.photo} alt="user"></img>
+                                                        <span to="#">{member.fname} {member.lname}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
+                                        {!!Object.keys(this.state.selectedMember) &&
+                                            <span className="applicant">
+                                                <img src={this.state.selectedMember.photo} alt=""></img>
+                                                <span className="name">{this.state.selectedMember.fname} {this.state.selectedMember.lname}</span>
+                                            </span>
+                                        }
                                     </div>
 
                                     <div className="submit confirmdiv">
-                                        <button type="submit" className="medium ui button confirm">Add Member</button>
+                                        <button type="submit" className="medium ui button confirm" onClick={this.handleSubmit}>Add Member</button>
                                     </div>
                                 </div>
                             </form>
@@ -150,4 +161,4 @@ class MoreInfoCouncil extends Component {
     }
 }
 
-export default connect(() => { }, {})(MoreInfoCouncil);
+export default connect(() => { }, { addMember, deleteMember })(MoreInfoCouncil);

@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, UPDATE_USER_SKILLS,UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK } from '../actionTypes';
+import { SET_CURRENT_USER, UPDATE_USER_SKILLS, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER } from '../actionTypes';
 
 const defaultState = {
     isAuthenticated: false,
@@ -68,7 +68,16 @@ const currentUserReducer = (state = defaultState, action) => {
             return {
                 ...state
             }
-
+        case ADD_MEMBER:
+            state.user.members.push(action.member);
+            return {
+                ...state
+            }
+        case DELETE_MEMBER:
+            state.user.members = state.user.members.filter(b => b._id !== action.memberId)
+            return {
+                ...state
+            }
         default:
             return state
     }
