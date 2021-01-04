@@ -1,7 +1,27 @@
 
 import { apiCall } from '../../services/api';
-import { UPDATE_USER_SKILLS, UPDATE_USER_EXPERIENCE, UPDATE_USER_PROJECT, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER } from '../actionTypes';
+import { UPDATE_USER_SKILLS, UPDATE_USER_EXPERIENCE,UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER } from '../actionTypes';
 
+function userRefresh(user) {
+    return {
+        type: UPDATE_USER_REFRESH,
+        user
+    }
+}
+
+export function updateRefresh(username) {
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('get', "/api/user/"+username,'')
+                .then((data) => {
+                    dispatch(userRefresh(data));
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+    }
+}
 
 function userSkills(skills) {
     return {

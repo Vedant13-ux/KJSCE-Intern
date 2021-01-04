@@ -20,8 +20,8 @@ class Navbar extends Component {
     async logout(e) {
         e.preventDefault();
         await this.setState({ isAuthenticated: false })
-        await this.props.logout();
         this.props.history.push('/');
+        await this.props.logout();
     }
     showDropdown() {
         console.log(this.state.showDropdown);

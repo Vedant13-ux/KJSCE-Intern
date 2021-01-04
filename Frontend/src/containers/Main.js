@@ -4,6 +4,7 @@ import Homepage from '../compenents/Homepage'
 import Landing from '../compenents/Landing';
 import { connect } from 'react-redux';
 import { authUser, setCurrentUser } from '../store/actions/auth'
+import {updateRefresh} from '../store/actions/user'
 import IntershipDetail from './InternshipDetails/InternshipDetails'
 import Community from '../compenents/Community'
 import NotFound from '../images/NotFound'
@@ -17,7 +18,14 @@ class Main extends React.Component{
     componentDidMount(){
         console.log("main mounted")
         if (!this.props.currentUser.isAuthenticated) this.props.history.push('/');
-
+        else{
+            this.props.updateRefresh(this.props.currentUser.user.email.split('@')[0])
+            .then(()=>{
+                console.log('updated user')
+            }).catch((e)=>{
+                console.log(e)
+            })
+        }
     }
     render(){
         const currentUser = this.props.currentUser;
@@ -44,4 +52,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default withRouter(connect(mapStateToProps, { authUser, setCurrentUser })(Main));
+export default withRouter(connect(mapStateToProps, { authUser, setCurrentUser,updateRefresh })(Main));
