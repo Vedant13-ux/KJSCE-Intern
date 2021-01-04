@@ -149,7 +149,7 @@ class ProjectForm extends Component {
             <textarea
               maxlength="200"
               rows="2"
-              placeholder="eg. was assigned to tech team"
+              placeholder="eg. used python and back tracking algorithm"
               name="description"
               val={description}
               onChange={this.handleChange}
