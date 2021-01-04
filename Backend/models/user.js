@@ -112,6 +112,12 @@ const userScehma = new mongoose.Schema({
 			ref: 'Experience'
 		}
 	],
+	projects: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Project'
+		}
+	],
 	bio: String,
 	socialHandles: {
 		facebook: {
