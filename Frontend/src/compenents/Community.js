@@ -232,7 +232,7 @@ class Feed extends React.Component {
       apiCall("put", "/api/community/posts/getSpecific", {roles})
         .then((data) => {
           console.log("hua sahi se",data)
-          this.setState({ posts: data });
+          // this.setState({ posts: data });
         })
         .catch((e) => {
           console.log("error");

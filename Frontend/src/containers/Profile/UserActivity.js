@@ -4,6 +4,7 @@ import { Nav } from "react-bootstrap";
 import { PostWall } from "../../compenents/Community";
 import { apiCall } from "../../services/api";
 import Experience from "./Experience";
+import Project from "./Project";
 
 class Basic extends Component {
   constructor(props) {
@@ -40,6 +41,9 @@ class Basic extends Component {
       case "experiences":
         display = <Experience owner={this.props.owner} user={this.props.user} />;
         break;
+      case "projects":
+        display = <Project owner={this.props.owner} user={this.props.user} />;
+        break;
       case "posts":
         display = (
           <PostWall
@@ -68,6 +72,15 @@ class Basic extends Component {
                 onClick={this.handleSwitch}
               >
                 Experiences
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                name="projects"
+                to="#projects"
+                onClick={this.handleSwitch}
+              >
+                Projects
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
