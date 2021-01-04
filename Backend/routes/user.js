@@ -188,6 +188,25 @@ router.put('/profile/update/experiences', (req, res, next) => {
         });
 });
 
+router.put('/profile/update/projects', (req, res, next) => {
+    db.User.findById(req.body.id)
+        .then(async user => {
+            if (!user) {
+                return next({ status: 404, message: "User Not Found" });
+            }
+            try {
+                let project = await db.Project.create(req.body.project)
+                await user.projects.push(project);
+                await user.save();
+                res.send(project);
+            } catch (error) {
+                next(error);
+            }
+        }).catch((err) => {
+            next(err);
+        });
+});
+
 // COuncil
 router.get('/council/findMembers/:name', (req, res, next) => {
     const nameArr = req.params.name.split(' ');
