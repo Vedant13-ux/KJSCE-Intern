@@ -34,7 +34,6 @@ class Basic extends Component {
         // Alumni
         passedOut: props.user.passedOut,
         workingAt: props.user.workingAt,
-
       },
       show1: false,
       show2: false,

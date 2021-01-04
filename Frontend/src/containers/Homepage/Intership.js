@@ -25,7 +25,7 @@ class Internship extends Component {
       this.props.deleteBookmark(this.props._id, this.props.currentUser.user._id)
         .then(async () => {
           console.log('bookmark removed');
-          await this.setState({ bookmarked: false ,style: { color: '#000000' }});
+          await this.setState({ bookmarked: false, style: { color: '#000000' } });
         }).catch((err) => {
           console.log(err);
         });
@@ -34,7 +34,7 @@ class Internship extends Component {
       this.props.addBookmark(this.props._id, this.props.currentUser.user._id)
         .then(async () => {
           console.log('bookmark added');
-          await this.setState({ bookmarked: true ,style: { color: '#ffca3d' }})
+          await this.setState({ bookmarked: true, style: { color: '#ffca3d' } })
         }).catch((err) => {
           console.log(err);
         });
@@ -56,7 +56,9 @@ class Internship extends Component {
               <p className="description">{this.props.description}</p>
 
               <div className="extraDetails">
-                <p><i className="fa fa-home mr-1"></i>  {this.props.type}</p>
+                {
+                  <p>{this.props.type === "Internal" ? <i className="fas fa-home"></i> : <i class="fas fa-briefcase"></i>} {this.props.type}</p>
+                }
                 <p><i className="fa fa-clock mr-1"></i>  {this.props.duration} months</p>
                 <p><i className="fa fa-hourglass mr-2"></i>Apply by {this.dateFormat()}</p>
               </div>

@@ -4,6 +4,7 @@ import PageFooter from "../containers/Global/PageFooter";
 import { apiCall } from "../services/api";
 import Basic from "../containers/Profile/Basicinfo";
 import Moreinfo from "../containers/Profile/Moreinfo";
+import MoreInfoCouncil from '../containers/Profile/MoreInfoCouncil'
 import UserActivity from "../containers/Profile/UserActivity";
 import Loading from "../images/Loading";
 import NotFound from "../images/NotFound"
@@ -83,10 +84,15 @@ class Profile extends Component {
           <section id="content" className="container">
             <Basic user={this.state.user} owner={this.state.owner} />
             <div className="row">
-              <Moreinfo
-                isowner={this.state.owner}
-                user={this.state.user}
-              />
+              {this.state.user.role === "Council" &&
+                <MoreInfoCouncil owner={this.state.owner} user={this.state.user} />
+              }
+              {this.state.user.role !== "Council" &&
+                <Moreinfo
+                  isowner={this.state.owner}
+                  user={this.state.user}
+                />
+              }
               <UserActivity owner={this.state.owner} user={this.state.user} loggedin={this.props.currentUser.user} />
             </div>
           </section>
