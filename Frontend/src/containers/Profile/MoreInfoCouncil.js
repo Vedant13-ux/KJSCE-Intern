@@ -41,8 +41,7 @@ class MoreInfoCouncil extends Component {
         this.filterFunction = (e) => {
             e.preventDefault();
             console.log('filter ma aaya');
-            var input, filter;
-            input = e.target;
+            var filter;
             filter = e.target.value;
             console.log(filter);
             apiCall('get', '/api/council/findMembers/' + filter, '')
