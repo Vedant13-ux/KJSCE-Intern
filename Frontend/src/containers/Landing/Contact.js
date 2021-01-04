@@ -8,7 +8,7 @@ const Features = (props) => {
                 Vedant Nagani's Email : vedant.nagani@somaiya.edu
             </p>
             <p>
-                Huzaifa Khilawala's Email : h.khilawala@somaiya.edu
+                Huzaifa Khilawala's Email : huzaifa.k@somaiya.edu
             </p>
         </div>
     )
