@@ -208,6 +208,5 @@ router.get('/council/findMembers/:name', (req, res, next) => {
                 next(err);
             });
     }
-
-})
+});
 module.exports = router;
