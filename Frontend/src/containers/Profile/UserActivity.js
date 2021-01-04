@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Nav } from "react-bootstrap";
 // import { Link } from 'react-router-dom';
 import { PostWall } from "../../compenents/Community";
-import { apiCall } from "../../services/api";
+// import { apiCall } from "../../services/api";
 import Experience from "./Experience";
 import Project from "./Project";
 

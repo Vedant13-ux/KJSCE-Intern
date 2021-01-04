@@ -13,8 +13,14 @@ import Post from './Community/Post'
 import Bookmarks from '../compenents/Bookmarks'
 import '../index2.css'
 
-const Main = (props) => {
-    const currentUser = props.currentUser;
+class Main extends React.Component{
+    componentDidMount(){
+        console.log("main mounted")
+        if (!this.props.currentUser.isAuthenticated) this.props.history.push('/');
+
+    }
+    render(){
+        const currentUser = this.props.currentUser;
     return (
         <div>
             <Switch>
@@ -29,7 +35,7 @@ const Main = (props) => {
                 <Route path="*" render={props => <NotFound {...props} />} />
             </Switch>
         </div>
-    )
+    )}
 }
 
 function mapStateToProps(state) {

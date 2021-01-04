@@ -441,9 +441,6 @@ class Feed extends React.Component {
 }
 
 export class PostWall extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   getPostById(id) {
     if (!this.props.posts[id]) return;
