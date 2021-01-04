@@ -30,8 +30,8 @@ class MoreInfoCouncil extends Component {
             console.log(member);
             console.log('Add Member ma aya');
             props.addMember(member, props.user._id)
-                .then(async (member) => {
-                    await this.setState({ selectMember: {} });
+                .then(async () => {
+                    await this.setState({ selectedMember: {}, position: '', inputValue: '' });
                     this.handleClose();
                 }).catch((err) => {
                     console.log(err);
@@ -64,7 +64,7 @@ class MoreInfoCouncil extends Component {
 
     }
     render() {
-        const { position, memberEmail } = this.state;
+        const { position } = this.state;
         return (
             <div className="col-md-4">
                 <div className="panel">

@@ -1,5 +1,6 @@
 import axios from 'axios'
-axios.defaults.baseURL = 'http://localhost:3001';
+// axios.defaults.baseURL = 'http://localhost:3001';
+axios.defaults.baseURL = 'https://kjsce-connect-backend.herokuapp.com'
 
 export function setToken(token) {
     if (token) {
