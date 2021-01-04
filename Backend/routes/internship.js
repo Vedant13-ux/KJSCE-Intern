@@ -40,6 +40,7 @@ router.post('/search/filter', async (req, res, next) => {
         var { min, max, skills, type } = req.body;
         min = parseInt(min);
         max = parseInt(max);
+        var recentDate = new Date();
         skills = skills.map(skill => {
             return new RegExp(escapeRegex(skill), 'gi');
         });
@@ -47,7 +48,7 @@ router.post('/search/filter', async (req, res, next) => {
         try {
             if (type.length === 1) {
                 if (skills.length == 0) {
-                    let internships = await db.InternshipDetails.find({  applyBy: { $gte: recentDate },duration: { $gte: min, $lte: max }, title: query, type: type[0] }).populate('faculty').exec();
+                    let internships = await db.InternshipDetails.find({ applyBy: { $gte: recentDate }, duration: { $gte: min, $lte: max }, title: query, type: type[0] }).populate('faculty').exec();
                     return res.status(200).send(internships);
                 } else {
                     let internships = await db.InternshipDetails.find({ applyBy: { $gte: recentDate }, duration: { $gte: min, $lte: max }, title: query, skillsRequired: { $all: skills }, type: type[0] }).populate('faculty').exec();
@@ -58,7 +59,7 @@ router.post('/search/filter', async (req, res, next) => {
                     let internships = await db.InternshipDetails.find({ applyBy: { $gte: recentDate }, title: query, duration: { $gte: min, $lte: max } }).populate('faculty').exec();
                     return res.status(200).send(internships);
                 } else {
-                    let internships = await db.InternshipDetails.find({  applyBy: { $gte: recentDate },title: query, skillsRequired: { $all: skills }, duration: { $gte: min, $lte: max } }).populate('faculty').exec();
+                    let internships = await db.InternshipDetails.find({ applyBy: { $gte: recentDate }, title: query, skillsRequired: { $all: skills }, duration: { $gte: min, $lte: max } }).populate('faculty').exec();
                     return res.status(200).send(internships);
                 }
             }

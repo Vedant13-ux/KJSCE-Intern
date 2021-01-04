@@ -29,7 +29,6 @@ const upload = multer({ storage: storage, fileFilter: imageFilter }).single('fil
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 }
-
 // Get user by id
 router.get('/user/:id', (req, res, next) => {
     db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('applications').populate('posts').populate('certificates').populate('experiences').populate('projects').exec()
@@ -192,15 +191,17 @@ router.put('/profile/update/experiences', (req, res, next) => {
 // COuncil
 router.get('/council/findMembers/:name', (req, res, next) => {
     const nameArr = req.params.name.split(' ');
+    const fname = RegExp(escapeRegex(nameArr[0]), 'gi');
     if (nameArr.length === 1) {
-        db.User.find({ fname: RegExp(escapeRegex(nameArr[0], 'gi')), role: 'Student' }, 'fname lname photo email _id')
+        db.User.find({ fname: fname, role: 'Student' }, 'fname lname photo email _id')
             .then((users) => {
                 res.send(users);
             }).catch((err) => {
                 next(err);
             });
     } else {
-        db.User.find({ fname: RegExp(escapeRegex(nameArr[0], 'gi')), lname: RegExp(escapeRegex(nameArr[1], 'gi')), role: 'Student' }, 'fname lname photo email _id')
+        const lname = RegExp(escapeRegex(nameArr[1]), 'gi');
+        db.User.find({ fname: fname, lname: lname, role: 'Student' }, 'fname lname photo email _id')
             .then((users) => {
                 res.send(users);
             }).catch((err) => {
