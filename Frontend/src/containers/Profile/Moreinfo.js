@@ -95,7 +95,7 @@ class Basic extends Component {
         id: props.user._id,
         user
       }
-      await props.updateinfo(data).then(() => this.handleClose3())
+      props.updateinfo(data).then(() => this.handleClose3())
     }
     this.handleChange1 = (e) => {
       let t = this.state.info
