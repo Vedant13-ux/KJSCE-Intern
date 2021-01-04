@@ -64,7 +64,7 @@ class MoreInfoCouncil extends Component {
 
     }
     render() {
-        const { position, memberEmail } = this.state;
+        const { position } = this.state;
         return (
             <div className="col-md-4">
                 <div className="panel">

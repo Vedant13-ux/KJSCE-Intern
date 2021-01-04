@@ -39,7 +39,7 @@ class Bookmarks extends Component {
                 }
                 {
                     (!this.state.start && this.state.bookmarks.length !== 0) &&
-                    < div id="bookmarks">
+                    <div id="bookmarks">
                         <div className="row">
                             {
                                 this.state.bookmarks.map((internship) => {
