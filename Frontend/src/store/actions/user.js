@@ -166,10 +166,10 @@ export function deleteBookmark(bookmark, userId) {
 }
 
 
-function addMemb(bookmark) {
+function addMemb(member) {
     return {
         type: ADD_MEMBER,
-        bookmark
+        member
     }
 }
 export function addMember(member, id) {
@@ -182,7 +182,7 @@ export function addMember(member, id) {
                         ...member.member
                     }
                     console.log(newMember);
-                    dispatch(addMemb());
+                    dispatch(addMemb(newMember));
                     res();
                 }).catch((err) => {
                     rej(err);
