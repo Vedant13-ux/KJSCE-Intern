@@ -212,7 +212,11 @@ margin-right: 9px;
   border-radius: 5px;
   display: inline-block;
   padding: 3px 6px;
+  
   font-size: 14px;
+}
+#experience .project-ele h4{
+  width: 100%;
 }
 #experience .experience-ele h5{
   margin:0px;
@@ -226,6 +230,11 @@ margin-right: 9px;
 }
 #experience .experience-ele sub{
   padding: 4px;
+}
+#experience .experience-ele .deleteproj{
+  float:right;
+  font-size: 20px;
+cursor: pointer;
 }
 #experience .experience-add{
   margin:10px 0;

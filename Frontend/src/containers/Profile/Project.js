@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Modal } from "react-bootstrap";
 import { connect } from 'react-redux'
-import { updateProjects } from '../../store/actions/user'
+import { updateProjects,deleteProjects } from '../../store/actions/user'
 
 class Project extends Component {
   constructor(props) {
@@ -24,6 +24,10 @@ class Project extends Component {
         }
       ).catch((err) => err)
     };
+    this.deleteproj=(e)=>{
+      console.log(e._id)
+      // this.props.deleteProjects(e).then(()=>console.log('delted')).catch((e)=>console.log(e))
+    }
   }
   render() {
     return (
@@ -32,8 +36,8 @@ class Project extends Component {
         <div style={{ overflowY: 'auto', maxHeight: '800px' }}>
           {this.state.list.map((e, i) => {
             return (
-              <div className="experience-ele">
-                <h4>{e.title}</h4>
+              <div className="experience-ele project-ele">
+                <h4>{e.title}{this.props.owner && <span class="deleteproj" onClick={()=>{this.deleteproj(e)}}><i className="fa fa-trash"></i></span>}</h4>
                 <p>
                   {new Date(e.startdate).toDateString() + '-' + (e.enddate === null ? "Present" : new Date(e.enddate).toDateString())}
                   <br></br>
@@ -175,4 +179,4 @@ class ProjectForm extends Component {
   }
 }
 
-export default connect(() => { }, { updateProjects })(Project);
+export default connect(() => { }, { updateProjects,deleteProjects })(Project);

@@ -1,6 +1,6 @@
 
 import { apiCall } from '../../services/api';
-import { UPDATE_USER_SKILLS, UPDATE_USER_EXPERIENCE,UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER } from '../actionTypes';
+import { UPDATE_USER_SKILLS, DELETE_USER_PROJECT,UPDATE_USER_EXPERIENCE,UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER } from '../actionTypes';
 
 function userRefresh(user) {
     return {
@@ -97,6 +97,26 @@ export function updateCertificates(certificate, id) {
             return apiCall('put', '/api/profile/update/certificates', { certificate, id })
                 .then((newCertificate) => {
                     dispatch(userCertificates(newCertificate));
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+    }
+}
+
+function userProjectdelete(project) {
+    return {
+        type: DELETE_USER_PROJECT,
+        project
+    }
+}
+export function deleteProjects(project, id) {
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('delete', '/api/profile/update/projects/'+id+'/'+project._id)
+                .then(() => {
+                    dispatch(userProjectdelete(project));
                     res();
                 }).catch((err) => {
                     rej(err);
