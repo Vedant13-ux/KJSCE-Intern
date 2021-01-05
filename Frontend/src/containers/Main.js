@@ -17,7 +17,8 @@ import '../index2.css'
 class Main extends React.Component {
     async componentWillMount() {
         console.log("main mounted");
-        if (localStorage.getItem('isAuthenticated') === 'false') this.props.history.push('/');
+        console.log(JSON.parse(localStorage.getItem('isAuthenticated')));
+        if (!JSON.parse(localStorage.getItem('isAuthenticated'))) this.props.history.push('/');
         else {
             await this.props.updateRefresh(localStorage.getItem('email').split('@')[0]);
         }
@@ -26,6 +27,8 @@ class Main extends React.Component {
         console.log('Main ka Render');
         const currentUser = this.props.currentUser;
         console.log(currentUser)
+        // if (!JSON.parse(localStorage.getItem('isAuthenticated'))) this.props.history.push('/');
+
         if (!currentUser.user._id) {
             return <div></div>
         }
