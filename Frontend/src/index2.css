@@ -248,6 +248,7 @@ cursor: pointer;
   line-height: 40px;
   background-color: #FFCA3D;
   padding: 2px 7px;
+  border-radius: 5px;
 }
 
 .eachMember .details{
@@ -300,6 +301,12 @@ cursor: pointer;
 }
 
  .dropdown .suggested:hover {background-color: #ddd;}
+
+ .panel .members {
+   max-height: 700px;
+   height: 90%;
+   overflow-y:auto ;
+ }
 
 
 /* ************BookMarks************** */

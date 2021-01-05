@@ -48,7 +48,7 @@ const Homepage = (props) => {
                 <FilterInternships />
                 <InternshipList bookmarks={props.currentUser.user.bookmarks} />
             </MyProvider>
-            { props.currentUser.user.role === "Faculty" && <InternshipCreate userId={props.currentUser.user._id} {...props} />}
+            { (props.currentUser.user.role in ["Faculty", "Alumni", "Council"]) && <InternshipCreate userId={props.currentUser.user._id} {...props} />}
             <PageFooter />
 
         </div>
