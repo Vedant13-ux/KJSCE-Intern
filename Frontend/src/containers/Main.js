@@ -29,7 +29,7 @@ class Main extends React.Component {
         console.log(currentUser)
         // if (!JSON.parse(localStorage.getItem('isAuthenticated'))) this.props.history.push('/');
 
-        if (!currentUser.user._id) {
+        if (!currentUser.user._id && localStorage.getItem('isAuthenticated') !== 'false') {
             return <div></div>
         }
         return (
