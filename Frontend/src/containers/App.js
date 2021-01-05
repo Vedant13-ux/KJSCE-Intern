@@ -1,18 +1,17 @@
 import React from 'react'
 import { Provider } from 'react-redux';
-import { store, persistor } from '../store'
+import { configureStore } from '../store'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Main from './Main'
-import { PersistGate } from 'redux-persist/integration/react'
 
-
+const store = configureStore();
 
 const App = () => (
   <Provider store={store}>
     <Router>
-      <PersistGate persistor={persistor}>
+      <div>
         <Main />
-      </PersistGate>
+      </div>
     </Router>
   </Provider>
 );
