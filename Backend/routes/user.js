@@ -207,6 +207,37 @@ router.put('/profile/update/projects', (req, res, next) => {
         });
 });
 
+router.delete('/profile/update/projects/:userId/:projectId', (req, res, next) => {
+    db.User.findById(req.params.userId)
+        .then(async (user) => {
+            if (!user) {
+                return next({
+                    status: 404,
+                    message: "User Not Found"
+                })
+            }
+            try {
+                let project = db.Project.find(req.params.projectId);
+                if (project) {
+                    await project.remove();
+                    let to_remove = user.projects.findIndex((m) => JSON.stringify(m._id) == JSON.stringify(project._id));
+                    await user.projects.splice(to_remove, 1);
+                    await user.save();
+                    res.send('project deleted');
+                } else {
+                    return next({
+                        status: 404,
+                        message: "project Not Found"
+                    })
+                }
+            } catch (err) {
+                next(err);
+            }
+        }).catch((err) => {
+            next(err);
+        });
+})
+
 // COuncil
 router.get('/council/findMembers/:name', (req, res, next) => {
     const nameArr = req.params.name.split(' ');
