@@ -77,7 +77,7 @@ const currentUserReducer = (state = defaultState, action) => {
                 ...state
             }
         case DELETE_BOOKMARK:
-            state.user.bookmarks = state.user.bookmarks.filter(b => b !== action.bookmark)
+            state.user.bookmarks = state.user.bookmarks.filter(b => b !== action.bookmark);
             return {
                 ...state
             }
