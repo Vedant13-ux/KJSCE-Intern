@@ -26,6 +26,7 @@ class Profile extends Component {
   }
 
   async componentDidMount() {
+    console.log("profile Mounted")
     document.documentElement.scrollTop = 0;
     if (this.props.currentUser.user.email.split('@')[0] === this.state.profileId) {
       let i = 0;

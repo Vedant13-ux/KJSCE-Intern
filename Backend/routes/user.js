@@ -218,10 +218,10 @@ router.delete('/profile/update/projects/:userId/:projectId', (req, res, next) =>
                 })
             }
             try {
-                let project = db.Project.find(req.params.projectId);
+                let project = db.Project.findById(req.params.projectId);
                 if (project) {
                     await project.remove();
-                    let to_remove = user.projects.findIndex((m) => JSON.stringify(m._id) == JSON.stringify(project._id));
+                    let to_remove = user.projects.findIndex((m) => String(m._id) === String(req.params.projectId));
                     await user.projects.splice(to_remove, 1);
                     await user.save();
                     res.send('project deleted');

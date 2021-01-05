@@ -47,7 +47,8 @@ const currentUserReducer = (state = defaultState, action) => {
                 ...state
             }
         case DELETE_USER_PROJECT:
-            let to_remove = state.user.projects.findIndex((m) => JSON.stringify(m._id) == JSON.stringify(action.project._id));
+            let to_remove = state.user.projects.findIndex((m) => String(m._id) === String(action.projectid));
+            console.log(to_remove)
             state.user.projects.splice(to_remove, 1);
             return {
                 ...state

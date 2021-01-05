@@ -26,10 +26,11 @@ class Project extends Component {
     };
     this.deleteproj=(e)=>{
       console.log(e._id)
-      // this.props.deleteProjects(e).then(()=>console.log('delted')).catch((e)=>console.log(e))
+      this.props.deleteProjects(e,this.props.user._id).then(()=>console.log('delted')).catch((e)=>console.log(e))
     }
   }
   render() {
+    console.log("rendering again")
     return (
       <div id="experience">
         {this.props.owner && <button onClick={this.handleshow} className="experience-add ui button ">Add + </button>}
