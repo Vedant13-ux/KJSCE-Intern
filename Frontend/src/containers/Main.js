@@ -36,8 +36,9 @@ class Main extends React.Component {
     render() {
         console.log('Main ka Render');
         const currentUser = this.props.currentUser;
-        if (!currentUser) {
-            return <div>Hello</div>
+        console.log(currentUser)
+        if (!currentUser.user._id) {
+            return <div></div>
         }
         return (
             <div>
