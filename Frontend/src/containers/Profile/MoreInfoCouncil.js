@@ -161,4 +161,4 @@ class MoreInfoCouncil extends Component {
     }
 }
 
-export default connect(() => { }, { addMember, deleteMember })(MoreInfoCouncil);
+export default connect(() => {}, { addMember, deleteMember })(MoreInfoCouncil);

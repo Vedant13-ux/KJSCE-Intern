@@ -105,18 +105,18 @@ export function updateCertificates(certificate, id) {
     }
 }
 
-function userProjectdelete(projectid) {
+function userProjectdelete(projectId) {
     return {
         type: DELETE_USER_PROJECT,
-        projectid
+        projectId
     }
 }
-export function deleteProjects(project, id) {
+export function deleteProjects(projectId, id) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('delete', '/api/profile/update/projects/'+id+'/'+project._id)
+            return apiCall('delete', '/api/profile/update/projects/'+id+'/'+projectId)
                 .then(() => {
-                    dispatch(userProjectdelete(project._id));
+                    dispatch(userProjectdelete(projectId));
                     res();
                 }).catch((err) => {
                     rej(err);

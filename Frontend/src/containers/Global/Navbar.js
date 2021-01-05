@@ -4,6 +4,7 @@ import logo from '../../images/logo.png';
 import { MContext } from '../../services/Provider'
 import { connect } from 'react-redux';
 import { logout } from '../../store/actions/auth'
+import Sidebar from './Sidebar'
 
 class Navbar extends Component {
     constructor(props) {
@@ -12,10 +13,17 @@ class Navbar extends Component {
             query: "",
             isAuthenticated: this.props.currentUser.isAuthenticated,
             onPage: this.props.onPage,
-            showDropdown: false
+            showDropdown: false,
+            isOpen: false
         }
         this.showDropdown = this.showDropdown.bind(this);
         this.logout = this.logout.bind(this);
+        this.toggleSidebar = this.toggleSidebar.bind(this);
+    }
+
+    async toggleSidebar() {
+        console.log("Toggle hora hai", this.state.isOpen);
+        await this.setState({ isOpen: !this.state.isOpen });
     }
     async logout(e) {
         e.preventDefault();
@@ -65,48 +73,56 @@ class Navbar extends Component {
             }
         }
         return (
-            <nav className="navbar navbar-expand-lg fixed-top">
-                <div className="container">
-                    <Link className="navbar-brand" to="/home">
-                        <img src={logo} alt="logo" className="logo" />
-                    </Link>
-                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
+            <div>
+                <nav className="navbar navbar-expand-lg fixed-top">
+                    <div className="container">
+                        <Link className="navbar-brand" to="/home">
+                            <img src={logo} alt="logo" className="logo" />
+                        </Link>
 
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        <button class="openbtn navbar-toggler" style={{ margin: '30px 12px' }} type="button" data-toggle="collapse" onClick={this.toggleSidebar}>
+                            <div class="container">
+                                <div class="bar1"></div>
+                                <div class="bar2"></div>
+                                <div class="bar3"></div>
+                            </div>
+                        </button>
 
-                        <div className="form-inline my-2 my-lg-0">
-                            <MContext.Consumer>
-                                {
-                                    context => (
-                                        <div><input onKeyPress={e => { if (e.which === 13) { context.filter() } }} onChange={(e) => context.setMessage(e.target.value)} className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="internshipSerach" />
-                                        </div>)
-                                }
-                            </MContext.Consumer>
+                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+
+                            <div className="form-inline my-2 my-lg-0">
+                                <MContext.Consumer>
+                                    {
+                                        context => (
+                                            <div><input onKeyPress={e => { if (e.which === 13) { context.filter() } }} onChange={(e) => context.setMessage(e.target.value)} className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="internshipSerach" />
+                                            </div>)
+                                    }
+                                </MContext.Consumer>
+                            </div>
+                            <ul className="navbar-nav mr-auto">
+                                <li className="nav-item active">
+                                    <Link className="nav-link" to="/home">
+                                        <i className="fas fa-home mr-1"></i>Home <span className="sr-only" to="">(current)</span></Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/community">
+                                        <i className="fas fa-users mr-1"></i>Community</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/messaging"><i className="fas fa-envelope mr-1"></i>Messaging</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/bookmarks"><i class="fas fa-bookmark mr-1"></i>Bookmarks</Link>
+                                </li>
+                            </ul>
+
+                            {rightContent()}
+
                         </div>
-                        <ul className="navbar-nav mr-auto">
-                            <li className="nav-item active">
-                                <Link className="nav-link" to="/home">
-                                    <i className="fas fa-home mr-1"></i>Home <span className="sr-only" to="">(current)</span></Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/community">
-                                    <i className="fas fa-users mr-1"></i>Community</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/messaging"><i className="fas fa-envelope mr-1"></i>Messaging</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/bookmarks"><i class="fas fa-bookmark mr-1"></i>Bookmarks</Link>
-                            </li>
-                        </ul>
-
-                        {rightContent()}
-
                     </div>
-                </div>
-            </nav >
+                </nav>
+                <Sidebar isOpen={this.state.isOpen} currentUser={this.props.currentUser} />
+            </div>
         )
     }
 
