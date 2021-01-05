@@ -15,23 +15,12 @@ import Bookmarks from '../compenents/Bookmarks'
 import '../index2.css'
 
 class Main extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
     async componentWillMount() {
         console.log("main mounted");
-        // if (false) this.props.history.push('/');
-        // else {
-
-        // }
-        await this.props.updateRefresh('vedant.nagani');
-        console.log('Main ke Baad');
-        // .then(() => {
-        //     console.log('updated user')
-        // }).catch((e) => {
-        //     console.log(e)
-        // })
+        if (localStorage.getItem('isAuthenticated') === 'false') this.props.history.push('/');
+        else {
+            await this.props.updateRefresh(localStorage.getItem('email').split('@')[0]);
+        }
     }
     render() {
         console.log('Main ka Render');
