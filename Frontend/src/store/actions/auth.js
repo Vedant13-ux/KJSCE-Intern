@@ -10,6 +10,7 @@ export function setCurrentUser(user) {
 export function logout() {
     return dispatch => {
         localStorage.clear();
+        localStorage.setItem('isAuthenticated', false);
         dispatch(setCurrentUser({}));
     }
 }
@@ -19,7 +20,6 @@ export function authUser(emailToken) {
         return new Promise((resolve, reject) => {
             return apiCall('get', '/api/auth/verify-email/' + emailToken, '')
                 .then(({ token, ...user }) => {
-                    localStorage.setItem("jwtToken", token)
                     dispatch(setCurrentUser(user));
                     resolve();
                 })
@@ -33,6 +33,8 @@ export function loginUser(user) {
             return apiCall('post', '/api/auth/signin', user)
                 .then(({ token, ...user }) => {
                     localStorage.setItem("jwtToken", token);
+                    localStorage.setItem('isAuthenticated', true);
+                    localStorage.setItem('email', user.email);
                     dispatch(setCurrentUser(user));
                     resolve();
                 })
