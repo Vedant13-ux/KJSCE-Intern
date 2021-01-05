@@ -12,8 +12,10 @@ const currentUserReducer = (state = defaultState, action) => {
                 user: action.user
             }
         case UPDATE_USER_REFRESH:
+            // state.user.projects=action.user.projects
             return {
-                ...state,user:action.user
+                isAuthenticated: true,
+                user: action.user
             }
         case UPDATE_USER_SKILLS:
             state.user.skills = action.skills;
