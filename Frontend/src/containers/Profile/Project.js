@@ -24,9 +24,14 @@ class Project extends Component {
         }
       ).catch((err) => err)
     };
-    this.deleteproj = (id) => {
-      console.log(id);
-      this.props.deleteProjects(id, this.props.user._id).then(() => console.log('delted')).catch((e) => console.log(e));
+    this.deleteproj=(e)=>{
+      console.log(e._id)
+      this.props.deleteProjects(e,this.props.user._id).then(()=>{
+
+      console.log('delted')
+      this.setState({})
+    }
+      ).catch((e)=>console.log(e))
     }
   }
   render() {
@@ -35,7 +40,7 @@ class Project extends Component {
       <div id="experience">
         {this.props.owner && <button onClick={this.handleshow} className="experience-add ui button ">Add + </button>}
         <div style={{ overflowY: 'auto', maxHeight: '800px' }}>
-          {this.state.list.map((e, i) => {
+          {this.props.user.projects.map((e, i) => {
             return (
               <div className="experience-ele project-ele">
                 <h4>{e.title}{this.props.owner && <span class="deleteproj" onClick={this.deleteproj.bind(this, e._id)}><i className="fa fa-trash"></i></span>}</h4>
