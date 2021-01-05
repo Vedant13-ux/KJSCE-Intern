@@ -9,16 +9,15 @@ class Sidebar extends Component {
             isMobile: this.props.isMobile,
             user: this.props.currentUser.user,
             isAuthenticated: this.props.currentUser.isAuthenticated,
-            isOpen: this.props.isOpen
         }
-        this.toggleSidebar = (e) => {
-            this.setState({ isOpen: !this.state.isOpen });
-            e.target.style.width = window.getComputedStyle(e.target).width === this.state.isOpen ? '0px' : '300px';
-        }
+        // this.toggleSidebar = (e) => {
+        //     this.setState({ isOpen: !this.state.isOpen });
+        //     e.target.style.width = window.getComputedStyle(e.target).width === this.state.isOpen ? '0px' : '300px';
+        // }
     }
     render() {
-        var style = this.state.isOpen ? { width: '300px' } : { width: '0px' };
-        console.log(this.state.isOpen);
+        var style = this.props.isOpen ? { width: '300px' } : { width: '0px' };
+        console.log(this.props.isOpen);
         return (
             <div id="mySidebar" className="sidebar" style={style}>
                 <div id="scrollableSide">
