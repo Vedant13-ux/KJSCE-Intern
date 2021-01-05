@@ -79,7 +79,7 @@ class MoreInfoCouncil extends Component {
                             </span>
                         )}
                     </div>
-                    <div className="panel-body pbn">
+                    <div className="panel-body pbn members">
                         <div>
                             {this.props.user.members.map(member => (
                                 <div className="eachMember">
