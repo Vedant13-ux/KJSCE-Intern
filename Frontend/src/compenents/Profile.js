@@ -57,6 +57,7 @@ class Profile extends Component {
     }
   }
   render() {
+    console.log(this.props.currentUser.user);
     if (this.state.start) {
       return (
         <div id="profile">
