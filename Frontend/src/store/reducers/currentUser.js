@@ -47,7 +47,7 @@ const currentUserReducer = (state = defaultState, action) => {
                 ...state
             }
         case DELETE_USER_PROJECT:
-            state.user.projects.filter((m) => String(m._id) !== String(action.projectid));
+            state.user.projects=state.user.projects.filter((m) => String(m._id) !== String(action.projectid));
             return {
                 ...state
             }
