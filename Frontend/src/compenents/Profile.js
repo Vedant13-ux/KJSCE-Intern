@@ -62,7 +62,7 @@ class Profile extends Component {
     if (this.state.start) {
       return (
         <div id="profile">
-          <Navbar currentUser={this.props.currentUser} history={this.props.history} />
+          <Navbar history={this.props.history} />
           <div
             style={{
               minHeight: "600px",
@@ -82,7 +82,7 @@ class Profile extends Component {
             href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
             rel="stylesheet"
           ></link>
-          <Navbar currentUser={this.props.currentUser} history={this.props.history} />
+          <Navbar history={this.props.history} />
           <section id="content" className="container">
             <Basic user={this.state.user} owner={this.state.owner} />
             <div className="row">

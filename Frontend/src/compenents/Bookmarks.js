@@ -28,7 +28,7 @@ class Bookmarks extends Component {
     render() {
         return (
             <div>
-                <Navbar></Navbar>
+                <Navbar history={this.props.history}></Navbar>
                 {this.state.start &&
                     <div className="loading-anime">
                         <Loading className="loading-wheel" />
