@@ -120,7 +120,7 @@ class MoreInfoCouncil extends Component {
                                             name="position"
                                             maxLength="30"
                                             required
-                                            val={position}
+                                            value={position}
                                             onChange={this.handleChange}
                                             type="text"
                                             placeholder="Eg. PR, PRO"
