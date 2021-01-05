@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, DELETE_USER_PROJECT,UPDATE_USER_SKILLS,UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER } from '../actionTypes';
+import { SET_CURRENT_USER, DELETE_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER } from '../actionTypes';
 
 const defaultState = {
     isAuthenticated: false,
@@ -13,7 +13,8 @@ const currentUserReducer = (state = defaultState, action) => {
             }
         case UPDATE_USER_REFRESH:
             return {
-                ...state,user:action.user
+                isAuthenticated: !!Object.keys(action.user).length,
+                user: action.user
             }
         case UPDATE_USER_SKILLS:
             state.user.skills = action.skills;
