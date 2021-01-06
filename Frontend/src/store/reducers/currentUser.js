@@ -57,6 +57,7 @@ const currentUserReducer = (state = defaultState, action) => {
                 ...state
             }
         case DELETE_USER_EXPERIENCE:
+            console.log(action.expId)
             state.user.experiences=state.user.experiences.filter((m) => String(m._id) !== String(action.expId));
             return {
                 ...state

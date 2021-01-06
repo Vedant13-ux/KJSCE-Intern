@@ -1,40 +1,72 @@
 import React, { Component } from "react";
 import { Modal } from "react-bootstrap";
 import { connect } from 'react-redux'
-import { updateExperiences } from '../../store/actions/user'
+import { updateExperiences ,deleteExperiences,editExperience} from '../../store/actions/user'
 
 class Experience extends Component {
   constructor(props) {
     super(props);
     this.state = {
       list: this.props.user.experiences,
+      editing: false,
+      editingexp: null,
       show: false,
     };
-    this.handleshow = () => {
-      this.setState({ show: true });
+    this.handleshow1 = () => {
+      this.setState({ show: true, editing: false });
+    };
+    this.handleshow2 = (e) => {
+      this.setState({ show: true, editing: true, editingexp: e });
     };
     this.handleclose = () => {
-      this.setState({ show: false });
+      this.setState({ show: false,editingexp:null });
     };
     this.handleexpsub = (data) => {
+      if (this.state.editing) {
+        data._id=this.state.editingexp._id;
+        this.props
+          .editExperience({experience:data})
+          .then(() => {
+            console.log("experience edited");
+            this.handleclose();
+          })
+          .catch((err) => err);
+        
+      } else {
       this.props.updateExperiences(data, this.props.user._id).then(
         () => {
           console.log('Experience Added')
           this.setState({ show: false })
         }
-      ).catch((err) => err)
+      ).catch((err) => err)}
+    };
+    this.deleteexp = () => {
+      this.props
+        .deleteExperiences(this.state.editingexp._id, this.props.user._id)
+        .then(() => {
+          console.log("delted");
+          this.handleclose();
+        })
+        .catch((e) => console.log(e));
     };
   }
   render() {
     return (
       <div id="experience">
-        {this.props.owner && <button onClick={this.handleshow} className="experience-add ui button ">Add + </button>}
+        {this.props.owner && <button onClick={this.handleshow1} className="experience-add ui button ">Add + </button>}
         <div style={{ overflowY: 'auto', maxHeight: '800px' }}>
           {this.state.list.map((e, i) => {
             return (
               <div className="experience-ele">
                 <h4>{e.title}</h4>
-                <sub>{e.type}</sub>
+                <sub>{e.type}</sub>{this.props.owner && (
+                    <span
+                      class="deleteproj"
+                      onClick={() => this.handleshow2(e)}
+                    >
+                      <i className="fa fa-edit"></i>
+                    </span>
+                  )}
                 <p>
                   <h5>{e.company}</h5>
                   {new Date(e.startdate).toDateString() + '-' + (e.enddate === null ? "Present" : new Date(e.enddate).toDateString())}
@@ -49,10 +81,14 @@ class Experience extends Component {
         </div>
         <Modal size="lg" show={this.state.show} onHide={this.handleclose} backdrop="static">
           <Modal.Header closeButton>
-            <Modal.Title>Fill Experience Details</Modal.Title>
+            <Modal.Title>{this.state.editing?'Edit Experience Details':'Fill Experience Details'}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <ExperienceForm {...this.props} onexpsub={this.handleexpsub}></ExperienceForm>
+            <ExperienceForm {...this.props} 
+            deleteit={this.deleteexp}
+            editing={this.state.editing}
+            editingexp={this.state.editingexp}
+            onexpsub={this.handleexpsub}></ExperienceForm>
           </Modal.Body>
         </Modal>
       </div>
@@ -64,25 +100,35 @@ class Experience extends Component {
 class ExperienceForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      title: "",
-      type: "",
-      company: "",
-      startdate: "",
-      enddate: null,
-      description: "",
-    };
-    this.handleSubmit = (e) => {
-      e.preventDefault()
-      props.onexpsub(this.state);
-      this.setState({
+    if (props.editing) {
+      let getdate = (yourDate)=>{
+        yourDate=new Date(yourDate)
+        let offset = yourDate.getTimezoneOffset()
+        yourDate = new Date(yourDate.getTime() - (offset*60*1000))
+        return yourDate.toISOString().split('T')[0]
+      }
+      this.state = {
+        title: props.editingexp.title,
+        type:props.editingexp.type,
+        company:props.editingexp.company,
+        startdate: getdate(props.editingexp.startdate),
+        enddate: props.editingexp.enddate?getdate(props.editingexp.enddate):null,
+        description: props.editingexp.description,
+      };
+    } else {
+      this.state = {
         title: "",
         type: "",
         company: "",
         startdate: "",
         enddate: null,
         description: "",
-      })
+      };
+    }
+    
+    this.handleSubmit = (e) => {
+      e.preventDefault()
+      props.onexpsub(this.state);
     }
     this.handleChange = (e) => {
       this.setState({ [e.target.name]: e.target.value })
@@ -115,7 +161,7 @@ class ExperienceForm extends Component {
               name="title"
               maxLength="30"
               required
-              val={title}
+              value={title}
               onChange={this.handleChange}
               type="text"
               placeholder="eg. Retail sales manager"
@@ -143,7 +189,7 @@ class ExperienceForm extends Component {
               name="company"
               maxLength="30"
               required
-              val={company}
+              value={company}
               onChange={this.handleChange}
               type="text"
               placeholder="eg. Microsoft"
@@ -160,7 +206,7 @@ class ExperienceForm extends Component {
                 required
                 type="Date"
                 name="startdate"
-                val={startdate}
+                value={startdate}
                 onChange={this.handleChange}
               ></input>
             </div>
@@ -171,7 +217,7 @@ class ExperienceForm extends Component {
                   required
                   type="Date"
                   name="enddate"
-                  val={enddate}
+                  value={enddate}
                   onChange={this.handleChange}
                 ></input>
               </div>}
@@ -183,12 +229,23 @@ class ExperienceForm extends Component {
               rows="2"
               placeholder="eg. was assigned to tech team"
               name="description"
-              val={description}
+              value={description}
               onChange={this.handleChange}
             ></textarea>
           </div>
           <div className="submit confirmdiv">
-            <button className="medium ui button confirm">ADD</button>
+            <button className="medium ui button confirm">
+              {this.props.editing ? "EDIT" : "ADD"}
+            </button>
+            {this.props.editing && (
+              <button
+                type="button"
+                className="medium ui button red"
+                onClick={this.props.deleteit}
+              >
+                DELETE
+              </button>
+            )}
           </div>
         </div>
       </form>
@@ -196,7 +253,7 @@ class ExperienceForm extends Component {
   }
 }
 
-export default connect(() => { }, { updateExperiences })(Experience);
+export default connect(() => { }, { updateExperiences,deleteExperiences,editExperience })(Experience);
 
 /* <div class="ui feed">
 <div class="event">
