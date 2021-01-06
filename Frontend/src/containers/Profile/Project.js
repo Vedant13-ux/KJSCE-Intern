@@ -25,9 +25,8 @@ class Project extends Component {
       ).catch((err) => err)
     };
     this.deleteproj=(e)=>{
-      console.log(e._id)
+      console.log(e,this.props.user._id)
       this.props.deleteProjects(e,this.props.user._id).then(()=>{
-
       console.log('delted')
       this.setState({})
     }
