@@ -194,8 +194,13 @@ margin-right: 9px;
   height: 95% !important;
   overflow-y: auto !important;
 }
-
-
+#certificates .providerimg{
+	max-width: 32px;
+	max-height: 32px;
+}
+/* #profile .post-wall{
+  margin-top: 0px !important;
+} */
 
 #experience .experience-ele{
   padding: 10px;

@@ -441,7 +441,7 @@ class Basic extends Component {
                 <div>
                   <h4>{s.title}</h4>
                   <p>
-                    {s.provider}
+                    <img className="providerimg" src={'https://www.google.com/s2/favicons?sz=64&domain_url='+s.link.replace('http://','').replace('https://','').split(/[/?#]/)[0]}></img>{s.provider}
                     <br></br>
                   Issued {new Date(s.date).toDateString()}
                     <br></br>

@@ -24,13 +24,13 @@ class Project extends Component {
         }
       ).catch((err) => err)
     };
-    this.deleteproj = (e) => {
-      console.log(e)
-      this.props.deleteProjects(e, this.props.user._id).then(() => {
-        console.log('delted');
-        this.setState({ list: this.props.user.projects })
-      }
-      ).catch((e) => console.log(e))
+    this.deleteproj=(e)=>{
+      console.log(e,this.props.user._id)
+      this.props.deleteProjects(e,this.props.user._id).then(()=>{
+      console.log('delted')
+      this.setState({})
+    }
+      ).catch((e)=>console.log(e))
     }
   }
   render() {
