@@ -122,10 +122,16 @@ class ProjectForm extends Component {
   constructor(props) {
     super(props);
     if (props.editing) {
+      let getdate = (yourDate)=>{
+        yourDate=new Date(yourDate)
+        let offset = yourDate.getTimezoneOffset()
+        yourDate = new Date(yourDate.getTime() - (offset*60*1000))
+        return yourDate.toISOString().split('T')[0]
+      }
       this.state = {
         title: props.editingproj.title,
-        startdate: props.editingproj.startdate,
-        enddate: props.editingproj.enddate?new Date(props.editingproj.enddate):null,
+        startdate: getdate(props.editingproj.startdate),
+        enddate: props.editingproj.enddate?getdate(props.editingproj.enddate):null,
         description: props.editingproj.description,
         link: props.editingproj.link,
       };
