@@ -57,8 +57,9 @@ const currentUserReducer = (state = defaultState, action) => {
                 ...state
             }
         case DELETE_USER_EXPERIENCE:
-            console.log(action.expId)
+            console.log(state.user.experiences)
             state.user.experiences=state.user.experiences.filter((m) => String(m._id) !== String(action.expId));
+            console.log(state.user.experiences)
             return {
                 ...state
             }
@@ -80,7 +81,7 @@ const currentUserReducer = (state = defaultState, action) => {
             }
         case EDIT_USER_PROJECT:
             let index2 = state.user.projects.findIndex((m) => String(m._id) === String(action.project._id));
-            state.user.projects[index] = action.project
+            state.user.projects[index2] = action.project
             return {
                 ...state
             }

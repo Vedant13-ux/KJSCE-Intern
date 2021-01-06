@@ -22,6 +22,7 @@ class Project extends Component {
       this.setState({ show: false, editingproj: null });
     };
     this.handleexpsub = (data) => {
+      console.log("aya")
       if (this.state.editing) {
         data._id=this.state.editingproj._id;
         this.props

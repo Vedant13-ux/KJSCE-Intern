@@ -24,9 +24,7 @@ class Main extends React.Component {
         }
     }
     render() {
-        console.log('Main ka Render');
         const currentUser = this.props.currentUser;
-        console.log(currentUser)
         if (!currentUser.user._id && localStorage.getItem('isAuthenticated') !== 'false' && JSON.parse(localStorage.getItem('isAuthenticated')) !== null) {
             return <div></div>
         }

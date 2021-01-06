@@ -26,7 +26,6 @@ class Profile extends Component {
   }
 
   async componentDidMount() {
-    console.log("profile Mounted")
     document.documentElement.scrollTop = 0;
     if (this.props.currentUser.user.email.split('@')[0] === this.state.profileId) {
       let i = 0;
@@ -58,7 +57,6 @@ class Profile extends Component {
     }
   }
   render() {
-    console.log(this.props.currentUser.user);
     if (this.state.start) {
       return (
         <div id="profile">
@@ -95,7 +93,7 @@ class Profile extends Component {
                   user={this.state.user}
                 />
               }
-              <UserActivity owner={this.state.owner} user={this.state.user} loggedin={this.props.currentUser.user} />
+              <UserActivity owner={this.state.owner} user={this.state.owner?this.props.currentUser.user:this.state.user} loggedin={this.props.currentUser.user} />
             </div>
           </section>
           <PageFooter />

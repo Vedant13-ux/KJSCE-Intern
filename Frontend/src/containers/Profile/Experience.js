@@ -41,6 +41,7 @@ class Experience extends Component {
       ).catch((err) => err)}
     };
     this.deleteexp = () => {
+      console.log("aya")
       this.props
         .deleteExperiences(this.state.editingexp._id, this.props.user._id)
         .then(() => {
