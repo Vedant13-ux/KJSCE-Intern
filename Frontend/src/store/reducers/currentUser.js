@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, DELETE_USER_PROJECT, EDIT_USER_PROJECT,UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER } from '../actionTypes';
+import { SET_CURRENT_USER, DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE,EDIT_USER_PROJECT,UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER } from '../actionTypes';
 
 const defaultState = {
     isAuthenticated: false,
@@ -46,7 +46,11 @@ const currentUserReducer = (state = defaultState, action) => {
             return {
                 ...state
             }
-        
+        case DELETE_USER_CERTIFICATE:
+            state.user.certificates=state.user.certificates.filter((m) => String(m._id) !== String(action.cert_id));
+            return {
+                ...state
+            }
         case UPDATE_USER_EXPERIENCE:
             state.user.experiences.push(action.experience);
             return {

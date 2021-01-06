@@ -148,7 +148,36 @@ router.put('/profile/edit/certificates', (req, res, next) => {
             next(err);
         });
 });
-
+router.delete('/profile/update/certificates/:userId/:certId', (req, res, next) => {
+    db.User.findById(req.params.userId)
+        .then(async (user) => {
+            if (!user) {
+                return next({
+                    status: 404,
+                    message: "User Not Found"
+                })
+            }
+            try {
+                let certificate = db.Certificate.findById(req.params.certId);
+                if (certificate) {
+                    await certificate.remove();
+                    let to_remove = user.certificates.findIndex((m) => String(m._id) === String(req.params.certId));
+                    await user.certificates.splice(to_remove, 1);
+                    await user.save();
+                    res.send('certificate deleted');
+                } else {
+                    return next({
+                        status: 404,
+                        message: "certificate Not Found"
+                    })
+                }
+            } catch (err) {
+                next(err);
+            }
+        }).catch((err) => {
+            next(err);
+        });
+})
 
 router.put('/profile/update/resume', (req, res, next) => {
     db.User.findById(req.body.id)

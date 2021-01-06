@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import { Multiselect } from "multiselect-react-dropdown";
 import { apiCall } from "../../services/api";
 import { connect } from 'react-redux'
-import { updateinfo, updateSkills, updateCertificates } from '../../store/actions/user';
+import { updateinfo, updateSkills,deleteCertificate, updateCertificates } from '../../store/actions/user';
 
 
 
@@ -116,6 +116,15 @@ class Basic extends Component {
         }
       ).catch((err) => err)
     }
+    this.deletecert = (id) => {
+      this.props
+        .deleteCertificate(id, this.props.user._id)
+        .then(() => {
+          console.log("delted");
+          this.setState({})
+        })
+        .catch((e) => console.log(e));
+    };
     this.changeskill = (s) => {
       console.log("aya")
       this.props.updateSkills(s, this.props.user._id).then(
@@ -420,7 +429,13 @@ class Basic extends Component {
             {
               this.props.user.certificates.map((s) => (
                 <div>
-                  <h4>{s.title}</h4>
+                  <h4>{s.title}{this.props.isowner && (
+                    <span
+                      class="deleteproj"
+                      onClick={() =>deletecert(s._id) }
+                    >
+                      <i className="fa fa-trash"></i>
+                    </span>)}</h4>
                   <p>
                     <img className="providerimg mr-2" src={'https://www.google.com/s2/favicons?sz=20&domain_url=' + s.link.replace('http://', '').replace('https://', '').split(/[/?#]/)[0]} alt="logo"></img>{s.provider}
                     <br></br>
@@ -506,4 +521,4 @@ class Basic extends Component {
   }
 }
 
-export default connect(() => { }, { updateinfo, updateSkills, updateCertificates })(Basic);
+export default connect(() => { }, { updateinfo, updateSkills,deleteCertificate, updateCertificates })(Basic);

@@ -1,6 +1,6 @@
 
 import { apiCall } from '../../services/api';
-import { UPDATE_USER_SKILLS,EDIT_USER_PROJECT, DELETE_USER_PROJECT,UPDATE_USER_EXPERIENCE,UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER } from '../actionTypes';
+import { UPDATE_USER_SKILLS,EDIT_USER_PROJECT, DELETE_USER_PROJECT,DELETE_USER_CERTIFICATE,UPDATE_USER_EXPERIENCE,UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER } from '../actionTypes';
 
 function userRefresh(user) {
     return {
@@ -104,7 +104,25 @@ export function updateCertificates(certificate, id) {
         })
     }
 }
-
+function userCertificatedelete(cert_id) {
+    return {
+        type: DELETE_USER_CERTIFICATE,
+        cert_id
+    }
+}
+export function deleteCertificate(cert_id,id){
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('delete', '/api/profile/update/certificates/'+id+'/'+cert_id)
+                .then(() => {
+                    dispatch(userCertificatedelete(cert_id));
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+}
+}
 function userExperience(experience) {
     return {
         type: UPDATE_USER_EXPERIENCE,
