@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Modal } from "react-bootstrap";
 import { connect } from "react-redux";
-import { updateProjects, deleteProjects } from "../../store/actions/user";
+import { updateProjects, deleteProjects,editProjects } from "../../store/actions/user";
 
 class Project extends Component {
   constructor(props) {
@@ -23,6 +23,15 @@ class Project extends Component {
     };
     this.handleexpsub = (data) => {
       if (this.state.editing) {
+        data._id=this.state.editingproj._id;
+        this.props
+          .editProjects(data)
+          .then(() => {
+            console.log("Project Added");
+            this.handleclose();
+          })
+          .catch((err) => err);
+        
       } else {
         this.props
           .updateProjects(data, this.props.user._id)
@@ -245,4 +254,4 @@ class ProjectForm extends Component {
   }
 }
 
-export default connect(() => {}, { updateProjects, deleteProjects })(Project);
+export default connect(() => {}, { updateProjects, editProjects,deleteProjects })(Project);

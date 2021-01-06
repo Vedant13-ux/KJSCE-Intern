@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, DELETE_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER } from '../actionTypes';
+import { SET_CURRENT_USER, DELETE_USER_PROJECT, EDIT_USER_PROJECT,UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER } from '../actionTypes';
 
 const defaultState = {
     isAuthenticated: false,
@@ -46,11 +46,7 @@ const currentUserReducer = (state = defaultState, action) => {
             return {
                 ...state
             }
-        case DELETE_USER_PROJECT:
-            state.user.projects=state.user.projects.filter((m) => String(m._id) !== String(action.projectId));
-            return {
-                ...state
-            }
+        
         case UPDATE_USER_EXPERIENCE:
             state.user.experiences.push(action.experience);
             return {
@@ -58,6 +54,17 @@ const currentUserReducer = (state = defaultState, action) => {
             }
         case UPDATE_USER_PROJECT:
             state.user.projects.push(action.project);
+            return {
+                ...state
+            }
+        case DELETE_USER_PROJECT:
+            state.user.projects=state.user.projects.filter((m) => String(m._id) !== String(action.projectId));
+            return {
+                ...state
+            }
+        case EDIT_USER_PROJECT:
+            let index=state.user.projects.findIndex((m) => String(m._id) === String(action.project._id));
+            state.user.projects[index]=action.project
             return {
                 ...state
             }

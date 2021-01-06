@@ -238,7 +238,14 @@ router.delete('/profile/update/projects/:userId/:projectId', (req, res, next) =>
             next(err);
         });
 })
-
+router.put('/profile/update/projectedit', (req, res, next) => {
+    db.Project.findByIdAndUpdate(req.body.project._id, req.body.project)
+    .then(async () => {
+        res.send('Updated!');
+    }).catch((err) => {
+        next(err);
+    });
+})
 // COuncil
 router.get('/council/findMembers/:name', (req, res, next) => {
     const nameArr = req.params.name.split(' ');
