@@ -130,24 +130,6 @@ router.put('/profile/update/certificates', (req, res, next) => {
         });
 });
 
-router.put('/profile/edit/certificates', (req, res, next) => {
-    db.User.findById(req.body.userId)
-        .then(async user => {
-            if (!user) {
-                return next({ status: 404, message: "User Not Found" });
-            }
-            try {
-                let certificate = await db.Certificate.create(req.body.certificate)
-                await user.certificates.push(certificate);
-                await user.save();
-                res.send(certificate);
-            } catch (error) {
-                next(error);
-            }
-        }).catch((err) => {
-            next(err);
-        });
-});
 router.delete('/profile/update/certificates/:userId/:certId', (req, res, next) => {
     db.User.findById(req.params.userId)
         .then(async (user) => {
@@ -217,7 +199,44 @@ router.put('/profile/update/experiences', (req, res, next) => {
             next(err);
         });
 });
-
+router.delete('/profile/update/experiences/:userId/:expId', (req, res, next) => {
+    db.User.findById(req.params.userId)
+        .then(async (user) => {
+            if (!user) {
+                return next({
+                    status: 404,
+                    message: "User Not Found"
+                })
+            }
+            try {
+                let experience = db.Experience.findById(req.params.expId);
+                if (experience) {
+                    await experience.remove();
+                    let to_remove = user.experiences.findIndex((m) => String(m._id) === String(req.params.expId));
+                    await user.experiences.splice(to_remove, 1);
+                    await user.save();
+                    res.send('experience deleted');
+                } else {
+                    return next({
+                        status: 404,
+                        message: "experience Not Found"
+                    })
+                }
+            } catch (err) {
+                next(err);
+            }
+        }).catch((err) => {
+            next(err);
+        });
+})
+router.put('/profile/edit/experience', (req, res, next) => {
+    db.Experience.findByIdAndUpdate(req.body.experience._id, req.body.experience)
+    .then(async () => {
+        res.send('Updated!');
+    }).catch((err) => {
+        next(err);
+    });
+})
 router.put('/profile/update/projects', (req, res, next) => {
     db.User.findById(req.body.id)
         .then(async user => {
@@ -267,7 +286,7 @@ router.delete('/profile/update/projects/:userId/:projectId', (req, res, next) =>
             next(err);
         });
 })
-router.put('/profile/update/projectedit', (req, res, next) => {
+router.put('/profile/edit/project', (req, res, next) => {
     console.log("aya")
     db.Project.findByIdAndUpdate(req.body.project._id, req.body.project)
     .then(async () => {

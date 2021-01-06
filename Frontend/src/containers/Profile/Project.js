@@ -101,7 +101,7 @@ class Project extends Component {
           backdrop="static"
         >
           <Modal.Header closeButton>
-            <Modal.Title>Fill Project Details</Modal.Title>
+            <Modal.Title>{this.state.editing?'Edit Project Details':'Fill Project Details'}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <ProjectForm

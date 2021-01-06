@@ -36,7 +36,7 @@ class Basic extends Component {
         display = <Experience owner={this.props.owner} user={this.props.user} />;
         break;
       case "projects":
-        display = <Project owner={this.props.owner} user={this.props.loggedin} />;
+        display = <Project owner={this.props.owner} user={this.props.user} />;
         break;
       case "posts":
         display = (

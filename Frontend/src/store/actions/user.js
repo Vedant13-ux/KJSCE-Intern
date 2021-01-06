@@ -1,6 +1,6 @@
 
 import { apiCall } from '../../services/api';
-import { DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT, DELETE_EVENT } from '../actionTypes';
+import { DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE,DELETE_USER_EXPERIENCE,EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT, DELETE_EVENT } from '../actionTypes';
 
 
 function userRefresh(user) {
@@ -143,7 +143,44 @@ export function updateExperiences(experience, id) {
         })
     }
 }
-
+function userExperiencedelete(expId) {
+    return {
+        type: DELETE_USER_EXPERIENCE,
+        expId
+    }
+}
+export function deleteExperiences(expId, id) {
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('delete', '/api/profile/update/experiences/'+id+'/'+expId)
+                .then(() => {
+                    dispatch(userExperiencedelete(expId));
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+    }
+}
+function userExperienceEdit(experience) {
+    return {
+        type: EDIT_USER_EXPERIENCE,
+        experience
+    }
+}
+export function editExperience(experience) {
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('put', '/api/profile/edit/experience',experience)
+                .then(() => {
+                    dispatch(userExperienceEdit(experience.experience));
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+    }
+}
 function userProject(project) {
     return {
         type: UPDATE_USER_PROJECT,
@@ -191,7 +228,7 @@ function userProjectedit(project) {
 export function editProjects(project) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/api/profile/update/projectedit', project)
+            return apiCall('put', '/api/profile/edit/project',project)
                 .then(() => {
                     dispatch(userProjectedit(project.project));
                     res();
