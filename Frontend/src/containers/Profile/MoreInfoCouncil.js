@@ -112,7 +112,7 @@ class MoreInfoCouncil extends Component {
                             <Modal.Title>Add members +</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <form onSubmit={this.handleSubmit} autoComplete="off">
+                            <form onSubmit={this.handleSubmit} autoComplete="off" className="memberForm">
                                 <div className="ui form">
                                     <div className="field">
                                         <label>Position</label>

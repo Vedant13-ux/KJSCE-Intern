@@ -3,7 +3,11 @@ import Modal from "react-bootstrap/Modal";
 import { Multiselect } from "multiselect-react-dropdown";
 import { apiCall } from "../../services/api";
 import { connect } from 'react-redux'
-import { updateinfo, updateSkills, updateCertificates } from '../../store/actions/user'
+import { updateinfo, updateSkills, updateCertificates } from '../../store/actions/user';
+import { parseFavicon } from 'parse-favicon'
+
+
+
 
 class Basic extends Component {
   constructor(props) {
@@ -103,15 +107,33 @@ class Basic extends Component {
     }
     this.addcert = (cert) => {
       cert.date = new Date(cert.date);
-      this.props.updateCertificates(cert, this.props.user._id).then(
-        () => {
-          console.log('Certificate Added')
-          this.setState({
-            certform: { title: "", provider: "", link: "", date: new Date() },
-            show2: false,
-          });
-        }
-      ).catch((err) => err)
+      const pageUrl = cert.link.split('.com')[0] + '.com';
+      console.log(pageUrl);
+      parseFavicon(pageUrl, textFetcher, bufferFetcher).subscribe(icon => console.log(icon))
+
+      async function textFetcher(url) {
+        return await fetch(resolveUrl(url, pageUrl)).then(res => res.text())
+      }
+
+      async function bufferFetcher(url) {
+        return await fetch(resolveUrl(url, pageUrl)).then(res => res.arrayBuffer())
+      }
+
+      function resolveUrl(url, base) {
+        return new URL(url, base).href
+      }
+
+
+      // console.log(urls);
+      // this.props.updateCertificates(cert, this.props.user._id).then(
+      //   () => {
+      //     console.log('Certificate Added')
+      //     this.setState({
+      //       certform: { title: "", provider: "", link: "", date: new Date() },
+      //       show2: false,
+      //     });
+      //   }
+      // ).catch((err) => err)
     }
     this.changeskill = (s) => {
       console.log("aya")
@@ -136,7 +158,6 @@ class Basic extends Component {
   }
   handleSubmit(e) {
     e.preventDefault();
-
     this.addcert(this.state.certform);
 
   }
@@ -443,7 +464,7 @@ class Basic extends Component {
             <Modal.Title>Certificate</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <form onSubmit={this.handleSubmit} id="internshipForm">
+            <form onSubmit={this.handleSubmit}>
               <div className="ui form">
                 <div className="field">
                   <label>Title</label>

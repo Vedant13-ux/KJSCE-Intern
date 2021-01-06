@@ -195,20 +195,15 @@ margin-right: 9px;
   overflow-y: auto !important;
 }
 
-/* #profile .post-wall{
-  margin-top: 0px !important;
-} */
+
 
 #experience .experience-ele{
-  /* background-color: #f5f5f5d2; */
-  /* border-radius: 10px; */
   padding: 10px;
   margin: 10px;
-  /* border-bottom: 2px solid rgb(168, 163, 163); */
   border: 1.5px solid #bdbdbdd2;
+  border-left: 10px solid #020b53;
 }
 #experience .experience-ele h4{
-  /* background-color: #FFCA3D; */
   border-radius: 5px;
   display: inline-block;
   padding: 3px 6px;
@@ -268,7 +263,7 @@ cursor: pointer;
 
  #myInput:focus {outline: 3px solid #ddd;}
 
- .dropdown {
+ .memberForm .dropdown {
   position: relative;
   margin: 0;
   margin-bottom: 50px;
