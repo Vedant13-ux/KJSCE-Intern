@@ -7,7 +7,6 @@ class Experience extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: this.props.user.experiences,
       editing: false,
       editingexp: null,
       show: false,
@@ -56,7 +55,7 @@ class Experience extends Component {
       <div id="experience">
         {this.props.owner && <button onClick={this.handleshow1} className="experience-add ui button ">Add + </button>}
         <div style={{ overflowY: 'auto', maxHeight: '800px' }}>
-          {this.state.list.map((e, i) => {
+          {this.props.user.experiences.map((e, i) => {
             return (
               <div className="experience-ele">
                 <h4>{e.title}</h4>

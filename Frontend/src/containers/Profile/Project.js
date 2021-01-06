@@ -7,7 +7,6 @@ class Project extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: this.props.user.projects,
       editing: false,
       editingproj: null,
       show: false,
