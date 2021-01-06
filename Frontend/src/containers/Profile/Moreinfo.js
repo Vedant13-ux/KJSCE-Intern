@@ -4,7 +4,6 @@ import { Multiselect } from "multiselect-react-dropdown";
 import { apiCall } from "../../services/api";
 import { connect } from 'react-redux'
 import { updateinfo, updateSkills, updateCertificates } from '../../store/actions/user';
-import { parseFavicon } from 'parse-favicon'
 
 
 
@@ -107,33 +106,15 @@ class Basic extends Component {
     }
     this.addcert = (cert) => {
       cert.date = new Date(cert.date);
-      const pageUrl = cert.link.split('.com')[0] + '.com';
-      console.log(pageUrl);
-      parseFavicon(pageUrl, textFetcher, bufferFetcher).subscribe(icon => console.log(icon))
-
-      async function textFetcher(url) {
-        return await fetch(resolveUrl(url, pageUrl)).then(res => res.text())
-      }
-
-      async function bufferFetcher(url) {
-        return await fetch(resolveUrl(url, pageUrl)).then(res => res.arrayBuffer())
-      }
-
-      function resolveUrl(url, base) {
-        return new URL(url, base).href
-      }
-
-
-      // console.log(urls);
-      // this.props.updateCertificates(cert, this.props.user._id).then(
-      //   () => {
-      //     console.log('Certificate Added')
-      //     this.setState({
-      //       certform: { title: "", provider: "", link: "", date: new Date() },
-      //       show2: false,
-      //     });
-      //   }
-      // ).catch((err) => err)
+      this.props.updateCertificates(cert, this.props.user._id).then(
+        () => {
+          console.log('Certificate Added')
+          this.setState({
+            certform: { title: "", provider: "", link: "", date: new Date() },
+            show2: false,
+          });
+        }
+      ).catch((err) => err)
     }
     this.changeskill = (s) => {
       console.log("aya")
@@ -441,7 +422,7 @@ class Basic extends Component {
                 <div>
                   <h4>{s.title}</h4>
                   <p>
-                    <img className="providerimg" src={'https://www.google.com/s2/favicons?sz=64&domain_url='+s.link.replace('http://','').replace('https://','').split(/[/?#]/)[0]}></img>{s.provider}
+                    <img className="providerimg mr-2" src={'https://www.google.com/s2/favicons?sz=20&domain_url=' + s.link.replace('http://', '').replace('https://', '').split(/[/?#]/)[0]} alt="logo"></img>{s.provider}
                     <br></br>
                   Issued {new Date(s.date).toDateString()}
                     <br></br>

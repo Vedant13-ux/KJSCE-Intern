@@ -12,7 +12,6 @@
     "jwt-decode": "^3.0.0",
     "moment": "^2.29.1",
     "multiselect-react-dropdown": "^1.6.1",
-    "parse-favicon": "^3.0.8",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
     "react-data-export": "^0.6.0",
