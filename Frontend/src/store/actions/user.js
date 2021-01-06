@@ -1,6 +1,7 @@
 
 import { apiCall } from '../../services/api';
-import { UPDATE_USER_SKILLS,EDIT_USER_PROJECT,DELETE_USER_EXPERIENCE,EDIT_USER_EXPERIENCE, DELETE_USER_PROJECT,DELETE_USER_CERTIFICATE,UPDATE_USER_EXPERIENCE,UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER } from '../actionTypes';
+import { DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE,DELETE_USER_EXPERIENCE,EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT, DELETE_EVENT } from '../actionTypes';
+
 
 function userRefresh(user) {
     return {
@@ -12,7 +13,7 @@ function userRefresh(user) {
 export function updateRefresh(username) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('get', "/api/user/"+username,'')
+            return apiCall('get', "/api/user/" + username, '')
                 .then((data) => {
                     dispatch(userRefresh(data));
                     res();
@@ -110,10 +111,10 @@ function userCertificatedelete(cert_id) {
         cert_id
     }
 }
-export function deleteCertificate(cert_id,id){
+export function deleteCertificate(cert_id, id) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('delete', '/api/profile/update/certificates/'+id+'/'+cert_id)
+            return apiCall('delete', '/api/profile/update/certificates/' + id + '/' + cert_id)
                 .then(() => {
                     dispatch(userCertificatedelete(cert_id));
                     res();
@@ -121,7 +122,7 @@ export function deleteCertificate(cert_id,id){
                     rej(err);
                 });
         })
-}
+    }
 }
 function userExperience(experience) {
     return {
@@ -208,7 +209,7 @@ function userProjectdelete(projectId) {
 export function deleteProjects(projectId, id) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('delete', '/api/profile/update/projects/'+id+'/'+projectId)
+            return apiCall('delete', '/api/profile/update/projects/' + id + '/' + projectId)
                 .then(() => {
                     dispatch(userProjectdelete(projectId));
                     res();
@@ -243,6 +244,7 @@ function addBook(bookmark) {
         bookmark
     }
 }
+
 export function addBookmark(bookmark, userId) {
     return dispatch => {
         return new Promise((res, rej) => {
@@ -263,6 +265,7 @@ function deleteBook(bookmark) {
         bookmark
     }
 }
+
 export function deleteBookmark(bookmark, userId) {
     return dispatch => {
         return new Promise((res, rej) => {
@@ -315,6 +318,26 @@ export function deleteMember(userId, memberId) {
             return apiCall('put', '/api/council/deleteMember/' + userId + '/' + memberId, '')
                 .then(() => {
                     dispatch(deleteMemb(memberId));
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+    }
+}
+function addEv(event) {
+    return {
+        type: UPDATE_EVENT,
+        event
+    }
+}
+
+export function addEvent(event, userId) {
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('post', '/api/council/addEvent/' + userId, event)
+                .then((newEvent) => {
+                    dispatch(addEv(newEvent));
                     res();
                 }).catch((err) => {
                     rej(err);

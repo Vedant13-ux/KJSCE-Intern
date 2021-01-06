@@ -31,9 +31,9 @@ function escapeRegex(text) {
 }
 // Get user by id
 router.get('/user/:id', (req, res, next) => {
-    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('applications').populate('posts').populate('certificates').populate('experiences').populate('projects').populate({ path: 'members', populate: { path: 'member', select: 'fname lname _id email photo' } }).populate({ path: 'commented', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } }).populate({ path: 'liked', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } }).exec()
+    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('events').populate('applications').populate('posts').populate('certificates').populate('experiences').populate('projects').populate({ path: 'members', populate: { path: 'member', select: 'fname lname _id email photo' } }).populate({ path: 'commented', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } }).populate({ path: 'liked', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } }).exec()
         .then((user) => {
-            user.password=''
+            user.password = ''
             res.status(200).send(user);
         }).catch((err) => {
             next(err);
@@ -327,6 +327,12 @@ router.put('/council/addMember/:id', (req, res, next) => {
                     message: "User Not Found"
                 })
             }
+            if (user.role !== "Council") {
+                return next({
+                    status: 405,
+                    message: 'Only Councils Can Add Members'
+                })
+            }
             try {
                 let member = await db.CouncilMember.create(req.body);
                 await user.members.push(member);
@@ -337,7 +343,7 @@ router.put('/council/addMember/:id', (req, res, next) => {
                 next(err);
             }
         }).catch((err) => {
-
+            next(err);
         });
 })
 
@@ -357,7 +363,7 @@ router.delete('/council/deleteMember/:userId/:memberId', (req, res, next) => {
                     let to_remove = user.members.findIndex((m) => JSON.stringify(m) == JSON.stringify(member._id));
                     await user.members.splice(to_remove, 1);
                     await user.save();
-                    res.send('Member Added');
+                    res.send('Member Deleted');
                 } else {
                     return next({
                         status: 404,
@@ -368,7 +374,69 @@ router.delete('/council/deleteMember/:userId/:memberId', (req, res, next) => {
                 next(err);
             }
         }).catch((err) => {
+            next(err);
+        });
+})
+
+router.post('/council/addEvent/:userId', (req, res, nex) => {
+    console.log(req.body);
+    db.User.findById(req.params.userId)
+        .then(async (user) => {
+            if (!user) {
+                return next({
+                    status: 404,
+                    message: 'User Not Found'
+                })
+            }
+            if (user.role !== "Council") {
+                return next({
+                    status: 405,
+                    message: 'Only Councils Can Create Events'
+                })
+            }
+            try {
+                let event = await db.Event.create(req.body);
+                await user.events.push(event);
+                await user.save();
+                res.send(event);
+            } catch (err) {
+                next(err);
+            }
+
+        }).catch((err) => {
+            next(err);
+        });
+})
+
+router.delete('/council/deleteEvent/:userId/:eventId', (req, res, next) => {
+    db.User.findById(req.params.userId)
+        .then(async (user) => {
+            if (!user) {
+                return next({
+                    status: 404,
+                    message: "User Not Found"
+                })
+            }
+            try {
+                let event = db.Event.find(req.params.eventId);
+                if (event) {
+                    await event.remove();
+                    let to_remove = user.events.findIndex((m) => JSON.stringify(m) == JSON.stringify(event._id));
+                    await user.events.splice(to_remove, 1);
+                    await user.save();
+                    res.send('Event Added');
+                } else {
+                    return next({
+                        status: 404,
+                        message: "Event Not Found"
+                    })
+                }
+            } catch (err) {
+                next(err);
+            }
+        }).catch((err) => {
 
         });
 })
+
 module.exports = router;

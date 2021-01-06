@@ -32,4 +32,5 @@ module.exports.Application = require('./application');
 module.exports.Certificate = require('./certificate')
 module.exports.Experience = require('./experience')
 module.exports.Project = require('./project');
-module.exports.CouncilMember = require('./councilMembers')
+module.exports.CouncilMember = require('./councilMembers');
+module.exports.Event = require('./events');
