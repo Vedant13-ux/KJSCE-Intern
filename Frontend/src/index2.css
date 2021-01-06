@@ -198,6 +198,12 @@ margin-right: 9px;
 	max-width: 32px;
 	max-height: 32px;
 }
+
+#certificates .deletecert{
+	float:right;
+  font-size: 20px;
+cursor: pointer;
+}
 /* #profile .post-wall{
   margin-top: 0px !important;
 } */

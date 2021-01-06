@@ -1,6 +1,7 @@
 
 import { apiCall } from '../../services/api';
-import { UPDATE_USER_SKILLS, DELETE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT, DELETE_EVENT, EDIT_EVENT } from '../actionTypes';
+import { DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT, DELETE_EVENT } from '../actionTypes';
+
 
 function userRefresh(user) {
     return {
@@ -104,19 +105,18 @@ export function updateCertificates(certificate, id) {
         })
     }
 }
-
-function userProjectdelete(projectId) {
+function userCertificatedelete(cert_id) {
     return {
-        type: DELETE_USER_PROJECT,
-        projectId
+        type: DELETE_USER_CERTIFICATE,
+        cert_id
     }
 }
-export function deleteProjects(projectId, id) {
+export function deleteCertificate(cert_id, id) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('delete', '/api/profile/update/projects/' + id + '/' + projectId)
+            return apiCall('delete', '/api/profile/update/certificates/' + id + '/' + cert_id)
                 .then(() => {
-                    dispatch(userProjectdelete(projectId));
+                    dispatch(userCertificatedelete(cert_id));
                     res();
                 }).catch((err) => {
                     rej(err);
@@ -124,7 +124,6 @@ export function deleteProjects(projectId, id) {
         })
     }
 }
-
 function userExperience(experience) {
     return {
         type: UPDATE_USER_EXPERIENCE,
@@ -164,7 +163,44 @@ export function updateProjects(project, id) {
         })
     }
 }
-
+function userProjectdelete(projectId) {
+    return {
+        type: DELETE_USER_PROJECT,
+        projectId
+    }
+}
+export function deleteProjects(projectId, id) {
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('delete', '/api/profile/update/projects/' + id + '/' + projectId)
+                .then(() => {
+                    dispatch(userProjectdelete(projectId));
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+    }
+}
+function userProjectedit(project) {
+    return {
+        type: EDIT_USER_PROJECT,
+        project
+    }
+}
+export function editProjects(project) {
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('put', '/api/profile/update/projectedit', project)
+                .then(() => {
+                    dispatch(userProjectedit(project.project));
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+    }
+}
 function addBook(bookmark) {
     return {
         type: ADD_BOOKMARK,
@@ -262,7 +298,7 @@ function addEv(event) {
 export function addEvent(event, userId) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('post', '/api/council/addEvent/' + userId, event )
+            return apiCall('post', '/api/council/addEvent/' + userId, event)
                 .then((newEvent) => {
                     dispatch(addEv(newEvent));
                     res();
