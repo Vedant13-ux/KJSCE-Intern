@@ -53,7 +53,6 @@ class Project extends Component {
     };
   }
   render() {
-    console.log("rendering again");
     return (
       <div id="experience">
         {this.props.owner && (
@@ -123,7 +122,6 @@ class ProjectForm extends Component {
   constructor(props) {
     super(props);
     if (props.editing) {
-      console.log(props.editingproj)
       this.state = {
         title: props.editingproj.title,
         startdate: props.editingproj.startdate,
@@ -143,13 +141,6 @@ class ProjectForm extends Component {
     this.handleSubmit = (e) => {
       e.preventDefault();
       props.onexpsub(this.state);
-      this.setState({
-        title: "",
-        startdate: "",
-        enddate: null,
-        description: "",
-        link: "",
-      });
     };
     this.handleChange = (e) => {
       this.setState({ [e.target.name]: e.target.value });
@@ -164,7 +155,6 @@ class ProjectForm extends Component {
   }
   render() {
     const { title, startdate, enddate, description, link } = this.state;
-    console.log(title)
     return (
       <form onSubmit={this.handleSubmit} id="internshipForm">
         <div className="ui form">
