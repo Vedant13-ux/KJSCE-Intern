@@ -636,6 +636,17 @@ body{
   display: flex;
   align-items: center;
 }
+#internshipdetail .internshipTitle h1{
+  display: inline-block;
+}
+#internshipdetail .internshipTitle .category{
+  color:  #020C53;
+  background-color: #FFCA3D;
+  font-weight: 500;
+  float:right;
+  padding: 5px 7px;
+  border-radius: 5px;
+}
 #internshipdetail .author{
   margin-left: 10px;
   color:rgb(99, 99, 99);

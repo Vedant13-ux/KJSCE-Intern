@@ -23,6 +23,12 @@ const internshipDetailsSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }],
+  recruited: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ],
   applications: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -34,7 +40,8 @@ const internshipDetailsSchema = new mongoose.Schema({
   completed: {
     type: Boolean,
     default: false
-  }
+  },
+  category: ''
 });
 
 module.exports = mongoose.model('InternshipDetails', internshipDetailsSchema);

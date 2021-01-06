@@ -168,7 +168,10 @@ class InternshipDetail extends Component {
               <div className="col-8">
                 <div className="card">
                   <div className="card-body">
-                    <h1>{this.state.details.title}</h1>
+                    <div className="internshipTitle">
+                      <h1>{this.state.details.title}</h1>
+                      <div className="category">{this.state.details.category}</div>
+                    </div>
                     <div className="provider">
                       <img
                         src={this.state.details.faculty.photo}

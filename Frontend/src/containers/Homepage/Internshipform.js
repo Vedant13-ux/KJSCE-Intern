@@ -26,6 +26,7 @@ class Intershipform extends Component {
         { text: "C++" },
         { text: "React Native" },
       ],
+      category: ''
 
     };
 
@@ -34,7 +35,7 @@ class Intershipform extends Component {
     this.handleSkills = this.handleSkills.bind(this);
     this.multiselectRef = React.createRef();
   }
-  
+
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -80,6 +81,7 @@ class Intershipform extends Component {
       description,
       perks,
       whoCanApply,
+      category
     } = this.state;
     return (
       <form onSubmit={this.handleSubmit} id="internshipForm">
@@ -91,7 +93,7 @@ class Intershipform extends Component {
                 name="title"
                 maxLength="30"
                 required
-                val={title}
+                value={title}
                 onChange={this.handleChange}
                 type="text"
                 placeholder="eg. Frontend with React"
@@ -104,7 +106,7 @@ class Intershipform extends Component {
               <select
                 name="department"
                 required
-                val={department}
+                value={department}
                 onChange={this.handleChange}
               >
                 <option value="">Department</option>
@@ -123,7 +125,7 @@ class Intershipform extends Component {
                 required
                 type="Date"
                 name="applyBy"
-                val={applyBy}
+                value={applyBy}
                 onChange={this.handleChange}
               ></input>
             </div>
@@ -137,7 +139,7 @@ class Intershipform extends Component {
                 max="12"
                 required
                 name="duration"
-                val={duration}
+                value={duration}
                 placeholder="eg. 1"
                 onChange={this.handleChange}
               ></input>
@@ -150,22 +152,40 @@ class Intershipform extends Component {
                 required
                 name="numberOpenings"
                 placeholder="eg. 2"
-                val={numberOpenings}
+                value={numberOpenings}
                 onChange={this.handleChange}
               ></input>
             </div>
           </div>
-          <div className="field">
-            <label>Type</label>
+          <div className="two fields">
+            <div className="field">
+              <label>Type</label>
 
-            <span className="mr-4">
-              <input type="radio" id="wfh" onChange={this.handleChange} name="type" value="Work from Home" className="mr-2" />
-              <label for="wfh">Work from Home</label>
-            </span>
-            <span>
-              <input type="radio" id="ext" onChange={this.handleChange} name="type" value="External" className="mr-2" />
-              <label for="ext">External</label>
-            </span>
+              <span className="mr-4">
+                <input type="radio" id="wfh" onChange={this.handleChange} name="type" value="Work from Home" className="mr-2" />
+                <label for="wfh">Work from Home</label>
+              </span>
+              <span>
+                <input type="radio" id="ext" onChange={this.handleChange} name="type" value="External" className="mr-2" />
+                <label for="ext">External</label>
+              </span>
+            </div>
+
+            <div className="field">
+              <label>Category</label>
+              <select
+                name="category"
+                required
+                value={category}
+                onChange={this.handleChange}
+              >
+                <option value="">Category</option>
+                <option value="Internship">Internship</option>
+                <option value="Research">Research</option>
+                <option value="Recruitment">Recruitment</option>
+              </select>
+            </div>
+
           </div>
         </div>
 
@@ -174,8 +194,6 @@ class Intershipform extends Component {
           <Multiselect
             options={this.state.skillData} // Options to display in the dropdown
             selectedValues={this.state.skillsRequired} // Preselected value to persist in dropdown
-            // onSelect={this.onSelect} // Function will trigger on select event
-            // onRemove={this.onRemove} // Function will trigger on remove event
             displayValue="text" // Property name to display in the dropdown options
             onSearch={this.handleSkills}
             ref={this.multiselectRef}
@@ -192,7 +210,7 @@ class Intershipform extends Component {
               required
               placeholder="eg. Only those candidates can apply who have relevant skills and interests and are available for duration of 3 months"
               name="whoCanApply"
-              val={whoCanApply}
+              value={whoCanApply}
               onChange={this.handleChange}
             ></textarea>
           </div>
@@ -204,7 +222,7 @@ class Intershipform extends Component {
               required
               placeholder="eg. Do daily assigned task and fix issues in github"
               name="description"
-              val={description}
+              value={description}
               onChange={this.handleChange}
             ></textarea>
           </div>
@@ -216,7 +234,7 @@ class Intershipform extends Component {
               required
               placeholder="eg. Should have communication and leadership skills"
               name="otherRequirements"
-              val={otherRequirements}
+              value={otherRequirements}
               onChange={this.handleChange}
             ></textarea>
           </div>
@@ -228,7 +246,7 @@ class Intershipform extends Component {
               required
               name="perks"
               placeholder="eg. Certificate,Letter of recommendation,Flexible work hours "
-              val={perks}
+              value={perks}
               onChange={this.handleChange}
             ></textarea>
           </div>
