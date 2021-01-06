@@ -25,9 +25,9 @@ class Project extends Component {
       if (this.state.editing) {
         data._id=this.state.editingproj._id;
         this.props
-          .editProjects(data)
+          .editProjects({project:data})
           .then(() => {
-            console.log("Project Added");
+            console.log("Project edited");
             this.handleclose();
           })
           .catch((err) => err);
@@ -47,7 +47,7 @@ class Project extends Component {
         .deleteProjects(this.state.editingproj._id, this.props.user._id)
         .then(() => {
           console.log("delted");
-          this.setState({});
+          this.handleclose();
         })
         .catch((e) => console.log(e));
     };
@@ -127,7 +127,7 @@ class ProjectForm extends Component {
       this.state = {
         title: props.editingproj.title,
         startdate: props.editingproj.startdate,
-        enddate: props.editingproj.enddate,
+        enddate: props.editingproj.enddate?new Date(props.editingproj.enddate):null,
         description: props.editingproj.description,
         link: props.editingproj.link,
       };
@@ -174,7 +174,7 @@ class ProjectForm extends Component {
               name="title"
               maxLength="30"
               required
-              val={title}
+              value={title}
               onChange={this.handleChange}
               type="text"
               placeholder="eg. Builded Sudoku Solver"
@@ -195,7 +195,7 @@ class ProjectForm extends Component {
                 required
                 type="Date"
                 name="startdate"
-                val={startdate}
+                value={startdate}
                 onChange={this.handleChange}
               ></input>
             </div>
@@ -206,7 +206,7 @@ class ProjectForm extends Component {
                   required
                   type="Date"
                   name="enddate"
-                  val={enddate}
+                  value={enddate}
                   onChange={this.handleChange}
                 ></input>
               </div>
@@ -219,7 +219,7 @@ class ProjectForm extends Component {
               rows="2"
               placeholder="eg. used python and back tracking algorithm"
               name="description"
-              val={description}
+              value={description}
               onChange={this.handleChange}
             ></textarea>
           </div>
@@ -228,7 +228,7 @@ class ProjectForm extends Component {
             <input
               name="link"
               required
-              val={link}
+              value={link}
               onChange={this.handleChange}
               type="url"
               placeholder="eg. https://github.com/Vedan..."

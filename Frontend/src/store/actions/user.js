@@ -172,9 +172,9 @@ function userProjectedit(project) {
 export function editProjects(project) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/profile/update/projectedit',project)
+            return apiCall('put', '/api/profile/update/projectedit',project)
                 .then(() => {
-                    dispatch(userProjectedit(project));
+                    dispatch(userProjectedit(project.project));
                     res();
                 }).catch((err) => {
                     rej(err);

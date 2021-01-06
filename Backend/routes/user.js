@@ -239,6 +239,7 @@ router.delete('/profile/update/projects/:userId/:projectId', (req, res, next) =>
         });
 })
 router.put('/profile/update/projectedit', (req, res, next) => {
+    console.log("aya")
     db.Project.findByIdAndUpdate(req.body.project._id, req.body.project)
     .then(async () => {
         res.send('Updated!');
