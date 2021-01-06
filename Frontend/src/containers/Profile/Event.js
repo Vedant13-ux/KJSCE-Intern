@@ -81,7 +81,7 @@ class EventForm extends Component {
         };
         this.handleSubmit = async (e) => {
             e.preventDefault();
-            props.onAddEvent({ ...this.state, startTime: this.formatAMPM(this.state.startTime), endTime: this.formatAMPM(this.state.endTime) });
+            props.onAddEvent({ ...this.state });
         }
         this.handleChange = (e) => {
             this.setState({ [e.target.name]: e.target.value })
@@ -135,30 +135,28 @@ class EventForm extends Component {
                             placeholder="Building, Area/Locality, City, State "
                         ></input>
                     </div>
-                    <div className="field">
-                        <label>Timings</label>
-                        <div className="two fields">
-                            <div className="field">
-                                <input
-                                    name="startTime"
-                                    required
-                                    value={startTime}
-                                    onChange={this.handleChange}
-                                    type="time"
-                                    placeholder="Start Time"
-                                ></input>
-                            </div>
-                            <div className="field">
-
-                                <input
-                                    name="endTime"
-                                    required
-                                    value={endTime}
-                                    onChange={this.handleChange}
-                                    type="time"
-                                    placeholder="End Time"
-                                ></input>
-                            </div>
+                    <div className="two fields">
+                        <div className="field">
+                            <label>Start Time (24Hr)</label>
+                            <input
+                                name="startTime"
+                                required
+                                value={startTime}
+                                onChange={this.handleChange}
+                                type="time"
+                                placeholder="Start Time"
+                            ></input>
+                        </div>
+                        <div className="field">
+                            <label>End Time (24Hr)</label>
+                            <input
+                                name="endTime"
+                                required
+                                value={endTime}
+                                onChange={this.handleChange}
+                                type="time"
+                                placeholder="End Time"
+                            ></input>
                         </div>
                     </div>
                     <div className="field">

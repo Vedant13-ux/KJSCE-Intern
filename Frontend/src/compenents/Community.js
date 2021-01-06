@@ -20,6 +20,7 @@ class Application extends React.Component {
   }
 
   componentDidMount() {
+    document.documentElement.scrollTop = 0;
     if (document.documentElement.offsetWidth < 900)
       this.setState({ isMobile: true });
     else this.setState({ isMobile: false });
@@ -74,10 +75,9 @@ class ScrollTopButton extends React.Component {
         styles: {
           position: "fixed",
           top: "4.4rem",
-          left: `${
-            document.querySelector(".feed-wrapper").getBoundingClientRect()
+          left: `${document.querySelector(".feed-wrapper").getBoundingClientRect()
               .left - 60
-          }px`,
+            }px`,
           display: `${this.state.visible ? "block" : "none"}`,
         },
       });
@@ -111,10 +111,9 @@ class ScrollTopButton extends React.Component {
       this.styles = {
         position: "fixed",
         top: "4.4rem",
-        left: `${
-          document.querySelector(".feed-wrapper").getBoundingClientRect().left -
+        left: `${document.querySelector(".feed-wrapper").getBoundingClientRect().left -
           60
-        }px`,
+          }px`,
         display: `${this.state.visible ? "block" : "none"}`,
       };
 
@@ -204,45 +203,45 @@ class Feed extends React.Component {
     this.state = {
       posts: [],
       start: true,
-      filter:{
-        Student:true,
-        Faculty:true,
-        Alumni:true,
-        Council:true,
-        it:true,
-        cs:true,
-        mech:true,
-        extc:true,
-        etrx:true,
-        "1":true,
-        "2":true,
-        "3":true,
-        "4":true,
+      filter: {
+        Student: true,
+        Faculty: true,
+        Alumni: true,
+        Council: true,
+        it: true,
+        cs: true,
+        mech: true,
+        extc: true,
+        etrx: true,
+        "1": true,
+        "2": true,
+        "3": true,
+        "4": true,
       }
     };
-    this.handleSubmit=(e)=>{
+    this.handleSubmit = (e) => {
       e.preventDefault()
-      let roles=[]
-      let allroles=["Student","Faculty","Alumni","Council"]
-      for (let i in allroles){
-        if (this.state.filter[allroles[i]]){
+      let roles = []
+      let allroles = ["Student", "Faculty", "Alumni", "Council"]
+      for (let i in allroles) {
+        if (this.state.filter[allroles[i]]) {
           roles.push(allroles[i])
         }
       }
-      apiCall("put", "/api/community/posts/getSpecific", {roles})
+      apiCall("put", "/api/community/posts/getSpecific", { roles })
         .then((data) => {
-          console.log("hua sahi se",data)
+          console.log("hua sahi se", data)
           // this.setState({ posts: data });
         })
         .catch((e) => {
           console.log("error");
         });
     }
-    this.handleChange=(e)=>{
-      console.log(e.target.checked,e.target.id)
-      let d=this.state.filter
-      d[e.target.id]=e.target.checked
-      this.setState({filter:d})
+    this.handleChange = (e) => {
+      console.log(e.target.checked, e.target.id)
+      let d = this.state.filter
+      d[e.target.id] = e.target.checked
+      this.setState({ filter: d })
     }
   }
 
@@ -273,160 +272,160 @@ class Feed extends React.Component {
               <form onSubmit={this.handleSubmit}>
                 <h5>From</h5>
                 <div>
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    defaultChecked={true}
-                    onChange={this.handleChange}
-                    id="Student"
-                  />
-                  <label class="form-check-label" for="Student">
-                    Student
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      defaultChecked={true}
+                      onChange={this.handleChange}
+                      id="Student"
+                    />
+                    <label class="form-check-label" for="Student">
+                      Student
                   </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    defaultChecked={true}
-                    onChange={this.handleChange}
-                    id="Faculty"
-                  />
-                  <label class="form-check-label" for="Faculty">
-                    Faculty
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      defaultChecked={true}
+                      onChange={this.handleChange}
+                      id="Faculty"
+                    />
+                    <label class="form-check-label" for="Faculty">
+                      Faculty
                   </label>
-                </div>
-                <div class="form-check">
-                  <input type="checkbox" class="form-check-input"
-                    defaultChecked={true}
-                    onChange={this.handleChange} id="Alumni" />
-                  <label class="form-check-label" for="Alumni">
-                    Alumni
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input"
+                      defaultChecked={true}
+                      onChange={this.handleChange} id="Alumni" />
+                    <label class="form-check-label" for="Alumni">
+                      Alumni
                   </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    defaultChecked={true}
-                    onChange={this.handleChange}
-                    id="Council"
-                  />
-                  <label class="form-check-label" for="Council">
-                    Council
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      defaultChecked={true}
+                      onChange={this.handleChange}
+                      id="Council"
+                    />
+                    <label class="form-check-label" for="Council">
+                      Council
                   </label>
-                </div>
+                  </div>
                 </div>
                 <h5>Department</h5>
                 <div>
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    defaultChecked={true}
-                    onChange={this.handleChange}
-                    id="cs"
-                  />
-                  <label class="form-check-label" for="cs">
-                  Computer Science
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      defaultChecked={true}
+                      onChange={this.handleChange}
+                      id="cs"
+                    />
+                    <label class="form-check-label" for="cs">
+                      Computer Science
                   </label>
-                </div>
-                <div class="form-check">
-                  <input type="checkbox" class="form-check-input"
-                    defaultChecked={true}
-                    onChange={this.handleChange} id="mech" />
-                  <label class="form-check-label" for="mech">
-                  Mechanical
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input"
+                      defaultChecked={true}
+                      onChange={this.handleChange} id="mech" />
+                    <label class="form-check-label" for="mech">
+                      Mechanical
                   </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    defaultChecked={true}
-                    onChange={this.handleChange}
-                    id="etrx"
-                  />
-                  <label class="form-check-label" for="etrx">
-                  Electronics
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      defaultChecked={true}
+                      onChange={this.handleChange}
+                      id="etrx"
+                    />
+                    <label class="form-check-label" for="etrx">
+                      Electronics
                   </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    defaultChecked={true}
-                    onChange={this.handleChange}
-                    id="extc"
-                  />
-                  <label class="form-check-label" for="extc">
-                  Electronics and Telecommunication
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      defaultChecked={true}
+                      onChange={this.handleChange}
+                      id="extc"
+                    />
+                    <label class="form-check-label" for="extc">
+                      Electronics and Telecommunication
                   </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    defaultChecked={true}
-                    onChange={this.handleChange}
-                    id="it"
-                  />
-                  <label class="form-check-label" for="it">
-                  Information Technology
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      defaultChecked={true}
+                      onChange={this.handleChange}
+                      id="it"
+                    />
+                    <label class="form-check-label" for="it">
+                      Information Technology
                   </label>
-                </div>
+                  </div>
                 </div>
                 <h5>Year</h5>
                 <div>
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    defaultChecked={true}
-                    onChange={this.handleChange}
-                    id="1"
-                  />
-                  <label class="form-check-label" for="1">
-                  FY
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      defaultChecked={true}
+                      onChange={this.handleChange}
+                      id="1"
+                    />
+                    <label class="form-check-label" for="1">
+                      FY
                   </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    defaultChecked={true}
-                    onChange={this.handleChange}
-                    id="2"
-                  />
-                  <label class="form-check-label" for="2">
-                  SY
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      defaultChecked={true}
+                      onChange={this.handleChange}
+                      id="2"
+                    />
+                    <label class="form-check-label" for="2">
+                      SY
                   </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    defaultChecked={true}
-                    onChange={this.handleChange}
-                    id="3"
-                  />
-                  <label class="form-check-label" for="3">
-                  TY
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      defaultChecked={true}
+                      onChange={this.handleChange}
+                      id="3"
+                    />
+                    <label class="form-check-label" for="3">
+                      TY
                   </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    defaultChecked={true}
-                    onChange={this.handleChange}
-                    id="4"
-                  />
-                  <label class="form-check-label" for="4">
-                  LY
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      defaultChecked={true}
+                      onChange={this.handleChange}
+                      id="4"
+                    />
+                    <label class="form-check-label" for="4">
+                      LY
                   </label>
-                </div>
+                  </div>
                 </div>
                 <button type="submit" class="btn btn-primary">
                   Apply
