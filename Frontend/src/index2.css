@@ -212,8 +212,11 @@ margin-right: 9px;
   border-radius: 5px;
   display: inline-block;
   padding: 3px 6px;
-  
   font-size: 14px;
+  margin-bottom: 0 !important;
+} 
+#experience .experience-ele div{
+	margin-left: 8px;
 }
 #experience .project-ele h4{
   width: 100%;

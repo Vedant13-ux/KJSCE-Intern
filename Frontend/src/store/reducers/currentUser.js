@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, DELETE_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER } from '../actionTypes';
+import { SET_CURRENT_USER, DELETE_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT, DELETE_EVENT, EDIT_EVENT } from '../actionTypes';
 
 const defaultState = {
     isAuthenticated: false,
@@ -47,7 +47,7 @@ const currentUserReducer = (state = defaultState, action) => {
                 ...state
             }
         case DELETE_USER_PROJECT:
-            state.user.projects=state.user.projects.filter((m) => String(m._id) !== String(action.projectId));
+            state.user.projects = state.user.projects.filter((m) => String(m._id) !== String(action.projectId));
             return {
                 ...state
             }
@@ -86,6 +86,16 @@ const currentUserReducer = (state = defaultState, action) => {
             }
         case DELETE_MEMBER:
             state.user.members = state.user.members.filter(b => b._id !== action.memberId)
+            return {
+                ...state
+            }
+        case UPDATE_EVENT:
+            state.user.events.push(action.event);
+            return {
+                ...state
+            }
+        case DELETE_EVENT:
+            state.user.events = state.user.events.filter(e => e._id !== action.eventId)
             return {
                 ...state
             }

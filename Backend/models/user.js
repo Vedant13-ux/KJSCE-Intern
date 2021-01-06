@@ -138,12 +138,8 @@ const userScehma = new mongoose.Schema({
 		},
 	},
 	events: [{
-		date: Date,
-		image: String,
-		imageId: String,
-		name: String,
-		timings: String,
-		description: String
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Event',
 	}],
 	members: [
 		{

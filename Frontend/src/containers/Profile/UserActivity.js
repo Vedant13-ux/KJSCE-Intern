@@ -5,12 +5,13 @@ import { PostWall } from "../../compenents/Community";
 // import { apiCall } from "../../services/api";
 import Experience from "./Experience";
 import Project from "./Project";
+import Event from './Event';
 
 class Basic extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      content: "experiences",
+      content: ["Faculty", "Student", "Alumni"].includes(this.props.user.role) ? "experiences": "events",
       posts: this.props.user.posts,
       start: true,
     };
@@ -21,23 +22,16 @@ class Basic extends Component {
     if (content === undefined) return;
     return this.setState({ content: content });
   }
-  componentDidMount() {
-    // if (!this.props.owner){
-    // apiCall("get", '/api/community/posts/getAll', "")
-    //   .then((data) => {
-    //     this.setState({ posts: data, start: false });
-    //   })
-    //   .catch((e) => {
-    //     this.setState({  start: false });
-    //   });
-    // }
-  }
+
   handleSwitch(e) {
     return this.setState({ content: e.target.name });
   }
   render() {
     let display;
     switch (this.state.content) {
+      case "events":
+        display = <Event owner={this.props.owner} user={this.props.user} />
+        break;
       case "experiences":
         display = <Experience owner={this.props.owner} user={this.props.user} />;
         break;
@@ -66,13 +60,24 @@ class Basic extends Component {
         <div className="tab-block">
           <Nav variant="tabs">
             <Nav.Item>
-              <Nav.Link
-                name="experiences"
-                to="#experiences"
-                onClick={this.handleSwitch}
-              >
-                Experiences
-              </Nav.Link>
+              {["Faculty", "Student", "Alumni"].includes(this.props.user.role) ?
+                < Nav.Link
+                  name="experiences"
+                  to="#experiences"
+                  onClick={this.handleSwitch}
+                >
+                  Experiences
+                </Nav.Link>
+                :
+                < Nav.Link
+                  name="events"
+                  to="#events"
+                  onClick={this.handleSwitch}
+                >
+                  Events
+                </Nav.Link>
+              }
+
             </Nav.Item>
             <Nav.Item>
               <Nav.Link
@@ -106,7 +111,7 @@ class Basic extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </div >
     );
   }
 }

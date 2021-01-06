@@ -24,13 +24,13 @@ class Project extends Component {
         }
       ).catch((err) => err)
     };
-    this.deleteproj=(e)=>{
-      console.log(e,this.props.user._id)
-      this.props.deleteProjects(e,this.props.user._id).then(()=>{
-      console.log('delted')
-      this.setState({})
-    }
-      ).catch((e)=>console.log(e))
+    this.deleteproj = (e) => {
+      console.log(e, this.props.user._id)
+      this.props.deleteProjects(e, this.props.user._id).then(() => {
+        console.log('delted')
+        this.setState({})
+      }
+      ).catch((e) => console.log(e))
     }
   }
   render() {
@@ -120,7 +120,7 @@ class ProjectForm extends Component {
               name="title"
               maxLength="30"
               required
-              val={title}
+              value={title}
               onChange={this.handleChange}
               type="text"
               placeholder="eg. Builded Sudoku Solver"
@@ -137,7 +137,7 @@ class ProjectForm extends Component {
                 required
                 type="Date"
                 name="startdate"
-                val={startdate}
+                value={startdate}
                 onChange={this.handleChange}
               ></input>
             </div>
@@ -148,7 +148,7 @@ class ProjectForm extends Component {
                   required
                   type="Date"
                   name="enddate"
-                  val={enddate}
+                  value={enddate}
                   onChange={this.handleChange}
                 ></input>
               </div>}
@@ -160,7 +160,7 @@ class ProjectForm extends Component {
               rows="2"
               placeholder="eg. used python and back tracking algorithm"
               name="description"
-              val={description}
+              value={description}
               onChange={this.handleChange}
             ></textarea>
           </div>
@@ -169,7 +169,7 @@ class ProjectForm extends Component {
             <input
               name="link"
               required
-              val={link}
+              value={link}
               onChange={this.handleChange}
               type="url"
               placeholder="eg. https://github.com/Vedan..."
