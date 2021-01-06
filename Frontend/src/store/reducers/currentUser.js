@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE,EDIT_USER_PROJECT,UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER } from '../actionTypes';
+import { SET_CURRENT_USER, DELETE_USER_PROJECT,DELETE_USER_EXPERIENCE,EDIT_USER_EXPERIENCE, DELETE_USER_CERTIFICATE,EDIT_USER_PROJECT,UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER } from '../actionTypes';
 
 const defaultState = {
     isAuthenticated: false,
@@ -53,6 +53,17 @@ const currentUserReducer = (state = defaultState, action) => {
             }
         case UPDATE_USER_EXPERIENCE:
             state.user.experiences.push(action.experience);
+            return {
+                ...state
+            }
+        case DELETE_USER_EXPERIENCE:
+            state.user.experiences=state.user.experiences.filter((m) => String(m._id) !== String(action.expId));
+            return {
+                ...state
+            }
+        case EDIT_USER_EXPERIENCE:
+            let index=state.user.experiences.findIndex((m) => String(m._id) === String(action.experience._id));
+            state.user.experiences[index]=action.experience
             return {
                 ...state
             }
