@@ -111,9 +111,9 @@ class Navbar extends Component {
                                 {this.props.onPage === "community" &&
                                     <UserSearch />
                                 }
-                                {this.props.onPage === "bookmarks" &&
+                                {/* {this.props.onPage === "bookmarks" &&
                                     <input onChange={this.props.onChange.bind(this, this.value)} type="search" placeholder="Search Among Bookmarks" className="form-control mr-sm-2"></input>
-                                }
+                                } */}
                             </div>
                             <ul className="navbar-nav mr-auto">
                                 <li className="nav-item active">
