@@ -98,11 +98,9 @@ class MoreInfoCouncil extends Component {
             )}
           </div>
           <div className="panel-body pbn members">
-            <div>
+            <div id="certificate">
               {this.props.user.members.map((member) => (
                 <div className="eachMember">
-                  <div className="row">
-                    <div className="col-7">
                       <span className="details">
                         <img
                           className="avatar-pro mr-2"
@@ -114,12 +112,8 @@ class MoreInfoCouncil extends Component {
                         >
                           {member.member.fname} {member.member.lname}
                         </Link>
-                      </span>
-                    </div>
-                    <div className="col-3">
+                      
                       <span className="position">{member.position}</span>
-                    </div>
-                    <div className="col-2">
                     {this.props.owner && (
                       <span
                         class="deletecert"
@@ -127,9 +121,8 @@ class MoreInfoCouncil extends Component {
                       >
                         <i className="fa fa-trash"></i>
                       </span>
-                    )}
-                    </div>
-                  </div>
+                    )}</span>
+                    
                   <hr className="short br-lighter"></hr>
                 </div>
               ))}
