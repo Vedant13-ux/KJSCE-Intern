@@ -305,16 +305,16 @@ export function addMember(member, id) {
     }
 }
 
-function deleteMemb(member) {
+function deleteMemb(memberId) {
     return {
         type: DELETE_MEMBER,
-        member
+        memberId
     }
 }
-export function deleteMember(userId, memberId) {
+export function deleteMember(memberId,userId) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/api/council/deleteMember/' + userId + '/' + memberId, '')
+            return apiCall('delete', '/api/council/deleteMember/' + userId + '/' + memberId, '')
                 .then(() => {
                     dispatch(deleteMemb(memberId));
                     res();

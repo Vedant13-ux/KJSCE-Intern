@@ -65,7 +65,7 @@ class Event extends Component {
         <div style={{ overflowY: "auto", maxHeight: "800px" }}>
           {this.props.user.events.map((e, i) => {
             return (
-              <div className="events-ele">
+              <div className="experience-ele events-ele">
                 <h4>
                   {e.title}
                   {this.props.owner && (

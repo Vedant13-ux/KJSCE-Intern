@@ -356,7 +356,7 @@ router.delete('/council/deleteMember/:userId/:memberId', (req, res, next) => {
                 })
             }
             try {
-                let member = db.CouncilMember.find(req.params.memberId);
+                let member = db.CouncilMember.findById(req.params.memberId);
                 if (member) {
                     await member.remove();
                     let to_remove = user.members.findIndex((m) => JSON.stringify(m) == JSON.stringify(member._id));
