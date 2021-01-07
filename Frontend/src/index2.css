@@ -173,7 +173,7 @@ margin-right: 9px;
   border: 0px;
   outline:0px;
 	text-align:center;
-  z-index: 5;
+  z-index: 2;
   display: inline-block;
 }
 .edit-but:focus{
@@ -244,9 +244,9 @@ cursor: pointer;
   padding: 4px;
 }
 #experience .experience-ele .deleteproj{
-  float:right;
+  float:right !important;
   font-size: 20px;
-cursor: pointer;
+  cursor: pointer;
 }
 #experience .experience-add{
   margin:10px 0;
@@ -387,10 +387,10 @@ cursor: pointer;
 	bottom: 0;
 	background-color:rgb(51, 51, 51);
 	overflow: hidden;
-	transition: 0.5s cubic-bezier(0.4, 0.6, 0.5, 0.8);
+	transition: 0.4s cubic-bezier(0.5, 0.6, 0.7, 0.8);
 	white-space: nowrap !important;
 	overflow-x: hidden;
-	z-index: 0;
+	z-index: 3;
 }
 
 .openbtn {
@@ -405,33 +405,22 @@ cursor: pointer;
 	border: 0;
 }
 
-/* Sidebar Brand */
-.sidebar .sidebar-brand {
-	height: 60px;
-	background: black;
-	white-space: nowrap;
-	z-index: 5;
-}
-.sidebar .sidebar-brand .logo{
-	height: 50px;
-	width: 150px;
-	margin: 0;
-	padding: 0;
-}
+
 /* Profile */
 .sidebar .sidebar-header {
+	margin-top: 60px;
 	padding: 15px;
 	overflow: hidden;
 	border-bottom: #FFCA3D 2px solid;
 }
 
 .sidebar .sidebar-header .user-pic {
-	float: left;
 	width: 60px;
 	padding: 2px;
 	border-radius: 12px;
 	margin-right: 15px;
 	overflow: hidden;
+	float:left;
 }
 
 .sidebar .sidebar-header .user-pic img {
@@ -440,12 +429,11 @@ cursor: pointer;
 	width: 100%;
 }
 .sidebar .sidebar-header .user-info{
+	display: inline-block;
 	padding:0;
 	padding-left: 2px;
-	display: flex;
-	flex-direction: column;
 	color: white;
-	justify-items: center;
+	margin:0 !important;
 }
 .sidebar .sidebar-header .user-info .user-name{
 	display: block !important;
@@ -487,7 +475,7 @@ cursor: pointer;
 .sidebar .sidebar-menu {
 	overflow-y: auto;
 	overflow-x: hidden !important;
-	padding-top: px;
+	padding-top: 20px;
 }
 
 .sidebar .sidebar-menu .mains {

@@ -21,11 +21,6 @@ class Sidebar extends Component {
         return (
             <div id="mySidebar" className="sidebar" style={style}>
                 <div id="scrollableSide">
-                    <div className="sidebar-brand">
-                        <Link className="navbar-brand" to="/home">
-                            <img src={this.props.logo} alt="logo" className="logo" />
-                        </Link>
-                    </div>
                     {this.state.isAuthenticated &&
                         <div className="sidebar-header">
                             <Link to={"/profile/" + this.state.user.email.split('@')[0]}>
@@ -35,7 +30,6 @@ class Sidebar extends Component {
                             </Link>
                             <div className="user-info">
                                 <Link to={"/profile/" + this.state.user.email.split('@')[0]}>
-
                                     <div>{this.state.user.fname} {this.state.user.lname}</div>
                                     <div>{this.state.user.role}</div>
                                     <div className="user-status">
