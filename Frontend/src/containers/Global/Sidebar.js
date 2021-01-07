@@ -22,109 +22,69 @@ class Sidebar extends Component {
             <div id="mySidebar" className="sidebar" style={style}>
                 <div id="scrollableSide">
                     <div className="sidebar-brand">
-                        <Link to="/">KJSCE Connect</Link>
+                        <Link className="navbar-brand" to="/home">
+                            <img src={this.props.logo} alt="logo" className="logo" />
+                        </Link>
                     </div>
                     {this.state.isAuthenticated &&
                         <div className="sidebar-header">
-                            <div className="user-pic">
-                                <img className="img-responsive img-rounded" src={this.state.user.photo} alt="User" />
-                            </div>
+                            <Link to={"/profile/" + this.state.user.email.split('@')[0]}>
+                                <div className="user-pic">
+                                    <img className="img-responsive img-rounded" src={this.state.user.photo} alt="User" />
+                                </div>
+                            </Link>
                             <div className="user-info">
-                                <span className="user-name">{this.state.user.fname} {this.state.user.lname}</span>
-                                <span className="user-role">Writer</span>
-                                <span className="user-status">
-                                    <i className="fa fa-circle"></i>
-                                    <span>Online</span>
-                                </span>
+                                <Link to={"/profile/" + this.state.user.email.split('@')[0]}>
+
+                                    <div>{this.state.user.fname} {this.state.user.lname}</div>
+                                    <div>{this.state.user.role}</div>
+                                    <div className="user-status">
+                                        <i className="fa fa-circle"></i>
+                                    Online
+                                </div>
+                                </Link>
                             </div>
                         </div>
                     }
                     <div className="sidebar-menu">
-                        <a href="/home" className="mains">
+                        <Link to="/home" className="mains">
                             <i className="fas fa-home ic"></i>
-                        Home
+                                Home
                         <span className="sr-only">(current)</span>
-                        </a>
-
-                        <div className="option" onclick="Sidedrop(this)">
-                            <a href className="mains" >
-                                <i className="fas fa-pen-nib ic">
-                                    <span className="badge badge-primary">5</span>
-                                </i>
-                            Create Post
-                            <i className="carret fas fa-angle-right"></i>
-                            </a>
-                            <div className="sidebar-dropdown">
-                                <a href="/newPost?category=poem">Poem</a>
-                                <hr />
-                                <a href="/newPost?category=quote">Quote</a>
-                                <hr />
-                                <a href="/newPost?category=shortStory">Short Story</a>
-                                <hr />
-                                <a href="/newPost?somethingElse">Something Else..</a>
-                                <hr />
-                            </div>
-                        </div>
-
-                        <div className="option" onclick="Sidedrop(this)">
-                            <a href className="mains" >
-                                <i className="fas fa-book-reader ic"><span className="badge badge-info">3</span></i>
-                            Reader's Corner
-                            <i className="carret fas fa-angle-right">
-
-                                </i>
-                            </a>
-                            <div className="sidebar-dropdown">
-                                <a href="/readerSection/#section1">Our Picks</a>
-                                <hr />
-                                <a href="/readerSection/#section2">Poems</a>
-                                <hr />
-                                <a href="/readerSection/#section3">Quotes</a>
-                                <hr />
-                                <a href="/readerSection/#section4">Short Stories</a>
-                                <hr />
-                            </div>
-                        </div>
+                        </Link>
 
 
-                        <a href="/chat" className="mains">
-                            <i className="fas fa-sticky-note ic">
-                                <span className="badge badge-success">11</span>
+                        <Link to="/community" className="mains">
+                            <i className="fas fa-users ic">
                             </i>
-                        Chat Room
-                    </a>
+                        Community
+                        </Link>
+                        <Link className="mains" to="/messaging">
+                            <i className="fas fa-envelope ic">
+                            </i>Messaging
+                        </Link>
 
-                        <a href="/bookmarks" className="mains">
+                        <Link to="/bookmarks" className="mains">
                             <i className="fas fa-bookmark ic">
-                                <span className="badge badge-info">4</span>
+                                <span className="badge badge-info">{this.state.user.bookmarks.length}</span>
                             </i>
                         Bookmarks
-                    </a>
+                        </Link>
 
-                        <a className="mains" href='/bookreviews'>
-                            <i className="fas fa-book ic"></i>
-                        Book Reviews
-                    </a>
-
-                        <a className="mains" href='/bookReviews'>
-                            <i className="fas fa-smile ic"></i>
-
-                        Donate
-                    </a>
-                        <a className="mains" href='/aboutUs'>
+                        <Link className="mains" to='/aboutUs'>
                             <i className="fas fa-user-tie ic"></i>
 
-                        About Us
-                    </a>
+                            About Us
+                        </Link>
 
-                        <a className="mains" href='/bookReviews'>
+                        <Link className="mains" to='/contactUs'>
                             <i className="far fas fa-address-book ic"></i>
-                        Contact Us
-                    </a>
-
-
-
-
+                            Contact Us
+                        </Link>
+                        <Link className="mains" onClick={this.props.logout}>
+                            <i className="fas fa-sign-out-alt ic"></i>
+                            Logout
+                        </Link>
                     </div>
                 </div>
             </div>

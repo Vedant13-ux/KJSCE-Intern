@@ -30,6 +30,7 @@ style 2--
   padding:0;
   background-color:#020C53;
   user-select: none;
+  z-index: 5;
 }
 .navbar .nav-item{
   margin: 10px 10px;

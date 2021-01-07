@@ -192,31 +192,47 @@ class Basic extends React.Component {
             <Modal.Body>
               <form onSubmit={this.handleSubmit}>
                 <div className="ui form">
-                  <div className="field">
-                    <label>Name</label>
-                    <div className="two fields">
-                      <div className="field">
-                        <input
-                          required
-                          type="text"
-                          name="fname"
-                          placeholder="First Name"
-                          value={fname}
-                          onChange={this.handleChange}
-                        />
-                      </div>
-                      <div className="field">
-                        <input
-                          required
-                          type="text"
-                          name="lname"
-                          placeholder="Last Name"
-                          value={lname}
-                          onChange={this.handleChange}
-                        />
+                  {this.props.user.role !== "Council" ?
+                    <div className="field">
+                      <label>Name</label>
+                      <div className="two fields">
+                        <div className="field">
+                          <input
+                            required
+                            type="text"
+                            name="fname"
+                            placeholder="First Name"
+                            value={fname}
+                            onChange={this.handleChange}
+                          />
+                        </div>
+                        <div className="field">
+                          <input
+                            required
+                            type="text"
+                            name="lname"
+                            placeholder="Last Name"
+                            value={lname}
+                            onChange={this.handleChange}
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
+
+                    :
+                    <div className="field">
+                      <label>Council Name</label>
+                      <input
+                        required
+                        type="text"
+                        name="fname"
+                        placeholder="Name of your Council"
+                        value={fname}
+                        onChange={this.handleChange}
+                      />
+                    </div>
+
+                  }
                   <div className="field">
                     <label>Bio</label>
                     <textarea
@@ -230,48 +246,60 @@ class Basic extends React.Component {
                     ></textarea>
                   </div>
                   <div className="field">
-                    <label>facebook link</label>
-                    <input
-                      name="facebook"
-                      type="url"
-                      placeholder="Password"
-                      onChange={this.handleChange}
-                      value={facebook}
-                    />
+                    <label>Facebook Handle</label>
+                    <div class="ui left icon input">
+                      <input
+                        name="facebook"
+                        type="url"
+                        onChange={this.handleChange}
+                        value={facebook}
+                        placeholder="Link of your Facebook Profile"
+                      />
+                      <i class="facebook icon"></i>
+                    </div>
                   </div>
                   <div className="field">
-                    <label>twitter link</label>
-                    <input
-                      name="twitter"
-                      type="url"
-                      placeholder="Password"
-                      onChange={this.handleChange}
-                      value={twitter}
-                    />
+                    <label>Twitter Handle</label>
+                    <div class="ui left icon input">
+                      <input
+                        name="twitter"
+                        type="url"
+                        onChange={this.handleChange}
+                        value={twitter}
+                        placeholder="Link of your Twitter Profile"
+                      />
+                      <i class="twitter icon"></i>
+                    </div>
                   </div>
                   <div className="field">
-                    <label>linkedin link</label>
-                    <input
-                      name="linkedin"
-                      type="url"
-                      placeholder="Password"
-                      onChange={this.handleChange}
-                      value={linkedin}
-                    />
+                    <label>Linkedin Handle</label>
+                    <div class="ui left icon input">
+                      <input
+                        name="linkedin"
+                        type="url"
+                        onChange={this.handleChange}
+                        value={linkedin}
+                        placeholder="Link of your Linkedin Profile"
+                      />
+                      <i class="linkedin icon"></i>
+                    </div>
                   </div>
                   <div className="field">
-                    <label>github link</label>
-                    <input
-                      name="github"
-                      type="url"
-                      placeholder="Password"
-                      onChange={this.handleChange}
-                      value={github}
-                    />
+                    <label>Github Account</label>
+                    <div class="ui left icon input">
+                      <input
+                        name="github"
+                        type="url"
+                        onChange={this.handleChange}
+                        value={github}
+                        placeholder="Link of your Github Profile"
+                      />
+                      <i class="github icon"></i>
+                    </div>
                   </div>
                   <div className="submit confirmdiv">
                     <button className="medium ui button confirm">
-                      CONFIRM
+                      Confirm
                     </button>
                   </div>
                 </div>

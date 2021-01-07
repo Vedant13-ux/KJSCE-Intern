@@ -19,11 +19,17 @@ class Navbar extends Component {
         this.showDropdown = this.showDropdown.bind(this);
         this.logout = this.logout.bind(this);
         this.toggleSidebar = this.toggleSidebar.bind(this);
+        this.toggleParent = this.toggleParent.bind(this);
+
     }
 
-    async toggleSidebar() {
+    async toggleSidebar(e) {
         console.log("Toggle hora hai", this.state.isOpen);
         await this.setState({ isOpen: !this.state.isOpen });
+        e.target.classList.toggle('change');
+    }
+    toggleParent(e) {
+        e.target.parentElement.classList.toggle('change');
     }
     async logout(e) {
         e.preventDefault();
@@ -80,11 +86,11 @@ class Navbar extends Component {
                             <img src={logo} alt="logo" className="logo" />
                         </Link>
 
-                        <button class="openbtn navbar-toggler" style={{ margin: '30px 12px' }} type="button" data-toggle="collapse" onClick={this.toggleSidebar}>
-                            <div class="container">
-                                <div class="bar1"></div>
-                                <div class="bar2"></div>
-                                <div class="bar3"></div>
+                        <button className="openbtn" style={{ margin: '30px 12px' }} type="button" data-toggle="collapse">
+                            <div className="container" onClick={this.toggleSidebar}>
+                                <div className="bar1" onClick={this.toggleParent}></div>
+                                <div className="bar2" onClick={this.toggleParent}></div>
+                                <div class="bar3" onClick={this.toggleParent}></div>
                             </div>
                         </button>
 
@@ -121,7 +127,7 @@ class Navbar extends Component {
                         </div>
                     </div>
                 </nav>
-                <Sidebar isOpen={this.state.isOpen} currentUser={this.props.currentUser} />
+                <Sidebar isOpen={this.state.isOpen} currentUser={this.props.currentUser} logo={logo} logout={this.logout} />
             </div>
         )
     }
