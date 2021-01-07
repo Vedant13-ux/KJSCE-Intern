@@ -106,12 +106,12 @@ const userScehma = new mongoose.Schema({
 			ref: 'Certificate'
 		}
 	],
-	achivements:[
+	achievements:[
 		{
 			type:mongoose.Schema.Types.ObjectId,
 			ref:'Achievement'
 		}
-	]
+	],
 	experiences: [
 		{
 			type: mongoose.Schema.Types.ObjectId,

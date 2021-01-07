@@ -138,8 +138,8 @@ const currentUserReducer = (state = defaultState, action) => {
                 ...state
             }
         case EDIT_USER_ACHIEVEMENT:
-            let index=state.user.achievements.findIndex((m) => String(m._id) === String(action.achievement._id));
-            state.user.achievements[index]=action.achievement
+            let index4=state.user.achievements.findIndex((m) => String(m._id) === String(action.achievement._id));
+            state.user.achievements[index4]=action.achievement
             return {
                 ...state
             }

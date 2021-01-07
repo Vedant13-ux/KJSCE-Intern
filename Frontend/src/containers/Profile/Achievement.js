@@ -55,7 +55,7 @@ class Achievement extends Component {
       <div id="experience">
         {this.props.owner && <button onClick={this.handleshow1} className="experience-add ui button ">Add + </button>}
         <div style={{ overflowY: 'auto', maxHeight: '800px' }}>
-          {this.props.user.achievement.map((e, i) => {
+          {this.props.user.achievements.map((e, i) => {
             return (
               <div className="experience-ele">
                 <h4>{e.title}</h4>{this.props.owner && (
@@ -138,7 +138,7 @@ class Achievementform extends Component {
     const {
       title,
       reward,
-      startdate,
+      date,
       description,
       link
     } = this.state;
