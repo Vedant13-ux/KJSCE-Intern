@@ -417,10 +417,10 @@ router.delete('/council/deleteEvent/:userId/:eventId', (req, res, next) => {
                 })
             }
             try {
-                let event = db.Event.find(req.params.eventId);
+                let event = db.Event.findById(req.params.eventId);
                 if (event) {
                     await event.remove();
-                    let to_remove = user.events.findIndex((m) => JSON.stringify(m) == JSON.stringify(event._id));
+                    let to_remove = user.events.findIndex((m) => String(m._id) === String(req.params.eventId));
                     await user.events.splice(to_remove, 1);
                     await user.save();
                     res.send('Event Added');
@@ -437,5 +437,12 @@ router.delete('/council/deleteEvent/:userId/:eventId', (req, res, next) => {
 
         });
 })
-
+router.put('/council/editEvent', (req, res, next) => {
+    db.Event.findByIdAndUpdate(req.body.event._id, req.body.event)
+    .then(async () => {
+        res.send('Updated!');
+    }).catch((err) => {
+        next(err);
+    });
+})
 module.exports = router;

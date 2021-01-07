@@ -1,6 +1,6 @@
 
 import { apiCall } from '../../services/api';
-import { DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE,DELETE_USER_EXPERIENCE,EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT, DELETE_EVENT } from '../actionTypes';
+import { DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE,EDIT_EVENT,DELETE_EVENT,DELETE_USER_EXPERIENCE,EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT } from '../actionTypes';
 
 
 function userRefresh(user) {
@@ -338,6 +338,45 @@ export function addEvent(event, userId) {
             return apiCall('post', '/api/council/addEvent/' + userId, event)
                 .then((newEvent) => {
                     dispatch(addEv(newEvent));
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+    }
+}
+function userEventDelete(eventId) {
+    return {
+        type: DELETE_EVENT,
+        eventId
+    }
+}
+export function deleteEvent(eventId, id) {
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('delete', '/api/council/deleteEvent/'+id+'/'+eventId)
+                .then(() => {
+                    dispatch(userEventDelete(eventId));
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+    }
+}
+function usereventedit(event) {
+    
+    return {
+        type: EDIT_EVENT,
+        event
+    }
+}
+export function editEvent(event) {
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('put', '/api/council/editEvent',event)
+                .then(() => {
+                    dispatch(usereventedit(event.event));
                     res();
                 }).catch((err) => {
                     rej(err);
