@@ -14,7 +14,7 @@ class Basic extends Component {
     this.state = {
       content: ["Faculty", "Student", "Alumni"].includes(this.props.user.role) ? "experiences": "events",
       posts: this.props.user.posts,
-      start: true,
+      start: false,
     };
     this.handleSwitch = this.handleSwitch.bind(this);
   }

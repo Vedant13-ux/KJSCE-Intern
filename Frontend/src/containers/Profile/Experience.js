@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Modal } from "react-bootstrap";
 import { connect } from 'react-redux'
 import { updateExperiences ,deleteExperiences,editExperience} from '../../store/actions/user'
+import NoExperience from '../../images/NoExperience'
 
 class Experience extends Component {
   constructor(props) {
@@ -77,7 +78,7 @@ class Experience extends Component {
                 </p>
                 {/* <hr className="short br-lighter"></hr> */}
               </div>)
-          })}
+          })}{this.props.user.experiences.length===0 && <NoExperience></NoExperience>}
         </div>
         <Modal size="lg" show={this.state.show} onHide={this.handleclose} backdrop="static">
           <Modal.Header closeButton>

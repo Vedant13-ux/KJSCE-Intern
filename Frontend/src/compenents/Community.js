@@ -4,6 +4,7 @@ import PageFooter from "../containers/Global/PageFooter";
 import { apiCall } from "../services/api";
 import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
+import NoPost from '../images/NoPost';
 
 class Application extends React.Component {
   constructor(props) {
@@ -464,9 +465,7 @@ export class PostWall extends React.Component {
       if (this.props.start) elem.push(<div></div>);
       else
         elem.push(
-          <div className="message" key={-2}>
-            <div className="text-message">No posts available</div>
-          </div>
+          <NoPost></NoPost>
         );
     }
     return elem;

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Modal } from "react-bootstrap";
 import { connect } from "react-redux";
 import { addEvent, editEvent, deleteEvent } from "../../store/actions/user";
+import NoEvents from '../../images/NoEvents'
 
 class Event extends Component {
   constructor(props) {
@@ -93,7 +94,7 @@ class Event extends Component {
                 </div>
               </div>
             );
-          })}
+          })}{this.props.user.events.length===0 && <NoEvents></NoEvents>}
         </div>
         <Modal
           size="lg"
