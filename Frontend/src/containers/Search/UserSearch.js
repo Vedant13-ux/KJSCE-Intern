@@ -19,7 +19,8 @@ class UserSearch extends Component {
             }
             apiCall("get", "/api/suggestUsers/" + filter, "")
                 .then(async (users) => {
-                    await this.setState({ suggestedMembers: users });
+                    console.log(users);
+                    await this.setState({ suggested: users });
                 })
                 .catch((err) => {
                     console.log(err);
@@ -34,24 +35,24 @@ class UserSearch extends Component {
                     <div id="myDropdown" className="dropdown-content">
                         <input
                             type="search"
-                            placeholder="Search.."
-                            id="myInput"
+                            placeholder="Search Users"
+                            className="form-control mr-sm-2"
                             value={this.state.inputValue}
-                            onChange={this.handleChange}
                             onKeyUp={this.filterFunction}
-                            name="inputValue"
-                        />
 
-                        {this.state.suggested.map((user) => (
-                            <Link
-                                className="suggested"
-                            >
-                                <img src={user.photo} alt="user"></img>
-                                <span to="#">
-                                    {user.fname} {user.lname}
-                                </span>
-                            </Link>
-                        ))}
+                        />
+                        <div className="suggestedResults">
+                            {this.state.suggested.map((user) => (
+                                <Link to={'/profile/'+ user.email.split('@')[0]}
+                                    className="suggested"
+                                >
+                                    <img src={user.photo} alt="user"></img>
+                                    <span>
+                                        {user.fname} {user.lname}
+                                    </span>
+                                </Link>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

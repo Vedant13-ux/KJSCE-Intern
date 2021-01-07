@@ -48,10 +48,11 @@ class Profile extends Component {
             start: false,
           });
         })
-        .catch((err) => {
+        .catch(async (err) => {
           console.log(err);
-          this.setState({
-            nof: true,
+          await this.setState({
+            // start:false,
+            nof: true
           });
         });
     }
@@ -61,19 +62,20 @@ class Profile extends Component {
       return (
         <div id="profile">
           <Navbar history={this.props.history} />
-          <div
-            style={{
-              minHeight: "600px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            {this.state.nof ? <NotFound className="loading" /> : <Loading className="loading" />}
-          </div>
+          <Loading></Loading>
           <PageFooter />
         </div>
       );
-    } else {
+    } else if (this.state.nof) {
+      return (
+        <div id="profile">
+          <Navbar history={this.props.history} />
+          <NotFound></NotFound>
+          <PageFooter />
+        </div>
+      )
+    }
+    else {
       return (
         <div id="profile">
           <link

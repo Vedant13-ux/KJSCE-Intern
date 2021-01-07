@@ -12,6 +12,11 @@ class Bookmarks extends Component {
         this.state = {
             bookmarks: [],
             start: true,
+            query: ""
+        }
+        this.filterBookmarks = (query) => {
+            console.log(query);
+            this.setState({ query });
         }
     }
     componentDidMount() {
@@ -28,7 +33,7 @@ class Bookmarks extends Component {
     render() {
         return (
             <div>
-                <Navbar history={this.props.history} onPage="bookmarks"></Navbar>
+                <Navbar history={this.props.history} onPage="bookmarks" onChange={this.props.filterBookmarks}></Navbar>
                 {this.state.start &&
                     <div className="loading-anime">
                         <Loading className="loading-wheel" />

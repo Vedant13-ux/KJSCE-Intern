@@ -4,6 +4,7 @@ import logo from '../../images/logo.png';
 import { MContext } from '../../services/Provider'
 import { connect } from 'react-redux';
 import { logout } from '../../store/actions/auth'
+import UserSearch from '../Search/UserSearch'
 import Sidebar from './Sidebar'
 
 class Navbar extends Component {
@@ -12,7 +13,6 @@ class Navbar extends Component {
         this.state = {
             query: "",
             isAuthenticated: this.props.currentUser.isAuthenticated,
-            onPage: this.props.location,
             showDropdown: false,
             isOpen: false
         }
@@ -99,14 +99,21 @@ class Navbar extends Component {
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
 
                             <div className="form-inline my-2 my-lg-0">
-                                {}
-                                <MContext.Consumer>
-                                    {
-                                        context => (
-                                            <div><input onKeyPress={e => { if (e.which === 13) { context.filter() } }} onChange={(e) => context.setMessage(e.target.value)} className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="internshipSerach" />
-                                            </div>)
-                                    }
-                                </MContext.Consumer>
+                                {this.props.onPage === "home" &&
+                                    <MContext.Consumer>
+                                        {
+                                            context => (
+                                                <div><input onKeyPress={e => { if (e.which === 13) { context.filter() } }} onChange={(e) => context.setMessage(e.target.value)} className="form-control mr-sm-2" type="search" placeholder="Search Internships" aria-label="Search" name="internshipSerach" />
+                                                </div>)
+                                        }
+                                    </MContext.Consumer>
+                                }
+                                {this.props.onPage === "community" &&
+                                    <UserSearch />
+                                }
+                                {this.props.onPage === "bookmarks" &&
+                                    <input onChange={this.props.onChange.bind(this, this.value)} type="search" placeholder="Search Among Bookmarks" className="form-control mr-sm-2"></input>
+                                }
                             </div>
                             <ul className="navbar-nav mr-auto">
                                 <li className="nav-item active">
