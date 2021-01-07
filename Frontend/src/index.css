@@ -121,30 +121,28 @@ style 2--
 .sections{
   display: flex;
   width: 100%;
-  min-height: 100%;
+  min-height: 100vh;
 }
 .sections .leftSection{
   width: 50%;
   flex: 50%;
   background-color: #020C53;
-  height: 100vh;
+  min-height: 100vh !important;
   display: flex;
   align-items: center;
-  justify-items: center;
 }
 .sections .leftSection .bigLogo{
-  margin: 0 auto;
+  margin: auto;
   max-width: 450px;
-  width: 90%;
+  width: 85%;
   max-height: 175px;
   height:85%;
-
 }
 .sections .rightSection{
   width: 50%;
   flex: 50%;
   background-color: #FFCA3D;
-  height: 100vh;
+  /* height: 100% !important; */
 }
 .sections .rightSection .nav{
   padding: 20px;
@@ -157,6 +155,30 @@ style 2--
   color: #020C53;
   left: 0;
   margin-left: 0;
+}
+
+@media screen and (max-width:1000px){
+  .sections{
+    flex-direction: column;
+    align-items: stretch;
+    justify-items: stretch;
+  }
+  .sections .leftSection{
+    flex:100%;
+    width: 100%;
+  }
+  .sections .rightSection{
+    flex:100%;
+    width: 100%;
+  }
+  .sections .rightSection .nav{
+    padding: 0;
+    padding-top: 7px;
+  }
+  .sections .rightSection .nav .nav-link{
+    margin: 5px 7px;
+    padding: 9px;
+  }
 }
 
         
