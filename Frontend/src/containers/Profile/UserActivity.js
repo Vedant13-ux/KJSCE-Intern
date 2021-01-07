@@ -6,6 +6,7 @@ import { PostWall } from "../../compenents/Community";
 import Experience from "./Experience";
 import Project from "./Project";
 import Event from './Event';
+import Achievement from './Achievement'
 
 class Basic extends Component {
   constructor(props) {
@@ -38,6 +39,9 @@ class Basic extends Component {
       case "projects":
         display = <Project owner={this.props.owner} user={this.props.user} />;
         break;
+      case "achievement":
+        display = <Achievement owner={this.props.owner} user={this.props.user}></Achievement>
+        break
       case "posts":
         display = (
           <PostWall
@@ -79,6 +83,16 @@ class Basic extends Component {
               }
 
             </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                name="achievement"
+                to="#achievement"
+                onClick={this.handleSwitch}
+              >
+                Achievement
+              </Nav.Link>
+            </Nav.Item>
+            
             <Nav.Item>
               <Nav.Link
                 name="projects"
