@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Modal } from "react-bootstrap";
 import { connect } from 'react-redux'
 import { updateAchievement ,deleteAchievement,editAchievement} from '../../store/actions/user'
+import NoAchievement from '../../images/NoAchievement'
 
 class Achievement extends Component {
   constructor(props) {
@@ -79,7 +80,7 @@ class Achievement extends Component {
                     see achievement
                   </a>}
               </div>)
-          })}
+          })}{this.props.user.achievements.length===0 && <NoAchievement></NoAchievement>}
         </div>
         <Modal size="lg" show={this.state.show} onHide={this.handleclose} backdrop="static">
           <Modal.Header closeButton>
