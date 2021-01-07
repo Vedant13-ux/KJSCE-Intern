@@ -102,7 +102,7 @@ class InternshipDetail extends Component {
         async (data) => {
           console.log(data)
           if (Object.keys(data).length !== 0) {
-            apiCall('get', '/api/internship/search/skills?skills=' + data["skillsRequired"].join(','))
+            apiCall('get', '/api/internship/search/skills?skills=' + data["skillsRequired"].join(',')+'&id='+this.props.match.params.id)
               .then(
                 async (recomm) => {
                   if (this.state.user._id === data.faculty._id) {

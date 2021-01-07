@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Modal } from "react-bootstrap";
 import { connect } from "react-redux";
 import { updateProjects, deleteProjects,editProjects } from "../../store/actions/user";
+import NoProject from '../../images/NoProject'
 
 class Project extends Component {
   constructor(props) {
@@ -92,7 +93,7 @@ class Project extends Component {
                 </p>
               </div>
             );
-          })}
+          })}{this.props.user.projects.length===0 && <NoProject></NoProject>}
         </div>
         <Modal
           size="lg"
