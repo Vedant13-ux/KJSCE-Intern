@@ -83,7 +83,7 @@ router.get('/search/skills', async (req, res, next) => {
     })
     console.log(skills);
     try {
-        var suggested = await db.InternshipDetails.find({ skillsRequired: { $all: skills } }).populate('faculty', 'fname lname photo _id').exec();
+        let suggested = await db.InternshipDetails.find({ skillsRequired: { $all: skills } }).populate('faculty', 'fname lname photo _id').exec().filter((m) => String(m._id) !== String(req.query.id));;
         res.send(suggested);
 
     } catch (error) {
