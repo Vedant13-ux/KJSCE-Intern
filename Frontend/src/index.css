@@ -641,6 +641,14 @@ body{
   border:1px solid rgba(0,0,0,.125);
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
+@media only screen and (max-width:959px){
+  #internshipdetail .recommendations .card{
+    margin-top: 15px;
+  }
+  #internshipdetail .col-12{
+    padding:0;
+  }
+}
 #internshipdetail .applynow{
   text-align: center;
 }
@@ -721,7 +729,7 @@ body{
   color: rgba(0, 0, 0, 0.788);
 }
 #internshipdetail .recommendations .scroll{
-  overflow-y: scroll
+  overflow-y: auto;
 }
 #internshipdetail .applynow .btn{
    background-color: #FFCA3D;

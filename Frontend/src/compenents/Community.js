@@ -33,7 +33,7 @@ class Application extends React.Component {
   render() {
     return (
       <div className="wrapper">
-        <Navbar isMobile={this.state.isMobile} {...this.props} />
+        <Navbar isMobile={this.state.isMobile} {...this.props} onPage="community"/>
         <Feed
           isMobile={this.state.isMobile}
           currentUser={this.props.currentUser}

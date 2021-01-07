@@ -44,7 +44,7 @@ const Homepage = (props) => {
                 </Carousel>
             </div>
             <MyProvider>
-                <Navbar history={props.history} ></Navbar>
+                <Navbar history={props.history} onPage="home" ></Navbar>
                 <FilterInternships />
                 <InternshipList bookmarks={props.currentUser.user.bookmarks} />
             </MyProvider>

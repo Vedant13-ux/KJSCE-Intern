@@ -71,9 +71,9 @@ class MoreInfoCouncil extends Component {
     this.handleClose = () =>
       this.setState({ show: false, suggestedMembers: [] });
     this.handleShow = () => this.setState({ show: true });
-    this.deletecert=(e)=>{
-        this.props
-        .deleteMember(e, this.props.user._id,props.user._id)
+    this.deletecert = (e) => {
+      this.props
+        .deleteMember(e, this.props.user._id, props.user._id)
         .then(() => {
           console.log("delted");
           this.setState({})
@@ -101,28 +101,29 @@ class MoreInfoCouncil extends Component {
             <div id="certificate">
               {this.props.user.members.map((member) => (
                 <div className="eachMember">
-                      <span className="details">
-                        <img
-                          className="avatar-pro mr-2"
-                          src={member.member.photo}
-                          alt="member"
-                        ></img>
-                        <Link
-                          to={"/profile/" + member.member.email.split("@")[0]}
-                        >
-                          {member.member.fname} {member.member.lname}
-                        </Link>
-                      
-                      <span className="position">{member.position}</span>
+                  <div className="details">
+                    <img
+                      className="avatar-pro mr-2"
+                      src={member.member.photo}
+                      alt="member"
+                    ></img>
+                    <Link
+                      to={"/profile/" + member.member.email.split("@")[0]}
+                    >
+                      {member.member.fname} {member.member.lname}
+                    </Link>
+
+                    <span className="position">{member.position}</span>
                     {this.props.owner && (
-                      <span
-                        class="deletecert"
+                      <div
+                        className="deletecert"
                         onClick={() => this.deletecert(member._id)}
                       >
                         <i className="fa fa-trash"></i>
-                      </span>
-                    )}</span>
-                    
+                      </div>
+                    )}
+                  </div>
+
                   <hr className="short br-lighter"></hr>
                 </div>
               ))}
@@ -214,4 +215,4 @@ class MoreInfoCouncil extends Component {
   }
 }
 
-export default connect(() => {}, { addMember, deleteMember })(MoreInfoCouncil);
+export default connect(() => { }, { addMember, deleteMember })(MoreInfoCouncil);

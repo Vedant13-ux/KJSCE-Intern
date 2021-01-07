@@ -165,7 +165,7 @@ class InternshipDetail extends Component {
         <div id="internshipdetail">
           <div className="container">
             <div className="row">
-              <div className="col-8">
+              <div className="col-lg-8 col-12" id="mainDetails">
                 <div className="card">
                   <div className="card-body">
                     <div className="internshipTitle">
@@ -340,7 +340,7 @@ class InternshipDetail extends Component {
                   </div>
                 </div>
               </div>
-              <div className="col-4 recommendations">
+              <div className="col-lg-4 col-12 recommendations">
                 <div className="card recomm">
                   <h3>Recommendations</h3>
                   <hr></hr>
@@ -371,7 +371,7 @@ class InternshipDetail extends Component {
     const { exists, start } = this.state;
     return (
       <div>
-        <Navbar currentUser={this.props.currentUser} history={this.props.history}></Navbar>
+        <Navbar history={this.props.history} onPage="internshipDetails"></Navbar>
         {this.contentDisplay(exists, start)}
         <PageFooter />
       </div>

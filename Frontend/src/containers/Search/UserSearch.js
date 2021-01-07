@@ -1,62 +1,60 @@
-import React from 'react'
-import { Dropdown } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { apiCall } from '../../services/api'
 
-const friendOptions = [
-    {
-        key: 'Jenny Hess',
-        text: 'Jenny Hess',
-        value: 'Jenny Hess',
-        image: { avatar: true, src: '/images/avatar/small/jenny.jpg' },
-    },
-    {
-        key: 'Elliot Fu',
-        text: 'Elliot Fu',
-        value: 'Elliot Fu',
-        image: { avatar: true, src: '/images/avatar/small/elliot.jpg' },
-    },
-    {
-        key: 'Stevie Feliciano',
-        text: 'Stevie Feliciano',
-        value: 'Stevie Feliciano',
-        image: { avatar: true, src: '/images/avatar/small/stevie.jpg' },
-    },
-    {
-        key: 'Christian',
-        text: 'Christian',
-        value: 'Christian',
-        image: { avatar: true, src: '/images/avatar/small/christian.jpg' },
-    },
-    {
-        key: 'Matt',
-        text: 'Matt',
-        value: 'Matt',
-        image: { avatar: true, src: '/images/avatar/small/matt.jpg' },
-    },
-    {
-        key: 'Justen Kitsune',
-        text: 'Justen Kitsune',
-        value: 'Justen Kitsune',
-        image: { avatar: true, src: '/images/avatar/small/justen.jpg' },
-    },
-]
-
-class UserSearch extends React.Component {
+class UserSearch extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
-        }
+            suggested: []
+        };
+        this.filterFunction = (e) => {
+            e.preventDefault();
+            console.log("filter ma aaya");
+            var filter;
+            filter = e.target.value;
+
+            if (filter === "") {
+                return this.setState({ suggested: [] });
+            }
+            apiCall("get", "/api/suggestUsers/" + filter, "")
+                .then(async (users) => {
+                    await this.setState({ suggestedMembers: users });
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        };
     }
-    handleChange = (e, { value }) => this.setState({ value })
+
     render() {
         return (
-            <Dropdown
-                placeholder='Select Friend'
-                fluid
-                selection
-                options={friendOptions}
-                onChange={this.handleChange}
-            />
+            <div id="userSearch">
+                <div className="dropdown">
+                    <div id="myDropdown" className="dropdown-content">
+                        <input
+                            type="search"
+                            placeholder="Search.."
+                            id="myInput"
+                            value={this.state.inputValue}
+                            onChange={this.handleChange}
+                            onKeyUp={this.filterFunction}
+                            name="inputValue"
+                        />
+
+                        {this.state.suggested.map((user) => (
+                            <Link
+                                className="suggested"
+                            >
+                                <img src={user.photo} alt="user"></img>
+                                <span to="#">
+                                    {user.fname} {user.lname}
+                                </span>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            </div>
         )
     }
 }

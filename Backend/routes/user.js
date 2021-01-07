@@ -231,11 +231,11 @@ router.delete('/profile/update/experiences/:userId/:expId', (req, res, next) => 
 })
 router.put('/profile/edit/experience', (req, res, next) => {
     db.Experience.findByIdAndUpdate(req.body.experience._id, req.body.experience)
-    .then(async () => {
-        res.send('Updated!');
-    }).catch((err) => {
-        next(err);
-    });
+        .then(async () => {
+            res.send('Updated!');
+        }).catch((err) => {
+            next(err);
+        });
 })
 router.put('/profile/update/projects', (req, res, next) => {
     db.User.findById(req.body.id)
@@ -288,11 +288,11 @@ router.delete('/profile/update/projects/:userId/:projectId', (req, res, next) =>
 })
 router.put('/profile/edit/project', (req, res, next) => {
     db.Project.findByIdAndUpdate(req.body.project._id, req.body.project)
-    .then(async () => {
-        res.send('Updated!');
-    }).catch((err) => {
-        next(err);
-    });
+        .then(async () => {
+            res.send('Updated!');
+        }).catch((err) => {
+            next(err);
+        });
 })
 // COuncil
 router.get('/council/findMembers/:name', (req, res, next) => {
@@ -439,11 +439,11 @@ router.delete('/council/deleteEvent/:userId/:eventId', (req, res, next) => {
 })
 router.put('/council/editEvent', (req, res, next) => {
     db.Event.findByIdAndUpdate(req.body.event._id, req.body.event)
-    .then(async () => {
-        res.send('Updated!');
-    }).catch((err) => {
-        next(err);
-    });
+        .then(async () => {
+            res.send('Updated!');
+        }).catch((err) => {
+            next(err);
+        });
 })
 
 router.put('/profile/update/achievements', (req, res, next) => {
@@ -496,11 +496,34 @@ router.delete('/profile/update/achievements/:userId/:expId', (req, res, next) =>
 })
 router.put('/profile/edit/achievement', (req, res, next) => {
     db.Achievement.findByIdAndUpdate(req.body.achievement._id, req.body.achievement)
-    .then(async () => {
-        res.send('Updated!');
-    }).catch((err) => {
-        next(err);
-    });
+        .then(async () => {
+            res.send('Updated!');
+        }).catch((err) => {
+            next(err);
+        });
+})
+
+
+// Suggested Members
+router.get('/suggestUsers/:name', (req, res, next) => {
+    const nameArr = req.params.name.split(' ');
+    const fname = RegExp(escapeRegex(nameArr[0]), 'gi');
+    if (nameArr.length === 1) {
+        db.User.find({ fname: fname}, 'fname lname photo email')
+            .then((users) => {
+                res.send(users);
+            }).catch((err) => {
+                next(err);
+            });
+    } else {
+        const lname = RegExp(escapeRegex(nameArr[1]), 'gi');
+        db.User.find({ fname: fname, lname: lname}, 'fname lname photo email')
+            .then((users) => {
+                res.send(users);
+            }).catch((err) => {
+                next(err);
+            });
+    }
 })
 
 module.exports = router;

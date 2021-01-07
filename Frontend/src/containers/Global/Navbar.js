@@ -12,16 +12,17 @@ class Navbar extends Component {
         this.state = {
             query: "",
             isAuthenticated: this.props.currentUser.isAuthenticated,
-            onPage: this.props.onPage,
+            onPage: this.props.location,
             showDropdown: false,
             isOpen: false
         }
+
         this.showDropdown = this.showDropdown.bind(this);
         this.logout = this.logout.bind(this);
         this.toggleSidebar = this.toggleSidebar.bind(this);
         this.toggleParent = this.toggleParent.bind(this);
-
     }
+
 
     async toggleSidebar(e) {
         console.log("Toggle hora hai", this.state.isOpen);
@@ -36,6 +37,7 @@ class Navbar extends Component {
         await this.setState({ isAuthenticated: false })
         this.props.history.push('/');
         await this.props.logout();
+
     }
     showDropdown() {
         console.log(this.state.showDropdown);
@@ -97,6 +99,7 @@ class Navbar extends Component {
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
 
                             <div className="form-inline my-2 my-lg-0">
+                                {}
                                 <MContext.Consumer>
                                     {
                                         context => (

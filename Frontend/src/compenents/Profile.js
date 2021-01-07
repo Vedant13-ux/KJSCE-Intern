@@ -80,7 +80,7 @@ class Profile extends Component {
             href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
             rel="stylesheet"
           ></link>
-          <Navbar history={this.props.history} />
+          <Navbar history={this.props.history} onPage="profile" />
           <section id="content" className="container">
             <Basic user={this.state.user} owner={this.state.owner} />
             <div className="row">
@@ -93,7 +93,7 @@ class Profile extends Component {
                   user={this.state.user}
                 />
               }
-              <UserActivity owner={this.state.owner} user={this.state.owner?this.props.currentUser.user:this.state.user} loggedin={this.props.currentUser.user} />
+              <UserActivity owner={this.state.owner} user={this.state.owner ? this.props.currentUser.user : this.state.user} loggedin={this.props.currentUser.user} />
             </div>
           </section>
           <PageFooter />

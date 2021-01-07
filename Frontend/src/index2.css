@@ -203,9 +203,9 @@ margin-right: 9px;
 }
 
 #certificates .deletecert{
-	float:right;
-  font-size: 20px;
-cursor: pointer;
+	float:right !important;
+  	font-size: 20px;
+	cursor: pointer;
 }
 /* #profile .post-wall{
   margin-top: 0px !important;
@@ -259,8 +259,8 @@ cursor: pointer;
   padding: 7px 10px !important;
 }
 /* Members in Council */
+
 .eachMember .position{
-  line-height: 40px;
   background-color: #FFCA3D;
   padding: 2px 7px;
   margin:5px;
@@ -269,15 +269,15 @@ cursor: pointer;
 
   border-radius: 5px;
 }
-.eachMember{
-	width:100%;
-}
 .eachMember .details{
-  width: 100%;
   display: flex;
   align-items: center;
+  justify-items: stretch;
 }
-
+.eachMember .details .deletecert{
+	cursor: pointer;
+	float:right !important;
+}
 
  #myInput {
   box-sizing: border-box;
@@ -294,6 +294,10 @@ cursor: pointer;
   position: relative;
   margin: 0;
   margin-bottom: 50px;
+}
+.dropdown {
+	position: relative;
+	margin: 0;
 }
 
  .dropdown-content {
