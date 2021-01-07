@@ -51,7 +51,7 @@ class Profile extends Component {
         .catch(async (err) => {
           console.log(err);
           await this.setState({
-            // start:false,
+            start:false,
             nof: true
           });
         });
@@ -62,7 +62,9 @@ class Profile extends Component {
       return (
         <div id="profile">
           <Navbar history={this.props.history} />
-          <Loading></Loading>
+          <div className="loading-anime">
+            <Loading className="loading-wheel" />
+          </div>
           <PageFooter />
         </div>
       );
