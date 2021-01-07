@@ -445,4 +445,62 @@ router.put('/council/editEvent', (req, res, next) => {
         next(err);
     });
 })
+
+router.put('/profile/update/achievements', (req, res, next) => {
+    db.User.findById(req.body.id)
+        .then(async user => {
+            if (!user) {
+                return next({ status: 404, message: "User Not Found" });
+            }
+            try {
+                let achievement = await db.Achievement.create(req.body.achievement)
+                await user.achievements.push(achievement);
+                await user.save();
+                res.send(achievement);
+            } catch (error) {
+                next(error);
+            }
+        }).catch((err) => {
+            next(err);
+        });
+});
+router.delete('/profile/update/achievements/:userId/:expId', (req, res, next) => {
+    db.User.findById(req.params.userId)
+        .then(async (user) => {
+            if (!user) {
+                return next({
+                    status: 404,
+                    message: "User Not Found"
+                })
+            }
+            try {
+                let achievement = db.Achievement.findById(req.params.expId);
+                if (achievement) {
+                    await achievement.remove();
+                    let to_remove = user.achievements.findIndex((m) => String(m._id) === String(req.params.expId));
+                    await user.achievements.splice(to_remove, 1);
+                    await user.save();
+                    res.send('achievement deleted');
+                } else {
+                    return next({
+                        status: 404,
+                        message: "achievement Not Found"
+                    })
+                }
+            } catch (err) {
+                next(err);
+            }
+        }).catch((err) => {
+            next(err);
+        });
+})
+router.put('/profile/edit/achievement', (req, res, next) => {
+    db.Achievement.findByIdAndUpdate(req.body.achievement._id, req.body.achievement)
+    .then(async () => {
+        res.send('Updated!');
+    }).catch((err) => {
+        next(err);
+    });
+})
+
 module.exports = router;

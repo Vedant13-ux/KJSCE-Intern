@@ -1,7 +1,6 @@
 
 import { apiCall } from '../../services/api';
-import { DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE,EDIT_EVENT,DELETE_EVENT,DELETE_USER_EXPERIENCE,EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT } from '../actionTypes';
-
+import { DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE,EDIT_EVENT,DELETE_EVENT,DELETE_USER_ACHIEVEMENT,EDIT_USER_ACHIEVEMENT,UPDATE_USER_ACHIEVEMENT,DELETE_USER_EXPERIENCE,EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT } from '../actionTypes';
 
 function userRefresh(user) {
     return {
@@ -365,7 +364,7 @@ export function deleteEvent(eventId, id) {
     }
 }
 function usereventedit(event) {
-    
+
     return {
         type: EDIT_EVENT,
         event
@@ -377,6 +376,64 @@ export function editEvent(event) {
             return apiCall('put', '/api/council/editEvent',event)
                 .then(() => {
                     dispatch(usereventedit(event.event));
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+    }
+}
+
+function userachievement(achievement) {
+    return {
+        type: UPDATE_USER_ACHIEVEMENT,
+        achievement
+    }
+}
+export function updateAchievement(achievement, id) {
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('put', '/api/profile/update/achievements', { achievement, id })
+                .then((newachm) => {
+                    dispatch(userachievement(newachm));
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+    }
+}
+function userachievementdelete(achmId) {
+    return {
+        type: DELETE_USER_ACHIEVEMENT,
+        achmId
+    }
+}
+export function deleteAchievement(achmId, id) {
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('delete', '/api/profile/update/achievements/'+id+'/'+achmId)
+                .then(() => {
+                    dispatch(userachievementdelete(achmId));
+                    res();
+                }).catch((err) => {
+                    rej(err);
+                });
+        })
+    }
+}
+function userachievementedit(achievement) {
+    return {
+        type: EDIT_USER_ACHIEVEMENT,
+        achievement
+    }
+}
+export function editAchievement(achievement) {
+    return dispatch => {
+        return new Promise((res, rej) => {
+            return apiCall('put', '/api/profile/edit/achievement',achievement)
+                .then(() => {
+                    dispatch(userachievementedit(achievement.achievement));
                     res();
                 }).catch((err) => {
                     rej(err);

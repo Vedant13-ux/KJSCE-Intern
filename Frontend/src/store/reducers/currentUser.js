@@ -1,4 +1,4 @@
-import {SET_CURRENT_USER, DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE,EDIT_EVENT,DELETE_EVENT,DELETE_USER_EXPERIENCE,EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT } from '../actionTypes';
+import {SET_CURRENT_USER, DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE,DELETE_USER_ACHIEVEMENT,EDIT_USER_ACHIEVEMENT,UPDATE_USER_ACHIEVEMENT,EDIT_EVENT,DELETE_EVENT,DELETE_USER_EXPERIENCE,EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT } from '../actionTypes';
 
 const defaultState = {
     isAuthenticated: false,
@@ -124,6 +124,22 @@ const currentUserReducer = (state = defaultState, action) => {
         case EDIT_EVENT:
             let index3=state.user.events.findIndex((m) => String(m._id) === String(action.event._id));
             state.user.events[index3]=action.event
+            return {
+                ...state
+            }
+        case UPDATE_USER_ACHIEVEMENT:
+            state.user.achievements.push(action.achievement);
+            return {
+                ...state
+            }
+        case DELETE_USER_ACHIEVEMENT:
+            state.user.achievements=state.user.achievements.filter((m) => String(m._id) !== String(action.achmId));
+            return {
+                ...state
+            }
+        case EDIT_USER_ACHIEVEMENT:
+            let index=state.user.achievements.findIndex((m) => String(m._id) === String(action.achievement._id));
+            state.user.achievements[index]=action.achievement
             return {
                 ...state
             }
