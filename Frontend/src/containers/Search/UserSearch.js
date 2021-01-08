@@ -38,7 +38,7 @@ class UserSearch extends Component {
                             placeholder="Search Users"
                             className="form-control mr-sm-2"
                             value={this.state.inputValue}
-                            onKeyUp={this.filterFunction}
+                            onChange={this.filterFunction}
 
                         />
                         <div className="suggestedResults">

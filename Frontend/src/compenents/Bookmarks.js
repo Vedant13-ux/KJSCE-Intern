@@ -12,11 +12,19 @@ class Bookmarks extends Component {
         this.state = {
             bookmarks: [],
             start: true,
-            query: ""
+            searchedBookmarks: []
         }
-        this.filterBookmarks = (query) => {
-            console.log(query);
-            this.setState({ query });
+        this.getQueryandFilter = async (query) => {
+            if (query === "") {
+                this.setState({ searchedBookmarks: [] });
+                console.log('hey');
+            }
+            const temp = this.state.bookmarks.filter(b => b.title.toUpperCase().includes(query.toUpperCase()));
+            console.log(temp);
+            await this.setState({ searchedBookmarks: temp });
+        }
+        this.escapeRegex = (text) => {
+            return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
         }
     }
     componentDidMount() {
@@ -24,16 +32,17 @@ class Bookmarks extends Component {
         apiCall('get', '/api/internship/bookmarks/' + this.props.currentUser.user._id, '')
             .then(async bookmarks => {
                 this.setState({ bookmarks, start: false });
-                console.log(bookmarks)
+
             })
             .catch(err => {
                 console.log(err);
             })
     }
     render() {
+        const content = this.state.searchedBookmarks.length === 0 ? this.state.bookmarks : this.state.searchedBookmarks;
         return (
             <div>
-                <Navbar history={this.props.history} onPage="bookmarks" onChange={this.props.filterBookmarks}></Navbar>
+                <Navbar history={this.props.history} onPage="bookmarks" getQuery={this.getQueryandFilter}></Navbar>
                 {this.state.start &&
                     <div className="loading-anime">
                         <Loading className="loading-wheel" />
@@ -47,7 +56,7 @@ class Bookmarks extends Component {
                     <div id="bookmarks">
                         <div className="row">
                             {
-                                this.state.bookmarks.map((internship) => {
+                                content.map((internship) => {
                                     return (
                                         <Internship
                                             userId={this.props.currentUser.user._id}
