@@ -13,40 +13,40 @@ export default class InternshipOffered extends Component {
       show: false,
       emails: [],
       selected_emails: [],
-      selint:null
+      selint: null
     };
     this.multiselectRef = React.createRef();
-    this.handleshow2 = (i,inte) => {
-      let allmail=[]
-      this.props.user.internshipsOffered[i].applicants.forEach((e)=>{
-          console.log(e)
-          allmail.push({...e,text:e.email})
+    this.handleshow2 = (i, inte) => {
+      let allmail = []
+      this.props.user.internshipsOffered[i].applicants.forEach((e) => {
+        console.log(e)
+        allmail.push({ ...e, text: e.email })
       })
-      let selemail=[]
-      this.props.user.internshipsOffered[i].recruited.forEach((e)=>{
-          selemail.push({text:e.email})
+      let selemail = []
+      this.props.user.internshipsOffered[i].recruited.forEach((e) => {
+        selemail.push({ text: e.email })
       })
-      this.setState({ show: true,emails:allmail,selected_emails:selemail ,selint:inte});
+      this.setState({ show: true, emails: allmail, selected_emails: selemail, selint: inte });
     };
     this.handleclose = () => {
       this.setState({ show: false });
     };
-    this.handlesub=()=>{
-        var emails = this.multiselectRef.current.getSelectedItems();
-        var emailArray = [];
-        emails.forEach((email) => {
+    this.handlesub = () => {
+      var emails = this.multiselectRef.current.getSelectedItems();
+      var emailArray = [];
+      emails.forEach((email) => {
         emailArray.push(email.text);
-        });
-        let selecteduserId=this.state.emails
-        selecteduserId=selecteduserId.filter((e)=>emailArray.includes(e.email))
-        apiCall('put', "/api/internship/recruited/"+this.state.selint, { userId: this.props.user._id,selecteduser:selecteduserId })
-            .then(() => {
-                console.log('users added Mail');
-                this.handleclose();
-            })
-            .catch(err => {
-                console.log(err)
-            })
+      });
+      let selecteduserId = this.state.emails
+      selecteduserId = selecteduserId.filter((e) => emailArray.includes(e.email))
+      apiCall('put', "/api/internship/recruited/" + this.state.selint, { userId: this.props.user._id, selecteduser: selecteduserId })
+        .then(() => {
+          console.log('users added Mail');
+          this.handleclose();
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
   render() {
@@ -60,18 +60,18 @@ export default class InternshipOffered extends Component {
             Add +{" "}
           </button>
         )}
-        <div style={{ overflowY: "auto", maxHeight: "800px" }}>
+        <div>
           {this.props.user.internshipsOffered.map((e, i) => {
             return (
-              <div className="experience-ele">
+              <div className="experience-ele" style={{paddingBottom:'20px'}}>
                 <h4>{e.title}</h4>
                 <sub>{e.category}</sub>
                 <p>
-                  <h5>{"duration: " + e.duration + " months"}</h5>
+                  <span>{"Duration : " + e.duration + " months"}</span>
                   <br></br>
                   <h6>{e.description}</h6>
-                  <Link to={"/internship/" + e._id}>see internship</Link>
-                  {this.props.owner && <button onClick={()=>this.handleshow2(i,e._id)} className="ui button ">
+                  <Link to={"/internship/" + e._id}>See Internship</Link>
+                  {this.props.owner && <button onClick={() => this.handleshow2(i, e._id)} className="ui button small" style={{float:"right"}}>
                     Select Recruited
                   </button>}
                 </p>

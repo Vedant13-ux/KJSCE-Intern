@@ -297,7 +297,7 @@ router.post('/mailapplicants', (req, res, next) => {
             if (!user) {
                 return next({ status: 404, message: 'User Not Found' })
             }
-            if (user.role !== 'Faculty') {
+            if (!["Faculty", "Council", "Alumni"].includes(user.role)) {
                 return next({ status: 405, message: 'You are not allowed to send Mails' })
             }
             try {
@@ -316,22 +316,23 @@ router.post('/mailapplicants', (req, res, next) => {
 })
 
 router.put('/recruited/:id', async (req, res, next) => {
+    console.log(req.body);
     try {
         let user = await db.User.findById(req.body.userId);
         let internship = await db.InternshipDetails.findById(req.params.id);
         // req.body.selecteduser
         if (user._id.equals(internship.faculty) && internship) {
-            // await internship.update(req.body.data);
-            //internship.recruited =[];
-            await req.body.selecteduser.forEach((userit)=>{
-                console.log('ek user',userit)
-                let userrec= db.User.findById(user._id);
+            await internship.update(req.body.data);
+            internship.recruited = [];
+            await req.body.selecteduser.forEach((userit) => {
+                console.log('ek user', userit)
+                let userrec = db.User.findById(user._id);
                 console.log('aya')
                 internship.recruited.push(userrec)
                 console.log("hua")
             })
             await internship.save();
-            res.send('changed recruited')
+            res.send('changed recruited');
         } else {
             next({
                 status: 403,

@@ -12,7 +12,7 @@ const mailer = (mailBody) => {
         from: 'kjsceintern@gmail.com',
         to: `${mailBody.to.join(', ')}`,
         subject: mailBody.subject,
-        text: mailBody.text
+        html: mailBody.text
     }
     transporter.sendMail(mailOptions, (err, info) => {
         if (err) {
