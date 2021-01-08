@@ -9,6 +9,7 @@ import Event from "./Event";
 import Achievement from "./Achievement";
 import {Link} from 'react-router-dom'
 import InternshipOffered from './InternshipOffered'
+import NoApplication from '../../images/NoApplication'
 
 class Basic extends Component {
   constructor(props) {
@@ -64,6 +65,7 @@ class Basic extends Component {
                 </div>
               );
             })}
+            {this.props.user.applications.length===0 && <NoApplication></NoApplication>}
           </div>
         );
         break;
