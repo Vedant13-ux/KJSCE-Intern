@@ -42,7 +42,7 @@ exports.signin = async function (req, res, next) {
   try {
     let user = await db.User.findOne({
       email: req.body.email
-    }).populate('certificates').populate('events').populate('experiences').populate('applications').populate('posts').populate('projects').populate('achievements').populate({ path: 'commented', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } }).populate({ path: 'liked', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } }).populate({ path: 'members', populate: { path: 'member', select: 'fname lname _id email photo' } }).exec();
+    }).populate('certificates').populate('events').populate('experiences').populate('applications').populate('posts').populate('projects').populate('achievements').populate({path:"internshipsOffered",populate:{path:'applicants', select:'fname lname email _id photo'}}).populate({path:"internshipsOffered",populate:{path:'recruited', select:'fname lname email _id photo'}}).populate({ path: 'commented', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } }).populate({ path: 'liked', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } }).populate({ path: 'members', populate: { path: 'member', select: 'fname lname _id email photo' } }).exec();
     console.log(user);
     let isMatch = await user.comparePassword(req.body.password, next);
     console.log(isMatch);

@@ -278,6 +278,7 @@ router.post('/apply', (req, res, next) => {
                     await internship.applicants.push(user);
                     await user.save();
                     await internship.save();
+                    res.send("applied")
                 } else {
                     return next({ status: 405, message: 'Action is Not Permitted' });
                 }
@@ -313,4 +314,35 @@ router.post('/mailapplicants', (req, res, next) => {
         })
         .catch(err => { console.log(err.message); next(err) });
 })
+
+router.put('/recruited/:id', async (req, res, next) => {
+    try {
+        let user = await db.User.findById(req.body.userId);
+        let internship = await db.InternshipDetails.findById(req.params.id);
+        // req.body.selecteduser
+        if (user._id.equals(internship.faculty) && internship) {
+            // await internship.update(req.body.data);
+            //internship.recruited =[];
+            await req.body.selecteduser.forEach((userit)=>{
+                console.log('ek user',userit)
+                let userrec= db.User.findById(user._id);
+                console.log('aya')
+                internship.recruited.push(userrec)
+                console.log("hua")
+            })
+            await internship.save();
+            res.send('changed recruited')
+        } else {
+            next({
+                status: 403,
+                message: 'Permission denied to perfrom the action.'
+            })
+        }
+
+    } catch (error) {
+        next(error);
+    }
+
+});
+
 module.exports = router;
