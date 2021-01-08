@@ -1184,6 +1184,7 @@ body {
 }
 
 
+
 .posting-area .posting-but1{
   display: inline-flex;
   padding: 0 7px;
@@ -1196,7 +1197,13 @@ body {
   height: 32px;
   padding: 5px;
   width:550px;
-
+  cursor: pointer;
+}
+@media only screen and (max-width:700px){
+  .posting-area  .posting-text{
+    max-width: 550px;
+    width: 95%;
+  }
 }
 
 .posting-area .posting-but2{

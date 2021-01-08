@@ -1,7 +1,7 @@
 import React from "react";
-const NoBookmarks = () => {
+const NoActivity = () => {
     return (
-        <div id="notFound">
+        <div id="profileSVG" className="noActivitySVG">
             <svg width="1116" height="590" viewBox="0 0 1116 590" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="undraw_social_user_lff0 1" clip-path="url(#clip0)">
                     <path id="Vector" d="M491.496 0H46.1219V586.881H491.496V0Z" fill="#3F3D56" />
@@ -37,8 +37,9 @@ const NoBookmarks = () => {
             </svg>
 
 
+
         </div>
     )
 }
 
-export default NoBookmarks;
+export default NoActivity;

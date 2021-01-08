@@ -1,4 +1,4 @@
-import {SET_CURRENT_USER, DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE,DELETE_USER_ACHIEVEMENT,EDIT_USER_ACHIEVEMENT,UPDATE_USER_ACHIEVEMENT,EDIT_EVENT,DELETE_EVENT,DELETE_USER_EXPERIENCE,EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT } from '../actionTypes';
+import { SET_CURRENT_USER, DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE, DELETE_USER_ACHIEVEMENT, EDIT_USER_ACHIEVEMENT, UPDATE_USER_ACHIEVEMENT, EDIT_EVENT, DELETE_EVENT, DELETE_USER_EXPERIENCE, EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT, ADD_POST } from '../actionTypes';
 
 const defaultState = {
     isAuthenticated: false,
@@ -57,13 +57,13 @@ const currentUserReducer = (state = defaultState, action) => {
                 ...state
             }
         case DELETE_USER_EXPERIENCE:
-            state.user.experiences=state.user.experiences.filter((m) => String(m._id) !== String(action.expId));
+            state.user.experiences = state.user.experiences.filter((m) => String(m._id) !== String(action.expId));
             return {
                 ...state
             }
         case EDIT_USER_EXPERIENCE:
-            let index=state.user.experiences.findIndex((m) => String(m._id) === String(action.experience._id));
-            state.user.experiences[index]=action.experience
+            let index = state.user.experiences.findIndex((m) => String(m._id) === String(action.experience._id));
+            state.user.experiences[index] = action.experience
             return {
                 ...state
             }
@@ -122,8 +122,8 @@ const currentUserReducer = (state = defaultState, action) => {
                 ...state
             }
         case EDIT_EVENT:
-            let index3=state.user.events.findIndex((m) => String(m._id) === String(action.event._id));
-            state.user.events[index3]=action.event
+            let index3 = state.user.events.findIndex((m) => String(m._id) === String(action.event._id));
+            state.user.events[index3] = action.event
             return {
                 ...state
             }
@@ -133,13 +133,19 @@ const currentUserReducer = (state = defaultState, action) => {
                 ...state
             }
         case DELETE_USER_ACHIEVEMENT:
-            state.user.achievements=state.user.achievements.filter((m) => String(m._id) !== String(action.achmId));
+            state.user.achievements = state.user.achievements.filter((m) => String(m._id) !== String(action.achmId));
             return {
                 ...state
             }
         case EDIT_USER_ACHIEVEMENT:
-            let index4=state.user.achievements.findIndex((m) => String(m._id) === String(action.achievement._id));
-            state.user.achievements[index4]=action.achievement
+            let index4 = state.user.achievements.findIndex((m) => String(m._id) === String(action.achievement._id));
+            state.user.achievements[index4] = action.achievement
+            return {
+                ...state
+            }
+        // To be Removed Later
+        case ADD_POST:
+            state.user.posts.push(ADD_POST);
             return {
                 ...state
             }

@@ -5,6 +5,8 @@ import { apiCall } from "../services/api";
 import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
 import NoPost from '../images/NoPost';
+import { addPost } from '../store/actions/user'
+import { connect } from "react-redux";
 
 class Application extends React.Component {
   constructor(props) {
@@ -34,10 +36,11 @@ class Application extends React.Component {
   render() {
     return (
       <div className="wrapper">
-        <Navbar isMobile={this.state.isMobile} {...this.props} onPage="community"/>
+        <Navbar isMobile={this.state.isMobile} {...this.props} onPage="community" />
         <Feed
           isMobile={this.state.isMobile}
           currentUser={this.props.currentUser}
+          addPost={this.props.addPost} history={this.props.history}
         />
         <ScrollTopButton />
         <PageFooter />
@@ -77,7 +80,7 @@ class ScrollTopButton extends React.Component {
           position: "fixed",
           top: "4.4rem",
           left: `${document.querySelector(".feed-wrapper").getBoundingClientRect()
-              .left - 60
+            .left - 60
             }px`,
           display: `${this.state.visible ? "block" : "none"}`,
         },
@@ -135,14 +138,25 @@ class PostCreate extends React.Component {
       show: false,
       postdata: {
         content: "",
+        image: "",
+        author: this.props.user._id
       },
     };
     this.handleChange = (e) => {
-      this.state.postdata[e.target.name] = e.target.val;
-      this.setState({ ...this.state });
+      var postdata = this.state.postdata;
+      postdata[e.target.name] = e.target.value;
+      this.setState({ postdata });
     };
     this.handleSubmit = (e) => {
-      //api call
+      e.preventDefault();
+      console.log(this.state.postdata);
+      apiCall('post', '/api/community/posts/create', { ...this.state.postdata })
+        .then(async (post) => {
+          await this.props.addPost(post);
+          return this.props.history.push('/post/' + post._id)
+        }).catch((err) => {
+          console.log(err);
+        });
     };
     this.handleClose = (e) => {
       this.setState({ show: false });
@@ -152,7 +166,7 @@ class PostCreate extends React.Component {
     };
   }
   render() {
-    const { content } = this.state.postdata;
+    const { content, image } = this.state.postdata;
     return (
       <div className="posting-area">
         <div onClick={this.handleShow} className="posting-text">
@@ -181,9 +195,13 @@ class PostCreate extends React.Component {
                     required
                     placeholder="What do you want to talk about?"
                     name="content"
-                    val={content}
+                    value={content}
                     onChange={this.handleChange}
                   ></textarea>
+                </div>
+                <div className="field">
+                  <label>Image URL</label>
+                  <input onChange={this.handleChange} value={image} type="url" name="image" placeholder="Link of Image"></input>
                 </div>
 
                 <div className="submit confirmdiv">
@@ -262,6 +280,7 @@ class Feed extends React.Component {
       <div id="feed">
         <div className="content-wrapper feed-wrapper">
           <PostWall
+            addPost={this.props.addPost} history={this.props.history}
             isprofile={false}
             postcreate={true}
             loggedin={this.props.currentUser}
@@ -477,7 +496,8 @@ export class PostWall extends React.Component {
 
     return (
       <div className="post-wall">
-        {this.props.postcreate && <PostCreate />}
+
+        {this.props.postcreate && <PostCreate addPost={this.props.addPost} history={this.props.history} user={this.props.loggedin.user} />}
         {content}
       </div>
     );
@@ -810,4 +830,4 @@ class CommentInput extends React.Component {
   }
 }
 
-export default Application;
+export default connect(() => { }, { addPost })(Application);

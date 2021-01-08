@@ -68,6 +68,10 @@ border-right: 30px solid #ffca3d;
 border-top: 11px solid  #ffca3d;
 background-color: #020b53;
 }
+.tab-content{
+	max-height: 800px;
+	height: 90%;
+}
 
 .panel {
 position: relative;
@@ -79,6 +83,26 @@ border-radius: 3px;
 	margin-top: 78px;
 	min-height: 600px;
 }
+#profile #profileSVG{
+	display:flex;
+	justify-content: center;
+}
+#profile #profileSVG svg{
+	max-width:800px;
+   width:95%;
+   max-height:300px;
+   height:90%;
+}
+#profile .noActivitySVG{
+	padding-top: 100px !important;
+}
+#profile #experience{
+	min-height: 400px;
+	overflow-y: auto;
+	max-height: 800px;
+	height: 90%;
+}
+
 .panel .tagsskill{
   background-color: #020b53;
   border-radius: 10px;
@@ -236,7 +260,9 @@ margin-right: 9px;
   }
 #experience .experience-ele h5{
   margin:0px;
+  margin-left: 8px;
   padding:0px;
+  font-weight: 350;
 }
 #experience .experience-ele h6{
   word-break: break-all;
@@ -566,3 +592,4 @@ margin-right: 9px;
 .sidebar a{
 	color: white;
 }
+

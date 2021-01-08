@@ -5,7 +5,7 @@ const { populate } = require('../models/user');
 
 // Getting Posts
 router.get('/posts/getAll', (req, res, next) => {
-    db.Post.find().populate('author').populate({ path: 'comments', populate: { path: 'author' } }).limit(10).exec()
+    db.Post.find().populate('author').populate({ path: 'comments', populate: { path: 'author' } }).sort({created : 1}).limit(10).exec()
 
         .then(posts => {
             res.status(200).send(posts);

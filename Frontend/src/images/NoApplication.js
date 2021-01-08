@@ -1,7 +1,7 @@
 import React from "react";
-const NoBookmarks = () => {
+const NoApplication = () => {
     return (
-        <div id="notFound">
+        <div id="profileSVG">
             <svg width="754" height="704" viewBox="0 0 754 704" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="undraw_Resume_re_hkth 1" clip-path="url(#clip0)">
                     <path id="Vector" d="M355.412 5.87184L332.344 18.4585L48.1358 173.529L25.0673 186.115C13.8738 192.239 5.56646 202.553 1.96784 214.794C-1.63077 227.035 -0.22677 240.204 5.87183 251.411L217.515 639.305C223.639 650.498 233.953 658.806 246.194 662.404C258.435 666.003 271.604 664.599 282.811 658.5L282.871 658.468L613.096 478.29L613.156 478.257C624.349 472.133 632.657 461.819 636.255 449.578C639.854 437.337 638.45 424.168 632.352 412.961L420.708 25.0675C414.585 13.874 404.271 5.56658 392.03 1.96794C379.788 -1.63071 366.62 -0.226737 355.412 5.87184V5.87184Z" fill="#F2F2F2" />
@@ -49,4 +49,4 @@ const NoBookmarks = () => {
     )
 }
 
-export default NoBookmarks;
+export default NoApplication;

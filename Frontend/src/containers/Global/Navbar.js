@@ -103,7 +103,7 @@ class Navbar extends Component {
                                     <MContext.Consumer>
                                         {
                                             context => (
-                                                <div><input onKeyPress={e => { if (e.which === 13) { context.filter() } }} onChange={(e) => context.setMessage(e.target.value)} className="form-control mr-sm-2" type="search" placeholder="Search Internships" aria-label="Search" name="internshipSerach" />
+                                                <div><input onKeyUp={e => { if (e.which === 13) { context.filter() } }} onChange={(e) => context.setMessage(e.target.value)} className="form-control mr-sm-2" type="search" placeholder="Search Internships" aria-label="Search" name="internshipSerach" />
                                                 </div>)
                                         }
                                     </MContext.Consumer>

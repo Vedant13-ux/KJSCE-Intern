@@ -7,12 +7,13 @@ import Experience from "./Experience";
 import Project from "./Project";
 import Event from './Event';
 import Achievement from './Achievement'
+import Activity from './Activity';
 
 class Basic extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      content: ["Faculty", "Student", "Alumni"].includes(this.props.user.role) ? "experiences": "events",
+      content: ["Faculty", "Student", "Alumni"].includes(this.props.user.role) ? "experiences" : "events",
       posts: this.props.user.posts,
       start: false,
     };
@@ -54,7 +55,7 @@ class Basic extends Component {
         );
         break;
       case "activity":
-        display = <div>activity</div>;
+        display = <Activity />
         break;
       default:
         break;
@@ -92,7 +93,7 @@ class Basic extends Component {
                 Achievement
               </Nav.Link>
             </Nav.Item>
-            
+
             <Nav.Item>
               <Nav.Link
                 name="projects"

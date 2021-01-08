@@ -1,7 +1,7 @@
 import React from "react";
-const NoBookmarks = () => {
+const NoProject = () => {
     return (
-        <div id="notFound">
+        <div id="profileSVG">
             <svg width="863" height="574" viewBox="0 0 863 574" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="undraw_Organizing_projects_0p9a 1" clip-path="url(#clip0)">
                     <path id="Vector" d="M105.422 505.622C105.422 524.503 94.1977 531.096 80.3529 531.096C80.0305 531.096 79.7099 531.092 79.3911 531.083C78.7499 531.069 78.1139 531.042 77.4867 530.996C64.9904 530.113 55.282 523.18 55.282 505.622C55.282 487.453 78.4973 464.525 80.2483 462.823L80.2518 462.821C80.318 462.755 80.3528 462.722 80.3528 462.722C80.3528 462.722 105.422 486.74 105.422 505.622Z" fill="#FFCA3D" />
@@ -180,4 +180,4 @@ const NoBookmarks = () => {
     )
 }
 
-export default NoBookmarks;
+export default NoProject;

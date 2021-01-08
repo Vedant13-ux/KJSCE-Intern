@@ -1,6 +1,6 @@
 
 import { apiCall } from '../../services/api';
-import { DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE,EDIT_EVENT,DELETE_EVENT,DELETE_USER_ACHIEVEMENT,EDIT_USER_ACHIEVEMENT,UPDATE_USER_ACHIEVEMENT,DELETE_USER_EXPERIENCE,EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT } from '../actionTypes';
+import { DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE, EDIT_EVENT, DELETE_EVENT, DELETE_USER_ACHIEVEMENT, EDIT_USER_ACHIEVEMENT, UPDATE_USER_ACHIEVEMENT, DELETE_USER_EXPERIENCE, EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT, ADD_POST } from '../actionTypes';
 
 function userRefresh(user) {
     return {
@@ -151,7 +151,7 @@ function userExperiencedelete(expId) {
 export function deleteExperiences(expId, id) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('delete', '/api/profile/update/experiences/'+id+'/'+expId)
+            return apiCall('delete', '/api/profile/update/experiences/' + id + '/' + expId)
                 .then(() => {
                     dispatch(userExperiencedelete(expId));
                     res();
@@ -170,7 +170,7 @@ function userExperienceEdit(experience) {
 export function editExperience(experience) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/api/profile/edit/experience',experience)
+            return apiCall('put', '/api/profile/edit/experience', experience)
                 .then(() => {
                     dispatch(userExperienceEdit(experience.experience));
                     res();
@@ -227,7 +227,7 @@ function userProjectedit(project) {
 export function editProjects(project) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/api/profile/edit/project',project)
+            return apiCall('put', '/api/profile/edit/project', project)
                 .then(() => {
                     dispatch(userProjectedit(project.project));
                     res();
@@ -311,7 +311,7 @@ function deleteMemb(memberId) {
         memberId
     }
 }
-export function deleteMember(memberId,userId) {
+export function deleteMember(memberId, userId) {
     return dispatch => {
         return new Promise((res, rej) => {
             return apiCall('delete', '/api/council/deleteMember/' + userId + '/' + memberId, '')
@@ -353,7 +353,7 @@ function userEventDelete(eventId) {
 export function deleteEvent(eventId, id) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('delete', '/api/council/deleteEvent/'+id+'/'+eventId)
+            return apiCall('delete', '/api/council/deleteEvent/' + id + '/' + eventId)
                 .then(() => {
                     dispatch(userEventDelete(eventId));
                     res();
@@ -373,7 +373,7 @@ function usereventedit(event) {
 export function editEvent(event) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/api/council/editEvent',event)
+            return apiCall('put', '/api/council/editEvent', event)
                 .then(() => {
                     dispatch(usereventedit(event.event));
                     res();
@@ -412,7 +412,7 @@ function userachievementdelete(achmId) {
 export function deleteAchievement(achmId, id) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('delete', '/api/profile/update/achievements/'+id+'/'+achmId)
+            return apiCall('delete', '/api/profile/update/achievements/' + id + '/' + achmId)
                 .then(() => {
                     dispatch(userachievementdelete(achmId));
                     res();
@@ -431,7 +431,7 @@ function userachievementedit(achievement) {
 export function editAchievement(achievement) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/api/profile/edit/achievement',achievement)
+            return apiCall('put', '/api/profile/edit/achievement', achievement)
                 .then(() => {
                     dispatch(userachievementedit(achievement.achievement));
                     res();
@@ -439,5 +439,12 @@ export function editAchievement(achievement) {
                     rej(err);
                 });
         })
+    }
+}
+
+export function addPost(post) {
+    return {
+        type: ADD_POST,
+        post
     }
 }

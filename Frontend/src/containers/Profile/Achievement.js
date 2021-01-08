@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Modal } from "react-bootstrap";
 import { connect } from 'react-redux'
-import { updateAchievement ,deleteAchievement,editAchievement} from '../../store/actions/user'
+import { updateAchievement, deleteAchievement, editAchievement } from '../../store/actions/user'
 import NoAchievement from '../../images/NoAchievement'
 
 class Achievement extends Component {
@@ -19,26 +19,27 @@ class Achievement extends Component {
       this.setState({ show: true, editing: true, editingachm: e });
     };
     this.handleclose = () => {
-      this.setState({ show: false,editingachm:null });
+      this.setState({ show: false, editingachm: null });
     };
     this.handleexpsub = (data) => {
       if (this.state.editing) {
-        data._id=this.state.editingachm._id;
+        data._id = this.state.editingachm._id;
         this.props
-          .editAchievement({achievement:data})
+          .editAchievement({ achievement: data })
           .then(() => {
             console.log("achievement edited");
             this.handleclose();
           })
           .catch((err) => err);
-        
+
       } else {
-      this.props.updateAchievement(data, this.props.user._id).then(
-        () => {
-          console.log('achievement Added')
-          this.setState({ show: false })
-        }
-      ).catch((err) => err)}
+        this.props.updateAchievement(data, this.props.user._id).then(
+          () => {
+            console.log('achievement Added')
+            this.setState({ show: false })
+          }
+        ).catch((err) => err)
+      }
     };
     this.deleteexp = () => {
       console.log("aya")
@@ -59,39 +60,43 @@ class Achievement extends Component {
           {this.props.user.achievements.map((e, i) => {
             return (
               <div className="experience-ele">
-                <h4>{e.title}</h4>{this.props.owner && (
-                    <span
-                      class="deleteproj"
-                      onClick={() => this.handleshow2(e)}
-                    >
-                      <i className="fa fa-edit"></i>
-                    </span>
-                  )}
-                  <h5>{e.reward}</h5>
-                <p>
-                  {new Date(e.date).toDateString()}
+                <h4>{e.title}</h4>
+                {this.props.owner && (
+                  <span
+                    class="deleteproj"
+                    onClick={() => this.handleshow2(e)}
+                  >
+                    <i className="fa fa-edit"></i>
+                  </span>
+                )}
+                <h5>Award/Prize : {e.reward}</h5>
+                <div>
+                  Date : {new Date(e.date).toDateString()}
                   <br></br>
                   <h6>
                     {e.description}
                   </h6>
-                </p>
+                </div>
                 {e.link &&
-                <a href={e.link} target="_blank" rel="noreferrer">
-                    see achievement
-                  </a>}
+                  <div>
+                    <a href={e.link} target="_blank" rel="noreferrer">
+                      see achievement
+                    </a>
+                  </div>
+                }
               </div>)
-          })}{this.props.user.achievements.length===0 && <NoAchievement></NoAchievement>}
+          })}{this.props.user.achievements.length === 0 && <NoAchievement></NoAchievement>}
         </div>
         <Modal size="lg" show={this.state.show} onHide={this.handleclose} backdrop="static">
           <Modal.Header closeButton>
-            <Modal.Title>{this.state.editing?'Edit Achivement Details':'Fill Achivement Details'}</Modal.Title>
+            <Modal.Title>{this.state.editing ? 'Edit Achivement Details' : 'Fill Achivement Details'}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Achievementform {...this.props} 
-            deleteit={this.deleteexp}
-            editing={this.state.editing}
-            editingachm={this.state.editingachm}
-            onexpsub={this.handleexpsub}></Achievementform>
+            <Achievementform {...this.props}
+              deleteit={this.deleteexp}
+              editing={this.state.editing}
+              editingachm={this.state.editingachm}
+              onexpsub={this.handleexpsub}></Achievementform>
           </Modal.Body>
         </Modal>
       </div>
@@ -104,15 +109,15 @@ class Achievementform extends Component {
   constructor(props) {
     super(props);
     if (props.editing) {
-      let getdate = (yourDate)=>{
-        yourDate=new Date(yourDate)
+      let getdate = (yourDate) => {
+        yourDate = new Date(yourDate)
         let offset = yourDate.getTimezoneOffset()
-        yourDate = new Date(yourDate.getTime() - (offset*60*1000))
+        yourDate = new Date(yourDate.getTime() - (offset * 60 * 1000))
         return yourDate.toISOString().split('T')[0]
       }
       this.state = {
         title: props.editingachm.title,
-        reward:props.editingachm.reward,
+        reward: props.editingachm.reward,
         date: getdate(props.editingachm.date),
         description: props.editingachm.description,
         link: props.editingachm.link,
@@ -123,10 +128,10 @@ class Achievementform extends Component {
         reward: "",
         date: "",
         description: "",
-        link:''
+        link: ''
       };
     }
-    
+
     this.handleSubmit = (e) => {
       e.preventDefault()
       props.onexpsub(this.state);
@@ -222,4 +227,4 @@ class Achievementform extends Component {
   }
 }
 
-export default connect(() => { }, { updateAchievement ,deleteAchievement,editAchievement })(Achievement);
+export default connect(() => { }, { updateAchievement, deleteAchievement, editAchievement })(Achievement);
