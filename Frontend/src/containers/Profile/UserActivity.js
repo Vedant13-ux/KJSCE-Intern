@@ -5,14 +5,18 @@ import { PostWall } from "../../compenents/Community";
 // import { apiCall } from "../../services/api";
 import Experience from "./Experience";
 import Project from "./Project";
-import Event from './Event';
-import Achievement from './Achievement'
+import Event from "./Event";
+import Achievement from "./Achievement";
+import {Link} from 'react-router-dom'
+import InternshipOffered from './InternshipOffered'
 
 class Basic extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      content: ["Faculty", "Student", "Alumni"].includes(this.props.user.role) ? "experiences": "events",
+      content: ["Faculty", "Student", "Alumni"].includes(this.props.user.role)
+        ? "experiences"
+        : "events",
       posts: this.props.user.posts,
       start: false,
     };
@@ -31,17 +35,50 @@ class Basic extends Component {
     let display;
     switch (this.state.content) {
       case "events":
-        display = <Event owner={this.props.owner} user={this.props.user} />
+        display = <Event owner={this.props.owner} user={this.props.user} />;
         break;
       case "experiences":
-        display = <Experience owner={this.props.owner} user={this.props.user} />;
+        display = (
+          <Experience owner={this.props.owner} user={this.props.user} />
+        );
         break;
       case "projects":
         display = <Project owner={this.props.owner} user={this.props.user} />;
         break;
+      case "application":
+        display = (
+          <div id="experience">
+            {this.props.user.applications.map((e, i) => {
+              return (
+                <div className="experience-ele">
+                  <h4>{e.title}</h4>
+                  <sub>{e.category}</sub>
+                  <span className="deleteproj">{e.recruited.includes(this.props.user._id)?(<span class="badge badge-success">Selected</span>):(<span class="badge badge-secondary">Applied</span>)}</span>
+                  <p>
+                  <h5>{'duration: '+e.duration+' months'}</h5><br></br>
+                  <h6>{e.description}</h6>
+                  <Link to={"/internship/" + e._id}>
+            see internship
+          </Link>
+          </p>
+                </div>
+              );
+            })}
+          </div>
+        );
+        break;
+      case "internshipoffered":
+        display=(<InternshipOffered owner={this.props.owner}
+          user={this.props.user}></InternshipOffered>)
+        break;
       case "achievement":
-        display = <Achievement owner={this.props.owner} user={this.props.user}></Achievement>
-        break
+        display = (
+          <Achievement
+            owner={this.props.owner}
+            user={this.props.user}
+          ></Achievement>
+        );
+        break;
       case "posts":
         display = (
           <PostWall
@@ -64,24 +101,25 @@ class Basic extends Component {
         <div className="tab-block">
           <Nav variant="tabs">
             <Nav.Item>
-              {["Faculty", "Student", "Alumni"].includes(this.props.user.role) ?
-                < Nav.Link
+              {["Faculty", "Student", "Alumni"].includes(
+                this.props.user.role
+              ) ? (
+                <Nav.Link
                   name="experiences"
                   to="#experiences"
                   onClick={this.handleSwitch}
                 >
                   Experiences
                 </Nav.Link>
-                :
-                < Nav.Link
+              ) : (
+                <Nav.Link
                   name="events"
                   to="#events"
                   onClick={this.handleSwitch}
                 >
                   Events
                 </Nav.Link>
-              }
-
+              )}
             </Nav.Item>
             <Nav.Item>
               <Nav.Link
@@ -92,7 +130,7 @@ class Basic extends Component {
                 Achievement
               </Nav.Link>
             </Nav.Item>
-            
+
             <Nav.Item>
               <Nav.Link
                 name="projects"
@@ -102,6 +140,23 @@ class Basic extends Component {
                 Projects
               </Nav.Link>
             </Nav.Item>
+            {this.props.user.role==="Student"?<Nav.Item>
+              <Nav.Link
+                name="application"
+                to="#application"
+                onClick={this.handleSwitch}
+              >
+                Applications
+              </Nav.Link>
+            </Nav.Item>:<Nav.Item>
+              <Nav.Link
+                name="internshipoffered"
+                to="#internshipoffered"
+                onClick={this.handleSwitch}
+              >
+                Internship Offered
+              </Nav.Link>
+            </Nav.Item>}
             <Nav.Item>
               <Nav.Link name="posts" to="#posts" onClick={this.handleSwitch}>
                 Posts
@@ -117,15 +172,13 @@ class Basic extends Component {
               </Nav.Link>
             </Nav.Item>
           </Nav>
-          <div
-            className="tab-content p30"
-          >
+          <div className="tab-content p30">
             <div id="tab1" className="tab-pane active">
               {display}
             </div>
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 }
