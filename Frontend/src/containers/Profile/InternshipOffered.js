@@ -13,8 +13,17 @@ export default class InternshipOffered extends Component {
       emails: [],
       selected_emails: [],
     };
-    this.handleshow2 = (e) => {
-      this.setState({ show: true });
+    this.handleshow2 = (i) => {
+      let allmail=[]
+      this.props.user.internshipsOffered[i].applicants.forEach((e)=>{
+          console.log(e)
+          allmail.push({...e,text:e.email})
+      })
+      let selemail=[]
+      this.props.user.internshipsOffered[i].recruited.forEach((e)=>{
+          selemail.push({text:e.email})
+      })
+      this.setState({ show: true,emails:allmail,selected_emails:selemail });
     };
     this.handleclose = () => {
       this.setState({ show: false });
@@ -45,7 +54,7 @@ export default class InternshipOffered extends Component {
                   <br></br>
                   <h6>{e.description}</h6>
                   <Link to={"/internship/" + e._id}>see internship</Link>
-                  {this.props.owner && <button onClick={this.handleshow2} className="ui button ">
+                  {this.props.owner && <button onClick={()=>this.handleshow2(i)} className="ui button ">
                     Select Recruited
                   </button>}
                 </p>

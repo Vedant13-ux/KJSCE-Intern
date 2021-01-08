@@ -31,7 +31,7 @@ function escapeRegex(text) {
 }
 // Get user by id
 router.get('/user/:id', (req, res, next) => {
-    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('events').populate('applications').populate('posts').populate('certificates').populate('experiences').populate('projects').populate('achievements').populate("internshipsOffered").populate({ path: 'members', populate: { path: 'member', select: 'fname lname _id email photo' } }).populate({ path: 'commented', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } }).populate({ path: 'liked', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } }).exec()
+    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('events').populate('applications').populate('posts').populate('certificates').populate('experiences').populate('projects').populate('achievements').populate({path:"internshipsOffered",populate:{path:'applicants', select:'fname lname email _id photo'}}).populate({path:"internshipsOffered",populate:{path:'recruited', select:'fname lname email _id photo'}}).populate({ path: 'members', populate: { path: 'member', select: 'fname lname _id email photo' } }).populate({ path: 'commented', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } }).populate({ path: 'liked', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } }).exec()
         .then((user) => {
             user.password = ''
             res.status(200).send(user);
