@@ -108,12 +108,12 @@ class Navbar extends Component {
                                         }
                                     </MContext.Consumer>
                                 }
-                                {this.props.onPage === "community" &&
+                                {["community", 'profile'].includes(this.props.onPage) &&
                                     <UserSearch />
                                 }
                                 {
-                                    // this.props.onPage === "bookmarks" &&
-                                    // <input onChange={this.props.onChange.bind(this, this.value)} type="search" placeholder="Search Among Bookmarks" className="form-control mr-sm-2"></input>
+                                    this.props.onPage === "bookmarks" &&
+                                    <input onChange={(e) => (this.props.getQuery(e.target.value))} type="search" placeholder="Search from Bookmarks" className="form-control mr-sm-2"></input>
                                 }
                             </div>
                             <ul className="navbar-nav mr-auto">

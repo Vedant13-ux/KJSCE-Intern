@@ -71,7 +71,7 @@ class Profile extends Component {
     } else if (this.state.nof) {
       return (
         <div id="profile">
-          <Navbar history={this.props.history} />
+          <Navbar history={this.props.history} onPage="profile" />
           <NotFound></NotFound>
           <PageFooter />
         </div>
