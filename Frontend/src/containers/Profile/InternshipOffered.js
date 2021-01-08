@@ -45,9 +45,9 @@ export default class InternshipOffered extends Component {
                   <br></br>
                   <h6>{e.description}</h6>
                   <Link to={"/internship/" + e._id}>see internship</Link>
-                  <button onClick={this.handleshow2} className="ui button ">
+                  {this.props.owner && <button onClick={this.handleshow2} className="ui button ">
                     Select Recruited
-                  </button>
+                  </button>}
                 </p>
               </div>
             );
