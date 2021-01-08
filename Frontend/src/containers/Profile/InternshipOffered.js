@@ -4,6 +4,7 @@ import { Modal } from "react-bootstrap";
 import NoApplication from "../../images/NoApplication";
 import { Link } from "react-router-dom";
 import { Multiselect } from "multiselect-react-dropdown";
+import { apiCall } from "../../services/api"
 
 export default class InternshipOffered extends Component {
   constructor(props) {
@@ -12,8 +13,10 @@ export default class InternshipOffered extends Component {
       show: false,
       emails: [],
       selected_emails: [],
+      selint:null
     };
-    this.handleshow2 = (i) => {
+    this.multiselectRef = React.createRef();
+    this.handleshow2 = (i,inte) => {
       let allmail=[]
       this.props.user.internshipsOffered[i].applicants.forEach((e)=>{
           console.log(e)
@@ -23,13 +26,27 @@ export default class InternshipOffered extends Component {
       this.props.user.internshipsOffered[i].recruited.forEach((e)=>{
           selemail.push({text:e.email})
       })
-      this.setState({ show: true,emails:allmail,selected_emails:selemail });
+      this.setState({ show: true,emails:allmail,selected_emails:selemail ,selint:inte});
     };
     this.handleclose = () => {
       this.setState({ show: false });
     };
     this.handlesub=()=>{
-        // add to recuited 
+        var emails = this.multiselectRef.current.getSelectedItems();
+        var emailArray = [];
+        emails.forEach((email) => {
+        emailArray.push(email.text);
+        });
+        let selecteduserId=this.state.emails
+        selecteduserId=selecteduserId.filter((e)=>emailArray.includes(e.email))
+        apiCall('put', "/api/internship/recruited/"+this.state.selint, { userId: this.props.user._id,selecteduser:selecteduserId })
+            .then(() => {
+                console.log('users added Mail');
+                this.handleclose();
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
   }
   render() {
@@ -54,7 +71,7 @@ export default class InternshipOffered extends Component {
                   <br></br>
                   <h6>{e.description}</h6>
                   <Link to={"/internship/" + e._id}>see internship</Link>
-                  {this.props.owner && <button onClick={()=>this.handleshow2(i)} className="ui button ">
+                  {this.props.owner && <button onClick={()=>this.handleshow2(i,e._id)} className="ui button ">
                     Select Recruited
                   </button>}
                 </p>
