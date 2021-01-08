@@ -11,6 +11,9 @@ import { Link } from 'react-router-dom'
 import InternshipOffered from './InternshipOffered'
 import NoApplication from '../../images/NoApplication';
 import Activity from './Activity';
+import { connect } from 'react-redux'
+import { addPost } from '../../store/actions/user'
+
 
 class Basic extends Component {
   constructor(props) {
@@ -55,7 +58,7 @@ class Basic extends Component {
                   <sub>{e.category}</sub>
                   <span className="deleteproj">{e.recruited.includes(this.props.user._id) ? (<span class="badge badge-success">Selected</span>) : (<span class="badge badge-secondary">Applied</span>)}</span>
                   <p>
-                    <h5>{'duration: ' + e.duration + ' months'}</h5><br></br>
+                    <span>{'Duration : ' + e.duration + ' months'}</span><br></br>
                     <h6>{e.description}</h6>
                     <Link to={"/internship/" + e._id}>
                       see internship
@@ -88,6 +91,7 @@ class Basic extends Component {
             postcreate={this.props.owner}
             currentUser={this.props.user}
             loggedin={{ user: this.props.loggedin }}
+            addPost={this.props.addPost}
           />
         );
         break;
@@ -184,4 +188,4 @@ class Basic extends Component {
   }
 }
 
-export default Basic;
+export default connect(() => { }, { addPost})(Basic);

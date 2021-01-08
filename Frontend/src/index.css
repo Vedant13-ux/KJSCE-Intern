@@ -234,6 +234,10 @@ style 2--
 .sections .rightSection .content .authForm .button:hover{
   color: #ffcb3dda;
 }
+.sections .rightSection .content .verification{
+  padding: 20px;
+  text-align: center;
+}
 
 /* *******************Login ************** */
 .sections .rightSection .content .loginForm{

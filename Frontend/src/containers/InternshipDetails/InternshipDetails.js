@@ -102,13 +102,13 @@ class InternshipDetail extends Component {
         async (data) => {
           console.log(data)
           if (Object.keys(data).length !== 0) {
-            apiCall('get', '/api/internship/search/skills?skills=' + data["skillsRequired"].join(',')+'&id='+this.props.match.params.id)
+            apiCall('get', '/api/internship/search/skills?skills=' + data["skillsRequired"].join(',') + '&id=' + this.props.match.params.id)
               .then(
                 async (recomm) => {
                   if (this.state.user._id === data.faculty._id) {
                     await this.setState({ owner: true });
                   }
-                  if (this.state.user.applications.findIndex(app => app._id === this.props.match.params.id) !== -1) {
+                  if (data.applicants.findIndex(app => app._id === this.state.user._id) !== -1) {
                     await this.setState({ applied: true })
                   }
                   if (new Date(this.state.details.applyBy) > Date.now()) {
@@ -145,9 +145,8 @@ class InternshipDetail extends Component {
     console.log(applyBody);
     apiCall('post', '/api/internship/apply', applyBody)
       .then(async () => {
-        console.log('Hello');
         await this.setState({ applied: true });
-        this.props.onHide();
+        // this.props.onHide();
       })
       .catch(err => console.log(err))
   }
@@ -273,7 +272,7 @@ class InternshipDetail extends Component {
                           </span>
                         )}
                     </span>
-                    {this.state.user.role === "Student" &&
+                    {this.state.user.role === "Student" && (this.state.details.faculty._id!==this.state.user._id) &&
                       <div>
                         {!this.state.applied && !this.state.passed &&
                           <div>

@@ -205,7 +205,7 @@ function mailOptions(req, process) {
                   /*@editable*/padding:0;
                   /*@editable*/text-align:left;
                   /*@editable*/vertical-align:middle;
-                  background-color: #FAFAFA;
+                    color:"#ffca3d !important"
                     padding-bottom: 14px;
                 }
               /*
@@ -421,7 +421,7 @@ function mailOptions(req, process) {
                     <!-- // Begin Template Preheader \\ -->
                     <table border="0" cellpadding="10" cellspacing="0" width="450" id="templatePreheader" style="background-color:#FAFAFA;">
                       <tr>
-                        <td valign="top" className="preheaderContent" style="border-collapse:collapse;">
+                        <td valign="top" class="preheaderContent" style="border-collapse:collapse;">
                           <!-- // Begin Module: Standard Preheader \\ -->
                           <table border="0" cellpadding="10" cellspacing="0" width="100%">
                             <tr>
@@ -438,16 +438,15 @@ function mailOptions(req, process) {
                       </tr>
                     </table>
                     <!-- // End Template Preheader \\ -->
-                    <table border="0" cellpadding="0" cellspacing="0" width="450" id="templateContainer" style="border:1px none #DDDDDD;background-color:#08ffc8;">
+                    <table border="0" cellpadding="0" cellspacing="0" width="450" id="templateContainer" style="border:1px none #DDDDDD;background-color:#020c53;">
                       <tr>
                         <td align="center" valign="top" style="border-collapse:collapse;">
                           <!-- // Begin Template Header \\ -->
-                          <table border="0" cellpadding="0" cellspacing="0" width="450" id="templateHeader" style="background-color:#08ffc8;border-bottom:0;">
+                          <table border="0" cellpadding="0" cellspacing="0" width="450" id="templateHeader" style="background-color: #020c53 ;border-bottom:0;">
                             <tr>
-                              <td className="headerContent centeredWithBackground" style="border-collapse:collapse;color:#202020;font-family:Arial;font-size:34px;font-weight:bold;line-height:100%;padding:0;text-align:center;vertical-align:middle;background-color:#08ffc8;padding-bottom:20px;padding-top:20px; border-top-left-radius:30px; border-top-right-radius:30px"">
-                                <!-- // Begin Module: Standard Header Image \\ -->
-                                  KJ-INTERN
-                                <!-- // End Module: Standard Header Image \\ -->
+
+                              <td class="headerContent centeredWithBackground" style="color:#ffca3d !important;border-collapse:collapse;color:#202020;font-family:Arial;font-size:34px;font-weight:bold;line-height:100%;padding:0;text-align:center;vertical-align:middle;background-color:#020c53;padding-bottom:20px;padding-top:20px; border-top-left-radius:30px; border-top-right-radius:30px">
+                                  KJSCE Connect
                               </td>
                             </tr>
                           </table>
@@ -459,17 +458,17 @@ function mailOptions(req, process) {
                           <!-- // Begin Template Body \\ -->
                           <table border="0" cellpadding="0" cellspacing="0" width="450" id="templateBody">
                             <tr>
-                              <td valign="top" className="bodyContent" style="border-collapse:collapse;background-color:#FFFFFF;">
+                              <td valign="top" class="bodyContent" style="border-collapse:collapse;background-color:#FFFFFF;">
                                 <!-- // Begin Module: Standard Content \\ -->
                                 <table border="0" cellpadding="20" cellspacing="0" width="100%" style="padding-bottom:10px;">
                                   <tr>
-                                    <td valign="top" style="padding-bottom:1rem;border-collapse:collapse;" className="mainContainer">
+                                    <td valign="top" style="padding-bottom:1rem;border-collapse:collapse;" class="mainContainer">
                                       <div style="text-align:center;color:#505050;font-family:Arial;font-size:14px;line-height:150%;">
-                                        <h1 className="h1" style="color:#202020;display:block;font-family:Arial;font-size:24px;font-weight:bold;line-height:100%;margin-top:20px;margin-right:0;margin-bottom:20px;margin-left:0;text-align:center;">Hey ${req.body.fname}, Verify Your Email</h1>
+                                        <h1 class="h1" style="color:#202020;display:block;font-family:Arial;font-size:24px;font-weight:bold;line-height:100%;margin-top:20px;margin-right:0;margin-bottom:20px;margin-left:0;text-align:center;">Hey ${req.body.fname}, Verify Your Email</h1>
           
-                                        <!-- <h2 className="h2">Heading 2</h2>
-                                                                          <h3 className="h3">Heading 3</h3>
-                                                                          <h4 className="h4">Heading 4</h4> -->
+                                        <!-- <h2 class="h2">Heading 2</h2>
+                                                                          <h3 class="h3">Heading 3</h3>
+                                                                          <h4 class="h4">Heading 4</h4> -->
                                         <p>Please click the button below to verify your email.</p>
                                       </div>
                                     </td>
@@ -480,7 +479,7 @@ function mailOptions(req, process) {
                                         <tbody>
                                           <tr align="center">
                                             <td align="center" valign="middle" style="border-collapse:collapse;">
-                                              <a href="${process.env.PORXY_URL}/verify-email/${req.body.emailToken}" className="buttonText" href="#" target="_blank" style="color: #4A90E2;text-decoration: none;font-weight: normal;display: block;border: 2px solid #585858;padding: 10px 80px;font-family: Arial;">Verify</a>
+                                              <a href="${process.env.PORXY_URL}/verify-email/${req.body.emailToken}" class="buttonText" href="#" target="_blank" style="color: #4A90E2;text-decoration: none;font-weight: normal;display: block;border: 2px solid #585858;padding: 10px 80px;font-family: Arial;">Verify</a>
                                             </td>
                                           </tr>
                                         </tbody>
@@ -500,7 +499,7 @@ function mailOptions(req, process) {
                           <!-- // Begin Support Section \\ -->
                           <table border="0" cellpadding="10" cellspacing="0" width="450" id="supportSection" style="background-color:white;font-family:arial;font-size:12px;border-top:1px solid #e4e4e4;">
                             <tr>
-                              <td valign="top" className="supportContent" style="border-collapse:collapse;background-color:white;font-family:arial;font-size:12px;border-top:1px solid #e4e4e4;">
+                              <td valign="top" class="supportContent" style="border-collapse:collapse;background-color:white;font-family:arial;font-size:12px;border-top:1px solid #e4e4e4;">
                                 <!-- // Begin Module: Standard Footer \\ -->
                                 <table border="0" cellpadding="10" cellspacing="0" width="100%">
                                   <tr>

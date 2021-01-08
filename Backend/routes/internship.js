@@ -271,7 +271,7 @@ router.post('/apply', (req, res, next) => {
                     return next({ status: 404, message: 'User Not Found' })
                 }
                 let isApplied = user.applications.includes(internship._id);
-                if (user.role === "Student" && !isApplied) {
+                if (user.role === "Student" && !isApplied && !(user._id.equals(internship.faculty))) {
                     let application = await db.Application.create(req.body);
                     await user.applications.push(internship);
                     await internship.applications.push(application);
@@ -297,7 +297,8 @@ router.post('/mailapplicants', (req, res, next) => {
             if (!user) {
                 return next({ status: 404, message: 'User Not Found' })
             }
-            if (!["Faculty", "Council", "Alumni"].includes(user.role)) {
+            if (!(["Faculty", "Council", "Alumni"].includes(user.role))) {
+                console.log(user.role);
                 return next({ status: 405, message: 'You are not allowed to send Mails' })
             }
             try {
@@ -316,7 +317,7 @@ router.post('/mailapplicants', (req, res, next) => {
 })
 
 router.put('/recruited/:id', async (req, res, next) => {
-    console.log(req.body);
+    // console.log(req.vod)
     try {
         let user = await db.User.findById(req.body.userId);
         let internship = await db.InternshipDetails.findById(req.params.id);
