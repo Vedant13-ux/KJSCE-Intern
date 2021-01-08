@@ -278,6 +278,7 @@ router.post('/apply', (req, res, next) => {
                     await internship.applicants.push(user);
                     await user.save();
                     await internship.save();
+                    res.send("applied")
                 } else {
                     return next({ status: 405, message: 'Action is Not Permitted' });
                 }
