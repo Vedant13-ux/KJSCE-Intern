@@ -5,12 +5,14 @@ import { MessagesPanel } from './MessagesPanel';
 import socketClient from "socket.io-client";
 const SERVER = "http://localhost:3001";
 export default class Chat extends React.Component {
-
-    state = {
-        channels: null,
-        socket: null,
-        channel: null
+    constructor(props){
+        this.state= {
+            channels: null,
+            socket: null,
+            channel: null
+        }
     }
+    
     socket;
     componentDidMount() {
         this.loadChannels();

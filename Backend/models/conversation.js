@@ -1,6 +1,12 @@
 const mongoose=require('mongoose');
 const convSchema=new mongoose.Schema({
-    between:String,
+    to:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    },
+    unread:{
+        type:String
+    },
     messages:[
         {
             type:mongoose.Schema.Types.ObjectId,
