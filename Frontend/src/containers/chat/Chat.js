@@ -3,9 +3,12 @@ import { ChannelList } from './ChannelList';
 // import './chat.scss';
 import { MessagesPanel } from './MessagesPanel';
 import socketClient from "socket.io-client";
+import {apiCall} from '../../services/api'
 const SERVER = "http://localhost:3001";
+
 export default class Chat extends React.Component {
     constructor(props){
+        super(props)
         this.state= {
             channels: null,
             socket: null,
@@ -54,10 +57,12 @@ export default class Chat extends React.Component {
     }
 
     loadChannels = async () => {
-        // fetch('http://localhost:8080/getChannels').then(async response => {
-        //     let data = await response.json();
-        //     this.setState({ channels: data.channels });
-        // })
+        apiCall("get", "/api/user/getConversation/",{list:this.props.currentUser.user.conversations})
+            .then((data) => {
+                console.log(data);
+                // this.setState({ skills: data });
+            })
+            .catch((err) => console.log(err));
     }
 
     handleChannelSelect = id => {
