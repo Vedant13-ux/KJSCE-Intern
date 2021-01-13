@@ -18,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 // Database
 require('./models/index');
+require('./Chat')(io);
 // require('./seedDB')();
 // ROutes
 
