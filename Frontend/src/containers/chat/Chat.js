@@ -53,7 +53,7 @@ export default class Chat extends React.Component {
     }
 
     loadConversations = async () => {
-        apiCall("get", "/api/user/getConversation/",{list:this.props.currentUser.user.conversations})
+        apiCall("put", "/api/getConversations/",{list:this.props.currentUser.user.conversations})
             .then((data) => {
                 console.log(data);
                 this.setState({ conversations: data.list });

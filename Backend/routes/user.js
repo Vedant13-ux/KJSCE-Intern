@@ -526,23 +526,23 @@ router.get('/suggestUsers/:name', (req, res, next) => {
     }
 })
 
-router.get('/user/getConversations', (req, res, next) => {
-    console.log("aya")
-    // let array=[]
-    // req.body.list.forEach((e)=>{
-    //     try{
-    //         // db.Conversation.findById(e).populate({path:'users', select:'fname lname email _id photo'})
-    //         //     .then((data) => {
-    //         //         array.push(data)
-    //         //     }).catch((err) => {
-    //         //         next(err);
-    //         //     });
-    //     }
-    //     catch(err){
-    //         next(err);
-    //     }
-    // })
-    // res.status(200).send({list:array});
+router.put('/getConversations', (req, res, next) => {
+    console.log("aya",req.body.list)
+    let array=[]
+    req.body.list.forEach((e)=>{
+        try{
+            db.Conversation.findById(e).populate({path:'users', select:'fname lname email _id photo'})
+                .then((data) => {
+                    array.push(data)
+                }).catch((err) => {
+                    next(err);
+                });
+        }
+        catch(err){
+            next(err);
+        }
+    })
+    res.status(200).send({list:array});
 })
 
 module.exports = router;
