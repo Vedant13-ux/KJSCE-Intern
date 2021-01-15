@@ -5,7 +5,7 @@ const { populate } = require('../models/user');
 
 // Getting Posts
 router.get('/posts/getAll', (req, res, next) => {
-    db.Post.find().populate('author').populate({ path: 'comments', populate: { path: 'author' } }).sort({created : 1}).limit(10).exec()
+    db.Post.find().populate('author').populate({ path: 'comments', populate: { path: 'author' } }).sort({ created: 1 }).limit(10).exec()
 
         .then(posts => {
             res.status(200).send(posts);
@@ -92,9 +92,12 @@ router.post('/posts/like/:id', (req, res, next) => {
             }
             try {
                 let user = await db.User.findById(req.body.id);
-                if (post.likedBy.findIndex((u) => u == req.body.id) == -1) {
+                if (post.likedBy.findIndex((u) => u == req.body.id) == -1 && user) {
                     await post.likedBy.push(user);
-                    return res.status(200).send(await post.save());
+                    await user.liked.push(post);
+                    await post.save()
+                    await user.save();
+                    return res.status(200).send('Liked Post');
                 }
                 return next({
                     status: 403,
@@ -120,9 +123,12 @@ router.put('/posts/like/:id', (req, res, next) => {
                 let to_remove = post.likedBy.findIndex((u) => {
                     return u == req.body.id;
                 });
-                if (to_remove !== -1) {
-                    await post.likedBy.splice(to_remove, 1)
-                    return res.status(200).send(await post.save());
+                if (to_remove !== -1 && user) {
+                    await post.likedBy.splice(to_remove, 1);
+                    user.liked = await user.liked.filter(p => p == req.body.id);
+                    await user.save();
+                    await post.save();
+                    return res.status(200).send('Unliked Post');
                 }
 
                 return next({
@@ -162,19 +168,28 @@ router.post('/posts/comments/:id', (req, res, next) => {
             }
             try {
                 let user = await db.User.findById(req.body.id);
-                commentBody = {
-                    author: user,
-                    text: req.body.text
+                if (user) {
+                    commentBody = {
+                        author: user,
+                        text: req.body.text
+                    }
+                    db.Comment.create(commentBody)
+                        .then(async (comment) => {
+                            await post.comments.push(comment);
+                            await post.save();
+                            await user.commented.push(post);
+                            await user.save();
+                            res.status(200).send(comment);
+                            return;
+                        }).catch((err) => {
+                            return next(err);
+                        });
+                } else {
+                    return next({
+                        status: 404,
+                        message: 'User Not Found'
+                    })
                 }
-                db.Comment.create(commentBody)
-                    .then(async (comment) => {
-                        await post.comments.push(comment);
-                        await post.save();
-                        res.status(200).send(comment);
-                        return;
-                    }).catch((err) => {
-                        return next(err);
-                    });
             } catch (err) { next(err) }
 
         })
@@ -214,9 +229,11 @@ router.delete('/posts/comments/delete/:postId/:cmntId', (req, res, next) => {
                         })
                     }
                     const toRemove = post.comments.findIndex(cmnt => cmnt == req.params.cmntId);
-                    if (toRemove != -1) {
+                    if (toRemove != -1 && user) {
                         await post.comments.splice(toRemove, 1);
                         await post.save();
+                        user.commented = user.commented.filter(p => JSON.stringify(p._id) == JSON.stringify(post._id));
+                        await user.save();
                         return res.send(posts.comments);
                     }
 
