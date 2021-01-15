@@ -526,4 +526,26 @@ router.get('/suggestUsers/:name', (req, res, next) => {
     }
 })
 
+router.put('/getConversations', (req, res, next) => {
+    console.log("aya",req.body.list)
+    let array=[]
+    let times=0
+    req.body.list.forEach((e)=>{
+        try{
+            db.Conversation.findById(e).populate({path:'users', select:'fname lname email _id photo'}).then(data=>{
+                array.push(data)
+                if (times===req.body.list.length){
+                    console.log(array)
+                    res.status(200).send({list:array});
+                }
+            })
+            .catch(e=>console.log((e)))
+        }
+        catch(err){
+            next(err);
+        }
+        times++;
+    })
+})
+
 module.exports = router;

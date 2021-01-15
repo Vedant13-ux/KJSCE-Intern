@@ -5,11 +5,7 @@ const messageSchema=new mongoose.Schema({
         type:Date,
         default:Date.now()
     },
-    from:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'User'
-    },
-    to:{
+    author:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     },

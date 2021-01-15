@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import Internshipform from '../Homepage/Internshipform'
 import FilterForm from '../Homepage/FilterForm'
-import ApplyForm from '../InternshipDetails/ApplyForm';
 
 export function InternshipCreate(props) {
   const [show, setShow] = useState(false);
@@ -45,36 +44,4 @@ export function FilterInternships() {
       </Modal>
     </div>
   )
-}
-
-export function ApplyInternship(props) {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  if (!props.applied) {
-    return (
-      <div>
-        <div className="applynow">
-          <button type="button" className="btn btn-lg btn-default" onClick={handleShow}>
-            Apply Now
-          </button>
-        </div>
-        <Modal show={show} onHide={handleClose} centered backdrop="static">
-          <Modal.Header closeButton>
-            <Modal.Title>Application</Modal.Title>
-          </Modal.Header>
-          <Modal.Body><ApplyForm onApply={props.onApply} onHide={handleClose} duration={props.duration} user={props.user} internship={props.internship} applied={props.applied}></ApplyForm></Modal.Body>
-        </Modal>
-      </div>
-    )
-  } else {
-    return (
-      <div className="applynow">
-        <button type="button" className="btn btn-lg btn-default" disabled>
-          Applied
-        </button>
-      </div>
-    )
-  }
 }

@@ -9,7 +9,7 @@ export function setToken(token) {
         delete axios.defaults.headers.common["Authorization"];
     }
 }
-// axios.defaults.baseURL = "https://kjsce-connect-backend.herokuapp.com";
+
 export function apiCall(method, path, data) {
     return new Promise((resolve, reject) => {
         return axios[method](path, data)
