@@ -35,7 +35,7 @@ class Main extends React.Component {
                 <Switch>
                     <Route exact path="/" render={props => <Landing {...props} currentUser={currentUser} />} />
                     <Route exact path="/home" render={props => <Homepage {...props} currentUser={currentUser} />} />
-                    <Route exact path="/message" render={props => <Chat {...props} currentUser={currentUser} />} />
+                    <Route exact path="/messaging" render={props => <Chat {...props} currentUser={currentUser} />} />
                     <Route exact path="/internship/:id" render={props => <IntershipDetail key={props.match.params.id} {...props} currentUser={currentUser} />} />
                     <Route exact path="/community" render={props => <Community {...props} currentUser={currentUser} />} />
                     <Route exact path="/post/:id" render={props => <Post key={props.match.params.id} {...props} currentUser={currentUser} />} />

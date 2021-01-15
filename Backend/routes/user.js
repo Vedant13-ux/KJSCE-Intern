@@ -527,39 +527,22 @@ router.get('/suggestUsers/:name', (req, res, next) => {
 })
 
 router.get('/user/getConversations', (req, res, next) => {
-    let array=[]
-    req.body.list.forEach((e)=>{
-        try{
-            db.Conversation.findById(e).populate({path:'users',select:"fname lname email photo"})
-                .then((data) => {
-                    array.push(data)
-                }).catch((err) => {
-                    next(err);
-                });
-        }
-        catch(err){
-            next(err);
-        }
-    })
-    res.status(200).send({list:array});
-})
-
-router.get('/user/getMessages', (req, res, next) => {
-    let array=[]
-    req.body.list.forEach((e)=>{
-        try{
-            db.Message.findById(e).populate({path:'author',select:"fname lname email photo"})
-                .then((data) => {
-                    array.push(data)
-                }).catch((err) => {
-                    next(err);
-                });
-        }
-        catch(err){
-            next(err);
-        }
-    })
-    res.status(200).send({list:array});
+    console.log("aya")
+    // let array=[]
+    // req.body.list.forEach((e)=>{
+    //     try{
+    //         // db.Conversation.findById(e).populate({path:'users', select:'fname lname email _id photo'})
+    //         //     .then((data) => {
+    //         //         array.push(data)
+    //         //     }).catch((err) => {
+    //         //         next(err);
+    //         //     });
+    //     }
+    //     catch(err){
+    //         next(err);
+    //     }
+    // })
+    // res.status(200).send({list:array});
 })
 
 module.exports = router;
