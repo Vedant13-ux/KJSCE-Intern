@@ -527,7 +527,6 @@ router.get('/suggestUsers/:name', (req, res, next) => {
 })
 
 router.put('/getConversations', (req, res, next) => {
-    console.log("aya",req.body.list)
     let array=[]
     req.body.list.forEach((e)=>{
         try{
