@@ -8,7 +8,7 @@
     background: #fff;
   }
   
-  .chat ul {
+  .chat-container ul {
     margin: 0px;
     padding: 0px;
     list-style: none;
@@ -69,11 +69,6 @@
     text-align: left;
   }
   
-  .chat {
-    border-radius: 30px;
-    padding: 20px;
-    background: #f5f7fa;
-  }
   
   .chat-container {
     height: 400px;
@@ -81,7 +76,7 @@
     padding-right: 16px;
   }
   
-  .spinme-right {
+  /* .spinme-right {
     display: inline-block;
     padding: 15px 20px;
     font-size: 14px;
@@ -100,7 +95,7 @@
     line-height: 1.25em;
     font-weight: 100;
     opacity: 0.2;
-  }
+  } */
 /*   
   .spinner {
     margin: 0;

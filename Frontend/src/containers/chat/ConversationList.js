@@ -1,10 +1,16 @@
 import React from 'react';
-import { Channel } from './Channel';
 
 function ConversationList(props){
     let list = <div className="no-content-message">no conversations</div>;
     if (props.conversations.length!==0) {
-        list = props.conversations.map(c => <Channel key={c.id} id={c.id} name={c.name} participants={c.participants} onClick={()=>props.onSelectChannel(c.id)} />);
+        list = props.conversations.map(c => {
+            <div className='channel-item' onClick={() => {
+                c.onClick(c.id);
+            }}>
+                <div>{c.name}</div>
+                <span>{c.participants}</span>
+            </div>
+        });
     }
     return (
         <div className='channel-list'>
