@@ -170,7 +170,7 @@ class Basic extends Component {
 
   render() {
     const { title, provider, date, link } = this.state.certform;
-    const { rollNo, year, workingAt, passedOut, facultyId, dept, position } = this.state.info;
+    const { rollNo, year, workingAt, passedOut, dept, position } = this.state.info;
     return (
       <div className="col-md-4">
         <div className="panel">
