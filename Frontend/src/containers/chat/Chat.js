@@ -10,7 +10,7 @@ export default class Chat extends React.Component {
     constructor(props){
         super(props)
         this.state= {
-            conversations: null,
+            conversations: [],
             socket: null,
             conversation: null
         }
