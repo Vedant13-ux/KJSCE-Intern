@@ -2,8 +2,9 @@ import React from "react";
 
 export class MessagesPanel extends React.Component {
   constructor(props){
-    this.state = { input_value: "" };
     super(props)
+    this.state = { input_value: "" };
+    
   }
   
   send = () => {
@@ -21,10 +22,8 @@ export class MessagesPanel extends React.Component {
     let list = <div>no messages</div>;
     if (this.props.conversation.messages.length!==0) {
       list = this.props.conversation.messages.map((m) => {
-        <li class={m.author._id===this.props.myId?'message-right':'message-left'} hidden>
-          <div class='messageinner-" + obj.name + "' hidden>
+        return <li class={m.author._id===this.props.myId?'message-right':'message-left'} hidden>
             <span class="message-text">m.text</span>
-          </div>
         </li>;
       });
     }
