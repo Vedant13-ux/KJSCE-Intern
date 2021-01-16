@@ -55,12 +55,12 @@ class Basic extends Component {
     if (commentedIndex < commented.length) {
       console.log('Commented ma aaya');
       console.log(commented.splice(0, commentedIndex), commentedIndex);
-      commented.splice(0, commentedIndex)
+      commented.splice( commentedIndex+1,commented.length)
       activity = activity.concat(commented);
     } else if (likedIndex < liked.length) {
       console.log('Liked ma aaya');
-      console.log(liked.splice(0, commentedIndex), commentedIndex);
-      liked.splice(0, likedIndex);
+      console.log(liked.splice(0, likedIndex), likedIndex);
+      liked.splice( likedIndex+1,liked.length);
       activity = activity.concat(liked);
     }
     console.log(activity);
