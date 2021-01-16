@@ -38,7 +38,7 @@ class Basic extends Component {
     })
     console.log(liked, commented);
 
-    while (likedIndex < liked.length && commentedIndex < commented.length) {
+    while (likedIndex <= liked.length && commentedIndex <= commented.length) {
       if (liked[likedIndex].created > commented[commentedIndex].created) {
         activity.push(liked[likedIndex]);
         console.log('LikedIndex : ' + likedIndex);
@@ -48,7 +48,7 @@ class Basic extends Component {
         activity.push(commented[commentedIndex]);
         commentedIndex++;
         console.log('CommentedIndex : ' + commentedIndex);
-      }
+      } 
     }
     if (likedIndex === liked.length && commentedIndex < commented.length) {
       activity.concat(commented.splice(0, commentedIndex));
