@@ -17,19 +17,3 @@ function chat(io){
     // });
 }
 module.exports =chat
-
-// let array=[]
-//     req.body.list.forEach((e)=>{
-//         try{
-//             db.Message.findById(e).populate({path:'author',select:"fname lname email photo"})
-//                 .then((data) => {
-//                     array.push(data)
-//                 }).catch((err) => {
-//                     next(err);
-//                 });
-//         }
-//         catch(err){
-//             next(err);
-//         }
-//     })
-//     res.status(200).send({list:array});

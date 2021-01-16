@@ -1,10 +1,14 @@
 import React from "react";
 
 export class MessagesPanel extends React.Component {
-  state = { input_value: "" };
+  constructor(props){
+    this.state = { input_value: "" };
+    super(props)
+  }
+  
   send = () => {
     if (this.state.input_value && this.state.input_value !== "") {
-      this.props.onSendMessage(this.props.channel.id, this.state.input_value);
+      this.props.onSendMessage(this.state.input_value);
       this.setState({ input_value: "" });
     }
   };
@@ -14,25 +18,23 @@ export class MessagesPanel extends React.Component {
   };
 
   render() {
-    let list = (
-      <div></div>
-    );
-    if (this.props.channel && this.props.channel.messages) {
-      list = this.props.channel.messages.map((m) => {
-        <div className="message-item">
-          <div>
-            <b>{m.senderName}</b>
+    let list = <div>no messages</div>;
+    if (this.props.conversation.messages.length!==0) {
+      list = this.props.conversation.messages.map((m) => {
+        <li class={m.author._id===this.props.myId?'message-right':'message-left'} hidden>
+          <div class='messageinner-" + obj.name + "' hidden>
+            <span class="message-text">m.text</span>
           </div>
-          <span>{m.text}</span>
-        </div>;
+        </li>;
       });
     }
     return (
+      <div className="messages-panel">
       <div className="chat-container">
         <div className="chat-listcontainer">
           <ul class="chat-message-list">{list}</ul>
         </div>
-        {this.props.channel && (
+        {this.props.conversation && (
           <div className="messages-input">
             <input
               type="text"
@@ -42,7 +44,7 @@ export class MessagesPanel extends React.Component {
             <button onClick={this.send}>Send</button>
           </div>
         )}
-      </div>
+      </div></div>
     );
   }
 }

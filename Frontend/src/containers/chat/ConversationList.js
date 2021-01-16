@@ -5,7 +5,7 @@ function ConversationList(props){
     if (props.conversations.length!==0) {
         list = props.conversations.map(c => {
             <div className='channel-item' onClick={() => {
-                c.onClick(c.id);
+                props.onSelectChannel(c._id);
             }}>
                 <div>{c.name}</div>
                 <span>{c.participants}</span>

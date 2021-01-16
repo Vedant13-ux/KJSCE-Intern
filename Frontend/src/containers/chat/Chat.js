@@ -70,8 +70,8 @@ export default class Chat extends React.Component {
         // });
     }
 
-    handleSendMessage = (channel_id, text) => {
-        // this.socket.emit('send-message', { channel_id, text, senderName: this.socket.id, id: Date.now() });
+    handleSendMessage = (text) => {
+        this.socket.emit('send-message', { convoId:this.state.conversation._id,message:{ text, author:this.props.currentUser.user} });
     }
 
     render() {
@@ -79,7 +79,7 @@ export default class Chat extends React.Component {
         return (
             <div id='wrapper'>
                 <ConversationList conversations={this.state.conversations} onSelectChannel={this.handleChannelSelect} />
-                <MessagesPanel onSendMessage={this.handleSendMessage} channel={this.state.channel} />
+                <MessagesPanel onSendMessage={this.handleSendMessage} conversation={this.state.conversation} myId={this.props.currentUser.user._id} />
             </div>
         );
     }
