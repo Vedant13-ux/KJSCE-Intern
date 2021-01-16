@@ -1,16 +1,16 @@
-const mongoose=require('mongoose');
-const convSchema=new mongoose.Schema({
-    users:[
+const mongoose = require('mongoose');
+const convSchema = new mongoose.Schema({
+    users: [
         {
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'User'
-    }
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
     ],
-    messages:[
+    messages: [
         {
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'Message'
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Message'
         }
     ]
 });
-module.exports=mongoose.model('Conversation',convSchema)
+module.exports = mongoose.model('Conversation', convSchema)

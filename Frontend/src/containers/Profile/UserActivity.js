@@ -26,9 +26,36 @@ class Basic extends Component {
     this.handleSwitch = this.handleSwitch.bind(this);
   }
   componentWillMount() {
-    let content = window.location.href.split("#")[1];
-    if (content === undefined) return;
-    return this.setState({ content: content });
+    const activity = [];
+    const { liked, commented } = this.props.user;
+    var likedIndex = 0;
+    var commentedIndex = 0;
+    liked.forEach(p => {
+      p.created = new Date(p.created);
+    })
+    commented.forEach(p => {
+      p.created = new Date(p.created);
+    })
+    console.log(liked, commented);
+
+    while (likedIndex < liked.length && commentedIndex < commented.length) {
+      if (liked[likedIndex].created > commented[commentedIndex].created) {
+        activity.push(liked[likedIndex]);
+        console.log('LikedIndex : ' + likedIndex);
+        likedIndex++;
+      }
+      else if (liked[likedIndex].created < commented[commentedIndex].created) {
+        activity.push(commented[commentedIndex]);
+        commentedIndex++;
+        console.log('CommentedIndex : ' + commentedIndex);
+      }
+    }
+    if (likedIndex === liked.length && commentedIndex < commented.length) {
+      activity.concat(commented.splice(0, commentedIndex));
+    } else if (commentedIndex === commented.length && likedIndex < liked.length) {
+      activity.concat(liked.splice(0, likedIndex));
+    }
+    console.log(activity);
   }
 
   handleSwitch(e) {
@@ -62,7 +89,7 @@ class Basic extends Component {
                     <h6>{e.description}</h6>
                     <Link to={"/internship/" + e._id}>
                       see internship
-          </Link>
+                    </Link>
                   </p>
                 </div>
               );
@@ -188,4 +215,4 @@ class Basic extends Component {
   }
 }
 
-export default connect(() => { }, { addPost})(Basic);
+export default connect(() => { }, { addPost })(Basic);

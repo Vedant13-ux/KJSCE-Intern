@@ -94,7 +94,10 @@ router.post('/posts/like/:id', (req, res, next) => {
                 let user = await db.User.findById(req.body.id);
                 if (post.likedBy.findIndex((u) => u == req.body.id) == -1 && user) {
                     await post.likedBy.push(user);
-                    await user.liked.push(post);
+                    let activity = {
+                        post: post._id,
+                    }
+                    await user.liked.push(activity);
                     await post.save()
                     await user.save();
                     return res.status(200).send('Liked Post');
@@ -125,7 +128,7 @@ router.put('/posts/like/:id', (req, res, next) => {
                 });
                 if (to_remove !== -1 && user) {
                     await post.likedBy.splice(to_remove, 1);
-                    user.liked = await user.liked.filter(p => p == req.body.id);
+                    user.liked = await user.liked.filter(p => p.post != req.params.id);
                     await user.save();
                     await post.save();
                     return res.status(200).send('Unliked Post');
@@ -177,7 +180,10 @@ router.post('/posts/comments/:id', (req, res, next) => {
                         .then(async (comment) => {
                             await post.comments.push(comment);
                             await post.save();
-                            await user.commented.push(post);
+                            let activity = {
+                                post: post._id,
+                            }
+                            await user.commented.push(activity);
                             await user.save();
                             res.status(200).send(comment);
                             return;
