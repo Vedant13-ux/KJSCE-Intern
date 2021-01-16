@@ -90,14 +90,26 @@ const userScehma = new mongoose.Schema({
 	],
 	liked: [
 		{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Post'
+			post: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Post',
+			},
+			created: {
+				type: Date,
+				default: Date.now()
+			}
 		}
 	],
 	commented: [
 		{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Post'
+			post: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Post',
+			},
+			created: {
+				type: Date,
+				default: Date.now()
+			}
 		}
 	],
 	certificates: [
@@ -106,10 +118,10 @@ const userScehma = new mongoose.Schema({
 			ref: 'Certificate'
 		}
 	],
-	achievements:[
+	achievements: [
 		{
-			type:mongoose.Schema.Types.ObjectId,
-			ref:'Achievement'
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Achievement'
 		}
 	],
 	experiences: [

@@ -7,6 +7,7 @@ const socket = require('socket.io');
 const server = app.listen(process.env.PORT || 3001, process.env.IP, () => {
     console.log('Server Listening on Port 3001');
 });
+var http = require('http').createServer(app);
 const io = socket(server);
 const errorHandler = require('./handlers/errorHandler');
 require('dotenv').config();

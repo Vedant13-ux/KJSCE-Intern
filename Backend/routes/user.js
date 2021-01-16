@@ -31,7 +31,7 @@ function escapeRegex(text) {
 }
 // Get user by id
 router.get('/user/:id', (req, res, next) => {
-    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('events').populate('applications').populate('posts').populate('certificates').populate('experiences').populate('projects').populate('achievements').populate({path:"internshipsOffered",populate:{path:'applicants', select:'fname lname email _id photo'}}).populate({path:"internshipsOffered",populate:{path:'recruited', select:'fname lname email _id photo'}}).populate({ path: 'members', populate: { path: 'member', select: 'fname lname _id email photo' } }).populate({ path: 'commented', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } }).populate({ path: 'liked', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } }).exec()
+    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('events').populate('applications').populate('posts').populate('certificates').populate('experiences').populate('projects').populate('achievements').populate({ path: "internshipsOffered", populate: { path: 'applicants', select: 'fname lname email _id photo' } }).populate({ path: "internshipsOffered", populate: { path: 'recruited', select: 'fname lname email _id photo' } }).populate({ path: 'members', populate: { path: 'member', select: 'fname lname _id email photo' } }).populate({ path: 'commented', populate: { path: 'post', select: '_id image author', populate: { path: 'author', select: ' fname lname email' } } }).populate({ path: 'liked', populate: { path: 'post', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } } }).exec()
         .then((user) => {
             user.password = ''
             res.status(200).send(user);
@@ -509,7 +509,7 @@ router.get('/suggestUsers/:name', (req, res, next) => {
     const nameArr = req.params.name.split(' ');
     const fname = RegExp(escapeRegex(nameArr[0]), 'gi');
     if (nameArr.length === 1) {
-        db.User.find({ fname: fname}, 'fname lname photo email')
+        db.User.find({ fname: fname }, 'fname lname photo email')
             .then((users) => {
                 res.send(users);
             }).catch((err) => {
@@ -517,7 +517,7 @@ router.get('/suggestUsers/:name', (req, res, next) => {
             });
     } else {
         const lname = RegExp(escapeRegex(nameArr[1]), 'gi');
-        db.User.find({ fname: fname, lname: lname}, 'fname lname photo email')
+        db.User.find({ fname: fname, lname: lname }, 'fname lname photo email')
             .then((users) => {
                 res.send(users);
             }).catch((err) => {
@@ -527,21 +527,21 @@ router.get('/suggestUsers/:name', (req, res, next) => {
 })
 
 router.put('/getConversations', (req, res, next) => {
-    console.log("aya",req.body.list)
-    let array=[]
-    let times=0
-    req.body.list.forEach((e)=>{
-        try{
-            db.Conversation.findById(e).populate({path:'users', select:'fname lname email _id photo'}).then(data=>{
+    console.log("aya", req.body.list)
+    let array = []
+    let times = 0
+    req.body.list.forEach((e) => {
+        try {
+            db.Conversation.findById(e).populate({ path: 'users', select: 'fname lname email _id photo' }).then(data => {
                 array.push(data)
-                if (times===req.body.list.length){
+                if (times === req.body.list.length) {
                     console.log(array)
-                    res.status(200).send({list:array});
+                    res.status(200).send({ list: array });
                 }
             })
-            .catch(e=>console.log((e)))
+                .catch(e => console.log((e)))
         }
-        catch(err){
+        catch (err) {
             next(err);
         }
         times++;
