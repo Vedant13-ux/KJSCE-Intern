@@ -22,11 +22,12 @@ class Basic extends Component {
       content: ["Faculty", "Student", "Alumni"].includes(this.props.user.role) ? "experiences" : "events",
       posts: this.props.user.posts,
       start: false,
+      activity: []
     };
     this.handleSwitch = this.handleSwitch.bind(this);
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     var activity = [];
     const { liked, commented } = this.props.user;
     var likedIndex = liked.length - 1;
@@ -63,6 +64,7 @@ class Basic extends Component {
       activity = activity.concat(liked);
     }
     console.log(activity);
+    await this.setState({ activity });
   }
 
 
@@ -131,7 +133,7 @@ class Basic extends Component {
         );
         break;
       case "activity":
-        display = <Activity />
+        display = <Activity activity={this.state.activity} />
         break;
       default:
         break;

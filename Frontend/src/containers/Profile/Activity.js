@@ -5,17 +5,24 @@ class Activity extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activity: []
+            activity: this.props.activity
         }
 
     }
     render() {
-        if (this.state.activity.length === 0)
+        if (this.props.activity.length === 0)
             return (
-                <div id="experinece">
+                <div id="experience">
                     <NoActivity></NoActivity>
                 </div>
             )
+        else{
+            return (
+                <div id="experience">
+                        
+                </div>
+            )
+        }
     }
 }
 
