@@ -3,7 +3,7 @@ const messageSchema=new mongoose.Schema({
     text:String,
     created:{
         type:Date,
-        default:Date.now()
+        default:Date.now
     },
     author:{
         type:mongoose.Schema.Types.ObjectId,

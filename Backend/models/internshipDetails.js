@@ -12,7 +12,7 @@ const internshipDetailsSchema = new mongoose.Schema({
   applyBy: Date,
   posted_on: {
     type: Date,
-    default: Date.now()
+    default: Date.now
   },
   numberOpenings: Number,
   otherRequirements: String,

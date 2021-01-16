@@ -34,7 +34,7 @@ const userScehma = new mongoose.Schema({
 	},
 	created: {
 		type: Date,
-		default: Date.now()
+		default: Date.now
 	},
 	bookmarks: [
 		{
@@ -96,7 +96,7 @@ const userScehma = new mongoose.Schema({
 			},
 			created: {
 				type: Date,
-				default: Date.now()
+				default: Date.now
 			}
 		}
 	],
@@ -108,7 +108,7 @@ const userScehma = new mongoose.Schema({
 			},
 			created: {
 				type: Date,
-				default: Date.now()
+				default: Date.now
 			}
 		}
 	],

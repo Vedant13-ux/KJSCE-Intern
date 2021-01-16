@@ -9,7 +9,7 @@ const commentSchema = new mongoose.Schema({
 	},
 	created: {
 		type: Date,
-		default: Date.now()
+		default: Date.now
 	},
 	liked_by: [
 		{
