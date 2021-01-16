@@ -26,15 +26,17 @@ class Basic extends Component {
     this.handleSwitch = this.handleSwitch.bind(this);
   }
   componentWillMount() {
-    const activity = [];
+    var activity = [];
     const { liked, commented } = this.props.user;
     var likedIndex = 0;
     var commentedIndex = 0;
     liked.forEach(p => {
       p.created = new Date(p.created);
+      p.type = 'Liked';
     })
     commented.forEach(p => {
       p.created = new Date(p.created);
+      p.type = 'Commented';
     })
     console.log(liked, commented);
 
@@ -48,12 +50,18 @@ class Basic extends Component {
         activity.push(commented[commentedIndex]);
         commentedIndex++;
         console.log('CommentedIndex : ' + commentedIndex);
-      } 
+      }
     }
-    if (likedIndex === liked.length && commentedIndex < commented.length) {
-      activity.concat(commented.splice(0, commentedIndex));
-    } else if (commentedIndex === commented.length && likedIndex < liked.length) {
-      activity.concat(liked.splice(0, likedIndex));
+    if (commentedIndex < commented.length) {
+      console.log('Commented ma aaya');
+      console.log(commented.splice(0, commentedIndex), commentedIndex);
+      commented.splice(0, commentedIndex)
+      activity = activity.concat(commented);
+    } else if (likedIndex < liked.length) {
+      console.log('Liked ma aaya');
+      console.log(liked.splice(0, likedIndex), likedIndex);
+      liked.splice(0, likedIndex);
+      activity = activity.concat(liked);
     }
     console.log(activity);
   }
