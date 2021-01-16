@@ -38,8 +38,8 @@ class Basic extends Component {
     })
     console.log(liked, commented);
 
-    while (likedIndex <= liked.length && commentedIndex <= commented.length) {
-      if (liked[likedIndex].created > commented[commentedIndex].created) {
+    while (likedIndex < liked.length && commentedIndex < commented.length) {
+      if (liked[likedIndex].created >= commented[commentedIndex].created) {
         activity.push(liked[likedIndex]);
         console.log('LikedIndex : ' + likedIndex);
         likedIndex++;
