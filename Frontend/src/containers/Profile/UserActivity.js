@@ -51,7 +51,7 @@ class Basic extends Component {
         commentedIndex--;
         console.log('CommentedIndex : ' + commentedIndex);
       }
-    }
+    } 
     if (commentedIndex > -1) {
       console.log('Commented ma aaya');
       console.log(commented.splice(0, commentedIndex), commentedIndex);
