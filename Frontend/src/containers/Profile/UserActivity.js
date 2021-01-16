@@ -25,11 +25,12 @@ class Basic extends Component {
     };
     this.handleSwitch = this.handleSwitch.bind(this);
   }
+
   componentWillMount() {
     var activity = [];
     const { liked, commented } = this.props.user;
-    var likedIndex = 0;
-    var commentedIndex = 0;
+    var likedIndex = liked.length - 1;
+    var commentedIndex = commented.length - 1;
     liked.forEach(p => {
       p.created = new Date(p.created);
       p.type = 'Liked';
@@ -40,31 +41,30 @@ class Basic extends Component {
     })
     console.log(liked, commented);
 
-    while (likedIndex < liked.length && commentedIndex < commented.length) {
+    while (likedIndex > -1 && commentedIndex > -1) {
       if (liked[likedIndex].created >= commented[commentedIndex].created) {
         activity.push(liked[likedIndex]);
         console.log('LikedIndex : ' + likedIndex);
-        likedIndex++;
+        likedIndex--;
       }
       else if (liked[likedIndex].created < commented[commentedIndex].created) {
         activity.push(commented[commentedIndex]);
-        commentedIndex++;
+        commentedIndex--;
         console.log('CommentedIndex : ' + commentedIndex);
       }
     }
-    if (commentedIndex < commented.length) {
+    if (commentedIndex > -1) {
       console.log('Commented ma aaya');
-      console.log(commented.splice(0, commentedIndex), commentedIndex);
-      commented.splice( commentedIndex+1,commented.length)
+      commented.splice(commentedIndex + 1, commented.length)
       activity = activity.concat(commented);
-    } else if (likedIndex < liked.length) {
+    } else if (likedIndex > -1) {
       console.log('Liked ma aaya');
-      console.log(liked.splice(0, likedIndex), likedIndex);
-      liked.splice( likedIndex+1,liked.length);
+      liked.splice(likedIndex + 1, liked.length);
       activity = activity.concat(liked);
     }
     console.log(activity);
   }
+
 
   handleSwitch(e) {
     return this.setState({ content: e.target.name });
