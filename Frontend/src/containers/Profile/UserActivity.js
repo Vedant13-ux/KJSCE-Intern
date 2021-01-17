@@ -133,7 +133,7 @@ class Basic extends Component {
         );
         break;
       case "activity":
-        display = <Activity activity={this.state.activity} />
+        display = <Activity activity={this.state.activity} owner={this.props.owner} user={this.props.user} />
         break;
       default:
         break;

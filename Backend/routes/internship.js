@@ -93,21 +93,25 @@ router.get('/search/skills', async (req, res, next) => {
 });
 
 // Create Internship
-router.post('/details', (req, res, next) => {
+router.post('/details', async (req, res, next) => {
     req.body.duration = parseInt(req.body.duration);
     req.body.numberOpenings = parseInt(req.body.numberOpenings);
-    // req.body.apply = new Date(req.body.apply).setHours(23);
-    // req.body.apply = new Date(req.body.apply).setMinutes(59);
-    // req.body.apply = new Date(req.body.apply).setSeconds(59);
-    // req.body.apply = new Date(req.body.apply).setMilliseconds(59);
-
-
-    db.InternshipDetails.create(req.body)
-        .then((internship) => {
-            res.status(200).send(internship);
-        }).catch((err) => {
-            next(err);
-        });
+    let user = await db.User.findById(req.body.faculty);
+    if (user) {
+        db.InternshipDetails.create(req.body)
+            .then(async (internship) => {
+                await user.internshipsOffered.push(internship);
+                await user.save();
+                res.status(200).send(internship);
+            }).catch((err) => {
+                next(err);
+            });
+    } else {
+        return next({
+            status: 404,
+            message: 'User Not Found'
+        })
+    }
 });
 // Skill Suggestions
 router.get('/skillSuggestion/:skill', (req, res, next) => {
@@ -317,23 +321,41 @@ router.post('/mailapplicants', (req, res, next) => {
 })
 
 router.put('/recruited/:id', async (req, res, next) => {
-    // console.log(req.vod)
+    console.log(req.body)
     try {
-        let user = await db.User.findById(req.body.userId);
-        let internship = await db.InternshipDetails.findById(req.params.id);
-        // req.body.selecteduser
-        if (user._id.equals(internship.faculty) && internship) {
-            await internship.update(req.body.data);
-            internship.recruited = [];
-            await req.body.selecteduser.forEach((userit) => {
-                console.log('ek user', userit)
-                let userrec = db.User.findById(user._id);
-                console.log('aya')
-                internship.recruited.push(userrec)
-                console.log("hua")
+        var user = await db.User.findById(req.body.userId);
+        var internship = await db.InternshipDetails.findById(req.params.id);
+        var times = 0;
+        if (user._id.equals(internship.faculty) && internship && user) {
+            var recruited = [];
+            req.body.selecteduser.forEach(async (userit) => {
+                db.User.findById(userit._id)
+                    .then(async (userrec) => {
+                        if (userrec) {
+                            console.log('aya');
+                            recruited.push(userrec);
+                            console.log("hua");
+                        }
+                        else {
+                            return next({
+                                status: 404,
+                                message: 'Applicant Not Found'
+                            })
+                        }
+
+                        if (times === req.body.selecteduser.length) {
+                            console.log('Hello')
+                            internship.recruited = recruited;
+                            await internship.save();
+                            res.send('changed recruited');
+                        }
+                    }).catch((err) => {
+                        next(err);
+                    });
+                times++;
+
             })
-            await internship.save();
-            res.send('changed recruited');
+
         } else {
             next({
                 status: 403,
