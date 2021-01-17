@@ -534,17 +534,18 @@ router.put('/getConversations', (req, res, next) => {
         try {
             db.Conversation.findById(e).populate({ path: 'users', select: 'fname lname email _id photo' }).then(data => {
                 array.push(data)
-                if (times === req.body.list.length) {
+                console.log("added")
+                if (times === req.body.list.length-1) {
                     console.log(array)
                     res.status(200).send({ list: array });
                 }
-            })
-                .catch(e => console.log((e)))
+                times++;
+            }).catch(e => console.log((e)))
         }
         catch (err) {
             next(err);
         }
-        times++;
+        
     })
 })
 
