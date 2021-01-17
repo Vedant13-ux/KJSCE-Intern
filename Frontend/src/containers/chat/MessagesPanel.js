@@ -20,7 +20,7 @@ export class MessagesPanel extends React.Component {
 
   render() {
     let list = <div>no messages</div>;
-    if (this.props.conversation.messages.length!==0) {
+    if (this.props.conversation && this.props.conversation.messages.length!==0) {
       list = this.props.conversation.messages.map((m) => {
         return <li class={m.author._id===this.props.myId?'message-right':'message-left'} hidden>
             <span class="message-text">m.text</span>

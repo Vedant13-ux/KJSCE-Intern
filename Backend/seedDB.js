@@ -6,7 +6,7 @@ const db = require('./models/index');
 async function seedDB() {
     // data={
     //     users:[
-    //         "5ffdc135e0807d0b5841c581","5fd791a15cec3a4d9374a02e"
+    //         "5fd78c0e0bccef3be8cc08ab","5fd791a15cec3a4d9374a02e"
     //     ],
     //     messages:[]
     // }
