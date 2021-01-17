@@ -66,12 +66,13 @@ export default class Chat extends React.Component {
   };
 
   handleChannelSelect = (id) => {
-    // let channel = this.state.channels.find(c => {
-    //     return c.id === id;
-    // });
-    // this.setState({ channel });
+    let conversation = this.state.conversations.find(c => {
+        return c._id === id;
+    });
     // this.socket.emit('channel-join', id, ack => {
     // });
+    this.setState({ conversation });
+    
   };
 
   handleSendMessage = (text) => {
