@@ -24,6 +24,7 @@ export default class Chat extends React.Component {
 
   configureSocket = () => {
     var socket = socketClient(SERVER);
+    console.log("started socket")
     socket.on("connection", () => {
       console.log("connected to server");
     });
@@ -59,7 +60,6 @@ export default class Chat extends React.Component {
       list: this.props.currentUser.user.conversations,
     })
       .then((data) => {
-        console.log(data);
         this.setState({ conversations: data.list });
       })
       .catch((err) => console.log(err));
