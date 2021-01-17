@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Modal } from "react-bootstrap";
 import { connect } from 'react-redux'
-import { updateExperiences ,deleteExperiences,editExperience} from '../../store/actions/user'
+import { updateExperiences, deleteExperiences, editExperience } from '../../store/actions/user'
 import NoExperience from '../../images/NoExperience'
 
 class Experience extends Component {
@@ -19,26 +19,27 @@ class Experience extends Component {
       this.setState({ show: true, editing: true, editingexp: e });
     };
     this.handleclose = () => {
-      this.setState({ show: false,editingexp:null });
+      this.setState({ show: false, editingexp: null });
     };
     this.handleexpsub = (data) => {
       if (this.state.editing) {
-        data._id=this.state.editingexp._id;
+        data._id = this.state.editingexp._id;
         this.props
-          .editExperience({experience:data})
+          .editExperience({ experience: data })
           .then(() => {
             console.log("experience edited");
             this.handleclose();
           })
           .catch((err) => err);
-        
+
       } else {
-      this.props.updateExperiences(data, this.props.user._id).then(
-        () => {
-          console.log('Experience Added')
-          this.setState({ show: false })
-        }
-      ).catch((err) => err)}
+        this.props.updateExperiences(data, this.props.user._id).then(
+          () => {
+            console.log('Experience Added')
+            this.setState({ show: false })
+          }
+        ).catch((err) => err)
+      }
     };
     this.deleteexp = () => {
       console.log("aya")
@@ -61,15 +62,15 @@ class Experience extends Component {
               <div className="experience-ele">
                 <h4>{e.title}</h4>
                 <sub>{e.type}</sub>{this.props.owner && (
-                    <span
-                      class="deleteproj"
-                      onClick={() => this.handleshow2(e)}
-                    >
-                      <i className="fa fa-edit"></i>
-                    </span>
-                  )}
+                  <span
+                    class="deleteproj"
+                    onClick={() => this.handleshow2(e)}
+                  >
+                    <i className="fa fa-edit"></i>
+                  </span>
+                )}
                 <p>
-                  <h5>{e.company}</h5>
+                  <span style={{ display: 'block' }}>{e.company}</span>
                   {new Date(e.startdate).toDateString() + '-' + (e.enddate === null ? "Present" : new Date(e.enddate).toDateString())}
                   <br></br>
                   <h6>
@@ -78,18 +79,18 @@ class Experience extends Component {
                 </p>
                 {/* <hr className="short br-lighter"></hr> */}
               </div>)
-          })}{this.props.user.experiences.length===0 && <NoExperience></NoExperience>}
+          })}{this.props.user.experiences.length === 0 && <NoExperience></NoExperience>}
         </div>
         <Modal size="lg" show={this.state.show} onHide={this.handleclose} backdrop="static">
           <Modal.Header closeButton>
-            <Modal.Title>{this.state.editing?'Edit Experience Details':'Fill Experience Details'}</Modal.Title>
+            <Modal.Title>{this.state.editing ? 'Edit Experience Details' : 'Fill Experience Details'}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <ExperienceForm {...this.props} 
-            deleteit={this.deleteexp}
-            editing={this.state.editing}
-            editingexp={this.state.editingexp}
-            onexpsub={this.handleexpsub}></ExperienceForm>
+            <ExperienceForm {...this.props}
+              deleteit={this.deleteexp}
+              editing={this.state.editing}
+              editingexp={this.state.editingexp}
+              onexpsub={this.handleexpsub}></ExperienceForm>
           </Modal.Body>
         </Modal>
       </div>
@@ -102,18 +103,18 @@ class ExperienceForm extends Component {
   constructor(props) {
     super(props);
     if (props.editing) {
-      let getdate = (yourDate)=>{
-        yourDate=new Date(yourDate)
+      let getdate = (yourDate) => {
+        yourDate = new Date(yourDate)
         let offset = yourDate.getTimezoneOffset()
-        yourDate = new Date(yourDate.getTime() - (offset*60*1000))
+        yourDate = new Date(yourDate.getTime() - (offset * 60 * 1000))
         return yourDate.toISOString().split('T')[0]
       }
       this.state = {
         title: props.editingexp.title,
-        type:props.editingexp.type,
-        company:props.editingexp.company,
+        type: props.editingexp.type,
+        company: props.editingexp.company,
         startdate: getdate(props.editingexp.startdate),
-        enddate: props.editingexp.enddate?getdate(props.editingexp.enddate):null,
+        enddate: props.editingexp.enddate ? getdate(props.editingexp.enddate) : null,
         description: props.editingexp.description,
       };
     } else {
@@ -126,7 +127,7 @@ class ExperienceForm extends Component {
         description: "",
       };
     }
-    
+
     this.handleSubmit = (e) => {
       e.preventDefault()
       props.onexpsub(this.state);
@@ -254,7 +255,7 @@ class ExperienceForm extends Component {
   }
 }
 
-export default connect(() => { }, { updateExperiences,deleteExperiences,editExperience })(Experience);
+export default connect(() => { }, { updateExperiences, deleteExperiences, editExperience })(Experience);
 
 /* <div class="ui feed">
 <div class="event">

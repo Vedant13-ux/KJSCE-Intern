@@ -9,7 +9,10 @@ import Modal from "react-bootstrap/Modal";
 import { Multiselect } from "multiselect-react-dropdown";
 import CKEditor from 'ckeditor4-react';
 import { Link } from 'react-router-dom';
-// import * from "react-data-export"
+// import ReactExport from "react-data-export";
+// const ExcelFile = ReactExport.ExcelFile;
+// const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+// const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 
 
@@ -272,7 +275,7 @@ class InternshipDetail extends Component {
                           </span>
                         )}
                     </span>
-                    {this.state.user.role === "Student" && (this.state.details.faculty._id!==this.state.user._id) &&
+                    {this.state.user.role === "Student" && (this.state.details.faculty._id !== this.state.user._id) &&
                       <div>
                         {!this.state.applied && !this.state.passed &&
                           <div>
@@ -326,13 +329,28 @@ class InternshipDetail extends Component {
                           </button>
                           </div>
                         }
-                        {this.state.passed &&
+                        {
+                          this.state.passed &&
                           <div className="applynow">
                             <button type="button" className="btn btn-lg btn-default" disabled="true">
                               Internship Expired
                             </button>
                           </div>
                         }
+
+                        {/* {this.state.owner &&
+                          <div className="applynow">
+                            <ExcelFile element={<button>Download Data</button>}>
+                              <ExcelSheet data={} name="Employees">
+                                <ExcelColumn label="Name" value="name" />
+                                <ExcelColumn label="Wallet Money" value="amount" />
+                                <ExcelColumn label="Gender" value="sex" />
+                                <ExcelColumn label="Marital Status"
+                                  value={(col) => col.is_married ? "Married" : "Single"} />
+                              </ExcelSheet>
+                            </ExcelFile>
+                          </div>
+                        } */}
 
                       </div>
                     }
