@@ -12,7 +12,7 @@ import InternshipOffered from './InternshipOffered'
 import NoApplication from '../../images/NoApplication';
 import Activity from './Activity';
 import { connect } from 'react-redux'
-import { addPost } from '../../store/actions/user'
+import { addPost, updateRecruited } from '../../store/actions/user'
 
 
 class Basic extends Component {
@@ -110,7 +110,7 @@ class Basic extends Component {
         break;
       case "internshipoffered":
         display = (<InternshipOffered owner={this.props.owner}
-          user={this.props.user}></InternshipOffered>)
+          user={this.props.user} updateRecruited={this.props.updateRecruited}></InternshipOffered>)
         break;
       case "achievement":
         display = (
@@ -225,4 +225,4 @@ class Basic extends Component {
   }
 }
 
-export default connect(() => { }, { addPost })(Basic);
+export default connect(() => { }, { addPost, updateRecruited })(Basic);

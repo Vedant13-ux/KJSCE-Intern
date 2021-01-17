@@ -328,6 +328,12 @@ router.put('/recruited/:id', async (req, res, next) => {
         var times = 0;
         if (user._id.equals(internship.faculty) && internship && user) {
             var recruited = [];
+            if (req.body.selecteduser.length === 0) {
+                internship.recruited = [];
+                await internship.save();
+                return res.send('changed recruited');
+
+            }
             req.body.selecteduser.forEach(async (userit) => {
                 db.User.findById(userit._id)
                     .then(async (userrec) => {

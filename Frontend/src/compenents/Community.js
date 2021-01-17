@@ -565,6 +565,7 @@ export class Post extends React.Component {
             isLiked: !this.state.isLiked,
             likes: lik,
           });
+          
         })
         .catch((e) => console.log(e));
     } else {

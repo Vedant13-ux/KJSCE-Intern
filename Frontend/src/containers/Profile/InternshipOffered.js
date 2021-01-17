@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { Modal } from "react-bootstrap";
-// import { connect } from "react-redux";
 import NoApplication from "../../images/NoApplication";
 import { Link } from "react-router-dom";
 import { Multiselect } from "multiselect-react-dropdown";
-import { apiCall } from "../../services/api"
+// import { apiCall } from "../../services/api"
 
-export default class InternshipOffered extends Component {
+class InternshipOffered extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,6 +15,7 @@ export default class InternshipOffered extends Component {
       selint: null
     };
     this.multiselectRef = React.createRef();
+
     this.handleshow2 = (i, inte) => {
       let allmail = []
       this.props.user.internshipsOffered[i].applicants.forEach((e) => {
@@ -28,9 +28,11 @@ export default class InternshipOffered extends Component {
       })
       this.setState({ show: true, emails: allmail, selected_emails: selemail, selint: inte });
     };
+
     this.handleclose = () => {
       this.setState({ show: false });
     };
+
     this.handlesub = () => {
       var emails = this.multiselectRef.current.getSelectedItems();
       var emailArray = [];
@@ -38,8 +40,8 @@ export default class InternshipOffered extends Component {
         emailArray.push(email.text);
       });
       let selecteduserId = this.state.emails
-      selecteduserId = selecteduserId.filter((e) => emailArray.includes(e.email))
-      apiCall('put', "/api/internship/recruited/" + this.state.selint, { userId: this.props.user._id, selecteduser: selecteduserId })
+      selecteduserId = selecteduserId.filter((e) => emailArray.includes(e.email));
+      this.props.updateRecruited(this.props.user._id, selecteduserId,this.state.selint)
         .then(() => {
           console.log('users added Mail');
           this.handleclose();
@@ -63,7 +65,7 @@ export default class InternshipOffered extends Component {
         <div>
           {this.props.user.internshipsOffered.map((e, i) => {
             return (
-              <div className="experience-ele" style={{paddingBottom:'20px'}}>
+              <div className="experience-ele" style={{ paddingBottom: '20px' }}>
                 <h4>{e.title}</h4>
                 <sub>{e.category}</sub>
                 <p>
@@ -71,7 +73,7 @@ export default class InternshipOffered extends Component {
                   <br></br>
                   <h6>{e.description}</h6>
                   <Link to={"/internship/" + e._id}>See Internship</Link>
-                  {this.props.owner && <button onClick={() => this.handleshow2(i, e._id)} className="ui button small" style={{float:"right"}}>
+                  {this.props.owner && <button onClick={() => this.handleshow2(i, e._id)} className="ui button small" style={{ float: "right" }}>
                     Select Recruited
                   </button>}
                 </p>
@@ -107,3 +109,4 @@ export default class InternshipOffered extends Component {
     );
   }
 }
+export default InternshipOffered;
