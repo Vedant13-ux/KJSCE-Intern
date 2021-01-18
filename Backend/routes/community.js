@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models');
-const { populate } = require('../models/user');
 
 // Getting Posts
 router.get('/posts/getAll', (req, res, next) => {
@@ -98,9 +97,10 @@ router.post('/posts/like/:id', (req, res, next) => {
                         post: post._id,
                     }
                     await user.liked.push(activity);
+                    var created = new Date();
                     await post.save()
                     await user.save();
-                    return res.status(200).send('Liked Post');
+                    return res.status(200).send(created);
                 }
                 return next({
                     status: 403,

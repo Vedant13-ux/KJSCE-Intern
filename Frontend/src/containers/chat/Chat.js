@@ -16,71 +16,73 @@ export default class Chat extends React.Component {
       socket: null,
       conversation: null,
     };
-  }
-  componentDidMount() {
-    this.loadConversations();
-    this.configureSocket();
-  }
+    this.configureSocket = async () => {
+      var socket = socketClient(SERVER);
+      console.log("started socket");
+      await socket.on("connection", () => {
+        console.log("connected to server");
+      });
+      // socket.on('channel', channel => {
 
-  configureSocket = () => {
-    var socket = socketClient(SERVER);
-    console.log("started socket")
-    socket.on("connection", () => {
-      console.log("connected to server");
-    });
-    // socket.on('channel', channel => {
+      //     let channels = this.state.channels;
+      //     channels.forEach(c => {
+      //         if (c.id === channel.id) {
+      //             c.participants = channel.participants;
+      //         }
+      //     });
+      //     this.setState({ channels });
+      // });
+      // socket.on('message', message => {
 
-    //     let channels = this.state.channels;
-    //     channels.forEach(c => {
-    //         if (c.id === channel.id) {
-    //             c.participants = channel.participants;
-    //         }
-    //     });
-    //     this.setState({ channels });
-    // });
-    // socket.on('message', message => {
+      //     let channels = this.state.channels
+      //     channels.forEach(c => {
+      //         if (c.id === message.channel_id) {
+      //             if (!c.messages) {
+      //                 c.messages = [message];
+      //             } else {
+      //                 c.messages.push(message);
+      //             }
+      //         }
+      //     });
+      //     this.setState({ channels });
+      // });
+      // this.socket = socket;
+    };
 
-    //     let channels = this.state.channels
-    //     channels.forEach(c => {
-    //         if (c.id === message.channel_id) {
-    //             if (!c.messages) {
-    //                 c.messages = [message];
-    //             } else {
-    //                 c.messages.push(message);
-    //             }
-    //         }
-    //     });
-    //     this.setState({ channels });
-    // });
-    this.socket = socket;
-  };
-
-  loadConversations = async () => {
-    apiCall("put", "/api/getConversations/", {
-      list: this.props.currentUser.user.conversations,
-    })
-      .then((data) => {
-        this.setState({ conversations: data.list });
+    this.loadConversations = async () => {
+      apiCall("put", "/api/getConversations/", {
+        list: this.props.currentUser.user.conversations,
       })
-      .catch((err) => console.log(err));
-  };
+        .then((data) => {
+          this.setState({ conversations: data.list });
+        })
+        .catch((err) => console.log(err));
+    };
 
-  handleChannelSelect = (id) => {
-    let conversation = this.state.conversations.find(c => {
+    this.handleChannelSelect = (id) => {
+      let conversation = this.state.conversations.find(c => {
         return c._id === id;
-    });
-    // this.socket.emit('channel-join', id, ack => {
-    // });
-    this.setState({ conversation });
-    
-  };
+      });
+      // this.socket.emit('channel-join', id, ack => {
+      // });
+      this.setState({ conversation });
 
-  handleSendMessage = (text) => {
-    this.socket.emit("send-message", {
-      convoId: this.state.conversation._id,
-      message: { text, author: this.props.currentUser.user },
-    });
-  };
+    };
+
+    this.handleSendMessage = (text) => {
+      this.socket.emit("send-message", {
+        convoId: this.state.conversation._id,
+        message: { text, author: this.props.currentUser.user },
+      });
+    };
+
+  }
+  async componentDidMount() {
+    console.log('Hello World');
+    await this.loadConversations();
+    await this.configureSocket();
+  }
+
 
   render() {
     return (

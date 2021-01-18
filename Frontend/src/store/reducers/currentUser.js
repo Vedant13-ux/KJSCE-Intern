@@ -162,8 +162,20 @@ const currentUserReducer = (state = defaultState, action) => {
                 ...state
             }
         case LIKE_ACTIVITY:
-            break;
-
+            state.user.liked.push(action.activity);
+            return {
+                ...state
+            }
+        case UNLIKE_ACTIVITY:
+            state.user.liked.filter(p => p.post._id !== action.postId);
+            return {
+                ...state
+            }
+        case COMMENT_ACTIVITY:
+            state.user.commented.push(action.activity);
+            return {
+                ...state
+            }
         default:
             return state
     }
