@@ -1,14 +1,19 @@
 const express = require('express');
 const app = express();
+app.disable('etag').disable('x-powered-by');
+
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const socket = require('socket.io');
-const server = app.listen(process.env.PORT || 3001, process.env.IP, () => {
-    console.log('Server Listening on Port 3001');
-});
-var http = require('http').createServer(app);
+// const server = app.listen(process.env.PORT || 3001, process.env.IP, () => {
+//     console.log('Server Listening on Port 3001');
+// });
+var server = require('http').createServer(app);
 const io = socket(server);
+server.listen(process.env.PORT || 3001, process.env.IP, () => {
+    console.log('Server Listening on Port 3001')
+})
 const errorHandler = require('./handlers/errorHandler');
 require('dotenv').config();
 // Middleware

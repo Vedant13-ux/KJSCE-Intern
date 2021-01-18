@@ -5,7 +5,7 @@ import { apiCall } from "../services/api";
 import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
 import NoPost from '../images/NoPost';
-import { addPost } from '../store/actions/user'
+import { addPost, updateLikeActivity, updateUnLikeActivity, updateCommentActivity } from '../store/actions/user'
 import { connect } from "react-redux";
 
 class Application extends React.Component {
@@ -41,6 +41,9 @@ class Application extends React.Component {
           isMobile={this.state.isMobile}
           currentUser={this.props.currentUser}
           addPost={this.props.addPost} history={this.props.history}
+          updateLikeActivity={this.props.updateLikeActivity}
+          updateUnLikeActivity={this.props.updateUnLikeActivity}
+          updateCommentActivity={this.props.updateCommentActivity}
         />
         <ScrollTopButton />
         <PageFooter />
@@ -286,6 +289,9 @@ class Feed extends React.Component {
             loggedin={this.props.currentUser}
             currentUser={null}
             {...this.state}
+            updateLikeActivity={this.props.updateLikeActivity}
+            updateUnLikeActivity={this.props.updateUnLikeActivity}
+            updateCommentActivity={this.props.updateCommentActivity}
           />
           <div className="right-side">
             <div className="controls">
@@ -471,6 +477,9 @@ export class PostWall extends React.Component {
         userprofile={this.props.currentUser}
         loggedin={this.props.loggedin}
         options={this.props.posts[id]}
+        updateLikeActivity={this.props.updateLikeActivity}
+        updateUnLikeActivity={this.props.updateUnLikeActivity}
+        updateCommentActivity={this.props.updateCommentActivity}
       />
     );
   }
@@ -556,8 +565,8 @@ export class Post extends React.Component {
       apiCall("post", "/api/community/posts/like/" + this.id, {
         id: this.props.loggedin.user._id,
       })
-        .then((data) => {
-          console.log(data);
+        .then((date) => {
+          console.log(date);
           button.classList.toggle("liked");
           lik++;
           this.setState({
@@ -565,7 +574,11 @@ export class Post extends React.Component {
             isLiked: !this.state.isLiked,
             likes: lik,
           });
-          
+          var activity = {
+            created: date,
+            post: this.props.options
+          }
+          this.props.updateLikeActivity(activity);
         })
         .catch((e) => console.log(e));
     } else {
@@ -581,6 +594,8 @@ export class Post extends React.Component {
             isLiked: !this.state.isLiked,
             likes: lik,
           });
+          // console.log(this.props.options._id);
+          this.props.updateUnLikeActivity(this.props.options._id);
         })
         .catch((e) => console.log(e));
     }
@@ -831,4 +846,5 @@ class CommentInput extends React.Component {
   }
 }
 
-export default connect(() => { }, { addPost })(Application);
+connect(() => { }, { addPost })(Post);
+export default connect(() => { }, { addPost, updateLikeActivity, updateUnLikeActivity, updateCommentActivity })(Application);
