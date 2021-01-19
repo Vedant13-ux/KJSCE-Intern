@@ -17,7 +17,7 @@ export default class Chat extends React.Component {
       conversation: null,
     };
     this.configureSocket = async () => {
-      var socket = socketClient(SERVER);
+      var socket = socketClient(SERVER,{query:{id:this.props.currentUser.user._id}});
       console.log("started socket");
       await socket.on("connection", () => {
         console.log("connected to server");
@@ -46,7 +46,8 @@ export default class Chat extends React.Component {
       //     });
       //     this.setState({ channels });
       // });
-      // this.socket = socket;
+      this.setState({socket})
+      socket.close()
     };
 
     this.loadConversations = async () => {

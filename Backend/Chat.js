@@ -12,6 +12,7 @@ function chat(io){
         });
 
         socket.on('disconnect', () => {
+            console.log("disconnected")
         });
 
     });
