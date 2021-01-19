@@ -20,7 +20,6 @@ class Basic extends Component {
     super(props);
     this.state = {
       content: ["Faculty", "Student", "Alumni"].includes(this.props.user.role) ? "experiences" : "events",
-      start: false,
       activity: []
     };
     this.handleSwitch = this.handleSwitch.bind(this);
@@ -69,6 +68,7 @@ class Basic extends Component {
 
 
   handleSwitch(e) {
+    if (e.target.name==='posts' && this.props.owner) this.props.updateposts();
     return this.setState({ content: e.target.name });
   }
   render() {
@@ -123,7 +123,7 @@ class Basic extends Component {
       case "posts":
         display = (
           <PostWall
-            {...this.state}
+            start={this.props.start}
             posts={this.props.posts}
             history={this.props.history}
             isprofile={true}

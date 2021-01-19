@@ -20,9 +20,19 @@ class Profile extends Component {
       },
       owner: false,
       start: true,
+      startpost:true,
       nof: false,
       profileId: this.props.match.params.id
     };
+    this.updateposts=()=>{
+      apiCall("put", "/api/getUsersPosts",{list:this.state.user.posts}).then((li)=>{
+        this.state.user.posts=li.list
+        this.setState({...this.state,startpost:false})
+    })
+    .catch((e)=>console.log(e))
+    this.state.user.posts=[]
+    this.setState({...this.state})
+  }
   }
 
   async componentDidMount() {
@@ -33,11 +43,9 @@ class Profile extends Component {
       for (i = 0; i < temp.certificates.length; i++) {
         temp.certificates[i].date = new Date(temp.certificates[i].date)
       }
-      apiCall("put", "/api/getUsersPosts",{list:temp.posts}).then((li)=>{
-        temp.posts=li.list
+      
         this.setState({ user: temp, owner: true, start: false });
-      })
-      .catch((e)=>console.log(e))
+      
       
     }
     else {
@@ -51,6 +59,7 @@ class Profile extends Component {
           await this.setState({
             user: data,
             start: false,
+            startpost:false
           });
         })
         .catch(async (err) => {
@@ -102,7 +111,7 @@ class Profile extends Component {
                   user={this.state.user}
                 />
               }
-              <UserActivity owner={this.state.owner} history={this.props.history} posts={this.state.user.posts} user={this.state.owner ? this.props.currentUser.user : this.state.user} loggedin={this.props.currentUser.user} />
+              <UserActivity owner={this.state.owner} history={this.props.history} start={this.state.startpost} updateposts={this.updateposts} posts={this.state.user.posts} user={this.state.owner ? this.props.currentUser.user : this.state.user} loggedin={this.props.currentUser.user} />
             </div>
           </section>
           <PageFooter />
