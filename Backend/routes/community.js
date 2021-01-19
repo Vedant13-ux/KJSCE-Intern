@@ -32,7 +32,7 @@ router.get('/posts/getNext', (req, res, next) => {
         .catch(err => next(err))
 });
 router.get('/posts/:id', (req, res, next) => {
-    db.Post.findById(req.params.id).populate("author")
+    db.Post.findById(req.params.id).populate("author").populate({ path: 'comments', populate: { path: 'author' } })
         .then((post) => {
             if (!post) {
                 return next({
