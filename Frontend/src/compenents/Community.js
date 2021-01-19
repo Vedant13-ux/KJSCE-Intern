@@ -613,16 +613,24 @@ export class Post extends React.Component {
     apiCall("post", "/api/community/posts/comments/" + this.id, {
       id: this.props.loggedin.user._id,
       text: commentText,
-    }).then(() => {
-      this.state.comments.push({
+    }).then((comment) => {
+      var newComment = {
+        _id: comment._id,
+        created: comment.created,
         author: {
           fname: this.props.loggedin.user.fname,
           lname: this.props.loggedin.user.lname,
           photo: this.props.loggedin.user.photo,
-          email:this.props.loggedin.user.email
+          email: this.props.loggedin.user.email
         },
         text: commentText,
-      });
+      }
+      var activity = {
+        created: newComment.created,
+        post: this.props.options
+      }
+      this.props.updateCommentActivity(activity);
+      this.state.comments.push(newComment);
       form.text.value = "";
       this.setState({ ...this.state, commentsExpanded: true });
     });
@@ -657,9 +665,9 @@ export class Post extends React.Component {
           />
           <div className="post-content">
             <p>{this.content}</p>
-            {this.img!=="" &&
-            <img onLoad={this.handleImageLoad} src={this.img} alt=""></img>
-          }
+            {this.img !== "" &&
+              <img onLoad={this.handleImageLoad} src={this.img} alt=""></img>
+            }
           </div>
           <PostInfo
             likes={this.state.likes}
@@ -746,7 +754,7 @@ class Comment extends React.Component {
           <img alt="" src={val.author.photo} />
         </a>
         <div className="content">
-          <Link to={"/profile/"+val.author.email.split("@")[0]} className="author">
+          <Link to={"/profile/" + val.author.email.split("@")[0]} className="author">
             {val.author.fname + " " + val.author.lname}
           </Link>
           <div className="metadata">

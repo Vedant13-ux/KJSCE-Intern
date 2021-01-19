@@ -22,12 +22,13 @@ class Basic extends React.Component {
         linkedin: this.props.user.socialHandles.linkedin,
         github: this.props.user.socialHandles.github,
       },
-      selectedFile: null,
       fileLabel: 'Choose Image to Upload',
       status: '',
       crop: {
         aspect: 1 / 1.11
       },
+      cropped: false,
+      startedCropping: false,
       imgSrc: null
     };
     this.imagePreviewCanvas = React.createRef();
@@ -82,11 +83,10 @@ class Basic extends React.Component {
       const data = new FormData();
       await data.append('file', newCroppedFile);
       await data.append('id', this.props.currentUser.user._id)
-
       this.props.updateUserPhoto(data).then(() => {
         console.log('Image Uploaded');
         this.handleClose2();
-        this.setState({ status: '' });
+        this.handleClearToDefult();
       }).catch(err => {
         console.log(err);
       })
@@ -100,7 +100,7 @@ class Basic extends React.Component {
       if (e.target.files && selectedFile) {
         var reader = new FileReader();
         reader.onload = async (el) => {
-          await this.setState({ imgSrc: el.target.result, imgSrcExs: extractImageFileExtensionFromBase64(el.target.result) })
+          await this.setState({ imgSrc: el.target.result, imgSrcExs: extractImageFileExtensionFromBase64(el.target.result), cropped: false, startedCropping: false, crop: { aspect: 1 / 1.11 } })
         };
         reader.readAsDataURL(selectedFile);
       }
@@ -108,7 +108,11 @@ class Basic extends React.Component {
     }
     // Image Cropping
     this.handleOnCropChange = (crop) => {
-      this.setState({ crop });
+      if (this.state.startedCropping) {
+        return this.setState({ crop, cropped: true });
+      } else {
+        return this.setState({ crop, startedCropping: true })
+      }
     }
     this.handleImageLoaded = (image) => {
       console.log(image);
@@ -117,6 +121,13 @@ class Basic extends React.Component {
       const canvasRef = this.imagePreviewCanvas.current;
       const { imgSrc } = this.state;
       image64toCanvasRef(canvasRef, imgSrc, pixelCrop);
+    }
+
+    this.handleClearToDefult = () => {
+      const canvas = this.imagePreviewCanvas.current;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      this.setState({ status: '', imgSrc: null, imgSrcExs: null, crop: { aspect: 1 / 1.11 }, cropped: false, startedCropping: false });
     }
   }
   render() {
@@ -145,40 +156,47 @@ class Basic extends React.Component {
                 <Modal.Title>Update Profile Picture</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <form onSubmit={this.handleImageUpload} enctype="multipart/form-data" name="uploadForm" className="form-group">
+                <form onSubmit={this.handleImageUpload} enctype="multipart/form-data" name="uploadForm" className="form-group imageUploadForm">
                   <div className="input-group">
                     <div className="custom-file">
                       <label className="custom-file-label" style={{ textAlign: "left" }}>{this.state.fileLabel}</label>
                       <input type="file" id="file" name="file" onChange={this.fileValidation} className="custom-file-input" style={{ outline: "none", border: "none" }} accept=".jpg,.png | image/*" required />
                       <input type="hidden" name="id" value={this.props.currentUser.user._id}></input>
                     </div>
+                  </div>
 
+
+                  <br></br>
+                  {imgSrc !== null &&
                     <div>
-                      <button className="btn btn-info">Upload</button>
+                      <h5>Crop Image</h5>
+                      <ReactCrop
+                        src={imgSrc}
+                        crop={this.state.crop}
+                        onChange={this.handleOnCropChange}
+                        onImageLoaded={this.handleImageLoaded}
+                        onComplete={this.handleOnCropComplete}
+                      />
+
+                      <h5>Preview Cropped Image</h5>
+
+                      <canvas ref={this.imagePreviewCanvas}></canvas>
                     </div>
+                  }
+                  {this.state.cropped === true &&
+                    <div style={{ display: "flex", alignItems: 'center' }}>
+                      <button className="ui button uploadImageBtn">Upload</button>
+                      {
+                        this.state.status === "uploading" &&
+                        <div style={{ display: 'inline-flex', alignItems: 'center' }}>
+                          <Spinner animation="border" variant="warning" ></Spinner>
+                          <span className="ml-2">Uploading you beautiful Photo....</span>
+                        </div>
+                      }
+                    </div>
+                  }
 
-                  </div>
                 </form>
-
-                <ReactCrop
-                  src={imgSrc}
-                  crop={this.state.crop}
-                  onChange={this.handleOnCropChange}
-                  onImageLoaded={this.handleImageLoaded}
-                  onComplete={this.handleOnCropComplete}
-                />
-                <br></br>
-                <p>Prview Cropped Image</p>
-
-                <canvas ref={this.imagePreviewCanvas}></canvas>
-                {
-                  this.state.status === "uploading" &&
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <Spinner animation="border" variant="warning" ></Spinner>
-                    <span className="ml-2">Uploading you beautiful Photo....</span>
-                  </div>
-                }
-
               </Modal.Body>
             </Modal>
           </div>

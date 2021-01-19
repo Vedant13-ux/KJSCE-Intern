@@ -330,6 +330,21 @@ margin-right: 9px;
 	}
 }
 
+.imageUploadForm .uploadImageBtn {
+
+	color: #020b53;
+	background-color: #020b53;
+	color: #FFCA3D;
+	padding: 7px 10px !important;
+}
+.imageUploadForm .uploadImageBtn:focus{
+
+	color: #020b53;
+	background-color: #020b53;
+	color: #FFCA3D;
+	padding: 7px 10px !important;
+}
+
 
 /* Search in Navbar */
  #myInput {
