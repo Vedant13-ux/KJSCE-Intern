@@ -79,12 +79,12 @@ class Event extends Component {
                   )}
                 </h4>
                 <div>
-                  <div>Venue : {e.venue}</div>
+                  <span>Venue : {e.venue}</span>
                 </div>
                 <div>
-                  <div>
+                  <span>
                     Timings : {e.startTime} - {e.endTime}
-                  </div>
+                  </span>
                 </div>
                 <div>Description : {e.description}</div>
                 <div>

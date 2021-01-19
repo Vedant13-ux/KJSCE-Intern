@@ -5,6 +5,7 @@ import { updatebasicinfo, updateUserPhoto } from '../../store/actions/user'
 import { Spinner } from 'react-bootstrap'
 import 'react-image-crop/dist/ReactCrop.css';
 import ReactCrop from 'react-image-crop';
+import { base64StringtoFile, image64toCanvasRef } from './ImageCropUtils'
 
 class Basic extends React.Component {
   constructor(props) {
@@ -23,8 +24,13 @@ class Basic extends React.Component {
       },
       selectedFile: null,
       fileLabel: 'Choose Image to Upload',
-      status: ''
+      status: '',
+      crop: {
+        aspect: 1 / 1.11
+      },
+      imgSrc: null
     };
+    this.imagePreviewCanvas = React.createRef();
     this.handleshow = (e) => {
       this.setState({ show: true });
     };
@@ -51,10 +57,8 @@ class Basic extends React.Component {
             linkedin: this.state.userdata.linkedin,
             github: this.state.userdata.github,
           }
-        },
-        crop: {
-          aspect: 16 / 9
         }
+
       };
       console.log(data)
       props.updatebasicinfo(data).then(() => this.handleClose());
@@ -90,11 +94,30 @@ class Basic extends React.Component {
     }
 
     this.fileValidation = async (e) => {
-      // console.log('Changed File');
+      const selectedFile = e.target.files[0];
       await this.setState({
-        selectedFile: e.target.files[0],
+        selectedFile
       });
-      // console.log(e.target.files[0]);
+      if (e.target.files && selectedFile) {
+        var reader = new FileReader();
+        reader.onload = async (el) => {
+          await this.setState({ imgSrc: el.target.result })
+        };
+        reader.readAsDataURL(selectedFile);
+      }
+      console.log(e.target.files[0]);
+    }
+    // Image Cropping
+    this.handleOnCropChange = (crop) => {
+      console.log(crop);
+      this.setState({ crop });
+    }
+    this.handleImageLoaded = (image) => {
+      console.log(image);
+    }
+    this.handleOnCropComplete = (crop, pixelCrop) => {
+      const { imgSrc } = this.state;
+      image64toCanvasRef(this.imagePreviewCanvas.current, imgSrc, pixelCrop);
     }
   }
   render() {
@@ -107,7 +130,7 @@ class Basic extends React.Component {
       linkedin,
       github,
     } = this.state.userdata;
-    const { selectedFile } = this.state
+    const { imgSrc } = this.state
     return (
       <div className="page-heading">
         <div className="media clearfix">
@@ -138,13 +161,24 @@ class Basic extends React.Component {
                   </div>
                 </form>
 
-                {this.state.status === "uploading" &&
+                <ReactCrop
+                  src={imgSrc} crop={this.state.crop}
+                  onChange={this.handleOnCropChange}
+                  onImageLoaded={this.handleImageLoaded}
+                  onComplete={this.handleOnCropComplete}
+                />
+                <br></br>
+                <p>Prview Cropped Image</p>
+
+                <canvas ref={this.imagePreviewCanvas}></canvas>
+                {
+                  this.state.status === "uploading" &&
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <Spinner animation="border" variant="warning" ></Spinner>
                     <span className="ml-2">Uploading you beautiful Photo....</span>
                   </div>
                 }
-                <ReactCrop src={selectedFile} crop={this.state.crop} />
+
               </Modal.Body>
             </Modal>
           </div>

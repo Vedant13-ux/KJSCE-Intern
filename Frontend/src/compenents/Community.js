@@ -644,6 +644,7 @@ export class Post extends React.Component {
     // this.scrollToBottom();
   }
 
+
   render() {
     return (
       <div className="post" id={this.id}>
