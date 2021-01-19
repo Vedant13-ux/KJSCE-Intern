@@ -34,6 +34,7 @@ class PostMain extends Component {
           currentUser={this.props.currentUser}
           history={this.props.history}
         />
+        <div id="heightforfooter">
         {this.state.data !== null ?
           <Post
             isprofile={false}
@@ -44,7 +45,7 @@ class PostMain extends Component {
             <Loading className="loading-wheel" />
           </div> :
             <NotFound />
-        }
+        }</div>
         <PageFooter />
       </div>
     );

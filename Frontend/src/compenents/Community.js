@@ -619,6 +619,7 @@ export class Post extends React.Component {
           fname: this.props.loggedin.user.fname,
           lname: this.props.loggedin.user.lname,
           photo: this.props.loggedin.user.photo,
+          email:this.props.loggedin.user.email
         },
         text: commentText,
       });
@@ -655,11 +656,9 @@ export class Post extends React.Component {
           />
           <div className="post-content">
             <p>{this.content}</p>
-
+            {this.img!=="" &&
             <img onLoad={this.handleImageLoad} src={this.img} alt=""></img>
-            {/* <div className="ui placeholder">
-              <div className="square image"></div>
-            </div> */}
+          }
           </div>
           <PostInfo
             likes={this.state.likes}
@@ -702,16 +701,6 @@ class Comments extends React.Component {
     let commentsArr = this.props.comments.map((val, i) => {
       return (
         <Comment data={val}></Comment>
-        // <div className="comment" key={i}>
-        //   <div className="user-avatar">
-        //     <img src={val.avatar} alt="author avatar"></img>
-        //   </div>
-        //   <div className="user-data">
-        //     <div className="username">{val.name}</div>
-
-        //     <div className="comment-text">{val.text}</div>
-        //   </div>
-        // </div>
       );
     });
 
@@ -756,9 +745,9 @@ class Comment extends React.Component {
           <img alt="" src={val.author.photo} />
         </a>
         <div className="content">
-          <a href="/" className="author">
+          <Link to={"/profile/"+val.author.email.split("@")[0]} className="author">
             {val.author.fname + " " + val.author.lname}
-          </a>
+          </Link>
           <div className="metadata">
             <span className="date">Today at 5:42PM hardcoded</span>
           </div>

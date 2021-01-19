@@ -27,7 +27,17 @@ function escapeRegex(text) {
 }
 // Get user by id
 router.get('/user/:id', (req, res, next) => {
-    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('events').populate('applications').populate('posts').populate('certificates').populate('experiences').populate('projects').populate('achievements').populate({ path: "internshipsOffered", populate: { path: 'applicants', select: 'fname lname email _id photo' } }).populate({ path: "internshipsOffered", populate: { path: 'recruited', select: 'fname lname email _id photo' } }).populate({ path: 'members', populate: { path: 'member', select: 'fname lname _id email photo' } }).populate({ path: 'commented', populate: { path: 'post', select: '_id image author', populate: { path: 'author', select: ' fname lname email' } } }).populate({ path: 'liked', populate: { path: 'post', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } } }).exec()
+    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('events').populate('applications').populate('certificates').populate('experiences').populate('projects').populate('achievements').populate({ path: "internshipsOffered", populate: { path: 'applicants', select: 'fname lname email _id photo' } }).populate({ path: "internshipsOffered", populate: { path: 'recruited', select: 'fname lname email _id photo' } }).populate({ path: 'members', populate: { path: 'member', select: 'fname lname _id email photo' } }).populate({ path: 'commented', populate: { path: 'post', select: '_id image author', populate: { path: 'author', select: ' fname lname email' } } }).populate({ path: 'liked', populate: { path: 'post', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } } }).exec()
+        .then((user) => {
+            user.password = ''
+            res.status(200).send(user);
+        }).catch((err) => {
+            next(err);
+        });
+});
+// Get user for profile viewing
+router.get('/userForProfile/:id', (req, res, next) => {
+    db.User.findOne({ email: req.params.id + '@somaiya.edu' }).populate('events').populate({path:"posts",populate:{ path: 'comments', populate: { path: 'author' } }}).populate('applications').populate('certificates').populate('experiences').populate('projects').populate('achievements').populate({ path: "internshipsOffered", populate: { path: 'applicants', select: 'fname lname email _id photo' } }).populate({ path: "internshipsOffered", populate: { path: 'recruited', select: 'fname lname email _id photo' } }).populate({ path: 'members', populate: { path: 'member', select: 'fname lname _id email photo' } }).populate({ path: 'commented', populate: { path: 'post', select: '_id image author', populate: { path: 'author', select: ' fname lname email' } } }).populate({ path: 'liked', populate: { path: 'post', select: '_id image author', populate: { path: 'author', select: 'email fname lname photo' } } }).exec()
         .then((user) => {
             user.password = ''
             res.status(200).send(user);
@@ -519,6 +529,26 @@ router.put('/getConversations', (req, res, next) => {
                 array.push(data)
                 if (times === req.body.list.length - 1) {
                     res.status(200).send({ list: array });
+                }
+                times++;
+            }).catch(e => console.log((e)))
+        }
+        catch (err) {
+            next(err);
+        }
+
+    })
+})
+
+router.put('/getUsersPosts',async  (req, res, next) => {
+    let array = []
+    let times = 0
+    req.body.list.forEach((e) => {
+        try {
+            db.Post.findById(e).populate({ path: 'comments', populate: { path: 'author' } }).then(data => {
+                array.push(data)
+                if (times === req.body.list.length - 1) {
+                    res.status(200).send({ list: array.reverse() });
                 }
                 times++;
             }).catch(e => console.log((e)))

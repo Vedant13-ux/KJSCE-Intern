@@ -33,10 +33,15 @@ class Profile extends Component {
       for (i = 0; i < temp.certificates.length; i++) {
         temp.certificates[i].date = new Date(temp.certificates[i].date)
       }
-      await this.setState({ user: temp, owner: true, start: false });
+      apiCall("put", "/api/getUsersPosts",{list:temp.posts}).then((li)=>{
+        temp.posts=li.list
+        this.setState({ user: temp, owner: true, start: false });
+      })
+      .catch((e)=>console.log(e))
+      
     }
     else {
-      apiCall("get", "/api/user/" + this.props.match.params.id, "")
+      apiCall("get", "/api/userForProfile/" + this.props.match.params.id, "")
         .then(async (data) => {
           console.log(data);
           let i = 0;
@@ -97,7 +102,7 @@ class Profile extends Component {
                   user={this.state.user}
                 />
               }
-              <UserActivity owner={this.state.owner} user={this.state.owner ? this.props.currentUser.user : this.state.user} loggedin={this.props.currentUser.user} />
+              <UserActivity owner={this.state.owner} history={this.props.history} posts={this.state.user.posts} user={this.state.owner ? this.props.currentUser.user : this.state.user} loggedin={this.props.currentUser.user} />
             </div>
           </section>
           <PageFooter />

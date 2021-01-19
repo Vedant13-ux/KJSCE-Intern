@@ -20,7 +20,6 @@ class Basic extends Component {
     super(props);
     this.state = {
       content: ["Faculty", "Student", "Alumni"].includes(this.props.user.role) ? "experiences" : "events",
-      posts: this.props.user.posts,
       start: false,
       activity: []
     };
@@ -28,6 +27,7 @@ class Basic extends Component {
   }
 
   async componentWillMount() {
+    console.log(this.props.posts)
     var activity = [];
     const { liked, commented } = this.props.user;
     var likedIndex = liked.length - 1;
@@ -124,6 +124,8 @@ class Basic extends Component {
         display = (
           <PostWall
             {...this.state}
+            posts={this.props.posts}
+            history={this.props.history}
             isprofile={true}
             postcreate={this.props.owner}
             currentUser={this.props.user}
