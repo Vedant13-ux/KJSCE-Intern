@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import NoPost from '../images/NoPost';
 import { addPost, updateLikeActivity, updateUnLikeActivity, updateCommentActivity } from '../store/actions/user'
 import { connect } from "react-redux";
+import Moment from 'react-moment';
 
 class Application extends React.Component {
   constructor(props) {
@@ -37,6 +38,7 @@ class Application extends React.Component {
     return (
       <div className="wrapper">
         <Navbar isMobile={this.state.isMobile} {...this.props} onPage="community" />
+        <ScrollTopButton />
         <Feed
           isMobile={this.state.isMobile}
           currentUser={this.props.currentUser}
@@ -45,7 +47,6 @@ class Application extends React.Component {
           updateUnLikeActivity={this.props.updateUnLikeActivity}
           updateCommentActivity={this.props.updateCommentActivity}
         />
-        <ScrollTopButton />
         <PageFooter />
       </div>
     );
@@ -155,7 +156,7 @@ class PostCreate extends React.Component {
       console.log(this.state.postdata);
       apiCall('post', '/api/community/posts/create', { ...this.state.postdata })
         .then(async (post) => {
-          await this.props.addPost(post);
+          this.props.addPost(post);
           return this.props.history.push('/post/' + post._id)
         }).catch((err) => {
           console.log(err);
@@ -785,7 +786,11 @@ class UserInfo extends React.Component {
           <Link to={"/profile/" + this.props.email.split("@")[0]}>
             <div className="username">{this.props.username}</div>
           </Link>
-          <div className="post-date">{this.props.date}</div>
+
+          <div className="post-date">
+            <Moment fromNow>{this.props.date}</Moment>
+
+          </div>
         </div>
       </div>
     );

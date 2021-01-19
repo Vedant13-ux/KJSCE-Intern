@@ -15,6 +15,7 @@ class PostMain extends Component {
     }
   }
   componentDidMount() {
+    document.documentElement.scrollTop = '0';
     apiCall("get", '/api/community/posts/' + this.props.match.params.id, "")
       .then((data) => {
         this.setState({ data: data, start: false });
@@ -29,6 +30,7 @@ class PostMain extends Component {
     return (
       <div id="postalone">
         <Navbar
+          onPage="community"
           currentUser={this.props.currentUser}
           history={this.props.history}
         />

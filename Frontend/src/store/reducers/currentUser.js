@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE, DELETE_USER_ACHIEVEMENT, EDIT_USER_ACHIEVEMENT, UPDATE_USER_ACHIEVEMENT, EDIT_EVENT, DELETE_EVENT, DELETE_USER_EXPERIENCE, EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT, ADD_POST, UPDATE_RECRUITED, LIKE_ACTIVITY, UNLIKE_ACTIVITY, COMMENT_ACTIVITY } from '../actionTypes';
+import { SET_CURRENT_USER, DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE, DELETE_USER_ACHIEVEMENT, EDIT_USER_ACHIEVEMENT, UPDATE_USER_ACHIEVEMENT, EDIT_EVENT, DELETE_EVENT, DELETE_USER_EXPERIENCE, EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT, ADD_POST, UPDATE_RECRUITED, LIKE_ACTIVITY, UNLIKE_ACTIVITY, COMMENT_ACTIVITY, UPDATE_USER_PHOTO } from '../actionTypes';
 
 const defaultState = {
     isAuthenticated: false,
@@ -145,7 +145,7 @@ const currentUserReducer = (state = defaultState, action) => {
             }
         // To be Removed Later
         case ADD_POST:
-            state.user.posts.push(ADD_POST);
+            state.user.posts.push(action.post);
             return {
                 ...state
             }
@@ -167,12 +167,19 @@ const currentUserReducer = (state = defaultState, action) => {
                 ...state
             }
         case UNLIKE_ACTIVITY:
-            state.user.liked.filter(p => p.post._id !== action.postId);
+            state.user.liked = state.user.liked.filter(p => p.post._id !== action.postId);
             return {
                 ...state
             }
         case COMMENT_ACTIVITY:
             state.user.commented.push(action.activity);
+            return {
+                ...state
+            }
+        case UPDATE_USER_PHOTO:
+            console.log(action.photo, action.photoId)
+            state.user.photo = action.photo;
+            state.user.photoId = action.photoId;
             return {
                 ...state
             }

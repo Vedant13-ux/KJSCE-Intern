@@ -1,8 +1,7 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
 import { connect } from 'react-redux'
-import { updatebasicinfo } from '../../store/actions/user'
-import { apiCall } from '../../services/api'
+import { updatebasicinfo, updateUserPhoto } from '../../store/actions/user'
 
 class Basic extends React.Component {
   constructor(props) {
@@ -62,27 +61,23 @@ class Basic extends React.Component {
 
     this.handleImageUpload = async (e) => {
       e.preventDefault();
-      // const data = new FormData();
-      // await data.append('file', this.state.selectedFile);
-      // await data.append('text', this.props.currentUser.user._id)
-      // for (var entry of data.entries()) {
-      //   console.log(entry);
-      // }
+      const data = new FormData();
+      await data.append('file', this.state.selectedFile);
+      await data.append('id', this.props.currentUser.user._id)
+      for (var entry of data.entries()) {
+        console.log(entry);
+      }
       // const obj = {
       //   id: this.props.currentUser.user._id,
       //   data: data
       // }
-      var form = document.forms.namedItem('uploadForm');
-      const data = new FormData(form);
-      await data.append('id', this.props.currentUser.user._id);
 
-      apiCall('put', '/api/profile/update/photo', data)
-        .then((file) => {
-          console.log('Image Uploaded');
-          console.log(file)
-        }).catch((err) => {
-          console.log('Image Upload Failed !!!!');
-        });
+      this.props.updateUserPhoto(data).then(() => {
+        console.log('Image Uploaded');
+        this.handleClose2();
+      }).catch(err => {
+        console.log(err);
+      })
     }
 
     this.fileValidation = async (e) => {
@@ -123,6 +118,7 @@ class Basic extends React.Component {
                     <div className="custom-file" style={{ display: 'block' }}>
                       <label className="custom-file-label" style={{ textAlign: "left" }}>{this.state.fileLabel}</label>
                       <input type="file" id="file" name="file" onChange={this.fileValidation} className="custom-file-input" style={{ outline: "none", border: "none" }} accept=".jpg,.png | image/*" required />
+                      <input type="hidden" name="id" value={this.props.currentUser.user._id}></input>
                     </div>
 
                     <div style={{ textAlign: 'center', display: 'block' }}>
@@ -318,5 +314,5 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { updatebasicinfo })(Basic);
+export default connect(mapStateToProps, { updatebasicinfo, updateUserPhoto })(Basic);
 

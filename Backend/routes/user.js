@@ -8,22 +8,18 @@ cloudinary.config({
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, '../../public');
-    },
-
+var storage = multer.diskStorage({
     filename: function (req, file, callback) {
         callback(null, Date.now() + file.originalname);
     }
 });
-const imageFilter = function (req, file, cb) {
+var imageFilter = function (req, file, cb) {
     if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
         return cb(new Error('Only image files are allowed!'), false);
     }
     cb(null, true);
 };
-const upload = multer({ storage: storage, fileFilter: imageFilter }).single('file');
+var upload = multer({ storage: storage, fileFilter: imageFilter });
 
 
 function escapeRegex(text) {
@@ -59,35 +55,23 @@ router.get('/profile/search', (req, res, next) => {
 });
 
 // Profile Picture Upload
-router.put('/profile/update/photo', (req, res, next) => {
+router.put('/profile/update/photo', upload.single('file'), (req, res, next) => {
     console.log(req.body);
-    for (var entry of req.body.entries()) {
-        console.log(entry);
-    }
-    // db.User.findById(req.body.id)
-    //     .then((user) => {
-    //         cloudinary.v2.uploader.upload(req.body.data, async function (err, result) {
-    //             if (err) {
-    //                 return next({
-    //                     status: 500,
-    //                     message: 'Image Could not be Uploaded. Please try again.'
-    //                 });
-    //             }
-    //             user.photoId = result.public_id;
-    //             user.photo = result.secure_url;
-    //             await user.save();
-    //             res.send('Image Uploaded');
-    //         });
-    //     })
-    //     .catch(err => next(err))
-    upload(req, res, function (err) {
-        if (err instanceof multer.MulterError) {
-            return res.status(500).json(err)
-        } else if (err) {
-            return res.status(500).json(err)
-        }
-        return res.status(200).send(req.file)
-    });
+    db.User.findById(req.body.id)
+        .then(async (user) => {
+            try {
+                await cloudinary.v2.uploader.destroy(user.photoId);
+                var result = await cloudinary.v2.uploader.upload(req.file.path);
+                user.photoId = result.public_id;
+                user.photo = result.secure_url;
+                await user.save();
+                return res.send({ photo: result.secure_url, photoId: result.public_id });
+
+            } catch (err) {
+                next(err);
+            }
+        })
+        .catch(err => next(err))
 });
 
 
@@ -533,7 +517,7 @@ router.put('/getConversations', (req, res, next) => {
         try {
             db.Conversation.findById(e).populate({ path: 'users', select: 'fname lname email _id photo' }).populate("messages").then(data => {
                 array.push(data)
-                if (times === req.body.list.length-1) {
+                if (times === req.body.list.length - 1) {
                     res.status(200).send({ list: array });
                 }
                 times++;
@@ -542,7 +526,7 @@ router.put('/getConversations', (req, res, next) => {
         catch (err) {
             next(err);
         }
-        
+
     })
 })
 
