@@ -523,13 +523,14 @@ sub{
   /* margin-left: ; */
 }
 .avatar-pro{
-  max-height: 40px;
-  max-width:40px;
-  border-radius: 50%;
+  height: 40px;
+  width:40px;
+  border-radius: 50px;
   padding: 0px;
   margin:0px;
   float: left;
   margin-left: 5px;
+  object-fit: cover;
 }
 .template .container .title{
   background-color: #020C53;

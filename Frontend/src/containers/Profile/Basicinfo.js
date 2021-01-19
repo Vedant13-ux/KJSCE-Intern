@@ -2,6 +2,7 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import { connect } from 'react-redux'
 import { updatebasicinfo, updateUserPhoto } from '../../store/actions/user'
+import { Spinner } from 'react-bootstrap'
 
 class Basic extends React.Component {
   constructor(props) {
@@ -19,7 +20,8 @@ class Basic extends React.Component {
         github: this.props.user.socialHandles.github,
       },
       selectedFile: null,
-      fileLabel: 'Choose Image to Upload'
+      fileLabel: 'Choose Image to Upload',
+      status: ''
     };
     this.handleshow = (e) => {
       this.setState({ show: true });
@@ -61,6 +63,7 @@ class Basic extends React.Component {
 
     this.handleImageUpload = async (e) => {
       e.preventDefault();
+      this.setState({ status: 'uploading' });
       const data = new FormData();
       await data.append('file', this.state.selectedFile);
       await data.append('id', this.props.currentUser.user._id)
@@ -75,6 +78,7 @@ class Basic extends React.Component {
       this.props.updateUserPhoto(data).then(() => {
         console.log('Image Uploaded');
         this.handleClose2();
+        this.setState({ status: '' });
       }).catch(err => {
         console.log(err);
       })
@@ -83,7 +87,8 @@ class Basic extends React.Component {
     this.fileValidation = async (e) => {
       // console.log('Changed File');
       await this.setState({
-        selectedFile: e.target.files[0]
+        selectedFile: e.target.files[0],
+        uploading: ''
       });
       // console.log(e.target.files[0]);
     }
@@ -101,9 +106,9 @@ class Basic extends React.Component {
     return (
       <div className="page-heading">
         <div className="media clearfix">
-          <div className="media-left pr30">
+          <div className="media-left">
             <img
-              className="media-object mw150"
+              className="mw150"
               src={this.props.user.photo}
               alt="..."
             />
@@ -113,19 +118,27 @@ class Basic extends React.Component {
                 <Modal.Title>Update Profile Picture</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <form onSubmit={this.handleImageUpload} enctype="multipart/form-data" name="uploadForm">
+                <form onSubmit={this.handleImageUpload} enctype="multipart/form-data" name="uploadForm" className="form-group">
                   <div className="input-group">
-                    <div className="custom-file" style={{ display: 'block' }}>
+                    <div className="custom-file">
                       <label className="custom-file-label" style={{ textAlign: "left" }}>{this.state.fileLabel}</label>
                       <input type="file" id="file" name="file" onChange={this.fileValidation} className="custom-file-input" style={{ outline: "none", border: "none" }} accept=".jpg,.png | image/*" required />
                       <input type="hidden" name="id" value={this.props.currentUser.user._id}></input>
                     </div>
 
-                    <div style={{ textAlign: 'center', display: 'block' }}>
-                      <button className="ui button">Upload</button>
+                    <div>
+                      <button className="btn btn-info">Upload</button>
                     </div>
+
                   </div>
                 </form>
+
+                {this.state.status === "uploading" &&
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Spinner animation="border" variant="warning" ></Spinner>
+                    <span className="ml-2">Uploading you beautiful Photo....</span>
+                  </div>
+                }
               </Modal.Body>
             </Modal>
           </div>

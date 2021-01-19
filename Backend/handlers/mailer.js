@@ -5,7 +5,7 @@ const mailer = (mailBody) => {
         service: 'gmail',
         auth: {
             user: 'kjsceintern@gmail.com',
-            pass: 'ftpberoupesefpbe'
+            pass: process.env.GMAIL_APP_PASSWORD
         }
     });
     var mailOptions = {

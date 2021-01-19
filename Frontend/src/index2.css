@@ -40,7 +40,7 @@
   margin:15px 15px !important;
   overflow-x: hidden;
 }
-.pr30 .uploadBtn{
+.media-left .uploadBtn{
   bottom: 5em;
   color: black;
   text-align: center;
@@ -50,14 +50,19 @@
   cursor: pointer;
 }
 .mw150{
-  max-height: 500px;
-  max-width: 170px;
-  height: 100%;
+  max-height: 200px;
+  max-width: 180px;
+  min-height: 190px;
+  max-height: 170px;
+  height: 90%;
   width: 97%;
+  border: #FFCA3D 1.5px solid;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   width: 100%;
+  object-fit:cover;
 }
+
 
 .page-heading {
 position: relative;
@@ -305,6 +310,28 @@ margin-right: 9px;
 	float:right !important;
 }
 
+@media screen and (max-width:900px){
+	.mw150{
+		min-height: 170px;
+		height: 90%;
+		max-height: 180px;
+	}
+	.page-heading{
+		border-left: 20px solid #ffca3d;
+		border-right: 20px solid #ffca3d;
+		border-top: 5px solid  #ffca3d;
+		padding: 15px;
+	}
+	.media-heading {
+		font-size: 19.2px;
+	}
+	.lead{
+		font-size: 15px;
+	}
+}
+
+
+/* Search in Navbar */
  #myInput {
   box-sizing: border-box;
   /* background-image: url('https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/search-512.png'); */

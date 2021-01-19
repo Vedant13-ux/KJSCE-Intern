@@ -147,6 +147,7 @@ class Basic extends Component {
                 this.props.user.role
               ) ? (
                   <Nav.Link
+                    active={this.state.content === "experiences" ? true : false}
                     name="experiences"
                     to="#experiences"
                     onClick={this.handleSwitch}
@@ -155,6 +156,7 @@ class Basic extends Component {
                   </Nav.Link>
                 ) : (
                   <Nav.Link
+                    active={this.state.content === "events" ? true : false}
                     name="events"
                     to="#events"
                     onClick={this.handleSwitch}
@@ -165,6 +167,7 @@ class Basic extends Component {
             </Nav.Item>
             <Nav.Item>
               <Nav.Link
+                active={this.state.content === "achievement" ? true : false}
                 name="achievement"
                 to="#achievement"
                 onClick={this.handleSwitch}
@@ -175,6 +178,7 @@ class Basic extends Component {
 
             <Nav.Item>
               <Nav.Link
+                active={this.state.content === "projects" ? true : false}
                 name="projects"
                 to="#projects"
                 onClick={this.handleSwitch}
@@ -184,6 +188,7 @@ class Basic extends Component {
             </Nav.Item>
             {this.props.user.role === "Student" ? <Nav.Item>
               <Nav.Link
+                active={this.state.content === "application" ? true : false}
                 name="application"
                 to="#application"
                 onClick={this.handleSwitch}
@@ -192,6 +197,7 @@ class Basic extends Component {
               </Nav.Link>
             </Nav.Item> : <Nav.Item>
                 <Nav.Link
+                  active={this.state.content === "internshipoffered" ? true : false}
                   name="internshipoffered"
                   to="#internshipoffered"
                   onClick={this.handleSwitch}
@@ -206,6 +212,7 @@ class Basic extends Component {
             </Nav.Item>
             <Nav.Item>
               <Nav.Link
+                active={this.state.content === "activity" ? true : false}
                 name="activity"
                 to="#activity"
                 onClick={this.handleSwitch}

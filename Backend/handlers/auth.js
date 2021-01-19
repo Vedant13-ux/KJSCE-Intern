@@ -14,7 +14,7 @@ exports.signup = async function (req, res, next) {
       service: 'gmail',
       auth: {
         user: 'kjsceintern@gmail.com',
-        pass: 'chwjbydamnjbtlvk'
+        pass: process.env.GMAIL_APP_PASSWORD
       }
     });
     transporter.sendMail(mailOptions, (err, info) => {
