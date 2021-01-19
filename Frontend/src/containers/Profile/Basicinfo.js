@@ -5,7 +5,7 @@ import { updatebasicinfo, updateUserPhoto } from '../../store/actions/user'
 import { Spinner } from 'react-bootstrap'
 import 'react-image-crop/dist/ReactCrop.css';
 import ReactCrop from 'react-image-crop';
-import { base64StringtoFile, image64toCanvasRef } from './ImageCropUtils'
+import { base64StringtoFile, image64toCanvasRef, extractImageFileExtensionFromBase64 } from './ImageCropUtils'
 
 class Basic extends React.Component {
   constructor(props) {
@@ -72,17 +72,16 @@ class Basic extends React.Component {
 
     this.handleImageUpload = async (e) => {
       e.preventDefault();
+      const canvasRef = this.imagePreviewCanvas.current;
+      const { imgSrcExs } = this.state;
+      const fileName = this.props.user.email.split('@')[0] + "." + imgSrcExs;
       this.setState({ status: 'uploading' });
+      const image64 = canvasRef.toDataURL('/image/' + imgSrcExs);
+      const newCroppedFile = base64StringtoFile(image64, fileName);
+      console.log(newCroppedFile);
       const data = new FormData();
-      await data.append('file', this.state.selectedFile);
+      await data.append('file', newCroppedFile);
       await data.append('id', this.props.currentUser.user._id)
-      for (var entry of data.entries()) {
-        console.log(entry);
-      }
-      // const obj = {
-      //   id: this.props.currentUser.user._id,
-      //   data: data
-      // }
 
       this.props.updateUserPhoto(data).then(() => {
         console.log('Image Uploaded');
@@ -101,7 +100,7 @@ class Basic extends React.Component {
       if (e.target.files && selectedFile) {
         var reader = new FileReader();
         reader.onload = async (el) => {
-          await this.setState({ imgSrc: el.target.result })
+          await this.setState({ imgSrc: el.target.result, imgSrcExs: extractImageFileExtensionFromBase64(el.target.result) })
         };
         reader.readAsDataURL(selectedFile);
       }
@@ -109,15 +108,15 @@ class Basic extends React.Component {
     }
     // Image Cropping
     this.handleOnCropChange = (crop) => {
-      console.log(crop);
       this.setState({ crop });
     }
     this.handleImageLoaded = (image) => {
       console.log(image);
     }
     this.handleOnCropComplete = (crop, pixelCrop) => {
+      const canvasRef = this.imagePreviewCanvas.current;
       const { imgSrc } = this.state;
-      image64toCanvasRef(this.imagePreviewCanvas.current, imgSrc, pixelCrop);
+      image64toCanvasRef(canvasRef, imgSrc, pixelCrop);
     }
   }
   render() {
@@ -162,7 +161,8 @@ class Basic extends React.Component {
                 </form>
 
                 <ReactCrop
-                  src={imgSrc} crop={this.state.crop}
+                  src={imgSrc}
+                  crop={this.state.crop}
                   onChange={this.handleOnCropChange}
                   onImageLoaded={this.handleImageLoaded}
                   onComplete={this.handleOnCropComplete}
