@@ -28,7 +28,7 @@ class Activity extends Component {
         else {
             return (
                 <div id="experience">
-                    <div class="ui feed" style={{ marginTop: '10px' }}>
+                    <div className="ui feed" style={{ marginTop: '10px' }}>
                         {this.props.activity.map(act =>
                             <div className="event">
                                 <div className="label" >

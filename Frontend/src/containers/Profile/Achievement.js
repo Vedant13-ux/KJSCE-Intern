@@ -63,7 +63,7 @@ class Achievement extends Component {
                 <h4>{e.title}</h4>
                 {this.props.owner && (
                   <span
-                    class="deleteproj"
+                    className="deleteproj"
                     onClick={() => this.handleshow2(e)}
                   >
                     <i className="fa fa-edit"></i>

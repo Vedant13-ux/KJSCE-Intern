@@ -92,7 +92,7 @@ class Navbar extends Component {
                             <div className="container" onClick={this.toggleSidebar}>
                                 <div className="bar1" onClick={this.toggleParent}></div>
                                 <div className="bar2" onClick={this.toggleParent}></div>
-                                <div class="bar3" onClick={this.toggleParent}></div>
+                                <div className="bar3" onClick={this.toggleParent}></div>
                             </div>
                         </button>
 
@@ -129,7 +129,7 @@ class Navbar extends Component {
                                     <Link className="nav-link" to="/messaging"><i className="fas fa-envelope mr-1"></i>Messaging</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/bookmarks"><i class="fas fa-bookmark mr-1"></i>Bookmarks</Link>
+                                    <Link className="nav-link" to="/bookmarks"><i className="fas fa-bookmark mr-1"></i>Bookmarks</Link>
                                 </li>
                             </ul>
 
