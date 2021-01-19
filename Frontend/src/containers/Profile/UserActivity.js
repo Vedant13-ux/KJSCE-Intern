@@ -208,7 +208,7 @@ class Basic extends Component {
               </Nav.Link>
               </Nav.Item>}
             <Nav.Item>
-              <Nav.Link name="posts" to="#posts" onClick={this.handleSwitch}>
+              <Nav.Link name="posts" to="#posts" onClick={this.handleSwitch} active={this.state.content === "posts" ? true : false} >
                 Posts
               </Nav.Link>
             </Nav.Item>
