@@ -3,6 +3,8 @@ import Modal from "react-bootstrap/Modal";
 import { connect } from 'react-redux'
 import { updatebasicinfo, updateUserPhoto } from '../../store/actions/user'
 import { Spinner } from 'react-bootstrap'
+import 'react-image-crop/dist/ReactCrop.css';
+import ReactCrop from 'react-image-crop';
 
 class Basic extends React.Component {
   constructor(props) {
@@ -49,6 +51,9 @@ class Basic extends React.Component {
             linkedin: this.state.userdata.linkedin,
             github: this.state.userdata.github,
           }
+        },
+        crop: {
+          aspect: 16 / 9
         }
       };
       console.log(data)
@@ -88,7 +93,6 @@ class Basic extends React.Component {
       // console.log('Changed File');
       await this.setState({
         selectedFile: e.target.files[0],
-        uploading: ''
       });
       // console.log(e.target.files[0]);
     }
@@ -103,6 +107,7 @@ class Basic extends React.Component {
       linkedin,
       github,
     } = this.state.userdata;
+    const { selectedFile } = this.state
     return (
       <div className="page-heading">
         <div className="media clearfix">
@@ -139,6 +144,7 @@ class Basic extends React.Component {
                     <span className="ml-2">Uploading you beautiful Photo....</span>
                   </div>
                 }
+                <ReactCrop src={selectedFile} crop={this.state.crop} />
               </Modal.Body>
             </Modal>
           </div>
@@ -256,7 +262,7 @@ class Basic extends React.Component {
                   </div>
                   <div className="field">
                     <label>Facebook Handle</label>
-                    <div class="ui left icon input">
+                    <div className="ui left icon input">
                       <input
                         name="facebook"
                         type="url"
@@ -264,12 +270,12 @@ class Basic extends React.Component {
                         value={facebook}
                         placeholder="Link of your Facebook Profile"
                       />
-                      <i class="facebook icon"></i>
+                      <i className="facebook icon"></i>
                     </div>
                   </div>
                   <div className="field">
                     <label>Twitter Handle</label>
-                    <div class="ui left icon input">
+                    <div className="ui left icon input">
                       <input
                         name="twitter"
                         type="url"
@@ -277,12 +283,12 @@ class Basic extends React.Component {
                         value={twitter}
                         placeholder="Link of your Twitter Profile"
                       />
-                      <i class="twitter icon"></i>
+                      <i className="twitter icon"></i>
                     </div>
                   </div>
                   <div className="field">
                     <label>Linkedin Handle</label>
-                    <div class="ui left icon input">
+                    <div className="ui left icon input">
                       <input
                         name="linkedin"
                         type="url"
@@ -290,12 +296,12 @@ class Basic extends React.Component {
                         value={linkedin}
                         placeholder="Link of your Linkedin Profile"
                       />
-                      <i class="linkedin icon"></i>
+                      <i className="linkedin icon"></i>
                     </div>
                   </div>
                   <div className="field">
                     <label>Github Account</label>
-                    <div class="ui left icon input">
+                    <div className="ui left icon input">
                       <input
                         name="github"
                         type="url"
@@ -303,7 +309,7 @@ class Basic extends React.Component {
                         value={github}
                         placeholder="Link of your Github Profile"
                       />
-                      <i class="github icon"></i>
+                      <i className="github icon"></i>
                     </div>
                   </div>
                   <div className="submit confirmdiv">

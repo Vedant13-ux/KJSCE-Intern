@@ -72,7 +72,7 @@ class Project extends Component {
                   {e.title}
                   {this.props.owner && (
                     <span
-                      class="deleteproj"
+                      className="deleteproj"
                       onClick={() => this.handleshow2(e)}
                     >
                       <i className="fa fa-edit"></i>

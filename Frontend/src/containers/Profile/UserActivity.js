@@ -93,7 +93,7 @@ class Basic extends Component {
                 <div className="experience-ele">
                   <h4>{e.title}</h4>
                   <sub>{e.category}</sub>
-                  <span className="deleteproj">{e.recruited.includes(this.props.user._id) ? (<span class="badge badge-success">Selected</span>) : (<span class="badge badge-secondary">Applied</span>)}</span>
+                  <span className="deleteproj">{e.recruited.includes(this.props.user._id) ? (<span className="badge badge-success">Selected</span>) : (<span className="badge badge-secondary">Applied</span>)}</span>
                   <p>
                     <span>{'Duration : ' + e.duration + ' months'}</span><br></br>
                     <h6>{e.description}</h6>

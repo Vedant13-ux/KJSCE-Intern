@@ -22,15 +22,15 @@ export class MessagesPanel extends React.Component {
     let list = <div>no messages</div>;
     if (this.props.conversation && this.props.conversation.messages.length!==0) {
       list = this.props.conversation.messages.map((m) => {
-        return <li class={m.author===this.props.myId?'message-right':'message-left'} >
-            <span class="message-text">{m.text}</span><sub>{new Date(m.created).toDateString()}</sub>
+        return <li className={m.author===this.props.myId?'message-right':'message-left'} >
+            <span className="message-text">{m.text}</span><sub>{new Date(m.created).toDateString()}</sub>
         </li>;
       });
     }
     return (
       <div className="messages-panel">
         <div className="chat-listcontainer">
-          <ul class="chat-message-list">{list}</ul>
+          <ul className="chat-message-list">{list}</ul>
         </div>
         {this.props.conversation && (
           <div className="messages-input">

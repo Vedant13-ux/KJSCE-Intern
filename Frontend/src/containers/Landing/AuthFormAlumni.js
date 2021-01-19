@@ -38,7 +38,7 @@ class AlumniSignup extends Component {
         return (
             <form className="ui form authForm" onSubmit={this.handleSubmit}>
                 <div className="heading">
-                    <i class="fas fa-user-graduate mr-2"></i>Alumni Signup
+                    <i className="fas fa-user-graduate mr-2"></i>Alumni Signup
                 </div>
                 <div className="field">
                     <label>Name</label>

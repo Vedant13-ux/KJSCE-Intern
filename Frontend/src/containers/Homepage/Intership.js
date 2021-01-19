@@ -57,7 +57,7 @@ class Internship extends Component {
 
               <div className="extraDetails">
                 {
-                  <p>{this.props.type === "Work from Home" ? <i className="fas fa-home"></i> : <i class="fas fa-briefcase"></i>} {this.props.type}</p>
+                  <p>{this.props.type === "Work from Home" ? <i className="fas fa-home"></i> : <i className="fas fa-briefcase"></i>} {this.props.type}</p>
                 }
                 <p><i className="fa fa-clock mr-1"></i>  {this.props.duration} months</p>
                 <p><i className="fa fa-hourglass mr-2"></i>Apply by {this.dateFormat()}</p>

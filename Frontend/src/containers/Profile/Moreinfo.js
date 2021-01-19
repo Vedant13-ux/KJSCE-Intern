@@ -431,7 +431,7 @@ class Basic extends Component {
                 <div>
                   <h4>{s.title}{this.props.isowner && (
                     <span
-                      class="deletecert"
+                      className="deletecert"
                       onClick={() =>this.deletecert(s._id) }
                     >
                       <i className="fa fa-trash"></i>

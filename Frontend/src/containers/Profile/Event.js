@@ -71,7 +71,7 @@ class Event extends Component {
                   {e.title}
                   {this.props.owner && (
                     <span
-                      class="deleteproj"
+                      className="deleteproj"
                       onClick={() => this.handleshow2(e)}
                     >
                       <i className="fa fa-edit"></i>
@@ -79,12 +79,12 @@ class Event extends Component {
                   )}
                 </h4>
                 <div>
-                  <h7>Venue : {e.venue}</h7>
+                  <div>Venue : {e.venue}</div>
                 </div>
                 <div>
-                  <h7>
+                  <div>
                     Timings : {e.startTime} - {e.endTime}
-                  </h7>
+                  </div>
                 </div>
                 <div>Description : {e.description}</div>
                 <div>
@@ -94,7 +94,7 @@ class Event extends Component {
                 </div>
               </div>
             );
-          })}{this.props.user.events.length===0 && <NoEvents></NoEvents>}
+          })}{this.props.user.events.length === 0 && <NoEvents></NoEvents>}
         </div>
         <Modal
           size="lg"
@@ -285,4 +285,4 @@ class EventForm extends Component {
   }
 }
 
-export default connect(() => {}, { addEvent, editEvent, deleteEvent })(Event);
+export default connect(() => { }, { addEvent, editEvent, deleteEvent })(Event);
