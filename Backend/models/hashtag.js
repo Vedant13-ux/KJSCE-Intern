@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const certScehma = new mongoose.Schema({
+const hashtagScehma = new mongoose.Schema({
     name: String,
-    posts:[
+    posts: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Post'
@@ -9,4 +9,4 @@ const certScehma = new mongoose.Schema({
     ]
 });
 
-module.exports = mongoose.model('Hashtag', certScehma);
+module.exports = mongoose.model('Hashtag', hashtagScehma);

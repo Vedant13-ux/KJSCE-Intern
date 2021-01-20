@@ -6,7 +6,7 @@ import { Spinner } from 'react-bootstrap'
 import 'react-image-crop/dist/ReactCrop.css';
 import ReactCrop from 'react-image-crop';
 import { base64StringtoFile, image64toCanvasRef, extractImageFileExtensionFromBase64 } from './ImageCropUtils';
-const acceptedFileTypes = 'image/x-png, image/png, image/jpg, image/jpeg';
+const acceptedFileTypes = ['image/x-png, image/png, image/jpg, image/jpeg'];
 const acceptedFileTypesArray = acceptedFileTypes.map(item => item.trim());
 
 class Basic extends React.Component {
