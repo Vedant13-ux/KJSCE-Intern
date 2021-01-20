@@ -25,7 +25,7 @@ app.use(cors());
 // Database
 require('./models/index');
 require('./Chat')(io);
-// require('./seedDB')();
+require('./seedDB')();
 // ROutes
 
 const authRoutes = require('./routes/auth');
