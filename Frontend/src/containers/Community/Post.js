@@ -31,7 +31,6 @@ class PostMain extends Component {
       <div id="postalone">
         <Navbar
           onPage="community"
-          currentUser={this.props.currentUser}
           history={this.props.history}
         />
         <div id="heightforfooter">
