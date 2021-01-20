@@ -236,28 +236,7 @@ class Feed extends React.Component {
     this.state = {
       posts: [],
       start: true,
-      trending: [
-        {
-          name: "giveStipendBruh",
-          noOfPosts: 89,
-        },
-        {
-          name: "givemoneyBruh",
-          noOfPosts: 59,
-        },
-        {
-          name: "python",
-          noOfPosts: 45,
-        },
-        {
-          name: "JavaIsCancer",
-          noOfPosts: 39,
-        },
-        {
-          name: "YesIDoCoding",
-          noOfPosts: 33,
-        },
-      ],
+      trending: [],
     };
   }
 
