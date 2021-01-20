@@ -16,16 +16,15 @@ class PostMain extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: null,
+      posts: [],
       start: true,
     }
   }
   componentDidMount() {
     document.documentElement.scrollTop = '0';
-    apiCall("get", '/api/community/posts/' + this.props.match.params.id, "")
+    apiCall("get", '/api/community/posts/getAllWithHashtag/' + this.props.match.params.id, "")
       .then((data) => {
-        this.setState({ data: data, start: false });
-        console.log(this.state)
+        this.setState({ posts: data, start: false });
       })
       .catch((e) => {
         console.log("error")
@@ -45,8 +44,9 @@ class PostMain extends Component {
           <PostWall
           history={this.props.history}
           isprofile={false}
+          start={this.state.start}
           postcreate={false}
-          posts={[]}
+          posts={this.state.posts}
           loggedin={this.props.currentUser}
           currentUser={null}
           updateLikeActivity={this.props.updateLikeActivity}
@@ -55,8 +55,7 @@ class PostMain extends Component {
         /> : this.state.start ? <div className="loading-anime">
             <Loading className="loading-wheel" />
           </div> :
-            // <NotFound />
-            <h1>pranked</h1>
+            <NotFound />
         }</div>
         <PageFooter />
       </div>

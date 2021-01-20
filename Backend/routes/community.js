@@ -12,6 +12,22 @@ router.get('/posts/getAll', (req, res, next) => {
         .catch(err => next(err));
 });
 
+router.get('/posts/getTrendingHashtags', (req, res, next) => {
+    // db.Post.find().populate('author').populate({ path: 'comments', populate: { path: 'author' } }).sort({ created: 1 }).limit(10).exec()
+
+    //     .then(posts => {
+    //         res.status(200).send(posts);
+    //     })
+    //     .catch(err => next(err));
+});
+
+router.get('/posts/getAllWithHashtag/:id', (req, res, next) => {
+    // db.Post.find({}).populate('author').populate({ path: 'comments', populate: { path: 'author' } }).sort({ created: 1 }).exec()
+    //     .then(posts => {
+    //         res.status(200).send(posts);
+    //     })
+    //     .catch(err => next(err));
+});
 
 router.get('/posts/getNext', (req, res, next) => {
     let curId = req.query.curId;
