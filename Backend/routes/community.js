@@ -25,9 +25,23 @@ var upload = multer({ storage: storage, fileFilter: imageFilter });
 // Getting Posts
 router.get('/posts/getAll', (req, res, next) => {
     db.Post.find().limit(10).sort('-created').populate({ path: 'author', select: 'fname lname photo email' }).populate({ path: 'comments', populate: { path: 'author', select: 'fname lname email photo' } }).exec()
-
         .then(posts => {
-            res.status(200).send(posts);
+            db.Hashtag.aggregate([
+                {
+                    "$project": {
+                        "name": 1,
+                        "length": { "$size": "$posts" }
+                    }
+                },
+                { "$sort": { "length": -1 } },
+                { "$limit": 5 }
+            ], function (err, results) {
+                if (err) {
+                    return next(err);
+                } else {
+                    res.send({ posts, trending: results });
+                }
+            })
         })
         .catch(err => next(err));
 });
@@ -37,7 +51,6 @@ router.get('/posts/getTrendingHashtags', (req, res, next) => {
         {
             "$project": {
                 "name": 1,
-                "posts": 1,
                 "length": { "$size": "$posts" }
             }
         },
@@ -53,7 +66,7 @@ router.get('/posts/getTrendingHashtags', (req, res, next) => {
 });
 
 router.get('/posts/getAllWithHashtag/:id', (req, res, next) => {
-    db.Hashtag.find({name:req.params.id}).populate({path:'posts',populate:{ path: 'author', select:'fname lname email photo' }}).populate({path:'posts',populate:{ path: 'comments', populate: { path: 'author', select:'fname lname email photo' } }}).sort({ created: -1 }).exec()
+    db.Hashtag.find({ name: req.params.id }).populate({ path: 'posts', populate: { path: 'author', select: 'fname lname email photo' } }).populate({ path: 'posts', populate: { path: 'comments', populate: { path: 'author', select: 'fname lname email photo' } } }).sort({ created: -1 }).exec()
         .then(data => {
             res.status(200).send(data[0].posts);
         })
