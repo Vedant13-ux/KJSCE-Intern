@@ -264,7 +264,7 @@ class Feed extends React.Component {
   componentWillMount() {
     apiCall("get", "/api/community/posts/getAll", "")
       .then((data) => {
-        this.setState({ posts: data, start: false });
+        this.setState({ posts: data.posts,trending:data.trending, start: false });
       })
       .catch((e) => {
         console.log("error");
@@ -296,7 +296,7 @@ class Feed extends React.Component {
             <div className="controls">
               <h3>Trending Hashtags</h3><hr></hr>
               {this.state.trending.map((val, i) => {
-                return <Link to={"/hashtag/" + val.name} className="notblue">{i !== 0 && <hr></hr>}<h5><p>{i + '.  '}</p>{'#' + val.name}</h5><p>{val.noOfPosts + ' posts'}</p></Link>
+                return <Link to={"/hashtag/" + val.name} className="notblue">{i !== 0 && <hr></hr>}<h5><p>{(i+1) + '.  '}</p>{'#' + val.name}</h5><p>{val.length + ' posts'}</p></Link>
               })}
             </div>
           </div>
@@ -582,8 +582,8 @@ class Comment extends React.Component {
     let val = this.state.data;
     return (
       <div className="comment">
-        <a className="avatar" href="/">
-          <img alt="" src={val.author.photo} />
+        <a href="/">
+          <img alt="" src={val.author.photo} className="avatar-pro" />
         </a>
         <div className="content">
           <Link
