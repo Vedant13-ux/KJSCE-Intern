@@ -5,7 +5,9 @@ import { updatebasicinfo, updateUserPhoto } from '../../store/actions/user'
 import { Spinner } from 'react-bootstrap'
 import 'react-image-crop/dist/ReactCrop.css';
 import ReactCrop from 'react-image-crop';
-import { base64StringtoFile, image64toCanvasRef, extractImageFileExtensionFromBase64 } from './ImageCropUtils'
+import { base64StringtoFile, image64toCanvasRef, extractImageFileExtensionFromBase64 } from './ImageCropUtils';
+const acceptedFileTypes = 'image/x-png, image/png, image/jpg, image/jpeg';
+const acceptedFileTypesArray = acceptedFileTypes.map(item => item.trim());
 
 class Basic extends React.Component {
   constructor(props) {
@@ -29,7 +31,8 @@ class Basic extends React.Component {
       },
       cropped: false,
       startedCropping: false,
-      imgSrc: null
+      imgSrc: null,
+      error: null
     };
     this.imagePreviewCanvas = React.createRef();
     this.handleshow = (e) => {
@@ -88,7 +91,7 @@ class Basic extends React.Component {
         this.handleClose2();
         this.handleClearToDefult();
       }).catch(err => {
-        console.log(err);
+        this.state.error = 'File Type is Not Supported'
       })
     }
 
@@ -193,7 +196,13 @@ class Basic extends React.Component {
                           <span className="ml-2">Uploading you beautiful Photo....</span>
                         </div>
                       }
+                      {this.state.error !== null &&
+                        <div style={{ color: 'red' }}>
+                          {this.state.error}
+                        </div>
+                      }
                     </div>
+
                   }
 
                 </form>

@@ -44,7 +44,7 @@ class Application extends React.Component {
         <Feed
           isMobile={this.state.isMobile}
           currentUser={this.props.currentUser}
-          addPost={this.props.addPost} history={this.props.history}
+          history={this.props.history}
           updateLikeActivity={this.props.updateLikeActivity}
           updateUnLikeActivity={this.props.updateUnLikeActivity}
           updateCommentActivity={this.props.updateCommentActivity}
@@ -284,13 +284,17 @@ class Feed extends React.Component {
         this.setState({ start: false });
       });
   }
+  // componentDidMount(e) {
+  //   if (document.documentElement.scrollTop === document.documentElement.scrollHeight) {
+  //     console.log('Start Dynamic Loading')
+  //   }
+  // }
 
   render() {
     return (
       <div id="feed">
         <div className="content-wrapper feed-wrapper">
           <PostWall
-            addPost={this.props.addPost} history={this.props.history}
             isprofile={false}
             postcreate={true}
             loggedin={this.props.currentUser}
@@ -513,7 +517,7 @@ export class PostWall extends React.Component {
     return (
       <div className="post-wall">
 
-        {this.props.postcreate && <PostCreate addPost={this.props.addPost} history={this.props.history} user={this.props.loggedin.user} />}
+        {this.props.postcreate && <PostCreate history={this.props.history} user={this.props.loggedin.user} />}
         {content}
       </div>
     );

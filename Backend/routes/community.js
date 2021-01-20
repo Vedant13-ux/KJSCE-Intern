@@ -24,7 +24,7 @@ var upload = multer({ storage: storage, fileFilter: imageFilter });
 
 // Getting Posts
 router.get('/posts/getAll', (req, res, next) => {
-    db.Post.find().populate('author').populate({ path: 'comments', populate: { path: 'author' } }).sort({ created: 1 }).limit(10).exec()
+    db.Post.find().limit(10).sort('-created').populate({ path: 'author', select: 'fname lname photo email' }).populate({ path: 'comments', populate: { path: 'author', select: 'fname lname email photo' } }).exec()
 
         .then(posts => {
             res.status(200).send(posts);
