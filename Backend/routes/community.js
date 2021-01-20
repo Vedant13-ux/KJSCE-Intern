@@ -1,6 +1,26 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models');
+const cloudinary = require('cloudinary');
+const multer = require('multer');
+cloudinary.config({
+    cloud_name: 'ved13',
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+var storage = multer.diskStorage({
+    filename: function (req, file, callback) {
+        callback(null, Date.now() + file.originalname);
+    }
+});
+var imageFilter = function (req, file, cb) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif|mp4|flv|mov|mkv|WMV|WebM)$/i)) {
+        return cb(new Error('Only media files are allowed!'), false);
+    }
+    cb(null, true);
+};
+var upload = multer({ storage: storage, fileFilter: imageFilter });
+
 
 // Getting Posts
 router.get('/posts/getAll', (req, res, next) => {
@@ -12,15 +32,15 @@ router.get('/posts/getAll', (req, res, next) => {
         .catch(err => next(err));
 });
 
-/*                    unfinished               */
-router.put('/posts/getSpecific', (req, res, next) => {
-    console.log(req.body)
-    db.Post.find().populate({ path: 'author', match: { role: "Student" } }).populate({ path: 'comments', populate: { path: 'author' } }).limit(10).exec()
-        .then(posts => {
-            res.status(200).send(posts);
-        })
-        .catch(err => next(err));
-});
+// /*                    unfinished               */
+// router.put('/posts/getSpecific', (req, res, next) => {
+//     console.log(req.body)
+//     db.Post.find().populate({ path: 'author', match: { role: "Student" }, select:' fname lname email photo' }).populate({ path: 'comments', populate: { path: 'author', select:' fname lname photo email' } }).limit(10).exec()
+//         .then(posts => {
+//             res.status(200).send(posts);
+//         })
+//         .catch(err => next(err));
+// });
 
 router.get('/posts/getNext', (req, res, next) => {
     let curId = req.query.curId;
@@ -44,7 +64,7 @@ router.get('/posts/:id', (req, res, next) => {
         .catch(err => next(err))
 });
 
-router.post('/posts/create', (req, res, next) => {
+router.post('/posts/create', upload.single('file'), (req, res, next) => {
     db.User.findById(req.body.author)
         .then((user) => {
             if (!user) {
@@ -53,13 +73,21 @@ router.post('/posts/create', (req, res, next) => {
                     message: 'User Not Found'
                 })
             }
-            db.Post.create(req.body)
-                .then(async (newPost) => {
-                    await user.posts.push(newPost);
-                    await user.save();
-                    res.status(200).send(newPost);
-                })
-                .catch(err => next(err))
+            cloudinary.v2.uploader.upload(req.file.path, function (err, result) {
+                if (err) {
+                    return next(err);
+                }
+                req.body.image = result.secure_url;
+                req.body.imageId = result.public_id;
+                db.Post.create(req.body)
+                    .then(async (newPost) => {
+                        await user.posts.push(newPost);
+                        await user.save();
+                        res.status(200).send(newPost);
+                    })
+                    .catch(err => next(err))
+            })
+
         }).catch((err) => {
 
         });

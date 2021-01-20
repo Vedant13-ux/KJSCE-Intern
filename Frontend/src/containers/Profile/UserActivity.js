@@ -12,7 +12,7 @@ import InternshipOffered from './InternshipOffered'
 import NoApplication from '../../images/NoApplication';
 import Activity from './Activity';
 import { connect } from 'react-redux'
-import { addPost, updateRecruited } from '../../store/actions/user'
+import {updateRecruited } from '../../store/actions/user'
 
 
 class Basic extends Component {
@@ -234,4 +234,4 @@ class Basic extends Component {
   }
 }
 
-export default connect(() => { }, { addPost, updateRecruited })(Basic);
+export default connect(() => { }, {updateRecruited })(Basic);

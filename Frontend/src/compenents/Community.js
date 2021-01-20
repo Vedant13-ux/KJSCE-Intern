@@ -5,9 +5,11 @@ import { apiCall } from "../services/api";
 import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
 import NoPost from '../images/NoPost';
-import { addPost, updateLikeActivity, updateUnLikeActivity, updateCommentActivity } from '../store/actions/user'
+import { updateLikeActivity, updateUnLikeActivity, updateCommentActivity } from '../store/actions/user'
 import { connect } from "react-redux";
 import Moment from 'react-moment';
+import { Spinner } from 'react-bootstrap'
+
 
 class Application extends React.Component {
   constructor(props) {
@@ -140,23 +142,19 @@ class PostCreate extends React.Component {
     super(props);
     this.state = {
       show: false,
-      postdata: {
-        content: "",
-        image: "",
-        author: this.props.user._id
-      },
-    };
-    this.handleChange = (e) => {
-      var postdata = this.state.postdata;
-      postdata[e.target.name] = e.target.value;
-      this.setState({ postdata });
+      selectedFile: null,
+      status: ''
     };
     this.handleSubmit = (e) => {
       e.preventDefault();
-      console.log(this.state.postdata);
-      apiCall('post', '/api/community/posts/create', { ...this.state.postdata })
+      this.setState({ status: 'uploading' })
+      const fd = new FormData(e.target);
+      for (var entry of fd.entries()) {
+        console.log(entry);
+      }
+      apiCall('post', '/api/community/posts/create', fd)
         .then(async (post) => {
-          this.props.addPost(post);
+          this.setState({ status: '', selectedFile: null })
           return this.props.history.push('/post/' + post._id)
         }).catch((err) => {
           console.log(err);
@@ -168,9 +166,11 @@ class PostCreate extends React.Component {
     this.handleShow = (e) => {
       this.setState({ show: true });
     };
+    this.fileValidaion = e => {
+      this.setState({ selectedFile: e.target.files[0] })
+    }
   }
   render() {
-    const { content, image } = this.state.postdata;
     return (
       <div className="posting-area">
         <div onClick={this.handleShow} className="posting-text">
@@ -189,7 +189,7 @@ class PostCreate extends React.Component {
             <Modal.Title>Create a post</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} encType='multipart/form-data'>
               <div className="ui form">
                 <div className="field">
                   <label>About post</label>
@@ -199,17 +199,23 @@ class PostCreate extends React.Component {
                     required
                     placeholder="What do you want to talk about?"
                     name="content"
-                    value={content}
-                    onChange={this.handleChange}
                   ></textarea>
                 </div>
                 <div className="field">
-                  <label>Image URL</label>
-                  <input onChange={this.handleChange} value={image} type="url" name="image" placeholder="Link of Image"></input>
+                  <label>Media Upload</label>
+                  <input onChange={this.fileValidaion} type="file" name="file"></input>
                 </div>
+                <input type="hidden" name="author" value={this.props.user._id} />
 
                 <div className="submit confirmdiv">
-                  <button className="medium ui button confirm">POST</button>
+                  {this.state.status === "uploading" ?
+                    <button className="ui button confirm" style={{ display: 'inline-flex', alignItems: 'center' }}>
+                      <Spinner animation="border" variant="warning" className="mr-2" ></Spinner>
+                  Uploading
+                </button>
+                    :
+                    <button className="medium ui button confirm">Post</button>
+                  }
                 </div>
               </div>
             </form>
@@ -537,11 +543,6 @@ export class Post extends React.Component {
       this.name = props.userprofile.fname + " " + props.userprofile.lname;
       this.email = props.userprofile.email;
     }
-    function dateFormat(k) {
-      let apply = new Date(k);
-      return apply.toDateString();
-    }
-    this.date = dateFormat(options.created);
     this.img = options.image;
     this.likeHandler = this.likeHandler.bind(this);
     this.addCommentHandler = this.addCommentHandler.bind(this);
@@ -659,7 +660,7 @@ export class Post extends React.Component {
         <div className="post-wrapper">
           <UserInfo
             userAvatar={this.avatar}
-            date={this.date}
+            date={this.props.options.created}
             email={this.email}
             username={this.name}
           />
@@ -849,5 +850,4 @@ class CommentInput extends React.Component {
   }
 }
 
-connect(() => { }, { addPost })(Post);
-export default connect(() => { }, { addPost, updateLikeActivity, updateUnLikeActivity, updateCommentActivity })(Application);
+export default connect(() => { }, { updateLikeActivity, updateUnLikeActivity, updateCommentActivity })(Application);
