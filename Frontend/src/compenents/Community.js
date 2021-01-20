@@ -4,12 +4,15 @@ import PageFooter from "../containers/Global/PageFooter";
 import { apiCall } from "../services/api";
 import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
-import NoPost from '../images/NoPost';
-import { updateLikeActivity, updateUnLikeActivity, updateCommentActivity } from '../store/actions/user'
+import NoPost from "../images/NoPost";
+import {
+  updateLikeActivity,
+  updateUnLikeActivity,
+  updateCommentActivity,
+} from "../store/actions/user";
 import { connect } from "react-redux";
-import Moment from 'react-moment';
+import Moment from "react-moment";
 import { Spinner } from 'react-bootstrap'
-
 
 class Application extends React.Component {
   constructor(props) {
@@ -39,7 +42,11 @@ class Application extends React.Component {
   render() {
     return (
       <div className="wrapper">
-        <Navbar isMobile={this.state.isMobile} {...this.props} onPage="community" />
+        <Navbar
+          isMobile={this.state.isMobile}
+          {...this.props}
+          onPage="community"
+        />
         <ScrollTopButton />
         <Feed
           isMobile={this.state.isMobile}
@@ -221,7 +228,7 @@ class PostCreate extends React.Component {
             </form>
           </Modal.Body>
         </Modal>
-      </div>
+      </div >
     );
   }
 }
@@ -232,46 +239,29 @@ class Feed extends React.Component {
     this.state = {
       posts: [],
       start: true,
-      filter: {
-        Student: true,
-        Faculty: true,
-        Alumni: true,
-        Council: true,
-        it: true,
-        cs: true,
-        mech: true,
-        extc: true,
-        etrx: true,
-        "1": true,
-        "2": true,
-        "3": true,
-        "4": true,
-      }
+      trending: [
+        {
+          name: "giveStipendBruh",
+          noOfPosts: 89,
+        },
+        {
+          name: "givemoneyBruh",
+          noOfPosts: 59,
+        },
+        {
+          name: "python",
+          noOfPosts: 45,
+        },
+        {
+          name: "JavaIsCancer",
+          noOfPosts: 39,
+        },
+        {
+          name: "YesIDoCoding",
+          noOfPosts: 33,
+        },
+      ],
     };
-    this.handleSubmit = (e) => {
-      e.preventDefault()
-      let roles = []
-      let allroles = ["Student", "Faculty", "Alumni", "Council"]
-      for (let i in allroles) {
-        if (this.state.filter[allroles[i]]) {
-          roles.push(allroles[i])
-        }
-      }
-      apiCall("put", "/api/community/posts/getSpecific", { roles })
-        .then((data) => {
-          console.log("hua sahi se", data)
-          // this.setState({ posts: data });
-        })
-        .catch((e) => {
-          console.log("error");
-        });
-    }
-    this.handleChange = (e) => {
-      console.log(e.target.checked, e.target.id)
-      let d = this.state.filter
-      d[e.target.id] = e.target.checked
-      this.setState({ filter: d })
-    }
   }
 
   componentWillMount() {
@@ -306,168 +296,10 @@ class Feed extends React.Component {
           />
           <div className="right-side">
             <div className="controls">
-              <form onSubmit={this.handleSubmit}>
-                <h5>From</h5>
-                <div>
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      defaultChecked={true}
-                      onChange={this.handleChange}
-                      id="Student"
-                    />
-                    <label className="form-check-label" for="Student">
-                      Student
-                  </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      defaultChecked={true}
-                      onChange={this.handleChange}
-                      id="Faculty"
-                    />
-                    <label className="form-check-label" for="Faculty">
-                      Faculty
-                  </label>
-                  </div>
-                  <div className="form-check">
-                    <input type="checkbox" className="form-check-input"
-                      defaultChecked={true}
-                      onChange={this.handleChange} id="Alumni" />
-                    <label className="form-check-label" for="Alumni">
-                      Alumni
-                  </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      defaultChecked={true}
-                      onChange={this.handleChange}
-                      id="Council"
-                    />
-                    <label className="form-check-label" for="Council">
-                      Council
-                  </label>
-                  </div>
-                </div>
-                <h5>Department</h5>
-                <div>
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      defaultChecked={true}
-                      onChange={this.handleChange}
-                      id="cs"
-                    />
-                    <label className="form-check-label" for="cs">
-                      Computer Science
-                  </label>
-                  </div>
-                  <div className="form-check">
-                    <input type="checkbox" className="form-check-input"
-                      defaultChecked={true}
-                      onChange={this.handleChange} id="mech" />
-                    <label className="form-check-label" for="mech">
-                      Mechanical
-                  </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      defaultChecked={true}
-                      onChange={this.handleChange}
-                      id="etrx"
-                    />
-                    <label className="form-check-label" for="etrx">
-                      Electronics
-                  </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      defaultChecked={true}
-                      onChange={this.handleChange}
-                      id="extc"
-                    />
-                    <label className="form-check-label" for="extc">
-                      Electronics and Telecommunication
-                  </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      defaultChecked={true}
-                      onChange={this.handleChange}
-                      id="it"
-                    />
-                    <label className="form-check-label" for="it">
-                      Information Technology
-                  </label>
-                  </div>
-                </div>
-                <h5>Year</h5>
-                <div>
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      defaultChecked={true}
-                      onChange={this.handleChange}
-                      id="1"
-                    />
-                    <label className="form-check-label" for="1">
-                      FY
-                  </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      defaultChecked={true}
-                      onChange={this.handleChange}
-                      id="2"
-                    />
-                    <label className="form-check-label" for="2">
-                      SY
-                  </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      defaultChecked={true}
-                      onChange={this.handleChange}
-                      id="3"
-                    />
-                    <label className="form-check-label" for="3">
-                      TY
-                  </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      defaultChecked={true}
-                      onChange={this.handleChange}
-                      id="4"
-                    />
-                    <label className="form-check-label" for="4">
-                      LY
-                  </label>
-                  </div>
-                </div>
-                <button type="submit" className="btn btn-primary">
-                  Apply
-                </button>
-              </form>
+              <h3>Trending Hashtags</h3><hr></hr>
+              {this.state.trending.map((val, i) => {
+                return <Link to={"/hashtag/" + val.name} className="notblue">{i !== 0 && <hr></hr>}<h5><p>{i + '.  '}</p>{'#' + val.name}</h5><p>{val.noOfPosts + ' posts'}</p></Link>
+              })}
             </div>
           </div>
         </div>
@@ -477,7 +309,6 @@ class Feed extends React.Component {
 }
 
 export class PostWall extends React.Component {
-
   getPostById(id) {
     if (!this.props.posts[id]) return;
     return (
@@ -502,10 +333,7 @@ export class PostWall extends React.Component {
     }
     if (!elem.length) {
       if (this.props.start) elem.push(<div></div>);
-      else
-        elem.push(
-          <NoPost></NoPost>
-        );
+      else elem.push(<NoPost></NoPost>);
     }
     return elem;
   }
@@ -516,10 +344,14 @@ export class PostWall extends React.Component {
 
     return (
       <div className="post-wall">
-
-        {this.props.postcreate && <PostCreate history={this.props.history} user={this.props.loggedin.user} />}
-        {content}
-      </div>
+        {this.props.postcreate && (
+          <PostCreate
+            history={this.props.history}
+            user={this.props.loggedin.user}
+          />
+        )}
+        { content}
+      </div >
     );
   }
 }
@@ -582,8 +414,8 @@ export class Post extends React.Component {
           });
           var activity = {
             created: date,
-            post: this.props.options
-          }
+            post: this.props.options,
+          };
           this.props.updateLikeActivity(activity);
         })
         .catch((e) => console.log(e));
@@ -626,14 +458,14 @@ export class Post extends React.Component {
           fname: this.props.loggedin.user.fname,
           lname: this.props.loggedin.user.lname,
           photo: this.props.loggedin.user.photo,
-          email: this.props.loggedin.user.email
+          email: this.props.loggedin.user.email,
         },
         text: commentText,
-      }
+      };
       var activity = {
         created: newComment.created,
-        post: this.props.options
-      }
+        post: this.props.options,
+      };
       this.props.updateCommentActivity(activity);
       this.state.comments.push(newComment);
       form.text.value = "";
@@ -657,7 +489,6 @@ export class Post extends React.Component {
     // this.scrollToBottom();
   }
 
-
   render() {
     return (
       <div className="post" id={this.id}>
@@ -670,9 +501,9 @@ export class Post extends React.Component {
           />
           <div className="post-content">
             <p>{this.content}</p>
-            {this.img !== "" &&
+            {this.img !== "" && (
               <img onLoad={this.handleImageLoad} src={this.img} alt=""></img>
-            }
+            )}
           </div>
           <PostInfo
             likes={this.state.likes}
@@ -713,9 +544,7 @@ class Comments extends React.Component {
       return <div className="empty-comments"></div>;
 
     let commentsArr = this.props.comments.map((val, i) => {
-      return (
-        <Comment data={val}></Comment>
-      );
+      return <Comment data={val}></Comment>;
     });
 
     let hideButton = (
@@ -759,7 +588,10 @@ class Comment extends React.Component {
           <img alt="" src={val.author.photo} />
         </a>
         <div className="content">
-          <Link to={"/profile/" + val.author.email.split("@")[0]} className="author">
+          <Link
+            to={"/profile/" + val.author.email.split("@")[0]}
+            className="author"
+          >
             {val.author.fname + " " + val.author.lname}
           </Link>
           <div className="metadata">
@@ -792,7 +624,6 @@ class UserInfo extends React.Component {
 
           <div className="post-date">
             <Moment fromNow>{this.props.date}</Moment>
-
           </div>
         </div>
       </div>

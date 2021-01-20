@@ -143,7 +143,6 @@ const currentUserReducer = (state = defaultState, action) => {
             return {
                 ...state
             }
-
         case UPDATE_RECRUITED:
             console.log(action.internship)
             state.user.internshipsOffered.forEach(i => {

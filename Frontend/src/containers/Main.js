@@ -11,6 +11,7 @@ import NotFound from '../images/NotFound'
 import EmailVerificaton from '../containers/Utils/EmailVerification';
 import Profile from '../compenents/Profile';
 import Post from './Community/Post'
+import Hashtag from './Community/Hashtag'
 import Bookmarks from '../compenents/Bookmarks'
 import Chat from '../containers/chat/Chat'
 import '../index2.css'
@@ -39,6 +40,7 @@ class Main extends React.Component {
                     <Route exact path="/internship/:id" render={props => <IntershipDetail key={props.match.params.id} {...props} currentUser={currentUser} />} />
                     <Route exact path="/community" render={props => <Community {...props} currentUser={currentUser} />} />
                     <Route exact path="/post/:id" render={props => <Post key={props.match.params.id} {...props} currentUser={currentUser} />} />
+                    <Route exact path="/hashtag/:id" render={props => <Hashtag key={props.match.params.id} {...props} currentUser={currentUser} />} />
                     <Route exact path="/verify-email/:token" render={props => <EmailVerificaton {...props} />} />
                     <Route exact path="/profile/:id" render={props => <Profile key={props.match.params.id} {...props} currentUser={currentUser} />} />
                     <Route exact path="/bookmarks" render={props => <Bookmarks {...props} currentUser={currentUser} />} />

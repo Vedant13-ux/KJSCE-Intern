@@ -443,7 +443,6 @@ export function editAchievement(achievement) {
 }
 
 
-
 function updateRecruit(recruited, internship) {
     return {
         type: UPDATE_RECRUITED,

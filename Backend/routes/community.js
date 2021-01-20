@@ -32,15 +32,22 @@ router.get('/posts/getAll', (req, res, next) => {
         .catch(err => next(err));
 });
 
-// /*                    unfinished               */
-// router.put('/posts/getSpecific', (req, res, next) => {
-//     console.log(req.body)
-//     db.Post.find().populate({ path: 'author', match: { role: "Student" }, select:' fname lname email photo' }).populate({ path: 'comments', populate: { path: 'author', select:' fname lname photo email' } }).limit(10).exec()
-//         .then(posts => {
-//             res.status(200).send(posts);
-//         })
-//         .catch(err => next(err));
-// });
+router.get('/posts/getTrendingHashtags', (req, res, next) => {
+    // db.Post.find().populate('author').populate({ path: 'comments', populate: { path: 'author' } }).sort({ created: 1 }).limit(10).exec()
+
+    //     .then(posts => {
+    //         res.status(200).send(posts);
+    //     })
+    //     .catch(err => next(err));
+});
+
+router.get('/posts/getAllWithHashtag/:id', (req, res, next) => {
+    db.Hashtag.find({name:req.params.id}).populate({path:'posts',populate:'author'}).populate({path:'posts',populate:{ path: 'comments', populate: { path: 'author' } }}).sort({ created: 1 }).exec()
+        .then(data => {
+            res.status(200).send(data.posts);
+        })
+        .catch(err => next(err));
+});
 
 router.get('/posts/getNext', (req, res, next) => {
     let curId = req.query.curId;

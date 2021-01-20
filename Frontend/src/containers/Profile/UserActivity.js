@@ -130,7 +130,6 @@ class Basic extends Component {
             postcreate={this.props.owner}
             currentUser={this.props.user}
             loggedin={{ user: this.props.loggedin }}
-            addPost={this.props.addPost}
           />
         );
         break;
@@ -234,4 +233,4 @@ class Basic extends Component {
   }
 }
 
-export default connect(() => { }, {updateRecruited })(Basic);
+export default connect(() => { }, { updateRecruited })(Basic);
