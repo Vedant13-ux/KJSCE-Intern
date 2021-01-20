@@ -42,9 +42,9 @@ router.get('/posts/getTrendingHashtags', (req, res, next) => {
 });
 
 router.get('/posts/getAllWithHashtag/:id', (req, res, next) => {
-    db.Hashtag.find({name:req.params.id}).populate({path:'posts',populate:'author'}).populate({path:'posts',populate:{ path: 'comments', populate: { path: 'author' } }}).sort({ created: 1 }).exec()
+    db.Hashtag.find({name:req.params.id}).populate({path:'posts',populate:{ path: 'author' }}).populate({path:'posts',populate:{ path: 'comments', populate: { path: 'author' } }}).sort({ created: 1 }).exec()
         .then(data => {
-            res.status(200).send(data.posts);
+            res.status(200).send(data[0].posts);
         })
         .catch(err => next(err));
 });
