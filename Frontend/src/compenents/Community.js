@@ -5,7 +5,7 @@ import { apiCall } from "../services/api";
 import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
 import NoPost from '../images/NoPost';
-import { addPost, updateLikeActivity, updateUnLikeActivity, updateCommentActivity } from '../store/actions/user'
+import { updateLikeActivity, updateUnLikeActivity, updateCommentActivity } from '../store/actions/user'
 import { connect } from "react-redux";
 import Moment from 'react-moment';
 
@@ -42,7 +42,7 @@ class Application extends React.Component {
         <Feed
           isMobile={this.state.isMobile}
           currentUser={this.props.currentUser}
-          addPost={this.props.addPost} history={this.props.history}
+           history={this.props.history}
           updateLikeActivity={this.props.updateLikeActivity}
           updateUnLikeActivity={this.props.updateUnLikeActivity}
           updateCommentActivity={this.props.updateCommentActivity}
@@ -156,7 +156,6 @@ class PostCreate extends React.Component {
       console.log(this.state.postdata);
       apiCall('post', '/api/community/posts/create', { ...this.state.postdata })
         .then(async (post) => {
-          this.props.addPost(post);
           return this.props.history.push('/post/' + post._id)
         }).catch((err) => {
           console.log(err);
@@ -284,7 +283,7 @@ class Feed extends React.Component {
       <div id="feed">
         <div className="content-wrapper feed-wrapper">
           <PostWall
-            addPost={this.props.addPost} history={this.props.history}
+           history={this.props.history}
             isprofile={false}
             postcreate={true}
             loggedin={this.props.currentUser}
@@ -507,7 +506,7 @@ export class PostWall extends React.Component {
     return (
       <div className="post-wall">
 
-        {this.props.postcreate && <PostCreate addPost={this.props.addPost} history={this.props.history} user={this.props.loggedin.user} />}
+        {this.props.postcreate && <PostCreate  history={this.props.history} user={this.props.loggedin.user} />}
         {content}
       </div>
     );
@@ -849,5 +848,4 @@ class CommentInput extends React.Component {
   }
 }
 
-connect(() => { }, { addPost })(Post);
-export default connect(() => { }, { addPost, updateLikeActivity, updateUnLikeActivity, updateCommentActivity })(Application);
+export default connect(() => { }, { updateLikeActivity, updateUnLikeActivity, updateCommentActivity })(Application);
