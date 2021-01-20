@@ -52,10 +52,9 @@ class PostMain extends Component {
           updateLikeActivity={this.props.updateLikeActivity}
           updateUnLikeActivity={this.props.updateUnLikeActivity}
           updateCommentActivity={this.props.updateCommentActivity}
-        /> : this.state.start ? <div className="loading-anime">
+        /> : <div className="loading-anime">
             <Loading className="loading-wheel" />
-          </div> :
-            <NotFound />
+          </div>
         }</div>
         <PageFooter />
       </div>
