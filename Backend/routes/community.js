@@ -22,11 +22,11 @@ router.get('/posts/getTrendingHashtags', (req, res, next) => {
 });
 
 router.get('/posts/getAllWithHashtag/:id', (req, res, next) => {
-    // db.Post.find({}).populate('author').populate({ path: 'comments', populate: { path: 'author' } }).sort({ created: 1 }).exec()
-    //     .then(posts => {
-    //         res.status(200).send(posts);
-    //     })
-    //     .catch(err => next(err));
+    db.Hashtag.find({name:req.params.id}).populate({path:'posts',populate:'author'}).populate({path:'posts',populate:{ path: 'comments', populate: { path: 'author' } }}).sort({ created: 1 }).exec()
+        .then(data => {
+            res.status(200).send(data.posts);
+        })
+        .catch(err => next(err));
 });
 
 router.get('/posts/getNext', (req, res, next) => {
