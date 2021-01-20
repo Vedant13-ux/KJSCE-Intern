@@ -582,9 +582,7 @@ class Comment extends React.Component {
     let val = this.state.data;
     return (
       <div className="comment">
-        <a href="/">
           <img alt="" src={val.author.photo} className="avatar-pro" />
-        </a>
         <div className="content">
           <Link
             to={"/profile/" + val.author.email.split("@")[0]}
