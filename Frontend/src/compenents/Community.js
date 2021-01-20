@@ -285,6 +285,7 @@ class Feed extends React.Component {
       <div id="feed">
         <div className="content-wrapper feed-wrapper">
           <PostWall
+            history={this.props.history}
             isprofile={false}
             postcreate={true}
             loggedin={this.props.currentUser}
