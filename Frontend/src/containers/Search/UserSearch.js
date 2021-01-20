@@ -39,7 +39,6 @@ class UserSearch extends Component {
                             className="form-control mr-sm-2"
                             value={this.state.inputValue}
                             onChange={this.filterFunction}
-
                         />
                         <div className="suggestedResults">
                             {this.state.suggested.map((user) => (

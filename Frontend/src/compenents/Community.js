@@ -92,9 +92,6 @@ class ScrollTopButton extends React.Component {
         styles: {
           position: "fixed",
           top: "4.4rem",
-          left: `${document.querySelector(".feed-wrapper").getBoundingClientRect()
-            .left - 60
-            }px`,
           display: `${this.state.visible ? "block" : "none"}`,
         },
       });

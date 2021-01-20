@@ -33,18 +33,29 @@ router.get('/posts/getAll', (req, res, next) => {
 });
 
 router.get('/posts/getTrendingHashtags', (req, res, next) => {
-    // db.Post.find().populate('author').populate({ path: 'comments', populate: { path: 'author' } }).sort({ created: 1 }).limit(10).exec()
-
-    //     .then(posts => {
-    //         res.status(200).send(posts);
-    //     })
-    //     .catch(err => next(err));
+    db.Hashtag.aggregate([
+        {
+            "$project": {
+                "name": 1,
+                "posts": 1,
+                "length": { "$size": "$posts" }
+            }
+        },
+        { "$sort": { "length": -1 } },
+        { "$limit": 5 }
+    ], function (err, results) {
+        if (err) {
+            return next(err);
+        } else {
+            res.send(results);
+        }
+    })
 });
 
 router.get('/posts/getAllWithHashtag/:id', (req, res, next) => {
-    db.Hashtag.find({name:req.params.id}).populate({path:'posts',populate:'author'}).populate({path:'posts',populate:{ path: 'comments', populate: { path: 'author' } }}).sort({ created: 1 }).exec()
+    db.Hashtag.find({ name: req.params.id }).populate({ path: 'posts', populate: { path: 'comments', populate: { path: 'author', select: 'fname lname email photo' } } }).exec()
         .then(data => {
-            res.status(200).send(data.posts);
+            res.status(200).send(data);
         })
         .catch(err => next(err));
 });
@@ -58,7 +69,7 @@ router.get('/posts/getNext', (req, res, next) => {
         .catch(err => next(err))
 });
 router.get('/posts/:id', (req, res, next) => {
-    db.Post.findById(req.params.id).populate("author").populate({ path: 'comments', populate: { path: 'author' } })
+    db.Post.findById(req.params.id).populate({ path: 'author', select: 'fname lname photo email' }).populate({ path: 'comments', populate: { path: 'author', select: 'fname lname photo email' } })
         .then((post) => {
             if (!post) {
                 return next({

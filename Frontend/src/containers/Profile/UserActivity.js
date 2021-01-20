@@ -12,7 +12,7 @@ import InternshipOffered from './InternshipOffered'
 import NoApplication from '../../images/NoApplication';
 import Activity from './Activity';
 import { connect } from 'react-redux'
-import {updateRecruited } from '../../store/actions/user'
+import {updateRecruited } from '../../store/actions/user';
 
 
 class Basic extends Component {

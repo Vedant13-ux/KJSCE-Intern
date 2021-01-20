@@ -358,7 +358,7 @@ margin-right: 9px;
 
  #myInput:focus {outline: 3px solid #ddd;}
 
- .memberForm .dropdown {
+.memberForm .dropdown {
   position: relative;
   margin: 0;
   margin-bottom: 50px;
