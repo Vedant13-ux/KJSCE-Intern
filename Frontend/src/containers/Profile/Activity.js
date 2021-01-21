@@ -35,8 +35,11 @@ class Activity extends Component {
                         {this.props.activity.map(act =>
                             <div className="event">
                                 <div className="label" >
-                                    <img src={act.post.image} alt="" style={{ width: '43px', height: '43px', borderRadius: '3px' }} />
-                                </div>
+                                    {act.post.image!==""?
+                                    <img src={act.post.image} alt="" style={{ width: '43px', height: '43px', borderRadius: '3px' }} />:
+                                    act.type==="Liked"?<i className="fa fa-heart" style={{ width: '43px', height: '43px', borderRadius: '3px' }} ></i>:<i className="fa fa-comment"></i>
+                                    }
+                                    </div>
                                 <div className="content">
                                     <div className="date">
                                         <Moment fromNow>{act.created.toString()}</Moment>
