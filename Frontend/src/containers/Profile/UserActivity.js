@@ -12,7 +12,11 @@ import InternshipOffered from './InternshipOffered'
 import NoApplication from '../../images/NoApplication';
 import Activity from './Activity';
 import { connect } from 'react-redux'
-import { updateRecruited } from '../../store/actions/user';
+import {
+  updateRecruited, updateLikeActivity,
+  updateUnLikeActivity,
+  updateCommentActivity,
+} from '../../store/actions/user';
 
 
 class Basic extends Component {
@@ -125,6 +129,9 @@ class Basic extends Component {
             postcreate={this.props.owner}
             currentUser={this.props.user}
             loggedin={{ user: this.props.loggedin }}
+            updateLikeActivity={this.props.updateLikeActivity}
+            updateUnLikeActivity={this.props.updateUnLikeActivity}
+            updateCommentActivity={this.props.updateCommentActivity}
           />
         );
         break;
@@ -228,4 +235,8 @@ class Basic extends Component {
   }
 }
 
-export default connect(() => { }, { updateRecruited })(Basic);
+export default connect(() => { }, {
+  updateRecruited, updateLikeActivity,
+  updateUnLikeActivity,
+  updateCommentActivity,
+})(Basic);
