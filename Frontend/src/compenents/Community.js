@@ -318,7 +318,7 @@ export class PostWall extends React.Component {
   render() {
     let content;
     content = this.renderAll();
-
+    console.log(this.props.start)
     return (
       <div className="post-wall">
         {this.props.postcreate && (

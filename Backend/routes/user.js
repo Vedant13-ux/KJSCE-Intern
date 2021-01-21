@@ -548,6 +548,8 @@ router.put('/getUsersPosts',async  (req, res, next) => {
             db.Post.findById(e).populate({ path: 'comments', populate: { path: 'author' } }).then(data => {
                 array.push(data)
                 if (times === req.body.list.length - 1) {
+                    array.sort((a,b)=>{
+                        return new Date(b.created) - new Date(a.created)})
                     res.status(200).send({ list: array.reverse() });
                 }
                 times++;

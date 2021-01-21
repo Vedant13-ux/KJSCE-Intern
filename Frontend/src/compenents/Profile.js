@@ -25,13 +25,23 @@ class Profile extends Component {
       profileId: this.props.match.params.id
     };
     this.updateposts=()=>{
-      apiCall("put", "/api/getUsersPosts",{list:this.state.user.posts}).then((li)=>{
-        this.state.user.posts=li.list
-        this.setState({...this.state,startpost:false})
-    })
-    .catch((e)=>console.log(e))
-    this.state.user.posts=[]
-    this.setState({...this.state})
+      if (this.state.user.posts.length>0){
+      if (typeof this.state.user.posts[0] === 'string' || this.state.user.posts[0] instanceof String){
+        apiCall("put", "/api/getUsersPosts",{list:this.state.user.posts}).then((li)=>{
+          this.state.user.posts=li.list
+          this.setState({...this.state,startpost:false})
+        })
+        .catch((e)=>console.log(e))
+        this.state.user.posts=[]
+        this.setState({...this.state})
+      }
+      else{
+        // already have data no need to api call again
+      }
+    }else{
+      this.setState({startpost:false})
+    }
+      
   }
   }
 
