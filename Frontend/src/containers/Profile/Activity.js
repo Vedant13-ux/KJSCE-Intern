@@ -7,9 +7,12 @@ class Activity extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activity: this.props.activity
+            activity: []
         }
 
+    }
+    componentWillMount() {
+        this.setState({ activity: this.props.activity })
     }
     render() {
         console.log(this.props.activity);
