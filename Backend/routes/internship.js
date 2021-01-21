@@ -94,6 +94,7 @@ router.get('/search/skills', async (req, res, next) => {
 
 // Create Internship
 router.post('/details', async (req, res, next) => {
+    console.log(req.body);
     req.body.duration = parseInt(req.body.duration);
     req.body.numberOpenings = parseInt(req.body.numberOpenings);
     let user = await db.User.findById(req.body.faculty);
@@ -282,7 +283,7 @@ router.post('/apply', (req, res, next) => {
                     await internship.applicants.push(user);
                     await user.save();
                     await internship.save();
-                    res.send("applied")
+                    res.send(internship)
                 } else {
                     return next({ status: 405, message: 'Action is Not Permitted' });
                 }

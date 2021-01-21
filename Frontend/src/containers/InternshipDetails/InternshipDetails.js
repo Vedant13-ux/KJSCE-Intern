@@ -9,7 +9,7 @@ import Modal from "react-bootstrap/Modal";
 import { Multiselect } from "multiselect-react-dropdown";
 import CKEditor from 'ckeditor4-react';
 import { Link } from 'react-router-dom';
-import json2xls from 'json2xls'
+// import json2xls from 'json2xls'
 
 
 
@@ -143,10 +143,9 @@ class InternshipDetail extends Component {
     const internshipId = this.state.details._id;
     const applyBody = { answers: [this.state.ans1, this.state.ans2], applicantId, internshipId };
     console.log(applyBody);
-    apiCall('post', '/api/internship/apply', applyBody)
+    this.props.internshipApply(applyBody, this.state.details.faculty)
       .then(async () => {
         await this.setState({ applied: true });
-        // this.props.onHide();
       })
       .catch(err => console.log(err))
   }
