@@ -236,28 +236,7 @@ class Feed extends React.Component {
     this.state = {
       posts: [],
       start: true,
-      trending: [
-        {
-          name: "giveStipendBruh",
-          noOfPosts: 89,
-        },
-        {
-          name: "givemoneyBruh",
-          noOfPosts: 59,
-        },
-        {
-          name: "python",
-          noOfPosts: 45,
-        },
-        {
-          name: "JavaIsCancer",
-          noOfPosts: 39,
-        },
-        {
-          name: "YesIDoCoding",
-          noOfPosts: 33,
-        },
-      ],
+      trending: [],
     };
   }
 
@@ -582,9 +561,7 @@ class Comment extends React.Component {
     let val = this.state.data;
     return (
       <div className="comment">
-        <a href="/">
           <img alt="" src={val.author.photo} className="avatar-pro" />
-        </a>
         <div className="content">
           <Link
             to={"/profile/" + val.author.email.split("@")[0]}

@@ -1045,6 +1045,10 @@ body {
    padding: 10px 5px;
 }
 
+.comment img{
+  margin-right: 10px;
+}
+
 .comment .user-data {
    max-width: 90%;
    overflow: hidden;
