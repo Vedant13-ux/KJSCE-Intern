@@ -17,7 +17,7 @@ export function InternshipCreate(props) {
         <Modal.Header closeButton>
           <Modal.Title>Fill internship Details</Modal.Title>
         </Modal.Header>
-        <Modal.Body><Internshipform userId={props.userId} {...props}></Internshipform></Modal.Body>
+        <Modal.Body><Internshipform {...props}></Internshipform></Modal.Body>
       </Modal>
     </div>
   )

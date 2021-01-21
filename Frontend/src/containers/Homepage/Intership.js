@@ -43,7 +43,7 @@ class Internship extends Component {
   render() {
     const id = '/internship/' + this.props._id;
     return (
-      <div className="col-md-4 col-lg-3">
+      <div className="col-xl-3 col-lg-4 col-sm-6">
         <div className="card">
           <div className="template">
             <div className="top">

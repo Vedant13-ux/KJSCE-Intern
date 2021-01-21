@@ -12,7 +12,7 @@ import InternshipOffered from './InternshipOffered'
 import NoApplication from '../../images/NoApplication';
 import Activity from './Activity';
 import { connect } from 'react-redux'
-import {updateRecruited } from '../../store/actions/user';
+import { updateRecruited } from '../../store/actions/user';
 
 
 class Basic extends Component {
@@ -44,31 +44,26 @@ class Basic extends Component {
     while (likedIndex > -1 && commentedIndex > -1) {
       if (liked[likedIndex].created >= commented[commentedIndex].created) {
         activity.push(liked[likedIndex]);
-        console.log('LikedIndex : ' + likedIndex);
         likedIndex--;
       }
       else if (liked[likedIndex].created < commented[commentedIndex].created) {
         activity.push(commented[commentedIndex]);
         commentedIndex--;
-        console.log('CommentedIndex : ' + commentedIndex);
       }
     }
     if (commentedIndex > -1) {
-      console.log('Commented ma aaya');
       commented.splice(commentedIndex + 1, commented.length)
       activity = activity.concat(commented);
     } else if (likedIndex > -1) {
-      console.log('Liked ma aaya');
       liked.splice(likedIndex + 1, liked.length);
       activity = activity.concat(liked);
     }
-    console.log(activity);
     await this.setState({ activity });
   }
 
 
   handleSwitch(e) {
-    if (e.target.name==='posts' && this.props.owner) this.props.updateposts();
+    if (e.target.name === 'posts' && this.props.owner) this.props.updateposts();
     return this.setState({ content: e.target.name });
   }
   render() {
@@ -88,7 +83,7 @@ class Basic extends Component {
       case "application":
         display = (
           <div id="experience">
-            {this.props.user.applications.map((e, i) => {
+            {this.props.user.applications.reverse().map((e, i) => {
               return (
                 <div className="experience-ele">
                   <h4>{e.title}</h4>

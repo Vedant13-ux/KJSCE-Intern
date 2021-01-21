@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Multiselect } from "multiselect-react-dropdown";
 import { apiCall } from "../../services/api";
+import { connect } from 'react-redux'
+import { internshipCreate } from '../../store/actions/user'
 
 class Intershipform extends Component {
   constructor(props) {
@@ -17,7 +19,13 @@ class Intershipform extends Component {
       description: "",
       perks: "",
       whoCanApply: "",
-      faculty: this.props.userId,
+      faculty: {
+        _id: this.props.currentUser.user._id,
+        fname: this.props.currentUser.user.fname,
+        lname: this.props.currentUser.user.lname,
+        photo: this.props.currentUser.user.photo,
+        email: this.props.currentUser.user.email,
+      },
       skillData: [
         { text: "Python" },
         { text: "Node.Js" },
@@ -60,10 +68,10 @@ class Intershipform extends Component {
     });
     await this.setState({ skillsRequired: skillArray, skillData: [] });
 
-    apiCall("post", '/api/internship/details', this.state).then(
-      data => {
-        console.log(data);
-        return this.props.history.push('/internship/' + data._id);
+    this.props.internshipCreate(this.state).then(
+      (id) => {
+        console.log("Created");
+        return this.props.history.push('/internship/' + id);
       }
     )
       .catch(err => console.log(err));
@@ -258,5 +266,10 @@ class Intershipform extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    currentUser: state.currentUser
+  }
+}
 
-export default Intershipform;
+export default connect(mapStateToProps, { internshipCreate })(Intershipform);

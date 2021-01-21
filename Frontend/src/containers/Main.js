@@ -4,7 +4,7 @@ import Homepage from '../compenents/Homepage'
 import Landing from '../compenents/Landing';
 import { connect } from 'react-redux';
 import { authUser, setCurrentUser } from '../store/actions/auth'
-import { updateRefresh } from '../store/actions/user'
+import { updateRefresh, internshipApply } from '../store/actions/user'
 import IntershipDetail from './InternshipDetails/InternshipDetails'
 import Community from '../compenents/Community'
 import NotFound from '../images/NotFound'
@@ -37,7 +37,7 @@ class Main extends React.Component {
                     <Route exact path="/" render={props => <Landing {...props} currentUser={currentUser} />} />
                     <Route exact path="/home" render={props => <Homepage {...props} currentUser={currentUser} />} />
                     <Route exact path="/messaging" render={props => <Chat {...props} currentUser={currentUser} />} />
-                    <Route exact path="/internship/:id" render={props => <IntershipDetail key={props.match.params.id} {...props} currentUser={currentUser} />} />
+                    <Route exact path="/internship/:id" render={props => <IntershipDetail internshipApply={this.props.internshipApply} key={props.match.params.id} {...props} currentUser={currentUser} />} />
                     <Route exact path="/community" render={props => <Community {...props} currentUser={currentUser} />} />
                     <Route exact path="/post/:id" render={props => <Post key={props.match.params.id} {...props} currentUser={currentUser} />} />
                     <Route exact path="/hashtag/:id" render={props => <Hashtag key={props.match.params.id} {...props} currentUser={currentUser} />} />
@@ -57,4 +57,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default withRouter(connect(mapStateToProps, { authUser, setCurrentUser, updateRefresh })(Main));
+export default withRouter(connect(mapStateToProps, { authUser, setCurrentUser, updateRefresh, internshipApply })(Main));
