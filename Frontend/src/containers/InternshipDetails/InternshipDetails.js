@@ -6,6 +6,7 @@ import { apiCall } from "../../services/api"
 import NotFoundSVG from "../../images/NotFound.js"
 import Loading from "../../images/Loading"
 import Modal from "react-bootstrap/Modal";
+import Internshipform from '../Homepage/Internshipform'
 import { Multiselect } from "multiselect-react-dropdown";
 import CKEditor from 'ckeditor4-react';
 import { Link } from 'react-router-dom';
@@ -26,6 +27,7 @@ class InternshipDetail extends Component {
       owner: false,
       show1: false,
       show2: false,
+      show3:false,
       emails: [{ text: "Hello" }, { text: "Vedant" }],
       role: "Student",
       subject: '',
@@ -42,6 +44,8 @@ class InternshipDetail extends Component {
     this.handleShow1 = () => this.setState({ show1: true });
     this.handleClose2 = () => this.setState({ show2: false });
     this.handleShow2 = () => this.setState({ show2: true });
+    this.handleClose3 = () => this.setState({ show3: false });
+    this.handleShow3 = () => this.setState({ show3: true });
     this.onSendMail = this.onSendMail.bind(this);
     this.handleApply = this.handleApply.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -169,6 +173,14 @@ class InternshipDetail extends Component {
                     <div className="internshipTitle">
                       <h1>{this.state.details.title}</h1>
                       <div className="category">{this.state.details.category}</div>
+                      {this.state.details.faculty.email===this.props.currentUser.user.email && (
+                        <span
+                          className="deleteproj"
+                          onClick={this.handleShow3}
+                        >
+                          <i className="fa fa-edit"></i>
+                        </span>
+                      )}
                     </div>
                     <div className="provider">
                       <img
@@ -368,6 +380,12 @@ class InternshipDetail extends Component {
               </div>
             </div>
           </div>
+          <Modal size="lg" show={this.state.show3} onHide={handleClose3} backdrop="static">
+            <Modal.Header closeButton>
+              <Modal.Title>Edit internship Details</Modal.Title>
+            </Modal.Header>
+            <Modal.Body><Internshipform predata={this.state.details} editing={true} {...props}></Internshipform></Modal.Body>
+          </Modal>
         </div >
       )
     } else if (exists === false) {

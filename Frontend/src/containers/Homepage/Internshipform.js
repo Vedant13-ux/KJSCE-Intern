@@ -7,6 +7,18 @@ import { internshipCreate } from '../../store/actions/user'
 class Intershipform extends Component {
   constructor(props) {
     super(props);
+    if (props.editing){
+      this.state=props.predata
+      this.state.skillData= [
+        { text: "Python" },
+        { text: "Node.Js" },
+        { text: "Django" },
+        { text: "Javascript" },
+        { text: "C++" },
+        { text: "React Native" },
+      ]
+    }
+    else{
     this.state = {
       title: "",
       skillsRequired: [],
@@ -36,8 +48,10 @@ class Intershipform extends Component {
       ],
       category: ''
 
-    };
-
+    };}
+    this.delete=()=>{
+      // Code to delete
+    }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSkills = this.handleSkills.bind(this);
@@ -67,14 +81,17 @@ class Intershipform extends Component {
       skillArray.push(skill.text);
     });
     await this.setState({ skillsRequired: skillArray, skillData: [] });
-
+    if (this.editing){
+      //Code if editing
+    }
+    else{
     this.props.internshipCreate(this.state).then(
       (id) => {
         console.log("Created");
         return this.props.history.push('/internship/' + id);
       }
-    )
-      .catch(err => console.log(err));
+    ).catch(err => console.log(err));
+    }
     console.log(this.state);
   }
 
@@ -258,8 +275,12 @@ class Intershipform extends Component {
               onChange={this.handleChange}
             ></textarea>
           </div>
+          {this.props.editing &&
           <div className="submit">
-            <button className="big ui button">ADD</button>
+            <button type="button" className="big ui button" onClick={this.delete}>DELETE</button>
+          </div>}
+          <div className="submit">
+            <button className="big ui button">{this.props.editing?'EDIT':'ADD'}</button>
           </div>
         </div>
       </form>

@@ -292,6 +292,11 @@ margin-right: 9px;
   font-size: 20px;
   cursor: pointer;
 }
+.internshipTitle  .deleteproj{
+	float:right;
+	font-size: 20px;
+	cursor: pointer;
+  }
 #experience .experience-add{
   margin:10px 0;
   color: #020b53;
