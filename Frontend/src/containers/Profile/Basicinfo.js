@@ -123,7 +123,7 @@ class Basic extends React.Component {
     this.handleOnCropComplete = (crop, pixelCrop) => {
       const canvasRef = this.imagePreviewCanvas.current;
       const { imgSrc } = this.state;
-      image64toCanvasRef(canvasRef, imgSrc, pixelCrop);
+      image64toCanvasRef(canvasRef, imgSrc, crop);
     }
 
     this.handleClearToDefult = () => {
