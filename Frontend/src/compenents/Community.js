@@ -147,22 +147,28 @@ class PostCreate extends React.Component {
     this.state = {
       show: false,
       selectedFile: null,
+      text:'<a href="bruh">bruh</a> ok',
       status: ''
     };
+    this.changed=(e)=>{
+      console.log(e.target.dangerouslySetInnerHTML)
+    }
     this.handleSubmit = (e) => {
       e.preventDefault();
-      this.setState({ status: 'uploading' })
-      const fd = new FormData(e.target);
-      for (var entry of fd.entries()) {
-        console.log(entry);
-      }
-      apiCall('post', '/community/posts/create', fd)
-        .then(async (post) => {
-          this.setState({ status: '', selectedFile: null })
-          return this.props.history.push('/post/' + post._id)
-        }).catch((err) => {
-          console.log(err);
-        });
+      console.log(e)
+      // e.preventDefault();
+      // this.setState({ status: 'uploading' })
+      // const fd = new FormData(e.target);
+      // for (var entry of fd.entries()) {
+      //   console.log(entry);
+      // }
+      // apiCall('post', '/community/posts/create', fd)
+      //   .then(async (post) => {
+      //     this.setState({ status: '', selectedFile: null })
+      //     return this.props.history.push('/post/' + post._id)
+      //   }).catch((err) => {
+      //     console.log(err);
+      //   });
     };
     this.handleClose = (e) => {
       this.setState({ show: false });
@@ -173,6 +179,7 @@ class PostCreate extends React.Component {
     this.fileValidaion = e => {
       this.setState({ selectedFile: e.target.files[0] })
     }
+    this.multiselectRef = React.createRef();
   }
   render() {
     return (
@@ -201,9 +208,13 @@ class PostCreate extends React.Component {
                     maxlength="200"
                     rows="2"
                     required
+                    value={this.state.text}
                     placeholder="What do you want to talk about?"
                     name="content"
                   ></textarea>
+                  <div ref={this.multiselectRef}
+                  // dangerouslySetInnerHTML={{__html: this.state.text}} 
+                   onChange={this.changed} contentEditable={true}> {`${this.state.text}`} </div>
                 </div>
                 <div className="field">
                   <label>Media Upload</label>
