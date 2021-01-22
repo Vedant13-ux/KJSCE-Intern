@@ -27,7 +27,7 @@ class Profile extends Component {
     this.updateposts=()=>{
       if (this.state.user.posts.length>0){
       if (typeof this.state.user.posts[0] === 'string' || this.state.user.posts[0] instanceof String){
-        apiCall("put", "/api/getUsersPosts",{list:this.state.user.posts}).then((li)=>{
+        apiCall("put", "/getUsersPosts",{list:this.state.user.posts}).then((li)=>{
           this.state.user.posts=li.list
           this.setState({...this.state,startpost:false})
         })
@@ -59,7 +59,7 @@ class Profile extends Component {
       
     }
     else {
-      apiCall("get", "/api/userForProfile/" + this.props.match.params.id, "")
+      apiCall("get", "/userForProfile/" + this.props.match.params.id, "")
         .then(async (data) => {
           console.log(data);
           let i = 0;

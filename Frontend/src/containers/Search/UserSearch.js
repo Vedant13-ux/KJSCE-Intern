@@ -17,7 +17,7 @@ class UserSearch extends Component {
             if (filter === "") {
                 return this.setState({ suggested: [] });
             }
-            apiCall("get", "/api/suggestUsers/" + filter, "")
+            apiCall("get", "/suggestUsers/" + filter, "")
                 .then(async (users) => {
                     console.log(users);
                     await this.setState({ suggested: users });

@@ -16,7 +16,7 @@ class PostMain extends Component {
   }
   componentDidMount() {
     document.documentElement.scrollTop = '0';
-    apiCall("get", '/api/community/posts/' + this.props.match.params.id, "")
+    apiCall("get", '/community/posts/' + this.props.match.params.id, "")
       .then((data) => {
         this.setState({ data: data, start: false });
         console.log(this.state)

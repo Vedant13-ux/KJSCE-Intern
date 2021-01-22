@@ -21,7 +21,7 @@ class PostMain extends Component {
   }
   componentDidMount() {
     document.documentElement.scrollTop = '0';
-    apiCall("get", '/api/community/posts/getAllWithHashtag/' + this.props.match.params.id, "")
+    apiCall("get", '/community/posts/getAllWithHashtag/' + this.props.match.params.id, "")
       .then((data) => {
         this.setState({ posts: data, start: false });
       })

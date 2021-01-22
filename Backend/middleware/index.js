@@ -4,6 +4,7 @@ const db = require('../models');
 exports.loginRequired = function (req, res, next) {
     console.log('Login Ma aaya')
     try {
+        console.log(req.headers.authorization);
         let token = req.headers.authorization.split(' ')[1];
         jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {
             if (err) {
@@ -27,7 +28,7 @@ exports.loginRequired = function (req, res, next) {
 }
 
 exports.ensureCorrectUser = function (req, res, next) {
-    console.log('Verify ma Aaya');
+    console.log(req.params.secureId);
     try {
         const token = req.headers.authorization.split(' ')[1];
         jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {

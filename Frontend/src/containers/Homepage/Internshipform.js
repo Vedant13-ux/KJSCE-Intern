@@ -51,7 +51,7 @@ class Intershipform extends Component {
     const skillInput = document.querySelector(".searchBox");
     var query = skillInput.value;
     console.log(query);
-    apiCall("get", "/api/internship/skillSuggestion/" + query, "")
+    apiCall("get", "/internship/skillSuggestion/" + query, "")
       .then(async (data) => {
         console.log(data);
         await this.setState({ skillData: data });

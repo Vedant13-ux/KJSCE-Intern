@@ -18,7 +18,7 @@ export class MyProvider extends Component {
         this.showAll();
     }
     showAll() {
-        let url = "/api/internship/search/all";
+        let url = "/internship/search/all";
         apiCall("get", url, "")
             .then((internships) => {
                 return this.setState({ ...this.state, list: internships ,start:false});
@@ -66,7 +66,7 @@ export class MyProvider extends Component {
                             query:this.state.query
                         }
                         console.log("aya boi", obj)
-                        apiCall("post", "/api/internship/search/filter", obj)
+                        apiCall("post", "/internship/search/filter", obj)
                             .then((internships) => {
                                 console.log("sahi hua");
                                 console.log(internships);

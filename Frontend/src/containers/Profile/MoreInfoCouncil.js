@@ -50,7 +50,7 @@ class MoreInfoCouncil extends Component {
       if (filter === "") {
         return this.setState({ suggestedMembers: [] });
       }
-      apiCall("get", "/api/council/findMembers/" + filter, "")
+      apiCall("get", "/council/findMembers/" + filter, "")
         .then(async (users) => {
           await this.setState({ suggestedMembers: users });
         })

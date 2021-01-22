@@ -29,7 +29,7 @@ class FilterForm extends Component {
         const skillInput = document.querySelector(".searchBox");
         var query = skillInput.value;
         console.log(query);
-        apiCall("get", "/api/internship/skillSuggestion/" + query, "")
+        apiCall("get", "/internship/skillSuggestion/" + query, "")
             .then((data) => {
                 console.log(data);
                 this.setState({ skills: data });

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
-import { apiCall } from '../../services/api'
+import { apiCallAuth } from '../../services/api'
 
 class AlumniSignup extends Component {
     constructor(props) {
@@ -24,7 +24,7 @@ class AlumniSignup extends Component {
         e.preventDefault();
         const data = this.state;
         console.log(data)
-        apiCall('post', '/api/auth/signup', data)
+        apiCallAuth('post', '/api/auth/signup', data)
             .then(async (response) => {
                 console.log(response)
                 await this.props.onVerify();

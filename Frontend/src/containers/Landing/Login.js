@@ -19,7 +19,6 @@ class Login extends Component {
     }
     async handleSubmit(e) {
         e.preventDefault();
-        console.log(this.state);
         this.props.loginUser(this.state)
             .then((result) => {
                 console.log('Logged In')

@@ -29,7 +29,7 @@ class Bookmarks extends Component {
     }
     componentDidMount() {
         document.documentElement.scrollTop = 0;
-        apiCall('get', '/api/internship/bookmarks/' + this.props.currentUser.user._id, '')
+        apiCall('get', '/internship/bookmarks/' + this.props.currentUser.user._id, '')
             .then(async bookmarks => {
                 this.setState({ bookmarks, start: false });
 

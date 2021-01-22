@@ -81,7 +81,7 @@ class InternshipDetail extends Component {
       to: emailArray,
     };
     console.log(mailBody);
-    apiCall('post', "/api/internship/mailapplicants", { mailBody, userId: this.state.user._id, internshipId: this.state.details._id })
+    apiCall('post', "/internship/mailapplicants", { mailBody, userId: this.state.user._id, internshipId: this.state.details._id })
       .then(() => {
         console.log('Sent Mail');
         this.handleClose1();
@@ -97,12 +97,12 @@ class InternshipDetail extends Component {
 
   componentWillMount() {
     document.documentElement.scrollTop = '0';
-    return apiCall('get', '/api/internship/details/' + this.props.match.params.id, '')
+    return apiCall('get', '/internship/details/' + this.props.match.params.id, '')
       .then(
         async (data) => {
           console.log(data)
           if (Object.keys(data).length !== 0) {
-            apiCall('get', '/api/internship/search/skills?skills=' + data["skillsRequired"].join(',') + '&id=' + this.props.match.params.id)
+            apiCall('get', '/internship/search/skills?skills=' + data["skillsRequired"].join(',') + '&id=' + this.props.match.params.id)
               .then(
                 async (recomm) => {
                   if (this.state.user._id === data.faculty._id) {

@@ -156,7 +156,7 @@ class PostCreate extends React.Component {
       for (var entry of fd.entries()) {
         console.log(entry);
       }
-      apiCall('post', '/api/community/posts/create', fd)
+      apiCall('post', '/community/posts/create', fd)
         .then(async (post) => {
           this.setState({ status: '', selectedFile: null })
           return this.props.history.push('/post/' + post._id)
@@ -241,7 +241,7 @@ class Feed extends React.Component {
   }
 
   componentWillMount() {
-    apiCall("get", "/api/community/posts/getAll", "")
+    apiCall("get", "/community/posts/getAll", "")
       .then((data) => {
         this.setState({ posts: data.posts,trending:data.trending, start: false });
       })
@@ -377,7 +377,7 @@ export class Post extends React.Component {
     let button = e.target.closest(".likes");
     let lik = this.state.likes;
     if (!this.state.isLiked) {
-      apiCall("post", "/api/community/posts/like/" + this.id, {
+      apiCall("post", "/community/posts/like/" + this.id, {
         id: this.props.loggedin.user._id,
       })
         .then((date) => {
@@ -397,7 +397,7 @@ export class Post extends React.Component {
         })
         .catch((e) => console.log(e));
     } else {
-      apiCall("put", "/api/community/posts/like/" + this.id, {
+      apiCall("put", "/community/posts/like/" + this.id, {
         id: this.props.loggedin.user._id,
       })
         .then((data) => {
@@ -424,7 +424,7 @@ export class Post extends React.Component {
       form.text.value = "";
       return;
     }
-    apiCall("post", "/api/community/posts/comments/" + this.id, {
+    apiCall("post", "/community/posts/comments/" + this.id, {
       id: this.props.loggedin.user._id,
       text: commentText,
     }).then((comment) => {

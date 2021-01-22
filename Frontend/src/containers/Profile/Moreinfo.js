@@ -156,7 +156,7 @@ class Basic extends Component {
     await this.setState({ error: "" });
     const skillInput = document.querySelector(".searchBox");
     var query = skillInput.value;
-    apiCall("get", "/api/internship/skillSuggestion/" + query, "")
+    apiCall("get", "/internship/skillSuggestion/" + query, "")
       .then((data) => {
         this.setState({ skills: data });
       })

@@ -16,14 +16,24 @@ import Hashtag from './Community/Hashtag'
 import Bookmarks from '../compenents/Bookmarks'
 import Chat from '../containers/chat/Chat'
 import '../index2.css'
+import { logout } from '../store/actions/auth'
+import jwtDecode from 'jwt-decode'
 
 class Main extends React.Component {
     async componentWillMount() {
+        if (localStorage.jwtToken) {
+            var email = '';
+            try {
+                email = jwtDecode(localStorage.jwtToken)['email'];
+            } catch {
+                this.props.logout();
+            }
+        }
         console.log("main mounted");
         console.log(JSON.parse(localStorage.getItem('isAuthenticated')));
         if (!JSON.parse(localStorage.getItem('isAuthenticated'))) this.props.history.push('/');
         else {
-            await this.props.updateRefresh(localStorage.getItem('email').split('@')[0]);
+            await this.props.updateRefresh(email);
         }
     }
     render() {
@@ -58,4 +68,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default withRouter(connect(mapStateToProps, { authUser, setCurrentUser, updateRefresh, internshipApply })(Main));
+export default withRouter(connect(mapStateToProps, { authUser, setCurrentUser, updateRefresh, internshipApply, logout })(Main));
