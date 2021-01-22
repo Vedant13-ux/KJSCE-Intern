@@ -147,10 +147,10 @@ class PostCreate extends React.Component {
     this.state = {
       show: false,
       selectedFile: null,
-      text:'<a href="bruh">bruh</a> ok',
+      text: '<a href="bruh">bruh</a> ok',
       status: ''
     };
-    this.changed=(e)=>{
+    this.changed = (e) => {
       console.log(e.target.dangerouslySetInnerHTML)
     }
     this.handleSubmit = (e) => {
@@ -213,8 +213,8 @@ class PostCreate extends React.Component {
                     name="content"
                   ></textarea>
                   <div ref={this.multiselectRef}
-                  dangerouslySetInnerHTML={{__html: this.state.text}} 
-                   onChange={this.changed} contentEditable={true}></div>
+                    dangerouslySetInnerHTML={{ __html: this.state.text }}
+                    onChange={this.changed} contentEditable={true}></div>
                 </div>
                 <div className="field">
                   <label>Media Upload</label>
@@ -254,7 +254,7 @@ class Feed extends React.Component {
   componentWillMount() {
     apiCall("get", "/community/posts/getAll", "")
       .then((data) => {
-        this.setState({ posts: data.posts,trending:data.trending, start: false });
+        this.setState({ posts: data.posts, trending: data.trending, start: false });
       })
       .catch((e) => {
         console.log("error");
@@ -286,7 +286,7 @@ class Feed extends React.Component {
             <div className="controls">
               <h3>Trending Hashtags</h3><hr></hr>
               {this.state.trending.map((val, i) => {
-                return <Link to={"/hashtag/" + val.name} className="notblue">{i !== 0 && <hr></hr>}<h5><p>{(i+1) + '.  '}</p>{'#' + val.name}</h5><p>{val.length + ' posts'}</p></Link>
+                return <Link to={"/hashtag/" + val.name} className="notblue">{i !== 0 && <hr></hr>}<h5><p>{(i + 1) + '.  '}</p>{'#' + val.name}</h5><p>{val.length + ' posts'}</p></Link>
               })}
             </div>
           </div>
@@ -572,7 +572,7 @@ class Comment extends React.Component {
     let val = this.state.data;
     return (
       <div className="comment">
-          <img alt="" src={val.author.photo} className="avatar-pro" />
+        <img alt="" src={val.author.photo} className="avatar-pro" />
         <div className="content">
           <Link
             to={"/profile/" + val.author.email.split("@")[0]}

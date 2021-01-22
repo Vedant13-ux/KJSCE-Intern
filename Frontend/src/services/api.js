@@ -3,16 +3,7 @@ import jwtDecode from 'jwt-decode'
 axios.defaults.baseURL = 'http://localhost:3001'
 
 var secureId = null;
-if (localStorage.jwtToken) {
-    // Promise(async (res, rej) => {
-    //     try {
-    //         console.log(secureId);
-    //         res();
-    //     } catch (err) {
-    //         rej(err);
-    //     }
-    // })
-}
+
 
 export function setTokenHeader(token) {
     console.log("Inides TOken Function");
@@ -27,7 +18,10 @@ export function setTokenHeader(token) {
     }
 }
 
-export function apiCall(method, path, data) {
+export async function apiCall(method, path, data) {
+    if (localStorage.jwtToken) {
+        var secureId = await jwtDecode(localStorage.jwtToken)['_id'];
+    }
     return new Promise((resolve, reject) => {
         return axios[method](`/api/${secureId}${path}`, data)
             .then(res => {
@@ -38,6 +32,7 @@ export function apiCall(method, path, data) {
     });
 }
 export function apiCallAuth(method, path, data) {
+
     return new Promise((resolve, reject) => {
         return axios[method](path, data)
             .then(res => {

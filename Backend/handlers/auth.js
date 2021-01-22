@@ -48,10 +48,10 @@ exports.signin = async function (req, res, next) {
       })
     }
     let isMatch = await user.comparePassword(req.body.password, next);
-    const { email, _id, fname, lname, photo, role } = user;
+    const { email, _id, fname, lname, emailToken } = user;
     if (isMatch) {
       let token = jwt.sign({
-        email, _id, fname, lname, photo, role
+        email, _id, fname, lname, emailToken
       }, process.env.SECRET_KEY);
 
       return res.status(200).json({

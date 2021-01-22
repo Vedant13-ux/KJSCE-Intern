@@ -34,9 +34,11 @@ exports.ensureCorrectUser = function (req, res, next) {
         jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {
             console.log(decoded);
             if (decoded && (decoded.id === req.params.sercureId)) {
-                if (decoded.emailToken == '') {
+                if (decoded.emailToken === null) {
+                    console.log('User is verified');
                     return next();
                 } else {
+                    console.log('User is not verified')
                     return next({
                         status: 401,
                         message: 'Please verify your email first or try to Signup Again'

@@ -29,7 +29,6 @@ export function authUser(emailToken) {
                 .then(({ token, ...user }) => {
                     localStorage.setItem("jwtToken", token);
                     localStorage.setItem('isAuthenticated', true);
-                    localStorage.setItem('email', user.email);
                     setAuthorizationHeader(token);
                     dispatch(setCurrentUser(user));
                     resolve();
@@ -45,7 +44,6 @@ export function loginUser(user) {
                 .then(async ({ token, ...user }) => {
                     localStorage.setItem("jwtToken", token);
                     localStorage.setItem('isAuthenticated', true);
-                    localStorage.setItem('email', user.email);
                     await setAuthorizationHeader(token);
                     console.log("Logeed iN and added token");
                     dispatch(setCurrentUser(user));

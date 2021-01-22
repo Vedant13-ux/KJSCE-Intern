@@ -18,23 +18,26 @@ import Chat from '../containers/chat/Chat'
 import '../index2.css'
 import { logout } from '../store/actions/auth'
 import jwtDecode from 'jwt-decode'
+import { setAuthorizationHeader } from '../store/actions/auth'
 
 class Main extends React.Component {
     async componentWillMount() {
-        if (localStorage.jwtToken) {
+        if ((localStorage.isAuthenticated) && (localStorage.jwtToken)) {
+            console.log('Token is there')
             var email = '';
             try {
-                email = jwtDecode(localStorage.jwtToken)['email'];
-            } catch {
+                email = await jwtDecode(localStorage.jwtToken)['email'].split('@')[0];
+                console.log(email);
+                setAuthorizationHeader(localStorage.jwtToken);
+                this.props.updateRefresh(email);
+
+            } catch (err) {
+                console.log(err);
+                this.props.history.push('/');
                 this.props.logout();
             }
         }
         console.log("main mounted");
-        console.log(JSON.parse(localStorage.getItem('isAuthenticated')));
-        if (!JSON.parse(localStorage.getItem('isAuthenticated'))) this.props.history.push('/');
-        else {
-            await this.props.updateRefresh(email);
-        }
     }
     render() {
         const currentUser = this.props.currentUser;
