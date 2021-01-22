@@ -4,7 +4,14 @@ axios.defaults.baseURL = 'http://localhost:3001'
 
 var secureId = null;
 if (localStorage.jwtToken) {
-    secureId = jwtDecode(localStorage.jwtToken)['_id'];
+    // Promise(async (res, rej) => {
+    //     try {
+    //         console.log(secureId);
+    //         res();
+    //     } catch (err) {
+    //         rej(err);
+    //     }
+    // })
 }
 
 export function setTokenHeader(token) {
