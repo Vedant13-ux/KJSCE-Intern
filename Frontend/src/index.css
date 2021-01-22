@@ -227,6 +227,13 @@ style 2--
 .sections .rightSection .content .authForm .submit{
   text-align: center;
 }
+#internshipForm .submit{
+  text-align: center;
+}
+#internshipForm .button{
+  padding:10px;
+  margin:5px;
+}
 .sections .rightSection .content .authForm .login{
   color: #020C53;
   position: relative;
@@ -443,12 +450,14 @@ sub{
   background-color: #FFCA3D;
   color:#020C53;
 }
+.filterForm .button-holder{
+  text-align: center;
+}
 .filterForm .btn{
   color: #020C53;
   background-color: #FFCA3D;
-  left:50%;
-  transform: translateX(-50%);
   position: relative;
+  margin:5px;
 }
 .filterForm .form {
   margin: 0 auto;
@@ -674,13 +683,20 @@ body{
 #internshipdetail .internshipTitle h1{
   display: inline-block;
 }
+#internshipdetail .internshipTitle .deleteproj{
+  display: inline;
+  margin-left: 12px;
+}
+#internshipdetail .internshipTitle .floatingclass{
+  float:right;
+}
 #internshipdetail .internshipTitle .category{
   color:  #020C53;
   background-color: #FFCA3D;
   font-weight: 500;
-  float:right;
   padding: 5px 7px;
   border-radius: 5px;
+  display:inline
 }
 #internshipdetail .author{
   margin-left: 10px;

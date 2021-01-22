@@ -153,13 +153,14 @@ router.get('/details/:id', (req, res, next) => {
         })
 });
 
-router.put('/details/:id', async (req, res, next) => {
+router.put('/details/', async (req, res, next) => {
     try {
         let user = await db.User.findById(req.body.id);
-        let internship = await db.InternshipDetails.findById(req.params.id);
+        let internship = await db.InternshipDetails.findById(req.body.data._id);
         if (user._id.equals(internship.faculty) && internship) {
             await internship.update(req.body.data);
             await internship.save();
+            return res.status(200).send("edited")
         } else {
             next({
                 status: 403,
@@ -173,14 +174,15 @@ router.put('/details/:id', async (req, res, next) => {
 
 });
 
-router.delete('/details/:id', async (req, res, next) => {
+router.delete('/details/:intId/:userId', async (req, res, next) => {
     try {
-        let user = await db.User.findById(req.body.id);
-        let internship = await db.InternshipDetails.findById(req.params.id);
+        let user = await db.User.findById(req.params.userId);
+        let internship = await db.InternshipDetails.findById(req.params.intId);
         if (user._id.equals(internship.faculty) && internship) {
             user.internshipsOffered = user.internshipsOffered.filter((i) => internship._id !== i);
             await internship.remove();
             await user.save();
+            return res.status(200).send("deleted")
         } else {
             next({
                 status: 403,
