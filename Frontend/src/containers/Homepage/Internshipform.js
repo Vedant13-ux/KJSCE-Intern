@@ -18,7 +18,7 @@ class Intershipform extends Component {
         yourDate = new Date(yourDate.getTime() - (offset * 60 * 1000))
         return yourDate.toISOString().split('T')[0]
       }
-      this.state = props.predata;
+      this.state = {...props.predata};
       this.state.skillData = [
         { text: "Python" },
         { text: "Node.Js" },
@@ -31,10 +31,10 @@ class Intershipform extends Component {
       this.state.applyBy=getdate(this.state.applyBy)
       let array=[]
       this.state.skillsRequired.forEach((e)=>{
-        console.log(e)
-        //array.push({text:e})
+        array.push({text:e})
       })
       this.state.skillsRequired=array
+      
     } else {
       this.state = {
         title: "",
@@ -103,13 +103,14 @@ class Intershipform extends Component {
     skills.forEach((skill) => {
       skillArray.push(skill.text);
     });
-    await this.setState({ skillsRequired: skillArray, skillData: [] });
-    if (this.editing) {
+    //await this.setState({ skillsRequired: skillArray, skillData: [] });
+    this.state.skillsRequired=skillArray
+    if (this.props.editing) {
       this.props
         .internshipedit(this.state, this.props.currentUser.user._id)
         .then((id) => {
           console.log("edited");
-          return this.props.history.push("/internship/" + id);
+          this.props.edited(this.state)
         })
         .catch((err) => console.log(err));
     } else {
@@ -127,6 +128,7 @@ class Intershipform extends Component {
   render() {
     const {
       title,
+      type,
       duration,
       applyBy,
       numberOpenings,
@@ -222,6 +224,7 @@ class Intershipform extends Component {
                   onChange={this.handleChange}
                   name="type"
                   value="Work from Home"
+                  checked={type==="Work from Home"}
                   className="mr-2"
                 />
                 <label for="wfh">Work from Home</label>
@@ -232,6 +235,7 @@ class Intershipform extends Component {
                   id="ext"
                   onChange={this.handleChange}
                   name="type"
+                  checked={type==="External"}
                   value="External"
                   className="mr-2"
                 />

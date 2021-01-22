@@ -51,6 +51,9 @@ class InternshipDetail extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.multiselectRef = React.createRef();
     this.onEditorChange = this.onEditorChange.bind(this);
+    this.edited=(i)=>{
+      this.setState({details:i,show3:false})
+    }
   }
 
 
@@ -385,7 +388,7 @@ class InternshipDetail extends Component {
             <Modal.Header closeButton>
               <Modal.Title>Edit internship Details</Modal.Title>
             </Modal.Header>
-            <Modal.Body><Internshipform predata={this.state.details} editing={true} {...this.props}></Internshipform></Modal.Body>
+            <Modal.Body><Internshipform edited={this.edited} predata={this.state.details} editing={true} {...this.props}></Internshipform></Modal.Body>
           </Modal>
         </div >
       )
