@@ -213,8 +213,8 @@ class PostCreate extends React.Component {
                     name="content"
                   ></textarea>
                   <div ref={this.multiselectRef}
-                  // dangerouslySetInnerHTML={{__html: this.state.text}} 
-                   onChange={this.changed} contentEditable={true}> {`${this.state.text}`} </div>
+                  dangerouslySetInnerHTML={{__html: this.state.text}} 
+                   onChange={this.changed} contentEditable={true}></div>
                 </div>
                 <div className="field">
                   <label>Media Upload</label>
