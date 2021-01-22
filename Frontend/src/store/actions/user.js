@@ -1,6 +1,6 @@
 
 import { apiCall } from '../../services/api';
-import { CREATE_INTERNSHIP, DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE, EDIT_EVENT, DELETE_EVENT, DELETE_USER_ACHIEVEMENT, EDIT_USER_ACHIEVEMENT, UPDATE_USER_ACHIEVEMENT, DELETE_USER_EXPERIENCE, EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT, UPDATE_RECRUITED, LIKE_ACTIVITY, COMMENT_ACTIVITY, UNLIKE_ACTIVITY, UPDATE_USER_PHOTO, INTERNSHIP_APPLY } from '../actionTypes';
+import { EDIT_INTERNSHIP,DELETE_INTERNSHIP,CREATE_INTERNSHIP, DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE, EDIT_EVENT, DELETE_EVENT, DELETE_USER_ACHIEVEMENT, EDIT_USER_ACHIEVEMENT, UPDATE_USER_ACHIEVEMENT, DELETE_USER_EXPERIENCE, EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT, UPDATE_RECRUITED, LIKE_ACTIVITY, COMMENT_ACTIVITY, UNLIKE_ACTIVITY, UPDATE_USER_PHOTO, INTERNSHIP_APPLY } from '../actionTypes';
 
 function userRefresh(user) {
     return {
@@ -540,6 +540,44 @@ export function internshipCreate(internshipDetail) {
                     console.log(internship)
                     internship.faculty = internshipDetail.faculty;
                     dispatch(updateOffered(internship));
+                    resolve(internship._id);
+                })
+                .catch(err => reject(err));
+        })
+    }
+}
+
+export function deleteinternship(intId) {
+    return {
+        type: DELETE_INTERNSHIP,
+        intId
+    }
+}
+export function internshipDelete(intId,userId) {
+    return dispatch => {
+        return new Promise((resolve, reject) => {
+            return apiCall("delete", '/api/internship/details/'+intId+'/'+userId)
+                .then(() => {
+                    dispatch(deleteinternship(intId));
+                    resolve();
+                })
+                .catch(err => reject(err));
+        })
+    }
+}
+
+export function editinternship(internship) {
+    return {
+        type: EDIT_INTERNSHIP,
+        internship
+    }
+}
+export function internshipedit(internship,userId) {
+    return dispatch => {
+        return new Promise((resolve, reject) => {
+            return apiCall("put", '/api/internship/details/',{id:userId,data:internship})
+                .then(() => {
+                    dispatch(editinternship(internship));
                     resolve(internship._id);
                 })
                 .catch(err => reject(err));

@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE, DELETE_USER_ACHIEVEMENT, EDIT_USER_ACHIEVEMENT, UPDATE_USER_ACHIEVEMENT, EDIT_EVENT, DELETE_EVENT, DELETE_USER_EXPERIENCE, EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT, UPDATE_RECRUITED, LIKE_ACTIVITY, UNLIKE_ACTIVITY, COMMENT_ACTIVITY, UPDATE_USER_PHOTO, INTERNSHIP_APPLY, CREATE_INTERNSHIP } from '../actionTypes';
+import {EDIT_INTERNSHIP,DELETE_INTERNSHIP, SET_CURRENT_USER, DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE, DELETE_USER_ACHIEVEMENT, EDIT_USER_ACHIEVEMENT, UPDATE_USER_ACHIEVEMENT, EDIT_EVENT, DELETE_EVENT, DELETE_USER_EXPERIENCE, EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT, UPDATE_RECRUITED, LIKE_ACTIVITY, UNLIKE_ACTIVITY, COMMENT_ACTIVITY, UPDATE_USER_PHOTO, INTERNSHIP_APPLY, CREATE_INTERNSHIP } from '../actionTypes';
 
 const defaultState = {
     isAuthenticated: false,
@@ -183,6 +183,17 @@ const currentUserReducer = (state = defaultState, action) => {
             }
         case CREATE_INTERNSHIP:
             state.user.internshipsOffered.push(action.internship)
+            return {
+                ...state
+            }
+        case EDIT_INTERNSHIP:
+            let index5 = state.user.internshipsOffered.findIndex((m) => String(m._id) === String(action.internship._id));
+            state.user.internshipsOffered[index5] = action.internship
+            return {
+                ...state
+            }
+        case DELETE_INTERNSHIP:
+            state.user.internshipsOffered = state.user.internshipsOffered.filter((m) => String(m._id) !== String(action.intId));
             return {
                 ...state
             }

@@ -1,57 +1,80 @@
 import React, { Component } from "react";
 import { Multiselect } from "multiselect-react-dropdown";
 import { apiCall } from "../../services/api";
-import { connect } from 'react-redux'
-import { internshipCreate } from '../../store/actions/user'
+import { connect } from "react-redux";
+import {
+  internshipCreate,
+  internshipDelete,
+  internshipedit,
+} from "../../store/actions/user";
 
 class Intershipform extends Component {
   constructor(props) {
     super(props);
-    if (props.editing){
-      this.state=props.predata
-      this.state.skillData= [
+    if (props.editing) {
+      let getdate = (yourDate) => {
+        yourDate = new Date(yourDate)
+        let offset = yourDate.getTimezoneOffset()
+        yourDate = new Date(yourDate.getTime() - (offset * 60 * 1000))
+        return yourDate.toISOString().split('T')[0]
+      }
+      this.state = props.predata;
+      this.state.skillData = [
         { text: "Python" },
         { text: "Node.Js" },
         { text: "Django" },
         { text: "Javascript" },
         { text: "C++" },
         { text: "React Native" },
-      ]
+      ];
+      // to fix date , type , skills
+      this.state.applyBy=getdate(this.state.applyBy)
+      let array=[]
+      this.state.skillsRequired.forEach((e)=>{
+        console.log(e)
+        //array.push({text:e})
+      })
+      this.state.skillsRequired=array
+    } else {
+      this.state = {
+        title: "",
+        skillsRequired: [],
+        duration: "",
+        applyBy: "",
+        numberOpenings: "",
+        otherRequirements: "",
+        department: "",
+        type: "Work from Home",
+        description: "",
+        perks: "",
+        whoCanApply: "",
+        faculty: {
+          _id: this.props.currentUser.user._id,
+          fname: this.props.currentUser.user.fname,
+          lname: this.props.currentUser.user.lname,
+          photo: this.props.currentUser.user.photo,
+          email: this.props.currentUser.user.email,
+        },
+        skillData: [
+          { text: "Python" },
+          { text: "Node.Js" },
+          { text: "Django" },
+          { text: "Javascript" },
+          { text: "C++" },
+          { text: "React Native" },
+        ],
+        category: "",
+      };
     }
-    else{
-    this.state = {
-      title: "",
-      skillsRequired: [],
-      duration: "",
-      applyBy: "",
-      numberOpenings: "",
-      otherRequirements: "",
-      department: "",
-      type: "Work from Home",
-      description: "",
-      perks: "",
-      whoCanApply: "",
-      faculty: {
-        _id: this.props.currentUser.user._id,
-        fname: this.props.currentUser.user.fname,
-        lname: this.props.currentUser.user.lname,
-        photo: this.props.currentUser.user.photo,
-        email: this.props.currentUser.user.email,
-      },
-      skillData: [
-        { text: "Python" },
-        { text: "Node.Js" },
-        { text: "Django" },
-        { text: "Javascript" },
-        { text: "C++" },
-        { text: "React Native" },
-      ],
-      category: ''
-
-    };}
-    this.delete=()=>{
-      // Code to delete
-    }
+    this.delete = () => {
+      this.props
+        .internshipDelete(this.state._id, this.props.currentUser.user._id)
+        .then(() => {
+          console.log("Deleted");
+          return this.props.history.push("/home");
+        })
+        .catch((err) => console.log(err));
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSkills = this.handleSkills.bind(this);
@@ -81,16 +104,22 @@ class Intershipform extends Component {
       skillArray.push(skill.text);
     });
     await this.setState({ skillsRequired: skillArray, skillData: [] });
-    if (this.editing){
-      //Code if editing
-    }
-    else{
-    this.props.internshipCreate(this.state).then(
-      (id) => {
-        console.log("Created");
-        return this.props.history.push('/internship/' + id);
-      }
-    ).catch(err => console.log(err));
+    if (this.editing) {
+      this.props
+        .internshipedit(this.state, this.props.currentUser.user._id)
+        .then((id) => {
+          console.log("edited");
+          return this.props.history.push("/internship/" + id);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      this.props
+        .internshipCreate(this.state)
+        .then((id) => {
+          console.log("Created");
+          return this.props.history.push("/internship/" + id);
+        })
+        .catch((err) => console.log(err));
     }
     console.log(this.state);
   }
@@ -106,7 +135,7 @@ class Intershipform extends Component {
       description,
       perks,
       whoCanApply,
-      category
+      category,
     } = this.state;
     return (
       <form onSubmit={this.handleSubmit} id="internshipForm">
@@ -187,11 +216,25 @@ class Intershipform extends Component {
               <label>Type</label>
 
               <span className="mr-4">
-                <input type="radio" id="wfh" onChange={this.handleChange} name="type" value="Work from Home" className="mr-2" />
+                <input
+                  type="radio"
+                  id="wfh"
+                  onChange={this.handleChange}
+                  name="type"
+                  value="Work from Home"
+                  className="mr-2"
+                />
                 <label for="wfh">Work from Home</label>
               </span>
               <span>
-                <input type="radio" id="ext" onChange={this.handleChange} name="type" value="External" className="mr-2" />
+                <input
+                  type="radio"
+                  id="ext"
+                  onChange={this.handleChange}
+                  name="type"
+                  value="External"
+                  className="mr-2"
+                />
                 <label for="ext">External</label>
               </span>
             </div>
@@ -210,7 +253,6 @@ class Intershipform extends Component {
                 <option value="Recruitment">Recruitment</option>
               </select>
             </div>
-
           </div>
         </div>
 
@@ -275,12 +317,19 @@ class Intershipform extends Component {
               onChange={this.handleChange}
             ></textarea>
           </div>
-          {this.props.editing &&
           <div className="submit">
-            <button type="button" className="big ui button" onClick={this.delete}>DELETE</button>
-          </div>}
-          <div className="submit">
-            <button className="big ui button">{this.props.editing?'EDIT':'ADD'}</button>
+            {this.props.editing && (
+              <button
+                type="button"
+                className="big ui button red"
+                onClick={this.delete}
+              >
+                DELETE
+              </button>
+            )}
+            <button className="big ui button">
+              {this.props.editing ? "EDIT" : "ADD"}
+            </button>
           </div>
         </div>
       </form>
@@ -289,8 +338,12 @@ class Intershipform extends Component {
 }
 function mapStateToProps(state) {
   return {
-    currentUser: state.currentUser
-  }
+    currentUser: state.currentUser,
+  };
 }
 
-export default connect(mapStateToProps, { internshipCreate })(Intershipform);
+export default connect(mapStateToProps, {
+  internshipCreate,
+  internshipDelete,
+  internshipedit,
+})(Intershipform);

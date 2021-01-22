@@ -172,6 +172,7 @@ class InternshipDetail extends Component {
                   <div className="card-body">
                     <div className="internshipTitle">
                       <h1>{this.state.details.title}</h1>
+                      <div className="floatingclass"><div>
                       <div className="category">{this.state.details.category}</div>
                       {this.state.details.faculty.email===this.props.currentUser.user.email && (
                         <span
@@ -180,7 +181,7 @@ class InternshipDetail extends Component {
                         >
                           <i className="fa fa-edit"></i>
                         </span>
-                      )}
+                      )}</div></div>
                     </div>
                     <div className="provider">
                       <img
@@ -380,11 +381,11 @@ class InternshipDetail extends Component {
               </div>
             </div>
           </div>
-          <Modal size="lg" show={this.state.show3} onHide={handleClose3} backdrop="static">
+          <Modal size="lg" show={this.state.show3} onHide={this.handleClose3} backdrop="static">
             <Modal.Header closeButton>
               <Modal.Title>Edit internship Details</Modal.Title>
             </Modal.Header>
-            <Modal.Body><Internshipform predata={this.state.details} editing={true} {...props}></Internshipform></Modal.Body>
+            <Modal.Body><Internshipform predata={this.state.details} editing={true} {...this.props}></Internshipform></Modal.Body>
           </Modal>
         </div >
       )

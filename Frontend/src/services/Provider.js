@@ -78,8 +78,8 @@ export class MyProvider extends Component {
               ...this.state,
               query: value,
             }),
-          reser: () => {
-            this.setState({
+          reset:async () => {
+            await this.setState({
               home: true,
               external: true,
               value: {

@@ -70,7 +70,11 @@ class FilterForm extends Component {
                             onChange={value => context.valchange({ value: value })}
                             // onChangeComplete={value => console.log(value)}
                             value={context.state.value} />
-                        <button type="button" className="btn btn-default" onClick={context.reset}>
+                            <div className="button-holder">
+                        <button type="button" className="btn btn-default" onClick={()=>{
+                            context.reset()
+                            this.props.onHide()
+                            }}>
                             Reset
                         </button>
                         <button type="button" className="btn btn-default" onClick={async (e) => {
@@ -84,6 +88,7 @@ class FilterForm extends Component {
                         }}>
                             Apply Filters
                         </button>
+                        </div>
                         <p style={{ color: 'red' }}>{this.state.error}</p>
                     </div>
                 )}
