@@ -4,7 +4,8 @@ import Homepage from '../compenents/Homepage'
 import Landing from '../compenents/Landing';
 import { connect } from 'react-redux';
 import { authUser, setCurrentUser } from '../store/actions/auth'
-import { updateRefresh, internshipApply } from '../store/actions/user'
+import { internshipApply } from '../store/actions/user'
+import { updateRefresh } from '../store/actions/auth'
 import IntershipDetail from './InternshipDetails/InternshipDetails'
 import Community from '../compenents/Community'
 import NotFound from '../images/NotFound'

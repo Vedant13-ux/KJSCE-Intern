@@ -1,27 +1,8 @@
 
 import { apiCall } from '../../services/api';
-import { CREATE_INTERNSHIP, DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE, EDIT_EVENT, DELETE_EVENT, DELETE_USER_ACHIEVEMENT, EDIT_USER_ACHIEVEMENT, UPDATE_USER_ACHIEVEMENT, DELETE_USER_EXPERIENCE, EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_REFRESH, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT, UPDATE_RECRUITED, LIKE_ACTIVITY, COMMENT_ACTIVITY, UNLIKE_ACTIVITY, UPDATE_USER_PHOTO, INTERNSHIP_APPLY } from '../actionTypes';
+import { CREATE_INTERNSHIP, DELETE_USER_PROJECT, DELETE_USER_CERTIFICATE, EDIT_EVENT, DELETE_EVENT, DELETE_USER_ACHIEVEMENT, EDIT_USER_ACHIEVEMENT, UPDATE_USER_ACHIEVEMENT, DELETE_USER_EXPERIENCE, EDIT_USER_EXPERIENCE, EDIT_USER_PROJECT, UPDATE_USER_SKILLS, UPDATE_USER_PROJECT, UPDATE_USER_EXPERIENCE, UPDATE_USER_CERTIFICATES, UPDATE_USER_BASIC_INFO, UPDATE_USER_INFO, ADD_BOOKMARK, DELETE_BOOKMARK, ADD_MEMBER, DELETE_MEMBER, UPDATE_EVENT, UPDATE_RECRUITED, LIKE_ACTIVITY, COMMENT_ACTIVITY, UNLIKE_ACTIVITY, UPDATE_USER_PHOTO, INTERNSHIP_APPLY } from '../actionTypes';
 
-function userRefresh(user) {
-    return {
-        type: UPDATE_USER_REFRESH,
-        user
-    }
-}
 
-export function updateRefresh(username) {
-    return dispatch => {
-        return new Promise((res, rej) => {
-            return apiCall('get', "/api/user/" + username, '')
-                .then((data) => {
-                    dispatch(userRefresh(data));
-                    res();
-                }).catch((err) => {
-                    rej(err);
-                });
-        })
-    }
-}
 
 function userSkills(skills) {
     return {
@@ -32,7 +13,7 @@ function userSkills(skills) {
 export function updateSkills(skills, id) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/api/profile/update/skills', { skills, id })
+            return apiCall('put', '/profile/update/skills', { skills, id })
                 .then(() => {
                     dispatch(userSkills(skills));
                     res();
@@ -53,7 +34,7 @@ function userinfo(user) {
 export function updateinfo(data) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', "/api/profile/update/basicinfo", data)
+            return apiCall('put', "/profile/update/basicinfo", data)
                 .then(() => {
                     dispatch(userinfo(data.user));
                     res();
@@ -74,7 +55,7 @@ function userbasicinfo(user) {
 export function updatebasicinfo(data) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', "/api/profile/update/basicinfo", data)
+            return apiCall('put', "/profile/update/basicinfo", data)
                 .then(() => {
                     dispatch(userbasicinfo(data.user));
                     res();
@@ -94,7 +75,7 @@ function userCertificates(certificate) {
 export function updateCertificates(certificate, id) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/api/profile/update/certificates', { certificate, id })
+            return apiCall('put', '/profile/update/certificates', { certificate, id })
                 .then((newCertificate) => {
                     dispatch(userCertificates(newCertificate));
                     res();
@@ -113,7 +94,7 @@ function userCertificatedelete(cert_id) {
 export function deleteCertificate(cert_id, id) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('delete', '/api/profile/update/certificates/' + id + '/' + cert_id)
+            return apiCall('delete', '/profile/update/certificates/' + id + '/' + cert_id)
                 .then(() => {
                     dispatch(userCertificatedelete(cert_id));
                     res();
@@ -132,7 +113,7 @@ function userExperience(experience) {
 export function updateExperiences(experience, id) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/api/profile/update/experiences', { experience, id })
+            return apiCall('put', '/profile/update/experiences', { experience, id })
                 .then((newExperience) => {
                     dispatch(userExperience(newExperience));
                     res();
@@ -151,7 +132,7 @@ function userExperiencedelete(expId) {
 export function deleteExperiences(expId, id) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('delete', '/api/profile/update/experiences/' + id + '/' + expId)
+            return apiCall('delete', '/profile/update/experiences/' + id + '/' + expId)
                 .then(() => {
                     dispatch(userExperiencedelete(expId));
                     res();
@@ -170,7 +151,7 @@ function userExperienceEdit(experience) {
 export function editExperience(experience) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/api/profile/edit/experience', experience)
+            return apiCall('put', '/profile/edit/experience', experience)
                 .then(() => {
                     dispatch(userExperienceEdit(experience.experience));
                     res();
@@ -189,7 +170,7 @@ function userProject(project) {
 export function updateProjects(project, id) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/api/profile/update/projects', { project, id })
+            return apiCall('put', '/profile/update/projects', { project, id })
                 .then((newProject) => {
                     dispatch(userProject(newProject));
                     res();
@@ -208,7 +189,7 @@ function userProjectdelete(projectId) {
 export function deleteProjects(projectId, id) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('delete', '/api/profile/update/projects/' + id + '/' + projectId)
+            return apiCall('delete', '/profile/update/projects/' + id + '/' + projectId)
                 .then(() => {
                     dispatch(userProjectdelete(projectId));
                     res();
@@ -227,7 +208,7 @@ function userProjectedit(project) {
 export function editProjects(project) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/api/profile/edit/project', project)
+            return apiCall('put', '/profile/edit/project', project)
                 .then(() => {
                     dispatch(userProjectedit(project.project));
                     res();
@@ -247,7 +228,7 @@ function addBook(bookmark) {
 export function addBookmark(bookmark, userId) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/api/internship/bookmark/add/' + bookmark, { userId })
+            return apiCall('put', '/internship/bookmark/add/' + bookmark, { userId })
                 .then(() => {
                     dispatch(addBook(bookmark));
                     res();
@@ -268,7 +249,7 @@ function deleteBook(bookmark) {
 export function deleteBookmark(bookmark, userId) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/api/internship/bookmark/delete/' + bookmark, { userId })
+            return apiCall('put', '/internship/bookmark/delete/' + bookmark, { userId })
                 .then(() => {
                     dispatch(deleteBook(bookmark));
                     res();
@@ -289,7 +270,7 @@ function addMemb(member) {
 export function addMember(member, id) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/api/council/addMember/' + id, member)
+            return apiCall('put', '/council/addMember/' + id, member)
                 .then((newMember) => {
                     newMember.member = {
                         _id: newMember.member._id,
@@ -314,7 +295,7 @@ function deleteMemb(memberId) {
 export function deleteMember(memberId, userId) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('delete', '/api/council/deleteMember/' + userId + '/' + memberId, '')
+            return apiCall('delete', '/council/deleteMember/' + userId + '/' + memberId, '')
                 .then(() => {
                     dispatch(deleteMemb(memberId));
                     res();
@@ -334,7 +315,7 @@ function addEv(event) {
 export function addEvent(event, userId) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('post', '/api/council/addEvent/' + userId, event)
+            return apiCall('post', '/council/addEvent/' + userId, event)
                 .then((newEvent) => {
                     dispatch(addEv(newEvent));
                     res();
@@ -353,7 +334,7 @@ function userEventDelete(eventId) {
 export function deleteEvent(eventId, id) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('delete', '/api/council/deleteEvent/' + id + '/' + eventId)
+            return apiCall('delete', '/council/deleteEvent/' + id + '/' + eventId)
                 .then(() => {
                     dispatch(userEventDelete(eventId));
                     res();
@@ -373,7 +354,7 @@ function usereventedit(event) {
 export function editEvent(event) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/api/council/editEvent', event)
+            return apiCall('put', '/council/editEvent', event)
                 .then(() => {
                     dispatch(usereventedit(event.event));
                     res();
@@ -393,7 +374,7 @@ function userachievement(achievement) {
 export function updateAchievement(achievement, id) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/api/profile/update/achievements', { achievement, id })
+            return apiCall('put', '/profile/update/achievements', { achievement, id })
                 .then((newachm) => {
                     dispatch(userachievement(newachm));
                     res();
@@ -412,7 +393,7 @@ function userachievementdelete(achmId) {
 export function deleteAchievement(achmId, id) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('delete', '/api/profile/update/achievements/' + id + '/' + achmId)
+            return apiCall('delete', '/profile/update/achievements/' + id + '/' + achmId)
                 .then(() => {
                     dispatch(userachievementdelete(achmId));
                     res();
@@ -431,7 +412,7 @@ function userachievementedit(achievement) {
 export function editAchievement(achievement) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/api/profile/edit/achievement', achievement)
+            return apiCall('put', '/profile/edit/achievement', achievement)
                 .then(() => {
                     dispatch(userachievementedit(achievement.achievement));
                     res();
@@ -453,7 +434,7 @@ function updateRecruit(recruited, internship) {
 export function updateRecruited(userId, selecteduser, internship) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', "/api/internship/recruited/" + internship, { userId, selecteduser })
+            return apiCall('put', "/internship/recruited/" + internship, { userId, selecteduser })
                 .then(() => {
                     dispatch(updateRecruit(selecteduser, internship));
                     res();
@@ -493,7 +474,7 @@ function updatePhoto(photo, photoId) {
 export function updateUserPhoto(fd) {
     return dispatch => {
         return new Promise((res, rej) => {
-            return apiCall('put', '/api/profile/update/photo', fd)
+            return apiCall('put', '/profile/update/photo', fd)
                 .then((response) => {
                     console.log(response);
                     dispatch(updatePhoto(response.photo, response.photoId));
@@ -515,7 +496,7 @@ function updateApplications(internship) {
 export function internshipApply(internshipDetail, faculty) {
     return dispatch => {
         return new Promise((resolve, reject) => {
-            return apiCall('post', '/api/internship/apply', internshipDetail)
+            return apiCall('post', '/internship/apply', internshipDetail)
                 .then((internship) => {
                     internship.faculty = faculty;
                     dispatch(updateApplications(internship));
@@ -535,7 +516,7 @@ export function updateOffered(internship) {
 export function internshipCreate(internshipDetail) {
     return dispatch => {
         return new Promise((resolve, reject) => {
-            return apiCall("post", '/api/internship/details', internshipDetail)
+            return apiCall("post", '/internship/details', internshipDetail)
                 .then((internship) => {
                     console.log(internship)
                     internship.faculty = internshipDetail.faculty;

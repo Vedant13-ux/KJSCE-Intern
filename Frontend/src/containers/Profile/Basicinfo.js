@@ -163,7 +163,7 @@ class Basic extends React.Component {
                   <div className="input-group">
                     <div className="custom-file">
                       <label className="custom-file-label" style={{ textAlign: "left" }}>{this.state.fileLabel}</label>
-                      <input type="file" id="file" name="file" onChange={this.fileValidation} className="custom-file-input" style={{ outline: "none", border: "none" }} accept=".jpg,.png | image/*" required />
+                      <input type="file" id="file" name="file" onChange={this.fileValidation} className="custom-file-input" style={{ outline: "none", border: "none" }} accept=".jpg, .png, .x-png, jpeg | image/*" required />
                       <input type="hidden" name="id" value={this.props.currentUser.user._id}></input>
                     </div>
                   </div>

@@ -2,8 +2,9 @@
 const jwt = require('jsonwebtoken');
 const db = require('../models');
 exports.loginRequired = function (req, res, next) {
+    console.log('Login Ma aaya')
     try {
-        let token = req.header.authorization.split(' ')[1];
+        let token = req.headers.authorization.split(' ')[1];
         jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {
             if (err) {
                 return next(err)
@@ -26,11 +27,20 @@ exports.loginRequired = function (req, res, next) {
 }
 
 exports.ensureCorrectUser = function (req, res, next) {
+    console.log('Verify ma Aaya');
     try {
         const token = req.headers.authorization.split(' ')[1];
         jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {
-            if (decoded && decoded.id === req.params.id) {
-                return next();
+            console.log(decoded);
+            if (decoded && (decoded.id === req.params.sercureId)) {
+                if (decoded.emailToken == '') {
+                    return next();
+                } else {
+                    return next({
+                        status: 401,
+                        message: 'Please verify your email first or try to Signup Again'
+                    })
+                }
             } else {
                 return next({
                     status: 401,
@@ -44,5 +54,9 @@ exports.ensureCorrectUser = function (req, res, next) {
             message: 'Unauthorized'
         });
     }
+}
+
+const isVerified = function (decoded) {
+
 }
 

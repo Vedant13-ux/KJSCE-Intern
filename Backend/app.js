@@ -35,10 +35,10 @@ const userRoutes = require('./routes/user');
 
 
 // Incuding Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/community', communityRoutes);
-app.use('/api/internship', internshipRoutes);
-app.use('/api', userRoutes)
+app.use('/api/:secureId/auth', authRoutes);
+app.use('/api/:secureId/community', loginRequired, ensureCorrectUser, communityRoutes);
+app.use('/api/:secureId/internship', loginRequired, ensureCorrectUser, internshipRoutes);
+app.use('/api/:secureId', loginRequired, ensureCorrectUser, userRoutes)
 
 
 app.use((req, res, next) => {
