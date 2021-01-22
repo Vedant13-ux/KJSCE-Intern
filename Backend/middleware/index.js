@@ -57,7 +57,4 @@ exports.ensureCorrectUser = function (req, res, next) {
     }
 }
 
-const isVerified = function (decoded) {
-
-}
 
