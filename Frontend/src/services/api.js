@@ -7,7 +7,6 @@ if (localStorage.jwtToken) {
     secureId = jwtDecode(localStorage.jwtToken)['_id'];
 }
 
-
 export function setTokenHeader(token) {
     console.log("Inides TOken Function");
     if (token) {

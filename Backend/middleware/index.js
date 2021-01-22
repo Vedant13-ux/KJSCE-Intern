@@ -28,7 +28,7 @@ exports.loginRequired = function (req, res, next) {
 }
 
 exports.ensureCorrectUser = function (req, res, next) {
-    console.log(req.params.secureId);
+    console.log('Correct User ma Aayaa');
     try {
         const token = req.headers.authorization.split(' ')[1];
         jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {

@@ -8,9 +8,11 @@ export function setCurrentUser(user) {
         user
     }
 }
+
 export function setAuthorizationHeader(token) {
     setTokenHeader(token);
 }
+
 export function logout() {
     return dispatch => {
         localStorage.clear();
