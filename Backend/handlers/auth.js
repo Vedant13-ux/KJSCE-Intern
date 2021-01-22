@@ -9,7 +9,6 @@ exports.signup = async function (req, res, next) {
     req.body.emailToken = crypto.randomBytes(64).toString('hex');
     const newUser = await db.User.create(req.body);
     var mailOptions = mailOptionsImport(req, process);
-    // console.log(mailOptions);
     var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -38,7 +37,6 @@ exports.signup = async function (req, res, next) {
 }
 
 exports.signin = async function (req, res, next) {
-  console.log(req.body);
   try {
     let user = await db.User.findOne({
       email: req.body.email
@@ -50,7 +48,6 @@ exports.signin = async function (req, res, next) {
       })
     }
     let isMatch = await user.comparePassword(req.body.password, next);
-    console.log(isMatch);
     if (isMatch) {
       let token = jwt.sign({
         ...user._doc
