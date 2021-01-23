@@ -55,7 +55,7 @@ class Main extends React.Component {
                     <Route exact path="/messaging" render={props => <Chat {...props} currentUser={currentUser} />} />
                     <Route exact path="/internship/:id" render={props => <IntershipDetail internshipApply={this.props.internshipApply} key={props.match.params.id} {...props} currentUser={currentUser} />} />
                     <Route exact path="/community" render={props => <Community {...props} currentUser={currentUser} />} />
-                    <Route exact path="/post/:id" render={props => <Post key={props.match.params.id} {...props} currentUser={currentUser} />} />
+                    <Route exact path="/post/:id" component={withAuth(Post)} />
                     <Route exact path="/hashtag/:id" render={props => <Hashtag key={props.match.params.id} {...props} currentUser={currentUser} />} />
                     <Route exact path="/verify-email/:token" render={props => <EmailVerificaton {...props} />} />
                     <Route exact path="/profile/:id" component={withAuth(Profile)} />
