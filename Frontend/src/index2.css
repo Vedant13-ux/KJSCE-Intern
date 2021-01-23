@@ -649,3 +649,15 @@ margin-right: 9px;
 	color: white;
 }
 
+.posttextarea{
+	height: 100px;
+	overflow: scroll;
+    padding: 10px;
+    font-size: 14px;
+    font-family: monospace;
+}
+
+.posttextarea p{
+	color:blue;
+	display:inline;
+}
