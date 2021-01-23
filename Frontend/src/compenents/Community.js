@@ -146,30 +146,46 @@ class PostCreate extends React.Component {
     super(props);
     this.state = {
       show: false,
+      text:'',
       selectedFile: null,
-      text: '<a href="bruh">bruh</a> ok',
       status: ''
     };
+    this.writinghash=false
     this.changed = (e) => {
-      console.log(e.target.dangerouslySetInnerHTML)
+      let text=this.removeTags(this.textarea.current.innerHTML)
+      // console.log(text)
+      // let arr=text.split(' ')
+      // console.log(arr)
+      // arr.forEach((e,i)=>{
+      //   if (e[0]=='#') arr[i]='<p>'+e+'</p>'
+      // })
+      // console.log(arr)
+      this.textarea.current.innerHTML="some"
+      //this.setState({text:arr.join(' ')})
     }
     this.handleSubmit = (e) => {
       e.preventDefault();
-      console.log(e)
-      // e.preventDefault();
-      // this.setState({ status: 'uploading' })
-      // const fd = new FormData(e.target);
-      // for (var entry of fd.entries()) {
-      //   console.log(entry);
-      // }
-      // apiCall('post', '/community/posts/create', fd)
-      //   .then(async (post) => {
-      //     this.setState({ status: '', selectedFile: null })
-      //     return this.props.history.push('/post/' + post._id)
-      //   }).catch((err) => {
-      //     console.log(err);
-      //   });
+      this.setState({ status: 'uploading' })
+      const fd = new FormData(e.target);
+      fd.append('content',this.removeTags(this.textarea.current.innerHTML))
+      for (var entry of fd.entries()) {
+        console.log(entry);
+      }
+      apiCall('post', '/community/posts/create', fd)
+        .then(async (post) => {
+          this.setState({ status: '', selectedFile: null })
+          return this.props.history.push('/post/' + post._id)
+        }).catch((err) => {
+          console.log(err);
+        });
     };
+    this.removeTags=(str)=> {
+      if ((str===null) || (str===''))
+      return '';
+      else
+      str = str.toString();
+      return str.replace( /(<([^>]+)>)/ig, '');
+   }
     this.handleClose = (e) => {
       this.setState({ show: false });
     };
@@ -179,7 +195,7 @@ class PostCreate extends React.Component {
     this.fileValidaion = e => {
       this.setState({ selectedFile: e.target.files[0] })
     }
-    this.multiselectRef = React.createRef();
+    this.textarea = React.createRef();
   }
   render() {
     return (
@@ -204,17 +220,15 @@ class PostCreate extends React.Component {
               <div className="ui form">
                 <div className="field">
                   <label>About post</label>
-                  <textarea
+                  {/* <textarea
                     maxlength="200"
                     rows="2"
                     required
-                    value={this.state.text}
                     placeholder="What do you want to talk about?"
                     name="content"
-                  ></textarea>
-                  <div ref={this.multiselectRef}
-                    dangerouslySetInnerHTML={{ __html: this.state.text }}
-                    onChange={this.changed} contentEditable={true}></div>
+                  ></textarea> */}
+                  <div ref={this.textarea}
+                    onInput={this.changed} dangerouslySetInnerHTML={{__html:this.state.text}} className="posttextarea" contentEditable={true}></div>
                 </div>
                 <div className="field">
                   <label>Media Upload</label>
