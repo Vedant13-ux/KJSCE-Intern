@@ -119,6 +119,11 @@ class Landing extends Component {
     }
 };
 
+function mapStateToProps(state) {
+    return {
+        currentUser: state.currentUser
+    }
+}
 
 
 export default Landing;
