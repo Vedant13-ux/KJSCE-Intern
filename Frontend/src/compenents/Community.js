@@ -159,8 +159,8 @@ class PostCreate extends React.Component {
       // arr.forEach((e,i)=>{
       //   if (e[0]=='#') arr[i]='<p>'+e+'</p>'
       // })
-      console.log(arr)
-      this.textarea.current.innerHTML="fart"
+      // console.log(arr)
+      this.textarea.current.innerHTML="some"
       //this.setState({text:arr.join(' ')})
     }
     this.handleSubmit = (e) => {
