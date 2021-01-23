@@ -4,14 +4,6 @@ axios.defaults.baseURL = 'http://localhost:3001'
 
 var secureId = null;
 
-async function setSecureId() {
-    if (localStorage.jwtToken) {
-        console.log('ScureId was Set')
-        secureId = await jwtDecode(localStorage.jwtToken)
-    }
-}
-setSecureId();
-
 
 export function setTokenHeader(token) {
     console.log("Inides TOken Function");
@@ -27,6 +19,10 @@ export function setTokenHeader(token) {
 }
 
 export async function apiCall(method, path, data) {
+    if (secureId === null && localStorage.jwtToken) {
+        console.log('ScureId was Set')
+        secureId = await jwtDecode(localStorage.jwtToken)
+    }
     if (localStorage.jwtToken) {
     }
     return new Promise((resolve, reject) => {
