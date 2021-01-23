@@ -501,6 +501,7 @@ export class Post extends React.Component {
   }
   
   render() {
+    console.log(this.content)
     return (
       <div className="post" id={this.id}>
         <div className="post-wrapper">
@@ -519,7 +520,9 @@ export class Post extends React.Component {
               else if (this.itstag){
                 if (c===' '){
                   this.itstag=false
-                  return <Link to={'/hashtag/'+this.tag.slice(1,this.tag.length)}>{this.tag+' '}</Link>
+                  let tag=this.tag
+                  this.tag=''
+                  return <Link to={'/hashtag/'+this.tag.slice(1,this.tag.length)}>{tag+' '}</Link>
                 }
                 else{
                   this.tag+=c
@@ -539,6 +542,7 @@ export class Post extends React.Component {
             likeHandler={this.likeHandler}
             isLiked={this.state.isLiked}
             showComments={this.showComments}
+            idpost={this.id}
           />
 
           <Comments
@@ -681,7 +685,7 @@ class PostInfo extends React.Component {
         <div className="views">
           <span>
             <div className="icon">
-              <i className="fas fa-share"></i>
+              <Link to={"/post/"+this.props.idpost}><i className="fas fa-share"></i></Link>
             </div>
           </span>
         </div>

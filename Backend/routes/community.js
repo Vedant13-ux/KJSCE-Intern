@@ -104,6 +104,8 @@ router.post('/posts/create', upload.single('file'), (req, res, next) => {
                     message: 'User Not Found'
                 })
             }
+            let hashtags = req.body.content.match(/#(\S*)/g);
+            req.body.hashtags = hashtags;
             if (req.file) {
                 cloudinary.v2.uploader.upload(req.file.path, function (err, result) {
                     if (err) {
@@ -127,10 +129,23 @@ router.post('/posts/create', upload.single('file'), (req, res, next) => {
                         res.status(200).send(newPost);
                     })
                     .catch(err => next(err))
+
             }
-
+            hashtags.forEach((e) => {
+                e = e.slice(1, e.length)
+                db.Hashtag.find({ name: e }).then(async (h) => {
+                    if (Object.keys(h).length > 0) {
+                        await h[0].posts.unshift(newPost);
+                        h[0].save()
+                    }
+                    else {
+                        h = await db.Hashtag.create({ name: e, posts: [newPost,] })
+                        h.save()
+                    }
+                })
+            })
         }).catch((err) => {
-
+            return next(err);
         });
 
 });
