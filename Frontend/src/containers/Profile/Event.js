@@ -285,4 +285,4 @@ class EventForm extends Component {
   }
 }
 
-export default connect(() => { }, { addEvent, editEvent, deleteEvent })(Event);
+export default connect(() => {return {} }, { addEvent, editEvent, deleteEvent })(Event);

@@ -34,9 +34,9 @@ class Navbar extends Component {
     }
     async logout(e) {
         e.preventDefault();
-        await this.setState({ isAuthenticated: false })
-        this.props.history.push('/');
+        await this.setState({ isAuthenticated: false });
         await this.props.logout();
+        this.props.history.push('/');
 
     }
     showDropdown() {
@@ -128,9 +128,12 @@ class Navbar extends Component {
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/messaging"><i className="fas fa-envelope mr-1"></i>Messaging</Link>
                                 </li>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/bookmarks"><i className="fas fa-bookmark mr-1"></i>Bookmarks</Link>
-                                </li>
+                                {this.state.isAuthenticated &&
+
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/bookmarks"><i className="fas fa-bookmark mr-1"></i>Bookmarks</Link>
+                                    </li>
+                                }
                             </ul>
 
                             {rightContent()}

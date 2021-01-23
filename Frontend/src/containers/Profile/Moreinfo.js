@@ -8,7 +8,7 @@ import { updateinfo, updateSkills,deleteCertificate, updateCertificates } from '
 
 
 
-class Basic extends Component {
+class MoreInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -521,4 +521,4 @@ class Basic extends Component {
   }
 }
 
-export default connect(() => { }, { updateinfo, updateSkills,deleteCertificate, updateCertificates })(Basic);
+export default connect(() => {return {} }, { updateinfo, updateSkills,deleteCertificate, updateCertificates })(MoreInfo);
