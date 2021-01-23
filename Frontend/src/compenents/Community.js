@@ -519,7 +519,9 @@ export class Post extends React.Component {
               else if (this.itstag){
                 if (c===' '){
                   this.itstag=false
-                  return <Link to={'/hashtag/'+this.tag.slice(1,this.tag.length)}>{this.tag+' '}</Link>
+                  let tag=this.tag
+                  this.tag=''
+                  return <Link to={'/hashtag/'+this.tag.slice(1,this.tag.length)}>{tag+' '}</Link>
                 }
                 else{
                   this.tag+=c
