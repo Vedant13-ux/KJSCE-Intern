@@ -4,17 +4,21 @@ import { configureStore } from '../store'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Main from './Main'
 
+
 const store = configureStore();
 
-const App = () => (
-  <Provider store={store}>
+const App = () => {
+  return (
+    <Provider store={store} >
     <Router>
       <div>
         <Main />
       </div>
     </Router>
-  </Provider>
-);
+  </Provider >
+  )
+
+};
 
 
 

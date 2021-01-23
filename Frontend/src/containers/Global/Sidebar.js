@@ -57,13 +57,15 @@ class Sidebar extends Component {
                             <i className="fas fa-envelope ic">
                             </i>Messaging
                         </Link>
+                        {this.state.isAuthenticated &&
+                            <Link to="/bookmarks" className="mains">
+                                <i className="fas fa-bookmark ic">
+                                    <span className="badge badge-info">{this.state.user.bookmarks.length}</span>
+                                </i>
+                            Bookmarks
+                            </Link>
+                        }
 
-                        <Link to="/bookmarks" className="mains">
-                            <i className="fas fa-bookmark ic">
-                                <span className="badge badge-info">{this.state.user.bookmarks.length}</span>
-                            </i>
-                        Bookmarks
-                        </Link>
 
                         <Link className="mains" to='/aboutUs'>
                             <i className="fas fa-user-tie ic"></i>
@@ -86,4 +88,4 @@ class Sidebar extends Component {
         )
     }
 }
-export default connect(() => { }, {})(Sidebar);
+export default connect(() => { return {} }, {})(Sidebar);

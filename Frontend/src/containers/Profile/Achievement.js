@@ -227,4 +227,4 @@ class Achievementform extends Component {
   }
 }
 
-export default connect(() => { }, { updateAchievement, deleteAchievement, editAchievement })(Achievement);
+export default connect(() => {return {} }, { updateAchievement, deleteAchievement, editAchievement })(Achievement);

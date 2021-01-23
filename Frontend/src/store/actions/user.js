@@ -537,7 +537,7 @@ export function deleteinternship(intId) {
 export function internshipDelete(intId, userId) {
     return dispatch => {
         return new Promise((resolve, reject) => {
-            return apiCall("delete", '/api/internship/details/' + intId + '/' + userId)
+            return apiCall("delete", '/internship/details/' + intId + '/' + userId)
                 .then(() => {
                     dispatch(deleteinternship(intId));
                     resolve();
@@ -556,7 +556,7 @@ export function editinternship(internship) {
 export function internshipedit(internship, userId) {
     return dispatch => {
         return new Promise((resolve, reject) => {
-            return apiCall("put", '/api/internship/details/', { id: userId, data: internship })
+            return apiCall("put", '/internship/details/', { id: userId, data: internship })
                 .then(() => {
                     dispatch(editinternship(internship));
                     resolve(internship._id);

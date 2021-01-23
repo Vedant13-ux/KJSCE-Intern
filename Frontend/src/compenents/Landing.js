@@ -27,6 +27,9 @@ class Landing extends Component {
         this.already = this.already.bind(this);
     }
     componentWillMount() {
+        if (this.props.isAuthenticated) {
+            return this.props.history.push('/home')
+        }
         let content = window.location.href.split('#')[1];
         if (content === 'signup')
             return this.setState({ content: 'Sign Up' })
@@ -38,6 +41,11 @@ class Landing extends Component {
             return this.setState({ content: 'About Us' })
         if (content === 'contact')
             return this.setState({ content: 'Contact' })
+    }
+    componentWillUpdate(nextProps) {
+        if (this.props.isAuthenticated) {
+            return this.props.history.push('/home');
+        }
     }
     handleSwitch(e) {
         return this.setState({ content: e.target.textContent })

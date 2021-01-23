@@ -251,4 +251,4 @@ class ProjectForm extends Component {
   }
 }
 
-export default connect(() => {}, { updateProjects, editProjects,deleteProjects })(Project);
+export default connect(() => {return {}}, { updateProjects, editProjects,deleteProjects })(Project);
