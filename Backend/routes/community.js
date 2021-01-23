@@ -118,6 +118,19 @@ router.post('/posts/create', upload.single('file'), (req, res, next) => {
                             await user.posts.push(newPost);
                             await user.save();
                             res.status(200).send(newPost);
+                            hashtags.forEach((e) => {
+                                e = e.slice(1, e.length)
+                                db.Hashtag.find({ name: e }).then(async (h) => {
+                                    if (Object.keys(h).length > 0) {
+                                        await h[0].posts.unshift(newPost);
+                                        h[0].save()
+                                    }
+                                    else {
+                                        h = await db.Hashtag.create({ name: e, posts: [newPost,] })
+                                        h.save()
+                                    }
+                                })
+                            })
                         })
                         .catch(err => next(err))
                 })
@@ -127,23 +140,23 @@ router.post('/posts/create', upload.single('file'), (req, res, next) => {
                         await user.posts.push(newPost);
                         await user.save();
                         res.status(200).send(newPost);
+                        hashtags.forEach((e) => {
+                            e = e.slice(1, e.length)
+                            db.Hashtag.find({ name: e }).then(async (h) => {
+                                if (Object.keys(h).length > 0) {
+                                    await h[0].posts.unshift(newPost);
+                                    h[0].save()
+                                }
+                                else {
+                                    h = await db.Hashtag.create({ name: e, posts: [newPost,] })
+                                    h.save()
+                                }
+                            })
+                        })
                     })
                     .catch(err => next(err))
 
             }
-            hashtags.forEach((e) => {
-                e = e.slice(1, e.length)
-                db.Hashtag.find({ name: e }).then(async (h) => {
-                    if (Object.keys(h).length > 0) {
-                        await h[0].posts.unshift(newPost);
-                        h[0].save()
-                    }
-                    else {
-                        h = await db.Hashtag.create({ name: e, posts: [newPost,] })
-                        h.save()
-                    }
-                })
-            })
         }).catch((err) => {
             return next(err);
         });
