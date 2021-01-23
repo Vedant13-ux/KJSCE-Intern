@@ -24,7 +24,7 @@ var upload = multer({ storage: storage, fileFilter: imageFilter });
 
 // Getting Posts
 router.get('/posts/getAll', (req, res, next) => {
-    db.Post.find().sort({'created':-1}).limit(10).populate({ path: 'author', select: 'fname lname photo email' }).populate({ path: 'comments', populate: { path: 'author', select: 'fname lname email photo' } }).exec()
+    db.Post.find().sort({ 'created': -1 }).limit(10).populate({ path: 'author', select: 'fname lname photo email' }).populate({ path: 'comments', populate: { path: 'author', select: 'fname lname email photo' } }).exec()
         .then(posts => {
             db.Hashtag.aggregate([
                 {
@@ -104,12 +104,22 @@ router.post('/posts/create', upload.single('file'), (req, res, next) => {
                     message: 'User Not Found'
                 })
             }
-            cloudinary.v2.uploader.upload(req.file.path, function (err, result) {
-                if (err) {
-                    return next(err);
-                }
-                req.body.image = result.secure_url;
-                req.body.imageId = result.public_id;
+            if (req.file) {
+                cloudinary.v2.uploader.upload(req.file.path, function (err, result) {
+                    if (err) {
+                        return next(err);
+                    }
+                    req.body.image = result.secure_url;
+                    req.body.imageId = result.public_id;
+                    db.Post.create(req.body)
+                        .then(async (newPost) => {
+                            await user.posts.push(newPost);
+                            await user.save();
+                            res.status(200).send(newPost);
+                        })
+                        .catch(err => next(err))
+                })
+            } else {
                 db.Post.create(req.body)
                     .then(async (newPost) => {
                         await user.posts.push(newPost);
@@ -117,7 +127,7 @@ router.post('/posts/create', upload.single('file'), (req, res, next) => {
                         res.status(200).send(newPost);
                     })
                     .catch(err => next(err))
-            })
+            }
 
         }).catch((err) => {
 
