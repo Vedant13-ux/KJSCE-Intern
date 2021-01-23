@@ -396,8 +396,8 @@ export class Post extends React.Component {
     this.hideComment = this.hideComment.bind(this);
     this.addCommentDecorator = this.addCommentDecorator.bind(this);
     this.handleImageLoad = this.handleImageLoad.bind(this);
-    this.itstag=false
-    this.tag=''
+    this.itstag = false
+    this.tag = ''
   }
   handleImageLoad(e) {
     this.setState({ imageLoaded: true });
@@ -499,11 +499,11 @@ export class Post extends React.Component {
     this.addCommentHandler(e);
     // this.scrollToBottom();
   }
-  
+
   render() {
     console.log(this.content)
-    this.tag=''
-    this.itstag=false
+    this.tag = ''
+    this.itstag = false
     return (
       <div className="post" id={this.id}>
         <div className="post-wrapper">
@@ -514,30 +514,30 @@ export class Post extends React.Component {
             username={this.name}
           />
           <div className="post-content">
-            <p>{this.content.split('').map((c)=>{
-              if (c==='#' && !this.itstag){
-                this.itstag=true
-                this.tag='#'
+            <p>{this.content.split('').map((c) => {
+              if (c === '#' && !this.itstag) {
+                this.itstag = true
+                this.tag = '#'
               }
-              else if (this.itstag){
-                if (c===' '){
-                  this.itstag=false
-                  let tag=this.tag
-                  this.tag=''
-                  return <Link to={'/hashtag/'+tag.slice(1,tag.length)}>{tag+' '}</Link>
+              else if (this.itstag) {
+                if (c === ' ') {
+                  this.itstag = false
+                  let tag = this.tag
+                  this.tag = ''
+                  return <Link to={'/hashtag/' + tag.slice(1, tag.length)}>{tag + ' '}</Link>
                 }
-                else{
-                  this.tag+=c
+                else {
+                  this.tag += c
                 }
               }
-              else{
+              else {
                 return c
               }
-            })}{this.itstag && <Link to={'/hashtag/'+this.tag.slice(1,this.tag.length)}>{this.tag}</Link>}</p>
+            })}{this.itstag && <Link to={'/hashtag/' + this.tag.slice(1, this.tag.length)}>{this.tag}</Link>}</p>
             {this.img !== "" && (
               <img onLoad={this.handleImageLoad} src={this.img} alt=""></img>
             )}
-            
+
           </div>
           <PostInfo
             likes={this.state.likes}
@@ -688,7 +688,7 @@ class PostInfo extends React.Component {
         <div className="views">
           <span>
             <div className="icon">
-              <Link to={"/post/"+this.props.idpost}><i className="fas fa-share"></i></Link>
+              <Link style={{ color: '#604d92' }} to={"/post/" + this.props.idpost}><i className="fas fa-share"></i></Link>
             </div>
           </span>
         </div>
