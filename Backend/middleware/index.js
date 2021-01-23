@@ -29,11 +29,12 @@ exports.loginRequired = function (req, res, next) {
 
 exports.ensureCorrectUser = function (req, res, next) {
     console.log('Correct User ma Aayaa');
+    console.log(req.params.secureId);
     try {
         const token = req.headers.authorization.split(' ')[1];
         jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {
             console.log(decoded);
-            if (decoded && (decoded.id === req.params.sercureId)) {
+            if (decoded && (decoded._id === req.params.secureId)) {
                 if (decoded.emailToken === null) {
                     console.log('User is verified');
                     return next();

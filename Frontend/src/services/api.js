@@ -21,9 +21,7 @@ export function setTokenHeader(token) {
 export async function apiCall(method, path, data) {
     if (secureId === null && localStorage.jwtToken) {
         console.log('ScureId was Set')
-        secureId = await jwtDecode(localStorage.jwtToken)
-    }
-    if (localStorage.jwtToken) {
+        secureId = await jwtDecode(localStorage.jwtToken)['_id'];
     }
     return new Promise((resolve, reject) => {
         return axios[method](`/api/${secureId}${path}`, data)

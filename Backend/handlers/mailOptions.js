@@ -5,7 +5,7 @@ function mailOptions(req, process) {
     subject: 'KJSCE Intern - Verification',
     text: `
           Hello, Thanks for regstering on our site. Please Click on the link bellow to verify your Account.
-          ${process.env.PORXY_URL}/verify-email/${req.body.emailToken}`,
+          ${process.env.PROXY_URL}/verify-email/${req.body.emailToken}`,
     html: `
           <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
           <html>
@@ -479,7 +479,7 @@ function mailOptions(req, process) {
                                         <tbody>
                                           <tr align="center">
                                             <td align="center" valign="middle" style="border-collapse:collapse;">
-                                              <a href="${process.env.PORXY_URL}/verify-email/${req.body.emailToken}" class="buttonText" href="#" target="_blank" style="color: #4A90E2;text-decoration: none;font-weight: normal;display: block;border: 2px solid #585858;padding: 10px 80px;font-family: Arial;">Verify</a>
+                                              <a href="${process.env.PROXY_URL}/verify-email/${req.body.emailToken}" class="buttonText" href="#" target="_blank" style="color: #4A90E2;text-decoration: none;font-weight: normal;display: block;border: 2px solid #585858;padding: 10px 80px;font-family: Arial;">Verify</a>
                                             </td>
                                           </tr>
                                         </tbody>
