@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 
 export default function withAuth(ComponentToRender) {
     class Authnticate extends Component {
-        componentWillUnmount() {
+        componentWillMount() {
+            console.log(this.props.location);
             if (!this.props.currentUser.isAuthenticated) {
                 this.props.history.push('/')
             }
@@ -14,7 +15,7 @@ export default function withAuth(ComponentToRender) {
             }
         }
         render() {
-            return <ComponentToRender {...this.props} currentUser={this.props.currentUser} ></ComponentToRender>
+            return <ComponentToRender key={this.props.match.params.id} {...this.props} currentUser={this.props.currentUser} ></ComponentToRender>
         }
     }
     function mapStateToProps(state) {
