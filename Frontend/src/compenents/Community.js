@@ -502,6 +502,8 @@ export class Post extends React.Component {
   
   render() {
     console.log(this.content)
+    this.tag=''
+    this.itstag=false
     return (
       <div className="post" id={this.id}>
         <div className="post-wrapper">
@@ -522,7 +524,7 @@ export class Post extends React.Component {
                   this.itstag=false
                   let tag=this.tag
                   this.tag=''
-                  return <Link to={'/hashtag/'+this.tag.slice(1,this.tag.length)}>{tag+' '}</Link>
+                  return <Link to={'/hashtag/'+tag.slice(1,tag.length)}>{tag+' '}</Link>
                 }
                 else{
                   this.tag+=c
@@ -535,6 +537,7 @@ export class Post extends React.Component {
             {this.img !== "" && (
               <img onLoad={this.handleImageLoad} src={this.img} alt=""></img>
             )}
+            
           </div>
           <PostInfo
             likes={this.state.likes}
