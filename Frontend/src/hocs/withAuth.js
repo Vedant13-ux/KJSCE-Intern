@@ -4,13 +4,8 @@ import { connect } from 'react-redux'
 export default function withAuth(ComponentToRender) {
     class Authnticate extends Component {
         componentWillMount() {
-            console.log(this.props.location);
+            console.log('Hocs ke andar');
             if (!this.props.currentUser.isAuthenticated) {
-                this.props.history.push('/')
-            }
-        }
-        componentWillUpdate(nextProps) {
-            if (!nextProps.currentUser.isAuthenticated) {
                 this.props.history.push('/')
             }
         }
@@ -22,7 +17,8 @@ export default function withAuth(ComponentToRender) {
             }
         }
         render() {
-            return <ComponentToRender {...this.setKey()} currentUser={this.props.currentUser} {...this.props} ></ComponentToRender>
+            console.log('Hocs ke andar ka render');
+            return <ComponentToRender {...this.setKey()} {...this.props} ></ComponentToRender>
         }
     }
     function mapStateToProps(state) {

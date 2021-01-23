@@ -146,7 +146,7 @@ class PostCreate extends React.Component {
     super(props);
     this.state = {
       show: false,
-      text:'',
+      text: '',
       selectedFile: null,
       status: ''
     };
@@ -186,13 +186,13 @@ class PostCreate extends React.Component {
           console.log(err);
         });
     };
-  //   this.removeTags=(str)=> {
-  //     if ((str===null) || (str===''))
-  //     return '';
-  //     else
-  //     str = str.toString();
-  //     return str.replace( /(<([^>]+)>)/ig, '');
-  //  }
+    //   this.removeTags=(str)=> {
+    //     if ((str===null) || (str===''))
+    //     return '';
+    //     else
+    //     str = str.toString();
+    //     return str.replace( /(<([^>]+)>)/ig, '');
+    //  }
     this.handleClose = (e) => {
       this.setState({ show: false });
     };
@@ -718,4 +718,11 @@ class CommentInput extends React.Component {
   }
 }
 
-export default connect(() => { }, { updateLikeActivity, updateUnLikeActivity, updateCommentActivity })(Application);
+function mapStateToProps(state) {
+  return {
+    currentUser: state.currentUser
+  }
+}
+
+
+export default connect(mapStateToProps, { updateLikeActivity, updateUnLikeActivity, updateCommentActivity })(Application);
