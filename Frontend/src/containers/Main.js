@@ -4,7 +4,6 @@ import Homepage from '../compenents/Homepage'
 import Landing from '../compenents/Landing';
 import { connect } from 'react-redux';
 import { } from '../store/actions/auth'
-import { internshipApply } from '../store/actions/user'
 import { updateRefresh, logout, setAuthorizationHeader, authUser, setCurrentUser } from '../store/actions/auth'
 import IntershipDetail from './InternshipDetails/InternshipDetails'
 import Community from '../compenents/Community'
@@ -52,14 +51,14 @@ class Main extends React.Component {
                 <Switch>
                     <Route exact path="/" render={props => <Landing {...props} isAuthenticated={currentUser.isAuthenticated} />} />
                     <Route path="/home" component={withAuth(Homepage)} />
-                    <Route exact path="/messaging" render={props => <Chat {...props} currentUser={currentUser} />} />
-                    <Route exact path="/internship/:id" render={props => <IntershipDetail internshipApply={this.props.internshipApply} key={props.match.params.id} {...props} currentUser={currentUser} />} />
-                    <Route exact path="/community" render={props => <Community {...props} currentUser={currentUser} />} />
+                    <Route exact path="/messaging" component={withAuth(Chat)} />
+                    <Route exact path="/internship/:id" component={withAuth(IntershipDetail)} />
+                    <Route exact path="/community" component={withAuth(Community)} />
                     <Route exact path="/post/:id" component={withAuth(Post)} />
-                    <Route exact path="/hashtag/:id" render={props => <Hashtag key={props.match.params.id} {...props} currentUser={currentUser} />} />
+                    <Route exact path="/hashtag/:id" component={withAuth(Hashtag)} />
                     <Route exact path="/verify-email/:token" render={props => <EmailVerificaton {...props} />} />
                     <Route exact path="/profile/:id" component={withAuth(Profile)} />
-                    <Route exact path="/bookmarks" render={props => <Bookmarks {...props} currentUser={currentUser} />} />
+                    <Route exact path="/bookmarks" component={withAuth(Bookmarks)} />
                     <Route path="*" render={props => <NotFound {...props} />} />
                 </Switch>
             </div>
@@ -73,4 +72,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default withRouter(connect(mapStateToProps, { authUser, setCurrentUser, updateRefresh, internshipApply, logout })(Main));
+export default withRouter(connect(mapStateToProps, { authUser, setCurrentUser, updateRefresh, logout })(Main));

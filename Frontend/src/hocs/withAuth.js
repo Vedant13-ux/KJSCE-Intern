@@ -14,8 +14,15 @@ export default function withAuth(ComponentToRender) {
                 this.props.history.push('/')
             }
         }
+        setKey() {
+            if (this.props.match.params.id) {
+                return { key: this.props.match.params.id }
+            } else {
+                return {}
+            }
+        }
         render() {
-            return <ComponentToRender key={this.props.match.params.id} {...this.props} currentUser={this.props.currentUser} ></ComponentToRender>
+            return <ComponentToRender {...this.setKey()} currentUser={this.props.currentUser} {...this.props} ></ComponentToRender>
         }
     }
     function mapStateToProps(state) {

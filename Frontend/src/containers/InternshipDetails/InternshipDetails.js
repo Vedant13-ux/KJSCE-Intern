@@ -11,6 +11,9 @@ import { Multiselect } from "multiselect-react-dropdown";
 import CKEditor from 'ckeditor4-react';
 import { Link } from 'react-router-dom';
 // import json2xls from 'json2xls'
+import { connect } from 'react-redux'
+import { internshipApply } from '../../store/actions/user'
+
 
 
 
@@ -27,7 +30,7 @@ class InternshipDetail extends Component {
       owner: false,
       show1: false,
       show2: false,
-      show3:false,
+      show3: false,
       emails: [{ text: "Hello" }, { text: "Vedant" }],
       role: "Student",
       subject: '',
@@ -51,8 +54,8 @@ class InternshipDetail extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.multiselectRef = React.createRef();
     this.onEditorChange = this.onEditorChange.bind(this);
-    this.edited=(i)=>{
-      this.setState({details:i,show3:false})
+    this.edited = (i) => {
+      this.setState({ details: i, show3: false })
     }
   }
 
@@ -176,15 +179,15 @@ class InternshipDetail extends Component {
                     <div className="internshipTitle">
                       <h1>{this.state.details.title}</h1>
                       <div className="floatingclass"><div>
-                      <div className="category">{this.state.details.category}</div>
-                      {this.state.details.faculty.email===this.props.currentUser.user.email && (
-                        <span
-                          className="deleteproj"
-                          onClick={this.handleShow3}
-                        >
-                          <i className="fa fa-edit"></i>
-                        </span>
-                      )}</div></div>
+                        <div className="category">{this.state.details.category}</div>
+                        {this.state.details.faculty.email === this.props.currentUser.user.email && (
+                          <span
+                            className="deleteproj"
+                            onClick={this.handleShow3}
+                          >
+                            <i className="fa fa-edit"></i>
+                          </span>
+                        )}</div></div>
                     </div>
                     <div className="provider">
                       <img
@@ -414,4 +417,4 @@ class InternshipDetail extends Component {
   }
 }
 
-export default InternshipDetail;
+export default connect(() => { return {} }, { internshipApply })(InternshipDetail);
