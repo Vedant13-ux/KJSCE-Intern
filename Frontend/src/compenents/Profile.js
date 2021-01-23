@@ -26,18 +26,19 @@ class Profile extends Component {
     };
     this.updateposts=()=>{
       if (this.state.user.posts.length>0){
-      if (typeof this.state.user.posts[0] === 'string' || this.state.user.posts[0] instanceof String){
-        apiCall("put", "/getUsersPosts",{list:this.state.user.posts}).then((li)=>{
-          this.state.user.posts=li.list
+        this.setState({startpost:true})
+      // if (typeof this.state.user.posts[0] === 'string' || this.state.user.posts[0] instanceof String){
+        apiCall("get", "/getUsersPosts/"+this.props.currentUser.user._id,'').then((li)=>{
+          this.state.user.posts=li.posts
           this.setState({...this.state,startpost:false})
         })
         .catch((e)=>console.log(e))
         this.state.user.posts=[]
         this.setState({...this.state})
-      }
-      else{
-        // already have data no need to api call again
-      }
+      // }
+      // else{
+      //   // already have data no need to api call again
+      // }
     }else{
       this.setState({startpost:false})
     }

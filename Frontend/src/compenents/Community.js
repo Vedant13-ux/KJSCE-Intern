@@ -396,6 +396,8 @@ export class Post extends React.Component {
     this.hideComment = this.hideComment.bind(this);
     this.addCommentDecorator = this.addCommentDecorator.bind(this);
     this.handleImageLoad = this.handleImageLoad.bind(this);
+    this.itstag=false
+    this.tag=''
   }
   handleImageLoad(e) {
     this.setState({ imageLoaded: true });
@@ -497,7 +499,7 @@ export class Post extends React.Component {
     this.addCommentHandler(e);
     // this.scrollToBottom();
   }
-
+  
   render() {
     return (
       <div className="post" id={this.id}>
@@ -509,7 +511,24 @@ export class Post extends React.Component {
             username={this.name}
           />
           <div className="post-content">
-            <p>{this.content}</p>
+            <p>{this.content.split('').map((c)=>{
+              if (c==='#' && !this.itstag){
+                this.itstag=true
+                this.tag='#'
+              }
+              else if (this.itstag){
+                if (c===' '){
+                  this.itstag=false
+                  return <Link to={'/hashtag/'+this.tag.slice(1,this.tag.length)}>{this.tag+' '}</Link>
+                }
+                else{
+                  this.tag+=c
+                }
+              }
+              else{
+                return c
+              }
+            })}{this.itstag && <Link to={'/hashtag/'+this.tag.slice(1,this.tag.length)}>{this.tag}</Link>}</p>
             {this.img !== "" && (
               <img onLoad={this.handleImageLoad} src={this.img} alt=""></img>
             )}

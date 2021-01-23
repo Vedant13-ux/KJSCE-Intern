@@ -546,26 +546,44 @@ router.put('/getConversations', (req, res, next) => {
     })
 })
 
-router.put('/getUsersPosts', async (req, res, next) => {
-    let array = []
-    let times = 0
-    req.body.list.forEach((e) => {
-        try {
-            db.Post.findById(e).populate({ path: 'comments', populate: { path: 'author' } }).then(data => {
-                array.push(data)
-                if (times === req.body.list.length - 1) {
-                    array.sort((a,b)=>{
-                        return new Date(b.created) - new Date(a.created)})
-                    res.status(200).send({ list: array.reverse() });
-                }
-                times++;
-            }).catch(e => console.log((e)))
-        }
-        catch (err) {
+router.get('/getUsersPosts/:userId', async (req, res, next) => {
+    console.log("aya")
+    db.User.findById(req.params.userId).populate("posts").populate({path:"posts",populate:{ path: 'comments', populate: { path: 'author' } }})
+        .then(async (user) => {
+            if (!user) {
+                return next({
+                    status: 404,
+                    message: "User Not Found"
+                })
+            }
+            try {
+                console.log("ayah")
+                res.status(200).send({posts:user.posts})
+            } catch (err) {
+                next(err);
+            }
+        }).catch((err) => {
             next(err);
-        }
+        });
+    // let array = []
+    // let times = 0
+    // req.body.list.forEach((e) => {
+    //     try {
+    //         db.Post.findById(e).populate({ path: 'comments', populate: { path: 'author' } }).then(data => {
+    //             array.push(data)
+    //             if (times === req.body.list.length - 1) {
+    //                 array.sort((a,b)=>{
+    //                     return new Date(b.created) - new Date(a.created)})
+    //                 res.status(200).send({ list: array.reverse() });
+    //             }
+    //             times++;
+    //         }).catch(e => console.log((e)))
+    //     }
+    //     catch (err) {
+    //         next(err);
+    //     }
 
-    })
+    // })
 })
 
 module.exports = router;
