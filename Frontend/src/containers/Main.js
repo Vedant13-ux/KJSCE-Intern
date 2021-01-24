@@ -15,7 +15,7 @@ import Bookmarks from '../compenents/Bookmarks'
 import Chat from '../containers/chat/Chat'
 import '../index2.css'
 import jwtDecode from 'jwt-decode'
-import {internshipApply} from '../store/actions/user'
+import { internshipApply } from '../store/actions/user'
 
 class Main extends React.Component {
     async componentWillMount() {
@@ -25,7 +25,7 @@ class Main extends React.Component {
             try {
                 email = await jwtDecode(localStorage.jwtToken)['email'].split('@')[0];
                 console.log(email);
-                setAuthorizationHeader(localStorage.jwtToken);
+                await setAuthorizationHeader(localStorage.jwtToken);
                 this.props.updateRefresh(email);
 
             } catch (err) {
@@ -75,4 +75,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default withRouter(connect(mapStateToProps, { authUser, setCurrentUser, updateRefresh, logout,internshipApply })(Main));
+export default withRouter(connect(mapStateToProps, { authUser, setCurrentUser, updateRefresh, logout, internshipApply })(Main));

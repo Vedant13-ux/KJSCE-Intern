@@ -1,28 +1,23 @@
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
-axios.defaults.baseURL = 'http://localhost:3001'
-
+axios.defaults.baseURL = 'https://kjsce-connect-frontend.herokuapp.com'
+// axios.defaults.baseURL = ''
 var secureId = null;
 
-
-export function setTokenHeader(token) {
+export async function setTokenHeader(token) {
     console.log("Inides TOken Function");
     if (token) {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
         console.log("Added TOken");
-
+        secureId = await jwtDecode(localStorage.jwtToken)['_id'];
     } else {
         delete axios.defaults.headers.common["Authorization"];
         console.log("Deleted Token");
-
+        secureId = null;
     }
 }
 
 export async function apiCall(method, path, data) {
-    if (secureId === null && localStorage.jwtToken) {
-        console.log('ScureId was Set')
-        secureId = await jwtDecode(localStorage.jwtToken)['_id'];
-    }
     return new Promise((resolve, reject) => {
         return axios[method](`/api/${secureId}${path}`, data)
             .then(res => {

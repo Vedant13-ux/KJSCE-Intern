@@ -35,11 +35,11 @@ class Activity extends Component {
                         {this.props.activity.map(act =>
                             <div className="event">
                                 <div className="label" >
-                                    {act.post.image!==""?
-                                    <img src={act.post.image} alt="" style={{ width: '43px', height: '43px', borderRadius: '3px' }} />:
-                                    act.type==="Liked"?<i className="fa fa-heart" style={{ width: '43px', height: '43px', borderRadius: '3px' }} ></i>:<i className="fa fa-comment"></i>
+                                    {act.post.image !== undefined ?
+                                        <img src={act.post.image} alt="" style={{ width: '43px', height: '43px', borderRadius: '3px' }} /> :
+                                        act.type === "Liked" ? <i className="fas fa-thumbs-up" style={{fontSize:'40px', marginLeft:'1px'}} ></i> : <i className="fa fa-comment" style={{fontSize:'40px', marginLeft:'1px'}}></i>
                                     }
-                                    </div>
+                                </div>
                                 <div className="content">
                                     <div className="date">
                                         <Moment fromNow>{act.created.toString()}</Moment>
