@@ -15,6 +15,7 @@ import Bookmarks from '../compenents/Bookmarks'
 import Chat from '../containers/chat/Chat'
 import '../index2.css'
 import jwtDecode from 'jwt-decode'
+import {internshipApply} from '../store/actions/user'
 
 class Main extends React.Component {
     async componentWillMount() {
@@ -74,4 +75,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default withRouter(connect(mapStateToProps, { authUser, setCurrentUser, updateRefresh, logout })(Main));
+export default withRouter(connect(mapStateToProps, { authUser, setCurrentUser, updateRefresh, logout,internshipApply })(Main));

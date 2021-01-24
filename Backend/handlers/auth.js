@@ -11,7 +11,7 @@ exports.signup = async function (req, res, next) {
       message: 'Your mail is not authorized for this role'
     }
     db.HiddenData.findById('600d38655a14e72e1cadc685')
-      .then((data) => {
+      .then(async (data) => {
         switch (req.body.role) {
           case 'Faculty':
             if (data.facultyEmails.includes(req.body.email))
@@ -43,27 +43,28 @@ exports.signup = async function (req, res, next) {
               message: 'You are not allowed to login'
             })
         }
+        req.body.emailToken = crypto.randomBytes(64).toString('hex');
+        const newUser = await db.User.create(req.body);
+        var mailOptions = mailOptionsImport(req, process);
+        var transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: 'kjsceintern@gmail.com',
+            pass: process.env.GMAIL_APP_PASSWORD
+          }
+        });
+        transporter.sendMail(mailOptions, (err, info) => {
+          if (err) {
+            return console.log(err.message);
+          }
+          console.log('Message Sent : %s', info.messageId);
+          console.log('Preview URL : %s', info.getTestMessageURL(info));
+        });
+        return res.status(200).send('Signed Up Successfully')
       }).catch((err) => {
         return next(err)
       });
-    req.body.emailToken = crypto.randomBytes(64).toString('hex');
-    const newUser = await db.User.create(req.body);
-    var mailOptions = mailOptionsImport(req, process);
-    var transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'kjsceintern@gmail.com',
-        pass: process.env.GMAIL_APP_PASSWORD
-      }
-    });
-    transporter.sendMail(mailOptions, (err, info) => {
-      if (err) {
-        return console.log(err.message);
-      }
-      console.log('Message Sent : %s', info.messageId);
-      console.log('Preview URL : %s', info.getTestMessageURL(info));
-    });
-    return res.status(200).send('Signed Up Successfully')
+
   } catch (err) {
     if (err.code === 11000) {
       err.message = 'Sorry, that username/email is already taken.'

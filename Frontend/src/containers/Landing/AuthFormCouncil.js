@@ -41,7 +41,7 @@ class CouncilSignup extends Component {
                 </div>
                 <div className="field">
                     <label>Council Name</label>
-                    <input required type="text" name="councilName" placeholder="Name of your Council" value={fname} onChange={this.handleChange} />
+                    <input required type="text" name="fname" placeholder="Name of your Council" value={fname} onChange={this.handleChange} />
                 </div>
                 <div className="field">
                     <label>Somaiya Email</label>
