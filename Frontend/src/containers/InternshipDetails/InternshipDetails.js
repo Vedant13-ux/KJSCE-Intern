@@ -31,7 +31,7 @@ class InternshipDetail extends Component {
       applied: false,
       owner: false,
       show1: false,
-      downloaddata:[],
+      downloaddata: [],
       show2: false,
       show3: false,
       emails: [{ text: "Hello" }, { text: "Vedant" }],
@@ -39,7 +39,7 @@ class InternshipDetail extends Component {
       subject: '',
       text: '',
       ques1: "Why should you be hired for this role?",
-      ques2: "Are you avaiable for " + this.props.duration + " months, starting immediately? If not, what is the time period you are avaiable for and the earliest date you can start this internhsip on?",
+      ques2: "",
       ans1: '',
       ans2: '',
       error: '',
@@ -120,19 +120,19 @@ class InternshipDetail extends Component {
                 async (recomm) => {
                   if (this.state.user._id === data.faculty._id) {
                     await this.setState({ owner: true });
-                    apiCall('get', '/internship/applications/'+this.props.match.params.id, '')
-                      .then((data)=>{
+                    apiCall('get', '/internship/applications/' + this.props.match.params.id, '')
+                      .then((data) => {
                         console.log(data)
-                        let arr=[]
-                        data.forEach((e)=>{
-                          let thing={...e.applicantId}
-                          thing.a1=e.answers[0]
-                          thing.a2=e.answers[1]
-                          thing.name=thing.fname+' '+thing.lname
+                        let arr = []
+                        data.forEach((e) => {
+                          let thing = { ...e.applicantId }
+                          thing.a1 = e.answers[0]
+                          thing.a2 = e.answers[1]
+                          thing.name = thing.fname + ' ' + thing.lname
                           arr.push(thing)
                         })
-                        this.setState({downloaddata:arr})
-                      }).catch(e=>console.log(e))
+                        this.setState({ downloaddata: arr })
+                      }).catch(e => console.log(e))
 
                   }
                   if (data.applicants.findIndex(app => app._id === this.state.user._id) !== -1) {
@@ -141,7 +141,7 @@ class InternshipDetail extends Component {
                   if (new Date(this.state.details.applyBy) > Date.now()) {
                     this.setState({ passed: true });
                   }
-                  await this.setState({ details: data, recommlist: recomm, exists: true, start: false });
+                  await this.setState({ details: data, recommlist: recomm, exists: true, start: false, ques2: `Are you avaiable for ${data.duration} months, starting immediately? If not, what is the time period you are avaiable for and the earliest date you can start this internhsip on?` });
                   await this.setState({ emails: this.getApplicantsEmail() });
                   console.log(this.state);
                 }).catch(
@@ -260,14 +260,14 @@ class InternshipDetail extends Component {
                           <button onClick={this.handleShow1} className="mailAppl ui small button">Mail Applicants</button>
                           <ExcelFile element={<button className="mailAppl ui small button">Download Application data</button>}>
                             <ExcelSheet data={this.state.downloaddata} name="Applications">
-                                <ExcelColumn label="Name" value="name"/>
-                                <ExcelColumn label="Roll no." value="rollNo"/>
-                                <ExcelColumn label="Department" value="dept"/>
-                                <ExcelColumn label="Year" value="year"/>
-                                <ExcelColumn label="Email" value="email"/>
-                                <ExcelColumn label={this.state.ques1} value="a1"/>
-                                <ExcelColumn label={this.state.ques2} value="a2"/>
-                                <ExcelColumn label="Profile link" value={(c)=>'https://kjsce-connect-frontend.herokuapp.com/profile/'+c.email.split('@')[0]}/>
+                              <ExcelColumn label="Name" value="name" />
+                              <ExcelColumn label="Roll no." value="rollNo" />
+                              <ExcelColumn label="Department" value="dept" />
+                              <ExcelColumn label="Year" value="year" />
+                              <ExcelColumn label="Email" value="email" />
+                              <ExcelColumn label={this.state.ques1} value="a1" />
+                              <ExcelColumn label={this.state.ques2} value="a2" />
+                              <ExcelColumn label="Profile link" value={(c) => 'https://kjsce-connect-frontend.herokuapp.com/profile/' + c.email.split('@')[0]} />
 
                             </ExcelSheet>
                           </ExcelFile>
@@ -342,7 +342,7 @@ class InternshipDetail extends Component {
                                       rows="3"
                                       required
                                       name="ans1"
-                                      val={this.state.ans1}
+                                      value={this.state.ans1}
                                       onChange={this.handleChange}
                                     ></textarea>
                                   </div>
@@ -353,7 +353,7 @@ class InternshipDetail extends Component {
                                       rows="2"
                                       required
                                       name="ans2"
-                                      val={this.state.ans2}
+                                      value={this.state.ans2}
                                       onChange={this.handleChange}
                                     ></textarea>
                                   </div>

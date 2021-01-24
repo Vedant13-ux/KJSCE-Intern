@@ -115,6 +115,7 @@ class AuthForm extends Component {
                                 Electronics and Telecommunication
                       </option>
                             <option value="etrx">Electronics</option>
+                            <option value="other">Other</option>
                         </select>
                     </div>
                     {role === "Student" &&
