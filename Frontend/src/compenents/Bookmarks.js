@@ -76,11 +76,7 @@ class Bookmarks extends Component {
         )
     }
 }
-function mapStateToProps(state) {
-    return {
-        currentUser: state.currentUser
-    }
-}
 
 
-export default connect(mapStateToProps, {})(Bookmarks);
+
+export default Bookmarks

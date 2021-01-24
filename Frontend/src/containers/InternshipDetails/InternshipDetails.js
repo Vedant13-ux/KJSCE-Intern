@@ -416,9 +416,5 @@ class InternshipDetail extends Component {
     );
   }
 }
-function mapStateToProps(state) {
-  return {
-    currentUser: state.currentUser
-  }
-}
-export default connect(mapStateToProps, { internshipApply })(InternshipDetail);
+
+export default InternshipDetail

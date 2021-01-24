@@ -8,6 +8,8 @@ import MoreInfoCouncil from '../containers/Profile/MoreInfoCouncil'
 import UserActivity from "../containers/Profile/UserActivity";
 import Loading from "../images/Loading";
 import NotFound from "../images/NotFound"
+import { connect } from 'react-redux'
+
 
 class Profile extends Component {
   constructor(props) {
@@ -20,30 +22,30 @@ class Profile extends Component {
       },
       owner: false,
       start: true,
-      startpost:true,
+      startpost: true,
       nof: false,
       profileId: this.props.match.params.id
     };
-    this.updateposts=()=>{
-      if (this.state.user.posts.length>0){
-        this.setState({startpost:true})
-      // if (typeof this.state.user.posts[0] === 'string' || this.state.user.posts[0] instanceof String){
-        apiCall("get", "/getUsersPosts/"+this.props.currentUser.user._id,'').then((li)=>{
-          this.state.user.posts=li.posts
-          this.setState({...this.state,startpost:false})
+    this.updateposts = () => {
+      if (this.state.user.posts.length > 0) {
+        this.setState({ startpost: true })
+        // if (typeof this.state.user.posts[0] === 'string' || this.state.user.posts[0] instanceof String){
+        apiCall("get", "/getUsersPosts/" + this.props.currentUser.user._id, '').then((li) => {
+          this.state.user.posts = li.posts
+          this.setState({ ...this.state, startpost: false })
         })
-        .catch((e)=>console.log(e))
-        this.state.user.posts=[]
-        this.setState({...this.state})
-      // }
-      // else{
-      //   // already have data no need to api call again
-      // }
-    }else{
-      this.setState({startpost:false})
+          .catch((e) => console.log(e))
+        this.state.user.posts = []
+        this.setState({ ...this.state })
+        // }
+        // else{
+        //   // already have data no need to api call again
+        // }
+      } else {
+        this.setState({ startpost: false })
+      }
+
     }
-      
-  }
   }
 
   async componentDidMount() {
@@ -54,10 +56,10 @@ class Profile extends Component {
       for (i = 0; i < temp.certificates.length; i++) {
         temp.certificates[i].date = new Date(temp.certificates[i].date)
       }
-      
-        this.setState({ user: temp, owner: true, start: false });
-      
-      
+
+      this.setState({ user: temp, owner: true, start: false });
+
+
     }
     else {
       apiCall("get", "/userForProfile/" + this.props.match.params.id, "")
@@ -70,13 +72,13 @@ class Profile extends Component {
           await this.setState({
             user: data,
             start: false,
-            startpost:false
+            startpost: false
           });
         })
         .catch(async (err) => {
           console.log(err);
           await this.setState({
-            start:false,
+            start: false,
             nof: true
           });
         });
@@ -131,4 +133,5 @@ class Profile extends Component {
     }
   }
 }
+
 export default Profile;

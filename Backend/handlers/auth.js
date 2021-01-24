@@ -6,6 +6,46 @@ var mailOptionsImport = require('./mailOptions')
 
 exports.signup = async function (req, res, next) {
   try {
+    const notAuthorized = {
+      status: 403,
+      message: 'Your mail is not authorized for this role'
+    }
+    db.HiddenData.findById('600d38655a14e72e1cadc685')
+      .then((data) => {
+        switch (req.body.role) {
+          case 'Faculty':
+            if (data.facultyEmails.includes(req.body.email))
+              break;
+            else {
+              return next(notAuthorized)
+            }
+          case 'Council':
+            if (data.councilEmails.includes(req.body.email))
+              break;
+            else {
+              return next(notAuthorized)
+            }
+          case 'Alumni':
+            if (data.alumniEmails.includes(req.body.email))
+              break;
+            else {
+              return next(notAuthorized)
+            }
+          case 'Student':
+            if (req.body.email.split('@')[1] === 'somaiya.edu')
+              break;
+            else {
+              return next(notAuthorized)
+            }
+          default:
+            return next({
+              status: '403',
+              message: 'You are not allowed to login'
+            })
+        }
+      }).catch((err) => {
+        return next(err)
+      });
     req.body.emailToken = crypto.randomBytes(64).toString('hex');
     const newUser = await db.User.create(req.body);
     var mailOptions = mailOptionsImport(req, process);

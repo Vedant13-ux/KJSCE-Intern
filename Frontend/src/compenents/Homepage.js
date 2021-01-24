@@ -55,11 +55,5 @@ const Homepage = (props) => {
         </div>
     );
 }
-function mapStateToProps(state) {
-    return {
-        currentUser: state.currentUser
-    }
-}
 
-
-export default connect(mapStateToProps, {})(Homepage);
+export default Homepage;
