@@ -153,6 +153,19 @@ router.get('/details/:id', (req, res, next) => {
         })
 });
 
+router.get('/applications/:id', (req, res, next) => {
+    db.InternshipDetails.findById(req.params.id).populate({path:'applications',populate:{path:'applicantId',select:'email fname lname dept year rollNo'}})
+        .exec((err, internship) => {
+            if (!internship) {
+                return res.status(404).send({});
+            }
+            if (err) {
+                return next(err);
+            }
+            return res.status(200).send(internship.applications)
+        })
+});
+
 router.put('/details/', async (req, res, next) => {
     try {
         let user = await db.User.findById(req.body.id);

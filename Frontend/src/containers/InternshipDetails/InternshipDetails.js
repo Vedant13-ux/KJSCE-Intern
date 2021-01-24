@@ -10,7 +10,11 @@ import Internshipform from '../Homepage/Internshipform'
 import { Multiselect } from "multiselect-react-dropdown";
 import CKEditor from 'ckeditor4-react';
 import { Link } from 'react-router-dom';
-// import json2xls from 'json2xls'
+import ReactExport from "react-export-excel";
+
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 
 
@@ -27,6 +31,7 @@ class InternshipDetail extends Component {
       applied: false,
       owner: false,
       show1: false,
+      downloaddata:[],
       show2: false,
       show3: false,
       emails: [{ text: "Hello" }, { text: "Vedant" }],
@@ -115,6 +120,20 @@ class InternshipDetail extends Component {
                 async (recomm) => {
                   if (this.state.user._id === data.faculty._id) {
                     await this.setState({ owner: true });
+                    apiCall('get', '/internship/applications/'+this.props.match.params.id, '')
+                      .then((data)=>{
+                        console.log(data)
+                        let arr=[]
+                        data.forEach((e)=>{
+                          let thing={...e.applicantId}
+                          thing.a1=e.answers[0]
+                          thing.a2=e.answers[1]
+                          thing.name=thing.fname+' '+thing.lname
+                          arr.push(thing)
+                        })
+                        this.setState({downloaddata:arr})
+                      }).catch(e=>console.log(e))
+
                   }
                   if (data.applicants.findIndex(app => app._id === this.state.user._id) !== -1) {
                     await this.setState({ applied: true })
@@ -239,6 +258,19 @@ class InternshipDetail extends Component {
                       Applicants {this.state.owner &&
                         <div>
                           <button onClick={this.handleShow1} className="mailAppl ui small button">Mail Applicants</button>
+                          <ExcelFile element={<button className="mailAppl ui small button">Download Application data</button>}>
+                            <ExcelSheet data={this.state.downloaddata} name="Applications">
+                                <ExcelColumn label="Name" value="name"/>
+                                <ExcelColumn label="Roll no." value="rollNo"/>
+                                <ExcelColumn label="Department" value="dept"/>
+                                <ExcelColumn label="Year" value="year"/>
+                                <ExcelColumn label="Email" value="email"/>
+                                <ExcelColumn label={this.state.ques1} value="a1"/>
+                                <ExcelColumn label={this.state.ques2} value="a2"/>
+                                <ExcelColumn label="Profile link" value={(c)=>'https://kjsce-connect-frontend.herokuapp.com/profile/'+c.email.split('@')[0]}/>
+
+                            </ExcelSheet>
+                          </ExcelFile>
                           <Modal show={this.state.show1} onHide={this.handleClose1} centered>
                             <Modal.Header closeButton backdrop="static">
                               <Modal.Title>Send Mail</Modal.Title>
