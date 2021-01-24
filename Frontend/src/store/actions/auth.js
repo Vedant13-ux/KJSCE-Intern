@@ -13,11 +13,11 @@ export function setAuthorizationHeader(token) {
 }
 
 export function logout() {
-    return dispatch => {
+    return async dispatch => {
+        await dispatch(setCurrentUser({}));
+        setAuthorizationHeader(false);
         localStorage.clear();
         localStorage.setItem('isAuthenticated', false);
-        setAuthorizationHeader(false);
-        dispatch(setCurrentUser({}));
     }
 }
 

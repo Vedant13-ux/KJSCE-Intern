@@ -39,7 +39,7 @@ class AuthForm extends Component {
             }
         }
         console.log(data);
-        apiCallAuth('post', '/auth/signup', data)
+        apiCallAuth('post', '/api/auth/signup', data)
             .then(async (response) => {
                 console.log(response)
                 await this.props.onVerify();

@@ -36,3 +36,4 @@ module.exports.CouncilMember = require('./councilMembers');
 module.exports.Event = require('./events');
 module.exports.Achievement = require('./achievement');
 module.exports.Hashtag = require('./hashtag');
+module.exports.HiddenData = require('./hiddenData');

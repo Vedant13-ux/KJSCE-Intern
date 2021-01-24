@@ -5,7 +5,6 @@ import Navbar from '../containers/Global/Navbar'
 import PageFooter from '../containers/Global/PageFooter'
 import Loading from '../images/Loading'
 import NoBookmarks from '../images/NoBookmarks'
-import { connect } from 'react-redux'
 
 class Bookmarks extends Component {
     constructor(props) {
@@ -76,11 +75,7 @@ class Bookmarks extends Component {
         )
     }
 }
-function mapStateToProps(state) {
-    return {
-        currentUser: state.currentUser
-    }
-}
 
 
-export default connect(mapStateToProps, {})(Bookmarks);
+
+export default Bookmarks

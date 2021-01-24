@@ -7,7 +7,6 @@ import PageFooter from '../containers/Global/PageFooter'
 import { InternshipCreate } from '../containers/Global/Utilities'
 import { MyProvider } from '../services/Provider'
 import { FilterInternships } from '../containers/Global/Utilities'
-import { connect } from 'react-redux'
 
 
 
@@ -55,11 +54,5 @@ const Homepage = (props) => {
         </div>
     );
 }
-function mapStateToProps(state) {
-    return {
-        currentUser: state.currentUser
-    }
-}
 
-
-export default connect(mapStateToProps, {})(Homepage);
+export default Homepage;

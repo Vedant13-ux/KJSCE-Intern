@@ -3,7 +3,6 @@ import { Switch, Route, withRouter } from 'react-router-dom';
 import Homepage from '../compenents/Homepage'
 import Landing from '../compenents/Landing';
 import { connect } from 'react-redux';
-import { } from '../store/actions/auth'
 import { updateRefresh, logout, setAuthorizationHeader, authUser, setCurrentUser } from '../store/actions/auth'
 import IntershipDetail from './InternshipDetails/InternshipDetails'
 import Community from '../compenents/Community'
@@ -16,7 +15,6 @@ import Bookmarks from '../compenents/Bookmarks'
 import Chat from '../containers/chat/Chat'
 import '../index2.css'
 import jwtDecode from 'jwt-decode'
-import withAuth from '../hocs/withAuth'
 
 class Main extends React.Component {
     async componentWillMount() {
@@ -31,11 +29,14 @@ class Main extends React.Component {
 
             } catch (err) {
                 console.log(err);
-                this.props.logout();
+                await this.props.logout();
                 this.props.history.push('/');
 
             }
         } else {
+            this.props.history.push('/');
+        }
+        if (!this.props.currentUser.isAuthenticated) {
             this.props.history.push('/');
         }
         console.log("main mounted");
@@ -49,16 +50,16 @@ class Main extends React.Component {
         return (
             <div>
                 <Switch>
-                    <Route exact path="/" render={props => <Landing {...props} isAuthenticated={currentUser.isAuthenticated} />} />
-                    <Route path="/home" component={withAuth(Homepage)} />
-                    <Route exact path="/messaging" component={withAuth(Chat)} />
-                    <Route exact path="/internship/:id" component={withAuth(IntershipDetail)} />
-                    <Route exact path="/community" component={withAuth(Community)} />
-                    <Route exact path="/post/:id" component={withAuth(Post)} />
-                    <Route exact path="/hashtag/:id" component={withAuth(Hashtag)} />
+                    <Route exact path="/" render={props => <Landing {...props} currentUser={currentUser} />} />
+                    <Route exact path="/home" render={props => <Homepage {...props} currentUser={currentUser} />} />
+                    <Route exact path="/messaging" render={props => <Chat {...props} currentUser={currentUser} />} />
+                    <Route exact path="/internship/:id" render={props => <IntershipDetail internshipApply={this.props.internshipApply} key={props.match.params.id} {...props} currentUser={currentUser} />} />
+                    <Route exact path="/community" render={props => <Community {...props} currentUser={currentUser} />} />
+                    <Route exact path="/post/:id" render={props => <Post key={props.match.params.id} {...props} currentUser={currentUser} />} />
+                    <Route exact path="/hashtag/:id" render={props => <Hashtag key={props.match.params.id} {...props} currentUser={currentUser} />} />
                     <Route exact path="/verify-email/:token" render={props => <EmailVerificaton {...props} />} />
-                    <Route exact path="/profile/:id" component={withAuth(Profile)} />
-                    <Route exact path="/bookmarks" component={withAuth(Bookmarks)} />
+                    <Route exact path="/profile/:id" render={props => <Profile key={props.match.params.id} {...props} currentUser={currentUser} />} />
+                    <Route exact path="/bookmarks" render={props => <Bookmarks {...props} currentUser={currentUser} />} />
                     <Route path="*" render={props => <NotFound {...props} />} />
                 </Switch>
             </div>
