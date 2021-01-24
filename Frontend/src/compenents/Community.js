@@ -534,7 +534,7 @@ export class Post extends React.Component {
                 return c
               }
             })}{this.itstag && <Link to={'/hashtag/' + this.tag.slice(1, this.tag.length)}>{this.tag}</Link>}</p>
-            {this.img !== "" && (
+            {this.img !== undefined && (
               <img onLoad={this.handleImageLoad} src={this.img} alt=""></img>
             )}
 
