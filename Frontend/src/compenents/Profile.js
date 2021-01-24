@@ -26,8 +26,7 @@ class Profile extends Component {
       profileId: this.props.match.params.id
     };
     this.updateposts = () => {
-      if (this.state.user.posts.length > 0) {
-        this.setState({ startpost: true })
+      // if (this.state.user.posts.length > 0) {
         // if (typeof this.state.user.posts[0] === 'string' || this.state.user.posts[0] instanceof String){
         apiCall("get", "/getUsersPosts/" + this.props.currentUser.user._id, '').then((li) => {
           this.state.user.posts = li.posts
@@ -35,14 +34,14 @@ class Profile extends Component {
         })
           .catch((e) => console.log(e))
         this.state.user.posts = []
-        this.setState({ ...this.state })
+        this.setState({ ...this.state ,startpost: true})
         // }
         // else{
         //   // already have data no need to api call again
         // }
-      } else {
-        this.setState({ startpost: false })
-      }
+      // } else {
+      //   this.setState({ startpost: false })
+      // }
 
     }
   }
