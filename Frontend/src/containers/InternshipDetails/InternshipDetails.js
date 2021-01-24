@@ -11,8 +11,6 @@ import { Multiselect } from "multiselect-react-dropdown";
 import CKEditor from 'ckeditor4-react';
 import { Link } from 'react-router-dom';
 // import json2xls from 'json2xls'
-import { connect } from 'react-redux'
-import { internshipApply } from '../../store/actions/user'
 
 
 

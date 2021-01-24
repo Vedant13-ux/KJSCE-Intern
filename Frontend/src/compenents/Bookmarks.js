@@ -5,7 +5,6 @@ import Navbar from '../containers/Global/Navbar'
 import PageFooter from '../containers/Global/PageFooter'
 import Loading from '../images/Loading'
 import NoBookmarks from '../images/NoBookmarks'
-import { connect } from 'react-redux'
 
 class Bookmarks extends Component {
     constructor(props) {

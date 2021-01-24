@@ -8,7 +8,6 @@ import MoreInfoCouncil from '../containers/Profile/MoreInfoCouncil'
 import UserActivity from "../containers/Profile/UserActivity";
 import Loading from "../images/Loading";
 import NotFound from "../images/NotFound"
-import { connect } from 'react-redux'
 
 
 class Profile extends Component {
