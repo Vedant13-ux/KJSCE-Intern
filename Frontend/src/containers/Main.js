@@ -37,6 +37,7 @@ class Main extends React.Component {
             this.props.history.push('/');
         }
         if (!localStorage.isAuthenticated) {
+            setAuthorizationHeader(false);
             this.props.history.push('/');
         }
         console.log("main mounted");
@@ -50,7 +51,7 @@ class Main extends React.Component {
         return (
             <div>
                 <Switch>
-                    <Route exact path="/" render={props => <Landing {...props} currentUser={currentUser} />} />
+                    <Route exact path="/" render={props => <Landing {...props} isAuthenticated={currentUser.isAuthenticated} />} />
                     <Route exact path="/home" render={props => <Homepage {...props} currentUser={currentUser} />} />
                     <Route exact path="/messaging" render={props => <Chat {...props} currentUser={currentUser} />} />
                     <Route exact path="/internship/:id" render={props => <IntershipDetail internshipApply={this.props.internshipApply} key={props.match.params.id} {...props} currentUser={currentUser} />} />
