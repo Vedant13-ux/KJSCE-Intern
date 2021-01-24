@@ -29,7 +29,7 @@ class Main extends React.Component {
 
             } catch (err) {
                 console.log(err);
-                this.props.logout();
+                await this.props.logout();
                 this.props.history.push('/');
 
             }
