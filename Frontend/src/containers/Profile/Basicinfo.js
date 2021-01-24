@@ -6,8 +6,8 @@ import { Spinner } from 'react-bootstrap'
 import 'react-image-crop/dist/ReactCrop.css';
 import ReactCrop from 'react-image-crop';
 import { base64StringtoFile, image64toCanvasRef, extractImageFileExtensionFromBase64 } from './ImageCropUtils';
-const acceptedFileTypes = ['image/x-png, image/png, image/jpg, image/jpeg'];
-const acceptedFileTypesArray = acceptedFileTypes.map(item => item.trim());
+const acceptedFileTypes = 'image/x-png, image/png, image/jpg, image/jpeg';
+const acceptedFileTypesArray = acceptedFileTypes.split(',').map(item => item.trim());
 
 class Basic extends React.Component {
   constructor(props) {
@@ -34,6 +34,7 @@ class Basic extends React.Component {
       imgSrc: null,
       error: null
     };
+    this.fileLabel = React.createRef();
     this.imagePreviewCanvas = React.createRef();
     this.handleshow = (e) => {
       this.setState({ show: true });
@@ -94,20 +95,48 @@ class Basic extends React.Component {
         this.state.error = 'File Type is Not Supported'
       })
     }
+    this.verifyFile = (fi) => {
 
-    this.fileValidation = async (e) => {
-      const selectedFile = e.target.files[0];
-      await this.setState({
-        selectedFile
-      });
-      if (e.target.files && selectedFile) {
-        var reader = new FileReader();
-        reader.onload = async (el) => {
-          await this.setState({ imgSrc: el.target.result, imgSrcExs: extractImageFileExtensionFromBase64(el.target.result), cropped: false, startedCropping: false, crop: { aspect: 1 / 1.11 } })
-        };
-        reader.readAsDataURL(selectedFile);
+      for (let i = 0; i <= fi.files.length - 1; i++) {
+        let fsize = fi.files.item(i).size;
+        let file = Math.round(fsize / 1024);
+        // The size of the file.
+        var fullPath = fi.value;
+        if (fullPath) {
+          var startIndex =
+            fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/');
+          var filename = fullPath.substring(startIndex);
+          if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+            filename = filename.substring(1);
+          }
+          this.fileLabel.current.innerHTML =
+            `${filename} ( <b> ${file} </b> KB )`;
+        }
+        return file
+
       }
-      console.log(e.target.files[0]);
+    }
+    this.fileValidation = async (e) => {
+      if (e.target.files && e.target.files[0]) {
+        const fileSize = await this.verifyFile(e.target);
+        if (fileSize <= 187) {
+          if (acceptedFileTypesArray.includes(e.target.files[0].type)) {
+            const selectedFile = e.target.files[0];
+            var reader = new FileReader();
+            reader.onload = async (el) => {
+              this.setState({ imgSrc: el.target.result, imgSrcExs: extractImageFileExtensionFromBase64(el.target.result), cropped: false, startedCropping: false, crop: { aspect: 1 / 1.11 }, error: null })
+            };
+            reader.readAsDataURL(selectedFile);
+          } else {
+            console.log(this.state.error);
+            await this.setState({ error: 'This File Type is not Alloed', imgSrc: null, imgSrcExs: null });
+            console.log(this.state.error);
+          }
+        } else {
+          await this.setState({ imgSrcExs: null, error: 'File Exceeds 2MB', imgSrc: null })
+          console.log(this.state.error);
+        }
+      }
     }
     // Image Cropping
     this.handleOnCropChange = (crop) => {
@@ -134,6 +163,7 @@ class Basic extends React.Component {
     }
   }
   render() {
+    const { error } = this.state;
     const {
       bio,
       fname,
@@ -162,8 +192,8 @@ class Basic extends React.Component {
                 <form onSubmit={this.handleImageUpload} enctype="multipart/form-data" name="uploadForm" className="form-group imageUploadForm">
                   <div className="input-group">
                     <div className="custom-file">
-                      <label className="custom-file-label" style={{ textAlign: "left" }}>{this.state.fileLabel}</label>
-                      <input type="file" id="file" name="file" onChange={this.fileValidation} className="custom-file-input" style={{ outline: "none", border: "none" }} accept=".jpg, .png, .x-png, jpeg | image/*" required />
+                      <label className="custom-file-label" style={{ textAlign: "left" }} ref={this.fileLabel}>{this.state.fileLabel}</label>
+                      <input type="file" id="file" name="file" onChange={this.fileValidation} className="custom-file-input" style={{ outline: "none", border: "none" }} accept={acceptedFileTypes} required />
                       <input type="hidden" name="id" value={this.props.currentUser.user._id}></input>
                     </div>
                   </div>
@@ -198,7 +228,7 @@ class Basic extends React.Component {
                       }
                       {this.state.error !== null &&
                         <div style={{ color: 'red' }}>
-                          {this.state.error}
+                          {error}
                         </div>
                       }
                     </div>

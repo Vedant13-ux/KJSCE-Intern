@@ -36,7 +36,7 @@ class Main extends React.Component {
         } else {
             this.props.history.push('/');
         }
-        if (!this.props.currentUser.isAuthenticated) {
+        if (!localStorage.isAuthenticated) {
             this.props.history.push('/');
         }
         console.log("main mounted");
