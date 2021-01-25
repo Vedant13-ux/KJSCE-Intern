@@ -379,15 +379,10 @@ export class Post extends React.Component {
     };
     this.id = options._id;
     this.content = options.content;
-    this.authordata = {...options.author}
     if (!props.isprofile) {
-      this.avatar = options.author.photo;
-      this.name = options.author.fname + " " + options.author.lname;
-      this.email = options.author.email;
+      this.authordata = {...options.author}
     } else {
-      this.avatar = props.userprofile.photo;
-      this.name = props.userprofile.fname + " " + props.userprofile.lname;
-      this.email = props.userprofile.email;
+      this.authordata = {...this.props.userprofile.author}
     }
     this.img = options.image;
     this.likeHandler = this.likeHandler.bind(this);
@@ -426,7 +421,7 @@ export class Post extends React.Component {
           });
           var activity = {
             created: date,
-            post: { ...this.props.options, author: this.props.userprofile},
+            post: { ...this.props.options, author: this.authordata},
           };
           this.props.updateLikeActivity(activity);
         })
@@ -476,7 +471,7 @@ export class Post extends React.Component {
       };
       var activity = {
         created: newComment.created,
-        post: this.props.options,
+        post: {...this.props.options,author: this.authordata}
       };
       this.props.updateCommentActivity(activity);
       this.state.comments.push(newComment);
@@ -511,8 +506,8 @@ export class Post extends React.Component {
           <UserInfo
             userAvatar={this.authordata.avatar}
             date={this.props.options.created}
-            email={this.email}
-            username={this.name}
+            email={this.authordata.email}
+            username={this.authordata.fname+' '+this.authordata.lname}
           />
           <div className="post-content">
             <p>{this.content.split('').map((c) => {
