@@ -379,6 +379,7 @@ export class Post extends React.Component {
     };
     this.id = options._id;
     this.content = options.content;
+    this.authordata = {...options.author}
     if (!props.isprofile) {
       this.avatar = options.author.photo;
       this.name = options.author.fname + " " + options.author.lname;
@@ -508,7 +509,7 @@ export class Post extends React.Component {
       <div className="post" id={this.id}>
         <div className="post-wrapper">
           <UserInfo
-            userAvatar={this.avatar}
+            userAvatar={this.authordata.avatar}
             date={this.props.options.created}
             email={this.email}
             username={this.name}
