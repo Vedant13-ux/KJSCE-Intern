@@ -382,7 +382,7 @@ export class Post extends React.Component {
     if (!props.isprofile) {
       this.authordata = {...options.author}
     } else {
-      this.authordata = {...this.props.userprofile.author}
+      this.authordata = {...this.props.userprofile}
     }
     this.img = options.image;
     this.likeHandler = this.likeHandler.bind(this);
@@ -505,7 +505,7 @@ export class Post extends React.Component {
       <div className="post" id={this.id}>
         <div className="post-wrapper">
           <UserInfo
-            userAvatar={this.authordata.avatar}
+            userAvatar={this.authordata.photo}
             date={this.props.options.created}
             email={this.authordata.email}
             username={this.authordata.fname+' '+this.authordata.lname}
@@ -517,7 +517,7 @@ export class Post extends React.Component {
                 this.tag = '#'
               }
               else if (this.itstag) {
-                if (c === ' ') {
+                if (!c.match(/^[A-Za-z0-9]$/)) {
                   this.itstag = false
                   let tag = this.tag
                   this.tag = ''
