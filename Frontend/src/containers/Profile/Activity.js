@@ -11,9 +11,42 @@ class Activity extends Component {
         }
 
     }
-    componentWillMount() {
-        this.setState({ activity: this.props.activity })
+    async componentWillMount() {
+        console.log(this.props.posts)
+        var activity = [];
+        const { liked, commented } = this.props.user;
+        var likedIndex = liked.length - 1;
+        var commentedIndex = commented.length - 1;
+        liked.forEach(p => {
+            p.created = new Date(p.created);
+            p.type = 'Liked';
+        })
+        commented.forEach(p => {
+            p.created = new Date(p.created);
+            p.type = 'Commented';
+        })
+        console.log(liked, commented);
+
+        while (likedIndex > -1 && commentedIndex > -1) {
+            if (liked[likedIndex].created >= commented[commentedIndex].created) {
+                activity.push(liked[likedIndex]);
+                likedIndex--;
+            }
+            else if (liked[likedIndex].created < commented[commentedIndex].created) {
+                activity.push(commented[commentedIndex]);
+                commentedIndex--;
+            }
+        }
+        if (commentedIndex > -1) {
+            commented.splice(commentedIndex + 1, commented.length)
+            activity = activity.concat(commented);
+        } else if (likedIndex > -1) {
+            liked.splice(likedIndex + 1, liked.length);
+            activity = activity.concat(liked);
+        }
+        await this.setState({ activity });
     }
+
     render() {
         console.log(this.props.activity);
         var person = "";
@@ -22,7 +55,7 @@ class Activity extends Component {
         } else {
             person = `${this.props.user.fname} ${this.props.user.lname}`
         }
-        if (this.props.activity.length === 0)
+        if (this.state.activity.length === 0)
             return (
                 <div id="experience">
                     <NoActivity></NoActivity>
@@ -32,12 +65,12 @@ class Activity extends Component {
             return (
                 <div id="experience">
                     <div className="ui feed" style={{ marginTop: '10px' }}>
-                        {this.props.activity.map(act =>
+                        {this.state.activity.map(act =>
                             <div className="event">
                                 <div className="label" >
                                     {act.post.image !== undefined ?
                                         <img src={act.post.image} alt="" style={{ width: '43px', height: '43px', borderRadius: '3px' }} /> :
-                                        act.type === "Liked" ? <i className="fas fa-thumbs-up" style={{fontSize:'40px', marginLeft:'1px'}} ></i> : <i className="fa fa-comment" style={{fontSize:'40px', marginLeft:'1px'}}></i>
+                                        act.type === "Liked" ? <i className="fas fa-thumbs-up" style={{ fontSize: '40px', marginLeft: '1px' }} ></i> : <i className="fa fa-comment" style={{ fontSize: '40px', marginLeft: '1px' }}></i>
                                     }
                                 </div>
                                 <div className="content">

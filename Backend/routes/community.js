@@ -24,7 +24,7 @@ var upload = multer({ storage: storage, fileFilter: imageFilter });
 
 // Getting Posts
 router.get('/posts/getAll', (req, res, next) => {
-    db.Post.find().sort({ 'created': -1 }).limit(10).populate({ path: 'author', select: 'fname lname photo email' }).populate({ path: 'comments', populate: { path: 'author', select: 'fname lname email photo' } }).exec()
+    db.Post.find().sort({ '_id': -1 }).populate({ path: 'author', select: 'fname lname photo email' }).populate({ path: 'comments', populate: { path: 'author', select: 'fname lname email photo' } }).exec()
         .then(posts => {
             db.Hashtag.aggregate([
                 {
@@ -46,24 +46,6 @@ router.get('/posts/getAll', (req, res, next) => {
         .catch(err => next(err));
 });
 
-router.get('/posts/getTrendingHashtags', (req, res, next) => {
-    db.Hashtag.aggregate([
-        {
-            "$project": {
-                "name": 1,
-                "length": { "$size": "$posts" }
-            }
-        },
-        { "$sort": { "length": -1 } },
-        { "$limit": 5 }
-    ], function (err, results) {
-        if (err) {
-            return next(err);
-        } else {
-            res.send(results);
-        }
-    })
-});
 
 router.get('/posts/getAllWithHashtag/:id', (req, res, next) => {
     db.Hashtag.find({ name: req.params.id }).populate({ path: 'posts', populate: { path: 'author', select: 'fname lname email photo' } }).populate({ path: 'posts', populate: { path: 'comments', populate: { path: 'author', select: 'fname lname email photo' } } }).sort({ created: -1 }).exec()

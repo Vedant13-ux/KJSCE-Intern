@@ -29,42 +29,7 @@ class Basic extends Component {
     this.handleSwitch = this.handleSwitch.bind(this);
   }
 
-  async componentWillMount() {
-    console.log(this.props.posts)
-    var activity = [];
-    const { liked, commented } = this.props.user;
-    var likedIndex = liked.length - 1;
-    var commentedIndex = commented.length - 1;
-    liked.forEach(p => {
-      p.created = new Date(p.created);
-      p.type = 'Liked';
-    })
-    commented.forEach(p => {
-      p.created = new Date(p.created);
-      p.type = 'Commented';
-    })
-    console.log(liked, commented);
-
-    while (likedIndex > -1 && commentedIndex > -1) {
-      if (liked[likedIndex].created >= commented[commentedIndex].created) {
-        activity.push(liked[likedIndex]);
-        likedIndex--;
-      }
-      else if (liked[likedIndex].created < commented[commentedIndex].created) {
-        activity.push(commented[commentedIndex]);
-        commentedIndex--;
-      }
-    }
-    if (commentedIndex > -1) {
-      commented.splice(commentedIndex + 1, commented.length)
-      activity = activity.concat(commented);
-    } else if (likedIndex > -1) {
-      liked.splice(likedIndex + 1, liked.length);
-      activity = activity.concat(liked);
-    }
-    await this.setState({ activity });
-  }
-
+  
 
   handleSwitch(e) {
     if (e.target.name === 'posts' && this.props.owner) this.props.updateposts();
@@ -136,7 +101,7 @@ class Basic extends Component {
         );
         break;
       case "activity":
-        display = <Activity activity={this.state.activity} owner={this.props.owner} user={this.props.user} />
+        display = <Activity owner={this.props.owner} user={this.props.user} />
         break;
       default:
         break;

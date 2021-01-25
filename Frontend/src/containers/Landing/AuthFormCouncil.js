@@ -46,7 +46,7 @@ class CouncilSignup extends Component {
                 <div className="field">
                     <label>Somaiya Email</label>
                     <div className="ui left icon input">
-                        <input required type="email" name="email" placeholder="Somaiya Email" value={email} onChange={this.handleChange} />
+                        <input required type="email" name="email" placeholder="Somaiya Email" value={email} onChange={this.handleChange} pattern="^[a-zA-Z0-9._%+-]+@somaiya\.edu$" />
                         <i className="envelope icon"></i>
                     </div>
                 </div>
