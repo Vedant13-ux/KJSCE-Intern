@@ -425,8 +425,9 @@ export class Post extends React.Component {
           });
           var activity = {
             created: date,
-            post: { ...this.props.options, author: this.props.userprofile},
+            post: { ...this.props.options, author: this.props.loggedin.user },
           };
+          console.log(this.props.userprofile, activity);
           this.props.updateLikeActivity(activity);
         })
         .catch((e) => console.log(e));

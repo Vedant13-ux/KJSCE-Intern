@@ -86,7 +86,10 @@ router.post('/posts/create', upload.single('file'), (req, res, next) => {
                     message: 'User Not Found'
                 })
             }
-            let hashtags = req.body.content.match(/#(\S*)/g);
+            let hashtags = req.body.content.match(/#([0-9a-z]*)/ig);
+            hashtags = [...new Set(hashtags)];
+            console.log(hashtags);
+            console.log(hashtags);
             req.body.hashtags = hashtags;
             if (req.file) {
                 cloudinary.v2.uploader.upload(req.file.path, function (err, result) {
