@@ -37,14 +37,14 @@ class Login extends Component {
                     <div className="field">
                         <label>Somaiya Email</label>
                         <div className="ui left icon input">
-                            <input required type="email" name="email" placeholder="abcd@somaiya.edu" value={email} onChange={this.handleChange} />
+                            <input required type="email" name="email" autoComplete="email" placeholder="abcd@somaiya.edu" value={email} onChange={this.handleChange} pattern="^[a-zA-Z0-9._%+-]+@somaiya\.edu$"/>
                             <i className="envelope icon"></i>
                         </div>
                     </div>
                     <div className="field">
                         <label>Password</label>
                         <div className="ui left icon input">
-                            <input required type="password" name="password" placeholder="Password" onChange={this.handleChange} value={password} />
+                            <input required type="password" name="password" autoComplete="current-password" placeholder="Password" onChange={this.handleChange} value={password} />
                             <i className="lock icon"></i>
                         </div>
                     </div>

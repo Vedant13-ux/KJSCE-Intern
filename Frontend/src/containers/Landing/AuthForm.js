@@ -79,7 +79,7 @@ class AuthForm extends Component {
                         <div className="twelve wide field">
                             <label>Somaiya Email</label>
                             <div className="ui left icon input">
-                                <input required type="email" name="email" placeholder="Somaiya Email" value={email} onChange={this.handleChange} pattern="^[a-zA-Z0-9._%+-]+@somaiya\.edu$" />
+                                <input required type="email" name="email" autoComplete="email" placeholder="Somaiya Email" value={email} onChange={this.handleChange} pattern="^[a-zA-Z0-9._%+-]+@somaiya\.edu$" />
                                 <i className="envelope icon"></i>
                             </div>
                         </div>
@@ -96,7 +96,7 @@ class AuthForm extends Component {
                             <div className="four wide field">
                                 <label>Roll No.</label>
                                 <div className="ui left icon input">
-                                    <input required type="text" name="rollNo" placeholder="Roll No." value={rollNo} onChange={this.handleChange} pattern="[0-9]{7}" />
+                                    <input required type="text" name="rollNo" autoComplete="off" placeholder="Roll No." value={rollNo} onChange={this.handleChange} pattern="[0-9]{7}" />
                                     <i className="ui id card icon"></i>
                                 </div>
                             </div>
@@ -134,7 +134,7 @@ class AuthForm extends Component {
                 <div className="field">
                     <label>Password</label>
                     <div className="ui left icon input">
-                        <input type="password" name="password" placeholder="Password" onChange={this.handleChange} value={password} />
+                        <input type="password" name="password" autoComplete="current-password" placeholder="Password" onChange={this.handleChange} value={password} />
                         <i className="lock icon"></i>
                     </div>
                 </div>
