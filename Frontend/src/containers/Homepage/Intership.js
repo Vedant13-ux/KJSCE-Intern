@@ -53,7 +53,7 @@ class Internship extends Component {
             <hr className='topHr' />
             <div className="container">
               <h4 className="title">{this.props.title}</h4>
-              <p className="description">{this.props.description}</p>
+              <p className="description">{this.props.description.length>53?this.props.description.slice(0,50) + '...':this.props.description}</p>
 
               <div className="extraDetails">
                 {

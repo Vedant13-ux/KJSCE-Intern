@@ -289,6 +289,7 @@ class Intershipform extends Component {
             <label>About Internship</label>
             <textarea
               maxlength="200"
+              minLength="50"
               rows="2"
               required
               placeholder="eg. Do daily assigned task and fix issues in github"
