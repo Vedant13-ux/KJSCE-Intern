@@ -338,7 +338,7 @@ export class PostWall extends React.Component {
   renderAll() {
     let elem = [];
     for (let key in this.props.posts) {
-      elem.unshift(this.getPostById(key));
+      elem.push(this.getPostById(key));
     }
     if (!elem.length) {
       if (this.props.start) elem.push(<div></div>);
@@ -425,7 +425,7 @@ export class Post extends React.Component {
           });
           var activity = {
             created: date,
-            post: this.props.options,
+            post: { ...this.props.options, author: this.props.userprofile},
           };
           this.props.updateLikeActivity(activity);
         })

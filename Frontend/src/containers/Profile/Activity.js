@@ -69,7 +69,7 @@ class Activity extends Component {
                             <div className="event">
                                 <div className="label" >
                                     {act.post.image !== undefined ?
-                                        <img src={act.post.image} alt="" style={{ width: '43px', height: '43px', borderRadius: '3px' }} /> :
+                                        <img src={act.post.image} alt="" style={{ width: '43px', height: '43px', borderRadius: '3px', objectFit:'cover' }} /> :
                                         act.type === "Liked" ? <i className="fas fa-thumbs-up" style={{ fontSize: '40px', marginLeft: '1px' }} ></i> : <i className="fa fa-comment" style={{ fontSize: '40px', marginLeft: '1px' }}></i>
                                     }
                                 </div>

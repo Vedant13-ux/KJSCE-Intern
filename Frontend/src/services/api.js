@@ -1,7 +1,7 @@
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
-axios.defaults.baseURL = 'https://kjsce-connect-frontend.herokuapp.com'
-// axios.defaults.baseURL = ''
+// axios.defaults.baseURL = 'https://kjsce-connect-backend.herokuapp.com'
+axios.defaults.baseURL = 'http://localhost:3001'
 var secureId = null;
 
 export async function setTokenHeader(token) {

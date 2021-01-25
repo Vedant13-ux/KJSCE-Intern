@@ -24,7 +24,7 @@ var upload = multer({ storage: storage, fileFilter: imageFilter });
 
 // Getting Posts
 router.get('/posts/getAll', (req, res, next) => {
-    db.Post.find().sort({ '_id': -1 }).populate({ path: 'author', select: 'fname lname photo email' }).populate({ path: 'comments', populate: { path: 'author', select: 'fname lname email photo' } }).exec()
+    db.Post.find().sort({ 'created': -1 }).populate({ path: 'author', select: 'fname lname photo email' }).populate({ path: 'comments', populate: { path: 'author', select: 'fname lname email photo' } }).exec()
         .then(posts => {
             db.Hashtag.aggregate([
                 {
