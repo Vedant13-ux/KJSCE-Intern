@@ -92,14 +92,13 @@ router.post('/posts/create', upload.single('file'), (req, res, next) => {
             // hashtags = [...new Set(hashtags)];
             // for(h of hashtags)
             var uniquehash = [];
-            let shoulAdd = true;
+            
             hashtags.forEach(h => {
+                let shoulAdd = true;
                 uniquehash.forEach(u => {
                     if (h.toUpperCase() === u.toUpperCase()) {
                         shoulAdd = false;
-                    } else {
-                        shoulAdd = true;
-                    }
+                    } 
                 })
                 if (shoulAdd) {
                     uniquehash.push = h
