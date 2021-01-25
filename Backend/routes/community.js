@@ -120,7 +120,7 @@ router.post('/posts/create', upload.single('file'), (req, res, next) => {
                             res.status(200).send(newPost);
                             hashtags.forEach((e) => {
                                 e = e.slice(1, e.length)
-                                db.Hashtag.find({ name: new Regex('^' + e + '$', 'i') }).then(async (h) => {
+                                db.Hashtag.find({ name: e}).then(async (h) => {
                                     console.log('hashtag found')
 
                                     if (Object.keys(h).length > 0) {
@@ -144,7 +144,7 @@ router.post('/posts/create', upload.single('file'), (req, res, next) => {
                         res.status(200).send(newPost);
                         hashtags.forEach((e) => {
                             e = e.slice(1, e.length)
-                            db.Hashtag.find({ name: new Regex('^' + e + '$', 'i') }).then(async (h) => {
+                            db.Hashtag.find({ name: e }).then(async (h) => {
                                 if (Object.keys(h).length > 0) {
                                     await h[0].posts.unshift(newPost);
                                     h[0].save()
