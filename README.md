@@ -7,6 +7,7 @@ Backend Server- https://kjsce-connect-backend.herokuapp.com
 Frontend Server - https://kjsceconnect.herokuapp.com/
 
 Login Credentials:
+
 Faculty Role:
 username : vedant.nagani@somaiya.edu ,
 password: 123
