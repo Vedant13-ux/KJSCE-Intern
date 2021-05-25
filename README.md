@@ -1,4 +1,4 @@
-# KJSCE-Intern
+# KJSCE Connect
 
 Backend Server- https://kjsce-connect-backend.herokuapp.com
 
